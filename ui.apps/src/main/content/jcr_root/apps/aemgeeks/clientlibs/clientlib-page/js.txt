@@ -1,0 +1,6 @@
+#base=js
+jquery-3.4.1.js
+bootstrap.bundle.js
+bootstrap.js
+jquery.easing.js
+sb-admin-2.js
