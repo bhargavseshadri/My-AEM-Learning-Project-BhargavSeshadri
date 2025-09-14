@@ -23,3 +23,6 @@ but Repeat creates div containers for every iteration
 c)data-sly-template(STEP: 1): for creating template (to reuse the code) :FILE: apps/aemgeeks/components/structure/home/head.html
 d)data-sly-use (STEP: 2): here we use this to get that file where the template is defined. :File: apps/aemgeeks/components/structure/home/home.html
 e)data-sly-call(STEP: 3) : use to call the specific template written in that file  :File: apps/aemgeeks/components/structure/home/home.html
+
+--------------------
+f)data-sly-attribute : used to give attributes like class,id in he=tml structure
