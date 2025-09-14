@@ -2,14 +2,23 @@
     <h1>${books.authorName} Books</h1>
     ===================Multifield with single field=============
     <div data-sly-list.item="${books.authorBooks}">
-         ---------------Book : ${itemList.count}--------------
+         ---------------Book : ${itemList.count}--------------  <!--Here in this way we can get the count of the element -->
         <p> Book : <b>${item} </b></p>
     </div>
     <p> ALL Book : <b>${books.authorBooks @ join=', '}</b></p>
 
     ========================== USING MAP ================================
-    <div data-sly-list.item="${books.bookDetailsWithMap}">
+    <div data-sly-list.item="${books.bookDetailsWithMap @ begin = 0, end = 3}">  <!--BhargavSeshadri - So here The item will get the complete MAP value in every iteration, AND THE "ITEM HERE CONTAINS THE KEY OF THE MAP" -->
+                                                                                 <!--@ begin = 0, end = 3, using this we can control the loop execution -->
+
+
         ---------------Book : ${itemList.count}--------------
+        <p>KEY:  <b>${item} </b></p>     <!--this will print only the key of the MAP, to print the value see the next line -->
+        <p>VALUE:  <b>${books.bookDetailsWithMap[item]} </b></p>  <!--So here we use Map key to get the value in every iteration-->
+
+
+    ========================== USING LIST WITH MAP ================================
+
         <p> Book : <b>${item.bookname} </b></p>
         <p> Subject : <b>${item.booksubject}</b> </p>
         <p> Publish : <b>${item.publishyear}</b> </p>
@@ -17,9 +26,9 @@
 
 
     ========================== USING BEAN ================================
-    <div data-sly-list.item="${books.bookDetailsWithBean}">
+    <div data-sly-list.item="${books.bookDetailsWithBean}">          <!--Each object in the bean class gets assigned to the item -->
         ---------------Book : ${itemList.count}--------------
-        <p> Book : <b>${item.bookName} </b></p>
+        <p> Book : <b>${item.bookName} </b></p>          <!--Then we can access the getter methods in this way -->
         <p> Date : <b>${'MMM dd,yyyy' @ format=item.publishDate}</b> </p>
         <p> Copies : <b>${item.copies}</b> </p>
     </div>

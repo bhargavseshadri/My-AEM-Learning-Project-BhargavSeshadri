@@ -1,18 +1,8 @@
-<!--/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  ~ Copyright 2016 Adobe Systems Incorporated
-  ~
-  ~ Licensed under the Apache License, Version 2.0 (the "License");
-  ~ you may not use this file except in compliance with the License.
-  ~ You may obtain a copy of the License at
-  ~
-  ~     http://www.apache.org/licenses/LICENSE-2.0
-  ~
-  ~ Unless required by applicable law or agreed to in writing, software
-  ~ distributed under the License is distributed on an "AS IS" BASIS,
-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  ~ See the License for the specific language governing permissions and
-  ~ limitations under the License.
-  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/-->
+
+<!--BhargavSeshadri
+STEP:1 (CREATING TEMPLATE) - here in the below line we are defining the template || head :- it is like a template name, so using that only we call the template ||
+@ page :- its like a parameter to a funtion so call the template we have to provide this parameter value ||
+IMPORTANT: So while calling the template we have to pass the sling model object to that parameter "@ page"-->
 <template data-sly-template.head="${ @ page }"
           data-sly-use.headlibRenderer="headlibs.html"
           data-sly-use.headResources="head.resources.html">
