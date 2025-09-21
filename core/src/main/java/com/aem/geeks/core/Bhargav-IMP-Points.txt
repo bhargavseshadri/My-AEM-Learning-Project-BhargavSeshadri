@@ -1,6 +1,25 @@
 =============================================================================================
 QUICK IMPORTANT NOTES
 =============================================================================================
--> Resource : Resource can be anything, it can be COMPONENT, NODE, PAGE.
+1) Resource : Resource can be anything, it can be COMPONENT, NODE, PAGE.
 
 =============================================================================================
+2) Global Objects available in HTL (most common ones)
+
+-> Enumerable Objects : These objects provedes a "VALUEMAP" which contains the information, we can access that info.
+- properties : Provides the component properties, like whatever we save through dialog, we can access those props without using sling model.
+- pageProperties : This will provide you the properties or info of page where our component used, In simple words getting page informatuion
+- inheritedPageProperties : It provide the inherited properties of page, we can access the properties of the parent page
+
+-> Demo code available here: apps/aemgeeks/components/content/author-books/author-books.html
+---------------------------------------
+-> Java-Backed-Object
+- Component : Provides the information of that component.
+- componentContext : It is open for each conmponent, Independent of wcmmode.
+- resource : object of current resource(when we drag and drop a compn on page, then the created node of that comp in that page is called as current Resource).
+- resourcePage : On the page where we drag and drop the component, It provides the information of that page means the current page
+- currentDesign : there is a design node available to store the template level properties, that info we can get through this.
+- currentNode
+- currentPage
+- resourceDesign
+- wcmmode

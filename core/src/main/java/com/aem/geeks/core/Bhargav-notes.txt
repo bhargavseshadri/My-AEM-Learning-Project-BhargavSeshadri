@@ -10,6 +10,32 @@ STEP:2(sling model implimentation) : FETCHING DATA: com/aem/geeks/core/models/im
 STEP:3 : RENDERING THE DATA ON FRONTEND: apps/aemgeeks/components/helloworld/helloworld.html
 
 =============================================================================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+=============================================================================================
 3) HTL
 a)data-sly-list:  LOOPING
 -> apps/aemgeeks/components/content/author-books/author-books.html
@@ -38,3 +64,9 @@ h)data-sly-resource : used to include resources.
 -> Example and notes for this is at : apps/aemgeeks/components/content/author-books/author-books.html
 -> Whatever the OUTPUT of the resource will be available in the place where we added this.
 -> Note: The OUTPUT of the resource we have given will be displayed to the user
+
+=================================
+=> USING GLOBAL OBJECTS
+1) properties - apps/aemgeeks/components/content/author-books/author-books.html
+2) pageProperties - apps/aemgeeks/components/content/author-books/author-books.html
+3) inheritedPageProperties - apps/aemgeeks/components/content/author-books/author-books.html

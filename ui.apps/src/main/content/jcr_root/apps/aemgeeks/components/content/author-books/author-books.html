@@ -77,9 +77,9 @@ comp on that page will comes and renders in this page also -->
 In this Example we gonna use selectors and also we "render the output of a file" lIke calling the file;
 -> Directly we cannot call the file using data-sly-resource, we can call using "selectors"
 -> I have created a file: apps/aemgeeks/components/content/author-books/dataSlyResourceTest.html we gonna print the content in that file
-->IMP:  Observe below that I am giving the "page path" as a resouurce and then giving the file name in the selector
--> <div data-sly-resource="${'/content/aemgeeks/us/en/bhargavseshadritestpage/jcr:content/parsys/author_books' @ addSelectors='dataSlyResourceTest'}"></div>
--->
+->IMP:  Observe below that I am giving the "page path" as a resouurce and then giving the file name in the selector-->
+<div data-sly-resource="${'/content/aemgeeks/us/en/bhargavseshadritestpage/jcr:content/parsys/author_books' @ addSelectors='dataSlyResourceTest'}"></div>
+
 
 <!-- -> Here I can give my page path, component, node as a resource. -->
 <!-- EXAMPLE:3 -> Giving page as a resource:
@@ -96,8 +96,23 @@ page where we authored this comp)
 
 
 <!-- EXAMPLE:5 (MOST COMMON): We can also add component using this
--> Below example we are saying add the component(author-books) at the path bhargavseshadritestpage (our page path)-->
+-> Below example we are saying add the component(author-books) at the path bhargavseshadritestpage (our page path)
 <div data-sly-resource="${@ path='bhargavseshadritestpage', resourceType='aemgeeks/components/content/author-books'}"></div>
+-->
+
+================== GLOBAL OBJECTS DEMO ====================
+<!--BhargavSeshadri
+Properties: we can get the data which they have given in the dialog box of that component on that page.
+-> In the below we are getting the value of the authorname given in the dialog -->
+<div><p>Dialog: ${properties.authorname}</p></div>
+
+<!--pageProperties: we can get the data or the info of the PAGE using this -->
+<div><p>Page Properties : <b> ${pageProperties.jcr:title}</b></p></div>
+
+<!--inheritedPageProperties: we can get the data or the info of the PARENT PAGE using this
+-> If there is one property that is not available on the your page and that property is available in your parent page, then we can use this object
+-> Note: if that property is available in our local page then it will give that local page prop value-->
+<div><p>Inherited Page Properties : <b> ${inheritedPageProperties['jcr:title']}</b></p></div>
 
 
 
