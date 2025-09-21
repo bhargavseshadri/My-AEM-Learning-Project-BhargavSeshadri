@@ -100,7 +100,7 @@ page where we authored this comp)
 <div data-sly-resource="${@ path='bhargavseshadritestpage', resourceType='aemgeeks/components/content/author-books'}"></div>
 -->
 
-================== GLOBAL OBJECTS DEMO ====================
+================== GLOBAL OBJECTS DEMO (Enumerable Objects) ====================
 <!--BhargavSeshadri
 Properties: we can get the data which they have given in the dialog box of that component on that page.
 -> In the below we are getting the value of the authorname given in the dialog -->
@@ -113,6 +113,19 @@ Properties: we can get the data which they have given in the dialog box of that 
 -> If there is one property that is not available on the your page and that property is available in your parent page, then we can use this object
 -> Note: if that property is available in our local page then it will give that local page prop value-->
 <div><p>Inherited Page Properties : <b> ${inheritedPageProperties['jcr:title']}</b></p></div>
+
+
+================== GLOBAL OBJECTS DEMO (Java-Backed-Objects) ====================
+<!--BhargavSeshadri EXAMPLES OF COMMONLY USED Java-Backed-GLOBAL-Objects-->
+<div><p>Component: <b> ${component.title}</b></p></div>
+<div><p>Component context: <b> ${componentContext.page.title}</b></p></div>
+<div><p>Design Node: <b> ${currentDesign.path}</b></p></div>
+<div><p>Current Node: <b> ${currentNode.path}</b></p></div>
+<div><p>Current Page: <b> ${currentPage.path}</b></p></div>
+<div><p>Resource: <b> ${resource.path}</b></p></div>
+<div><p>Resource Page: <b> ${resourcePage.path}</b></p></div>
+<div><p>Resource Design: <b> ${resourceDesign.path}</b></p></div>
+<div><p>WCMMODE -> Edit/Preview: <b> ${wcmmode.edit} / ${wcmmode.preview}</b></p></div>
 
 
 

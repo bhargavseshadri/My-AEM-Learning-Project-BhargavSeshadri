@@ -65,8 +65,23 @@ h)data-sly-resource : used to include resources.
 -> Whatever the OUTPUT of the resource will be available in the place where we added this.
 -> Note: The OUTPUT of the resource we have given will be displayed to the user
 
+--------------------
+i)data-sly-set : setting a variable in HTL, If you want a variable that should be available through out the HTL file then we use this
+
 =================================
 => USING GLOBAL OBJECTS
+> Enumerable Objects
 1) properties - apps/aemgeeks/components/content/author-books/author-books.html
 2) pageProperties - apps/aemgeeks/components/content/author-books/author-books.html
 3) inheritedPageProperties - apps/aemgeeks/components/content/author-books/author-books.html
+
+> Java-Backed-Object
+4) Component : apps/aemgeeks/components/content/author-books/author-books.html
+5) componentContext : apps/aemgeeks/components/content/author-books/author-books.html
+6) resource : apps/aemgeeks/components/content/author-books/author-books.html
+7) resourcePage : apps/aemgeeks/components/content/author-books/author-books.html
+8) currentDesign : apps/aemgeeks/components/content/author-books/author-books.html
+9) currentNode : apps/aemgeeks/components/content/author-books/author-books.html
+10) currentPage : apps/aemgeeks/components/content/author-books/author-books.html
+11) resourceDesign : apps/aemgeeks/components/content/author-books/author-books.html
+12) wcmmode : apps/aemgeeks/components/content/author-books/author-books.html

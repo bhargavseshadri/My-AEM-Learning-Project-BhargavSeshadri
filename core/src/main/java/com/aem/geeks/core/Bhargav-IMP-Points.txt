@@ -18,8 +18,8 @@ QUICK IMPORTANT NOTES
 - componentContext : It is open for each conmponent, Independent of wcmmode.
 - resource : object of current resource(when we drag and drop a compn on page, then the created node of that comp in that page is called as current Resource).
 - resourcePage : On the page where we drag and drop the component, It provides the information of that page means the current page
-- currentDesign : there is a design node available to store the template level properties, that info we can get through this.
-- currentNode
+- currentDesign : there is a design node available to store the template level properties, that info we can get through this. if nothing is set then it gives the default libs design node path
+- currentNode : when we drag and drop a component on a page, then that comp node is treated as a current node.
 - currentPage
-- resourceDesign
-- wcmmode
+- resourceDesign : it is the same as the current design
+- wcmmode : It provide you the information, that in which mode you are, returns "boolean", for EDIT: isEdit method, for Preview: isPreview method
