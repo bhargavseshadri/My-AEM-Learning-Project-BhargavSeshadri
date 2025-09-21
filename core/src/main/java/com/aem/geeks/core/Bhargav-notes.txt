@@ -25,4 +25,12 @@ d)data-sly-use (STEP: 2): here we use this to get that file where the template i
 e)data-sly-call(STEP: 3) : use to call the specific template written in that file  :File: apps/aemgeeks/components/structure/home/home.html
 
 --------------------
-f)data-sly-attribute : used to give attributes like class,id in he=tml structure
+f)data-sly-attribute : used to give attributes like class,id in html structure
+
+--------------------
+g)data-sly-include : used to include files, if we want to include any file like html,jsp we use this.
+-> Example and notes for this is at : apps/aemgeeks/components/content/author-books/author-books.html
+-> Note: the path you include is not a valid one, then in that case it won't render anything.
+
+--------------------
+h)data-sly-resource : used to include resources

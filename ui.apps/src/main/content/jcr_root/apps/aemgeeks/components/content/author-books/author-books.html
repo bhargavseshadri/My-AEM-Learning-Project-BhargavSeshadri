@@ -1,3 +1,7 @@
+<!--BhargavSeshadri -->
+
+
+
 <div data-sly-use.books="com.aem.geeks.core.models.AuthorBooks">
     <h1>${books.authorName} Books</h1>
     ===================Multifield with single field=============
@@ -48,6 +52,17 @@
 
 </div>
 
+================== data-sly-include ====================
+<div data-sly-include="include1.html"></div>  <!--BhargavSeshadri: example for using data-sly-include, (just giving the
+file name because of the file is in same directory and same component)
+->So now what happens is the whole above div is replaced by the code present in "include1.html"
+
+
+->Different options to use this
+1) <div data-sly-include="${'include1.html' @prependPath='/files'}"></div>  ==> this will prepend the path like : "files/include1"
+2) <div data-sly-include="${'include1.html' @appendPath='/files'}"></div>  ==> this will append the path like : "include1/files"
+3) <div data-sly-include="${@file = 'include1.html'}"></div>  ==> it is just like including  the file, that's it
+-->
 
 
 
