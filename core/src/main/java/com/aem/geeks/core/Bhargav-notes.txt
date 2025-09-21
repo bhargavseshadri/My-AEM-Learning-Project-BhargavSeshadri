@@ -30,7 +30,11 @@ f)data-sly-attribute : used to give attributes like class,id in html structure
 --------------------
 g)data-sly-include : used to include files, if we want to include any file like html,jsp we use this.
 -> Example and notes for this is at : apps/aemgeeks/components/content/author-books/author-books.html
--> Note: the path you include is not a valid one, then in that case it won't render anything.
+-> Note: If the path you include is not a valid one, then in that case it won't render anything.
+-> Note: the file code will completely replace the code or div tag or markup in the main file.
 
 --------------------
-h)data-sly-resource : used to include resources
+h)data-sly-resource : used to include resources.
+-> Example and notes for this is at : apps/aemgeeks/components/content/author-books/author-books.html
+-> Whatever the OUTPUT of the resource will be available in the place where we added this.
+-> Note: The OUTPUT of the resource we have given will be displayed to the user
