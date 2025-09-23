@@ -44,6 +44,17 @@ a)data-sly-list:  LOOPING
 b)data-sly-repeat: everything is exactly similar to data-sly-list but only difference is in page html structure list-have only one parent container and inside it it have <p> tags,
 but Repeat creates div containers for every iteration
 
+-> data-sly-list with ITERATOR :
+eg scenario: want to iterate the child pages of a purticular page and then display that info to htl
+- so in our sling model we gonna get all the child pages using "Iterator<Page> pages=page.listChildren();" and then we get the iterator.
+- Now we gonna use this data-sly-list in the htl
+- STEP:1 -> com/aem/geeks/core/services/impl/DemoServiceAImpl.java  (here we get the list of page objs and puts them in iterator)
+- STEP:2 -> apps/aemgeeks/components/content/servicedemo/servicedemo.html (here we use data-sly-list)
+
+-> Note: approach with out using iterator is at (Useful to understand the use of ARRAYLIST, ITERATOR)
+step:1 -> com/aem/geeks/core/services/impl/DemoServiceBImpl.java
+step:2 -> apps/aemgeeks/components/content/servicedemo/servicedemo.html
+
 --------------------
 -> We use the below three combined
 c)data-sly-template(STEP: 1): for creating template (to reuse the code) :FILE: apps/aemgeeks/components/structure/home/head.html

@@ -12,6 +12,7 @@ QUICK IMPORTANT NOTES
 - inheritedPageProperties : It provide the inherited properties of page, we can access the properties of the parent page
 
 -> Demo code available here: apps/aemgeeks/components/content/author-books/author-books.html
+
 ---------------------------------------
 -> Java-Backed-Object
 - Component : Provides the information of that component.
@@ -22,4 +23,14 @@ QUICK IMPORTANT NOTES
 - currentNode : when we drag and drop a component on a page, then that comp node is treated as a current node.
 - currentPage
 - resourceDesign : it is the same as the current design
-- wcmmode : It provide you the information, that in which mode you are, returns "boolean", for EDIT: isEdit method, for Preview: isPreview method
+- wcmmode : It provide you the information, that in which mode you are, returns "boolean", for EDIT: isEdit method, for Preview: isPreview method.
+
+=============================================================================================
+3) Utility Functions available in Sightly: in, format, join
+
+=============================================================================================
+4) pageManeger: using this we can get the page we want.
+eg:
+@ScriptVariable
+PageManager pageManager;
+Page page=pageManager.getPage("/content/aemgeeks/us/en");

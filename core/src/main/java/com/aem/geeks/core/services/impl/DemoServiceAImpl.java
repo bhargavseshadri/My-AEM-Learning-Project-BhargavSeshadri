@@ -44,14 +44,17 @@ public class DemoServiceAImpl implements DemoService {
         LOG.info("\n ==============INSIDE MODIFIED================");
     }
 
+
+    //BhargavSeshadri -> example of using data-sly-list iterator : STEP: 1
+    //For Step: 2 ->
     @Override
     public Iterator<Page>  getPages(){
         try {
             ResourceResolver resourceResolver= ResolverUtil.newResolver(resourceResolverFactory);
-            PageManager pageManager=resourceResolver.adaptTo(PageManager.class);
-            Page page=pageManager.getPage("/content/aemgeeks/us/en");
-            Iterator<Page> pages=page.listChildren();
-            return pages;
+            PageManager pageManager=resourceResolver.adaptTo(PageManager.class);    //Here we are getting the PageManager
+            Page page=pageManager.getPage("/content/aemgeeks/us/en");            //getting page using PageManager
+            Iterator<Page> pages=page.listChildren();                               //getting the list of child pages and putting them in iterator
+            return pages;                                                           //Sending the iterator obj
         } catch (LoginException e) {
             LOG.info("\n Login Exception {} ",e.getMessage());
         }

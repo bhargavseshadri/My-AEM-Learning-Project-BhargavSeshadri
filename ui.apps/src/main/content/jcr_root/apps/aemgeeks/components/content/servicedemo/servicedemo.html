@@ -4,10 +4,14 @@
 --------------------Start Tutorial #29-----------------------
 <div></div>
 ==================== USING Service and Iterator =============
+<!--BhargavSeshadri -STEP:2: Data-sly-list(iterator) :  So here from pagesList we are getting the iterator obj with all the list of child pages-->
+
 <div data-sly-list.item="${service.pagesList}">
     <p> Page ${itemList.count} Title : <b>${item.title} </b></p>
 </div>
 ==================== USING Service and List ==================
+<!--BhargavSeshadri -STEP:2: Data-sly-list :  So here from pageTitleList we are getting the ARRAYLIST with all the list of child pages-->
+
 <div data-sly-list.item="${service.pageTitleList}">
     <p> Page ${itemList.count} Title : <b>${item} </b></p>
 </div>

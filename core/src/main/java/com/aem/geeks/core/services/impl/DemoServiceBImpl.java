@@ -37,7 +37,7 @@ public class DemoServiceBImpl implements DemoServiceB {
     DemoService demoService;
 
     @Override
-    public List<String> getPages(){
+    public List<String> getPages(){                     //BhargavSeshadri : Approach without using data-sly-list iterator (STEP:1)
         List<String> listPages = new ArrayList<String>();
 
         try {
