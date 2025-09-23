@@ -10,7 +10,10 @@ STEP:2(sling model implimentation) : FETCHING DATA: com/aem/geeks/core/models/im
 STEP:3 : RENDERING THE DATA ON FRONTEND: apps/aemgeeks/components/helloworld/helloworld.html
 
 =============================================================================================
+3) SERVLET
 
+a) ResourceType Servlet:
+-> GET : (only step) : com/aem/geeks/core/servlets/BhargavResourceTypeGETServlet.java
 
 
 
@@ -51,7 +54,7 @@ eg scenario: want to iterate the child pages of a purticular page and then displ
 - STEP:1 -> com/aem/geeks/core/services/impl/DemoServiceAImpl.java  (here we get the list of page objs and puts them in iterator)
 - STEP:2 -> apps/aemgeeks/components/content/servicedemo/servicedemo.html (here we use data-sly-list)
 
--> Note: approach with out using iterator is at (Useful to understand the use of ARRAYLIST, ITERATOR)
+-> Note: approach without using iterator is at (Useful to understand the use of ARRAYLIST, ITERATOR)
 step:1 -> com/aem/geeks/core/services/impl/DemoServiceBImpl.java
 step:2 -> apps/aemgeeks/components/content/servicedemo/servicedemo.html
 

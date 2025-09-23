@@ -34,3 +34,14 @@ eg:
 @ScriptVariable
 PageManager pageManager;
 Page page=pageManager.getPage("/content/aemgeeks/us/en");
+
+=============================================================================================
+5) @Component
+-> Servlets : @Component(service = Servlet.class)
+
+
+=============================================================================================
+6) Servlets
+a) ResourceType Servlets
+-> Methods, extensions and Selectors will only work for resourceType servlets. (ResourceType is manditory in these and others are optional)
+-> so we give a Resource in the servlet, and whenever that resource is accessed, our servlet will be "CALLED".
