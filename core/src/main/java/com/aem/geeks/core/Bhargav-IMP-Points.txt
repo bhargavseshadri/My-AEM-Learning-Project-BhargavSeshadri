@@ -1,12 +1,14 @@
 =============================================================================================
 QUICK IMPORTANT NOTES
+
 =============================================================================================
-1) Resource : Resource can be anything, it can be COMPONENT, NODE, PAGE.
+IMPORTANT PATHS
+-> For Configurations(crx) : apps/system/config, (preferred path is /apps/my-prjt/osgiconfig/config)
 
 =============================================================================================
 2) Global Objects available in HTL (most common ones)
 
--> Enumerable Objects : These objects provedes a "VALUEMAP" which contains the information, we can access that info.
+-> Enumerable Objects : These objects provides a "VALUEMAP" which contains the information, we can access that info.
 - properties : Provides the component properties, like whatever we save through dialog, we can access those props without using sling model.
 - pageProperties : This will provide you the properties or info of page where our component used, In simple words getting page informatuion
 - inheritedPageProperties : It provide the inherited properties of page, we can access the properties of the parent page
@@ -17,13 +19,15 @@ QUICK IMPORTANT NOTES
 -> Java-Backed-Object
 - Component : Provides the information of that component.
 - componentContext : It is open for each conmponent, Independent of wcmmode.
-- resource : object of current resource(when we drag and drop a compn on page, then the created node of that comp in that page is called as current Resource).
+- resource : object of current resource(when we drag and drop a comp on page, then the created node of that comp in that page is called as current Resource).
 - resourcePage : On the page where we drag and drop the component, It provides the information of that page means the current page
 - currentDesign : there is a design node available to store the template level properties, that info we can get through this. if nothing is set then it gives the default libs design node path
 - currentNode : when we drag and drop a component on a page, then that comp node is treated as a current node.
 - currentPage
 - resourceDesign : it is the same as the current design
 - wcmmode : It provide you the information, that in which mode you are, returns "boolean", for EDIT: isEdit method, for Preview: isPreview method.
+
+-> Demo code available here: apps/aemgeeks/components/content/author-books/author-books.html
 
 =============================================================================================
 3) Utility Functions available in Sightly: in, format, join
@@ -37,11 +41,14 @@ Page page=pageManager.getPage("/content/aemgeeks/us/en");
 
 =============================================================================================
 5) @Component
--> Servlets : @Component(service = Servlet.class)
-
+--> Servlets : @Component(service = Servlet.class)
+--> OSGI Configuration : @Component(service = OSGiConfig.class,immediate = true)
+--> Schedulers
+- Runnable : @Component(immediate = true, service = Runnable.class)
+- Job :  @Component(immediate = true, service = Job.class)
 
 =============================================================================================
-6) Servlets
-a) ResourceType Servlets
--> Methods, extensions and Selectors will only work for resourceType servlets. (ResourceType is manditory in these and others are optional)
--> so we give a Resource in the servlet, and whenever that resource is accessed, our servlet will be "CALLED".
+ANNOTATIONS:
+@Activate : when we want something to load or activate at the time of this service initializations, there we use this
+
+=============================================================================================

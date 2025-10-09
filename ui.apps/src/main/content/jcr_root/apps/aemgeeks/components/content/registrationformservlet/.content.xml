@@ -2,5 +2,5 @@
 <jcr:root xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0"
     jcr:description="Component for Servlet Demo."
     jcr:primaryType="cq:Component"
-    jcr:title="Servlet component - One"
+    jcr:title="ResourceType - Post - Servlet"
     componentGroup="AEM GEEKS - Content"/>

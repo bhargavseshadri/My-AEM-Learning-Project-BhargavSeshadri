@@ -1,0 +1,97 @@
+ONLY INTERVIEW RELATED MATERIAL
+
+=============================================================================================
+Basic Important Points
+
+-> Implimentation used for creating AEM is - APACHE JACKRABBIT OAK
+-> Implimentation used by JCR is - APACHE JACKRABBIT OAK, Apache oak
+-> To connect AEM to crxde we use Apache sling
+-> We can also use LAZY BONES instead of maven
+-> For restricting the image types we use mimeTypes = "[]"
+-> to make it required through dialog box -> required = "{Boolean}true"
+-> For textfield or text areas : maxLength = "{Long}10"
+-> For setting range : min = "{double}1000" , max = "{double}1000"
+-> cq:design_dialog only used for static templates
+
+=============================================================================================
+DEFINITIONS
+1) Resource : Resource can be anything, it can be COMPONENT, NODE, PAGE.
+2) Immediate = true -> Whenever we want to activate the service immediately after the bundle gets started in that place we use this.
+3)
+
+=============================================================================================
+AEM & OSGI ARCHITECTURE
+
+OSGI ARCHITECTURE:
+1. Service Layer: we can write reusable code and establishing the connection between bundles
+2. Life cycle layer: it deals with all the life cycle processess of the bundle(install, start, update, stop, uninstalling the bundles)
+3. Modules layer: it deals with the exporting and importing of the packages, these packages contains classes, interfaces, components.
+4. Execution environment: It is the runtime environment of the java and responsible for loading the relevant classes at the time of execution
+
+AEM ARCHITECTURE:
+--> Application layer : Here we have various ca[pabilities like sites, forms, etc
+--> WEB APPLICATION FRAMEWORK(apache sling) : rest based web application framework, helps in cosuming and exposing the content in jcr and interaction with osgi java container
+--> JCR Repositiry(apache jack rabbit oak)(storage layer): what ever the content that author added will be stored here
+--> OSGI JAVA CONTAINER(apache felix): used for moduler development, and provides various functionalities in form of modules, components etc
+
+=============================================================================================
+==> SERVLETS
+a) ResourceType Servlets
+-> Methods, extensions and Selectors will only work for resourceType servlets. (ResourceType is manditory in these and others are optional)
+-> so we give a Resource in the servlet, and whenever that resource is accessed, our servlet will be "CALLED".
+-> ResourceType Servlets : @SlingServletResourceType()
+-> Here we can use extensions, Selectors, and methods
+- these servlets can be accessed controlled using a jcr repo ACL
+- if we do not provide any method then the default method is GET
+
+b) PathType Servlets
+-> Path @SlingServletPaths(value=__)
+-> ACL access is not present
+-> fixed url endpoint
+
+-> Benifits
+- Creating utility endpoints (like APIs)
+- Handling AJAX calls from frontend
+- Exposing data externally
+
+=============================================================================================
+SCHEDULERS
+-> Runnable : imp method that starts the execution is -- run()
+-> Job : imp method that starts the execution is -- execute(JobContext jobContext)
+
+-> ScheduleOptions scheduleOptions = scheduler.EXPR(config.cronExpression());
+
+=============================================================================================
+OSGI CONFIGURATIONS:
+Definition: Initial set of inputs given to a bundle. like giving the input to pur java file or component in that case we use osgi configurations
+
+-> Type of inputs: Text Field, Multifield, Checkbox, Dropdown
+
+=============================================================================================
+RUN MODES: in AEM are like environment identifiers that tell AEM how it should behave in different environments — for example: author, publish, development, staging, production, etc.
+In short:
+   Run modes allow you to configure AEM differently for different environments without changing the code.
+   Two types:
+   1. installation run modes
+   2. custom run modes
+
+=============================================================================================
+CORE COMPONENTS & PROXY COMPONENTS
+
+-> CORE COMPONENTS: Core Components are a set of ready-made, production-ready components provided by Adobe (like Text, Image, Carousel, Button, Title, etc.) as part of AEM.'
+path : /apps/core/wcm/components/...
+
+-> PROXY COMPONENTS: A proxy component is a lightweight wrapper around a core component. It doesn’t add new logic — it just points to a core component using
+ sling:resourceSuperType and gives it a project-specific name and path. and it allows future customization without touching core code.
+
+=============================================================================================
+CRXDE FOLDER STRUCTURE
+
+-> apps: proxy comps, core comps, and static templates
+-> conf: configuration files related to the project are stored here, and also editable templates
+-> content: all the webpages, (static pages, dynamic pages, js, css) and digital assets are present here
+-> ETC: contains all the resources related to the tools are stored here
+-> Users: contains all the info of users and groups
+-> libs: OOTB things present here, we can use this but we cant modify
+
+=============================================================================================
