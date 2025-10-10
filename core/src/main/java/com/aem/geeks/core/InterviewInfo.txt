@@ -54,6 +54,11 @@ b) PathType Servlets
 - Handling AJAX calls from frontend
 - Exposing data externally
 
+Q) Why in aem servlet code they use protedted void for get and post methods, what's the reason?
+Ans. 1) Servlets extend a base class (SlingAllMethodsServlet or HttpServlet), In those parent classes, the doGet() and doPost() methods are already
+declared as protected. So when you override them, you must keep the same access modifier (protected), otherwise Java will throw an error (you can’t reduce visibility of an overridden method).
+2) they are marked as protected to limit access (i.e., only subclasses or the framework should call them).
+
 =============================================================================================
 SCHEDULERS
 -> Runnable : imp method that starts the execution is -- run()

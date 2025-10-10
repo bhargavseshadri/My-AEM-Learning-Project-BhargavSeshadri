@@ -2,6 +2,10 @@
 - Main: com/aem/geeks/core/utils/ResolverUtil.java
 - Eg: com/aem/geeks/core/services/impl/ComponentsInfoServiceImpl.java
 
+
+-> Info required for this :
+- In Bundles my core bundle name is--> aemgeeks.core
+
 =============================================================================================
 2) FETCHING DATA FROM EXTERNAL API (using sling model)
 - Main:
@@ -14,7 +18,12 @@ STEP:3 : RENDERING THE DATA ON FRONTEND: apps/aemgeeks/components/helloworld/hel
 
 a) ResourceType Servlet:
 -> GET : (only step) : com/aem/geeks/core/servlets/BhargavResourceTypeGETServlet.java
+-> POST:
+Step: 1 - apps/aemgeeks/components/content/registrationformservlet/registrationformservlet.html
+- you should have a component or some resource, so here we have a form and when ever we give the value and hit the submit button the post servlet
+will execute and posts the data to our JCR, (optional part)GET method will give the response after that.
 
+Step: 2 (last step) - ResourceType Post Servlet : com/aem/geeks/core/servlets/BhargavResourceTypePostServlet.java
 
 
 

@@ -5,7 +5,8 @@
 </head>
 <body style="font-family: Arial, sans-serif; background:#f5f5f5; padding:40px;">
 
-<form style="max-width:400px; margin:auto; background:#fff; padding:20px; border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,0.1);">
+<form style="max-width:400px; margin:auto; background:#fff; padding:20px; border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,0.1);"
+       method="post" action="/content/aemgeeks/us/en/registration-form-post-servlet/jcr:content.bha.txt">
     <h2 style="text-align:center; margin-bottom:20px;">Registration Form</h2>
 
     <!-- Name -->
@@ -22,17 +23,6 @@
     <label for="phone" style="display:block; margin-bottom:5px; font-weight:bold;">Phone Number</label>
     <input type="tel" id="phone" name="phone"
            style="width:100%; padding:10px; margin-bottom:15px; border:1px solid #ccc; border-radius:5px;" required>
-
-    <!-- Role -->
-    <label style="display:block; margin-bottom:5px; font-weight:bold;">Role</label>
-    <div style="margin-bottom:15px;">
-        <label>
-            <input type="radio" name="role" value="teacher" required> Teacher
-        </label>
-        <label style="margin-left:20px;">
-            <input type="radio" name="role" value="student" required> Student
-        </label>
-    </div>
 
     <!-- Password -->
     <label for="password" style="display:block; margin-bottom:5px; font-weight:bold;">Password</label>
