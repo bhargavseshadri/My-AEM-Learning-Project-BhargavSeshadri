@@ -65,7 +65,7 @@ public class BhargavResourceTypePostServlet extends SlingAllMethodsServlet {
                 res.getWriter().write("Congrats!! Your Sign Up was successful  -- Your User Name is " + userName);  //sending a response after POST
                 session.save();
 
-                res.setContentType("text/plain");
+                res.setContentType("text/plain");  //AEM/server sending the response to the browser. here response is sending in format text/plain
                 res.setStatus(200);
                 res.getWriter().write("User node created successfully! Username: " + userName);
                 res.getWriter().flush();

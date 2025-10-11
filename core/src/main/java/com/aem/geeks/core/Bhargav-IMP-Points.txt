@@ -48,7 +48,49 @@ Page page=pageManager.getPage("/content/aemgeeks/us/en");
 - Job :  @Component(immediate = true, service = Job.class)
 
 =============================================================================================
-ANNOTATIONS:
+6) ANNOTATIONS:
 @Activate : when we want something to load or activate at the time of this service initializations, there we use this
+
+=============================================================================================
+7) req.setAttribute() AND req.getAttribute()  Explanation with Example
+
+Q) What is an “attribute” in a request?
+Answer: You can store temporary data in the HttpServletRequest object using setAttribute() and later read it back using getAttribute().
+--> Think of a HttpServletRequest (or SlingHttpServletRequest) object as a container or bag that travels from the browser → AEM → servlet → JSP → other servlets.
+--> That bag can carry
+a) Parameters (from the user input, like req.getParameter("name"))
+b) Headers (like cookies, content-type)
+c) And also... attributes that developers can manually add.
+
+--> So attributes are temporary data stored inside the request object — for this single request only.
+--> req.setAttribute("key", value);  => Adds a data item to the request.
+--> req.getAttribute("key");  => Retrieves that data item later.
+
+--> Example With code snippets: Imagine you’re processing a registration form.
+Step 1: You receive a POST request.
+String name = req.getParameter("name");
+String email = req.getParameter("email");
+
+- Now, before forwarding this to a JSP page or another servlet, you want to store these values inside the request temporarily
+
+Step 2: Set attributes
+req.setAttribute("userName", name);
+req.setAttribute("userEmail", email);
+- Now your req object carries these attributes.
+
+Step 3: Forward the request
+RequestDispatcher dispatcher = req.getRequestDispatcher("/thankyou.jsp");
+dispatcher.forward(req, res);
+
+- Then inside your JSP (HTL or JSP):
+<p>Welcome ${requestScope.userName}! Your email is ${requestScope.userEmail}</p>  --> Output : Welcome Bhargav! Your email is bhargav@example.com
+
+Final understanding: (temporary notepad that travels along with one request) Here with in the request, until the req is there at that time we are setting
+these attr(variables) userName, userEmail with our data.
+
+Note: We can forward this attributs from one servlet to another, like we can set these attributs in one servlet and then get these in another servlet
+// Forward the request to another servlet
+RequestDispatcher dispatcher = req.getRequestDispatcher("/second");
+dispatcher.forward(req, res);
 
 =============================================================================================

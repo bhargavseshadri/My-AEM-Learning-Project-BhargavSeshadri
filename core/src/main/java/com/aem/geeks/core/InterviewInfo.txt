@@ -36,6 +36,11 @@ AEM ARCHITECTURE:
 
 =============================================================================================
 ==> SERVLETS
+
+-> When a servlet runs, Sling (and the underlying web server Jetty) automatically gives it two key objects:
+   SlingHttpServletRequest → the HTTP request (what the browser sent)
+   SlingHttpServletResponse → the HTTP response (what you send back)
+
 a) ResourceType Servlets
 -> Methods, extensions and Selectors will only work for resourceType servlets. (ResourceType is manditory in these and others are optional)
 -> so we give a Resource in the servlet, and whenever that resource is accessed, our servlet will be "CALLED".
