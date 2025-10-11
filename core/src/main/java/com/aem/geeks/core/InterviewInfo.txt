@@ -17,7 +17,7 @@ Basic Important Points
 DEFINITIONS
 1) Resource : Resource can be anything, it can be COMPONENT, NODE, PAGE.
 2) Immediate = true -> Whenever we want to activate the service immediately after the bundle gets started in that place we use this.
-3)
+3)req.setAttribute() AND req.getAttribute() :  storing temporary data in the HttpServletRequest object using setAttribute() and later read it back using getAttribute().
 
 =============================================================================================
 AEM & OSGI ARCHITECTURE

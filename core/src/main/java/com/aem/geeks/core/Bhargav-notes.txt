@@ -17,10 +17,12 @@ STEP:3 : RENDERING THE DATA ON FRONTEND: apps/aemgeeks/components/helloworld/hel
 3) SERVLET
 
 a) ResourceType Servlet:
+* MY EXAMPLE
 -> GET : (only step) : com/aem/geeks/core/servlets/BhargavResourceTypeGETServlet.java
 -> POST:
 Servelt Usage: Here this Servlet will work for a REGISTRATION FORM component, there when a user adds his details in the form and submits it then this post servlet
-gets called and then it will create a new node(usernode) under the provided "page resource", and in that node it will store the user given data
+               gets called and then it will create a new node(usernode) under the provided "page resource", and in that node it will store the user given data
+
 Step: 1 - apps/aemgeeks/components/content/registrationformservlet/registrationformservlet.html
 - you should have a component or some resource, so here we have a form and when ever we give the value and hit the submit button the post servlet
 will execute and posts the data to our JCR, (optional part)GET method will give the response after that.
@@ -28,11 +30,34 @@ will execute and posts the data to our JCR, (optional part)GET method will give 
 Step: 2 (last step) - ResourceType Post Servlet : com/aem/geeks/core/servlets/BhargavResourceTypePostServlet.java
 
 
+* AEM GEEKS EXAMPLE
+-> GET, POST : com/aem/geeks/core/servlets/GeeksResourceTypesServlet.java
 
+-----------------------------
+b) PathType Servlet: com/aem/geeks/core/servlets/GeeksPathTypeServlet.java
 
+Servlet Usage: here we are writing a path bound servlet, which is bound to paths ""/bin/pages","/geeks/pages" with get and post methods
+               * in GET method we will create a json with all the pages where KEY will be the page title amd VALUE will be the page path
+               * in POST method we will submit the form data to this servlet and later on print that data in logs
 
+Step:1 - Defining a Servlet : com/aem/geeks/core/servlets/GeeksPathTypeServlet.java
+Step:2 (last step for GET method) - Calling the servlet
+a) Hit this path (because we have bound our servlet to /bin/pages): http://localhost:4502/bin/pages
+b) If you get the forbidden error then your path is missing in the servlet execution paths, add you path in those execution paths.
+* ->ADDING OUR PATH TO THE EXECUTION PATHS:
+* 1) go to system/console/configmgr
+* 2) search for "Apache Sling Servlet/Script resolver and Error Handler"
+* 3) there add your path in the execution paths; eg : /geeks/  - then save it.
+* 4) now hit the path you will get the result : http://localhost:4502/geeks/pages/
 
+Step:3 (Only for POST METHOD) : apps/aemgeeks/components/content/formforpathtypeservlet/formforpathtypeservlet.html
+* Go to the form component and there add you path (eg: /bin/pages) in the form "action" attribute and for the "method" attribute give post.
 
+=============================================================================================
+4) JSON DEMOs
+
+a) Create a json with all the pages where KEY will be the page title amd VALUE will be the page path.
+Demo file : com/aem/geeks/core/servlets/GeeksPathTypeServlet.java
 
 
 

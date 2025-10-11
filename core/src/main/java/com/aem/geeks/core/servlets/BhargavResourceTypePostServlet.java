@@ -21,7 +21,9 @@ import java.io.IOException;
  * And then in CRX under it will create a new newUser node with user details, for every new user It creates a new node under "/content/aemgeeks/us/en/registration-form-post-servlet/jcr:content"
  * The form details will only stored under this node because I have given this path in form "action" attribute
  *
- * IMPORTANT: After the servlet, then go to the form and add method="post" action="Path where you want to store thev data"; add these in the form tag*/
+ * IMPORTANT: After the servlet, then go to the form and add method="post" action="Path where you want to store thev data"; add these in the form tag
+ *
+ * Page used for the demo: http://localhost:4502/content/aemgeeks/us/en/registration-form-post-servlet.html*/
 
 @Component(service = Servlet.class)
 @SlingServletResourceTypes(
@@ -33,7 +35,6 @@ import java.io.IOException;
 public class BhargavResourceTypePostServlet extends SlingAllMethodsServlet {
 
     private static final long serialVersionUID = 1L;
-    public static int count = 0;
 
     @Override
     protected void doGet(final SlingHttpServletRequest req, final SlingHttpServletResponse res) throws IOException {  //Get Method
@@ -49,7 +50,7 @@ public class BhargavResourceTypePostServlet extends SlingAllMethodsServlet {
         try {                                                    //Going down we are getting the node, modifying, adding the node and setting the properties using session
             if (session != null) {
                 Node postToResourceNode = session.getNode("/content/aemgeeks/us/en/registration-form-post-servlet/jcr:content");  // this is the path of my page where i have used this form component
-                Node newUserNode = postToResourceNode.addNode("newUser" + ++count, "nt:unstructured");
+                Node newUserNode = postToResourceNode.addNode("newUser" + System.currentTimeMillis(), "nt:unstructured");
                 newUserNode.setProperty("name", req.getParameter("name"));       //here the name, password, email etc these should match the values given in the form "name" attribute
                 newUserNode.setProperty("phonenumber", req.getParameter("phone"));
                 newUserNode.setProperty("email", req.getParameter("email"));

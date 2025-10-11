@@ -52,7 +52,26 @@ Page page=pageManager.getPage("/content/aemgeeks/us/en");
 @Activate : when we want something to load or activate at the time of this service initializations, there we use this
 
 =============================================================================================
-7) req.setAttribute() AND req.getAttribute()  Explanation with Example
+7) SERVLETS - GET and POST requests explanation
+
+--> GET FLOW
+a) Browser issues GET /path?query=abc HTTP/1.1 (headers, cookies).
+b) Server/router receives request, Sling/Servlet container resolves resource/servlet.
+c) Container calls doGet(req, res)
+d) doGet reads req.getParameter(...), session, headers, etc., prepares content and sets response headers (Content-Type, caching),
+writes body via res.getWriter() or stream.
+e) Server sends HTTP status (200 OK) + body back.
+f) Browser renders or caches per response headers.
+
+--> POST FLOW
+a) Browser issues POST /path HTTP/1.1 with body (form-encoded, JSON, multipart) + headers.
+b) Transports to the server.
+c) Container resolves servlet and calls doPost(req, res).
+d) doPost reads req.getParameter() (for form), validates input, performs DB/JCR writes.
+f) doPost typically returns: HttpStatus codes and then Client receives response and acts accordingly.
+
+=============================================================================================
+8) req.setAttribute() AND req.getAttribute()  Explanation with Example
 
 Q) What is an “attribute” in a request?
 Answer: You can store temporary data in the HttpServletRequest object using setAttribute() and later read it back using getAttribute().

@@ -18,6 +18,11 @@ import javax.servlet.ServletException;
 import java.io.IOException;
 import java.util.List;
 
+
+
+//BhargavSeshadri: this is the ResourceType Servlet example by Aem Geeks
+//
+
 @Component(service = Servlet.class)
 @SlingServletResourceTypes(
         methods = {HttpConstants.METHOD_GET,HttpConstants.METHOD_POST},
@@ -35,12 +40,15 @@ public class GeeksResourceTypesServlet extends SlingAllMethodsServlet {
         resp.setContentType("text/plain");
         resp.getWriter().write("Page Title = " + resource.getValueMap().get(JcrConstants.JCR_TITLE));
     }
+
+
+
     @Override
     protected void doPost(SlingHttpServletRequest req, SlingHttpServletResponse resp)
             throws ServletException, IOException {
         try {
             LOG.info("\n ------------------------STARTED POST-------------------------");
-            List<RequestParameter> requestParameterList=req.getRequestParameterList();
+            List<RequestParameter> requestParameterList=req.getRequestParameterList();  //here we are getting the request parameter, by this we can get all the Parameters list
             for(RequestParameter requestParameter : requestParameterList){
                 LOG.info("\n ==PARAMETERS===>  {} : {} ",requestParameter.getName(),requestParameter.getString());
             }
