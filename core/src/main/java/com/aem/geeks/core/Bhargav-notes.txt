@@ -19,11 +19,15 @@ STEP:3 : RENDERING THE DATA ON FRONTEND: apps/aemgeeks/components/helloworld/hel
 a) ResourceType Servlet:
 -> GET : (only step) : com/aem/geeks/core/servlets/BhargavResourceTypeGETServlet.java
 -> POST:
+Servelt Usage: Here this Servlet will work for a REGISTRATION FORM component, there when a user adds his details in the form and submits it then this post servlet
+gets called and then it will create a new node(usernode) under the provided "page resource", and in that node it will store the user given data
 Step: 1 - apps/aemgeeks/components/content/registrationformservlet/registrationformservlet.html
 - you should have a component or some resource, so here we have a form and when ever we give the value and hit the submit button the post servlet
 will execute and posts the data to our JCR, (optional part)GET method will give the response after that.
 
 Step: 2 (last step) - ResourceType Post Servlet : com/aem/geeks/core/servlets/BhargavResourceTypePostServlet.java
+
+
 
 
 
