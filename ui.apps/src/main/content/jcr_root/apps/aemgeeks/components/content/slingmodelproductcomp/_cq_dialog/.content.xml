@@ -52,8 +52,8 @@
                                         jcr:primaryType="nt:unstructured"
                                         sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
                                         composite="{Boolean}true"
-                                        fieldDescription="Books Details"
-                                        fieldLabel="Book Details"
+                                        fieldDescription="Product Details"
+                                        fieldLabel="Product Details"
                                         required="{Boolean}false">
                                         <field
                                             jcr:primaryType="nt:unstructured"
@@ -67,6 +67,13 @@
                                                     emptyText="Product Name"
                                                     fieldLabel="Product Name"
                                                     name="./productnamemultifield"/>
+
+                                                <buyerName
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                        emptyText="Buyer Name"
+                                                        fieldLabel="Buyer Name"
+                                                        name="./buyerName"/>
 
                                                 <quantity
                                                     jcr:primaryType="nt:unstructured"

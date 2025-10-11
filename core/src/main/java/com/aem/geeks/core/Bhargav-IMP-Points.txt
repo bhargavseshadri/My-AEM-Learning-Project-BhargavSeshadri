@@ -115,3 +115,9 @@ RequestDispatcher dispatcher = req.getRequestDispatcher("/second");
 dispatcher.forward(req, res);
 
 =============================================================================================
+10) MULTIFIELD - COMPOSITE PROPERTY (composite="{Boolean}true")
+- we will add this property while defining a multifield in content dialog, by default it is false
+- FALSE : In this case, if we give two set of values to the multified in the comp dialog, then it store those two sets values in a "STRING ARRAY" inside component node.
+- TRUE : In this case if we provide a two sets of values to the multified in the comp dialog, it will create a node under our component node(with name we have give
+          for multified in xml) and then under that node it will create a two item nodes for those two sets of values.
+- we use false when we have a single field in the multifield, and true when we have a multiple fields in the multifield.

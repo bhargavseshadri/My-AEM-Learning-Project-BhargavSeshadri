@@ -4,4 +4,13 @@
     <li>${obj.manufacturerName}</li>
     <li>${obj.getCurrentPageTitle}</li>
     <li>${obj.returnName}</li>
+
+    ==========Rendering Composite Multifield using MAP=============
+    <div data-sly-list="${obj.getProductDetailsWithMap}">  <!--Step:3 -Composite Multifield - here we are getting the list with maps containing our values and
+                                                                                            iterating here one by one and printing the values-->
+        ----------Book: ${itemList.count}-----------
+        <p>Product : <b>${item.productname}</b></p>
+        <p>Product : <b>${item.buyername}</b></p>
+        <p>Product : <b>${item.quantity}</b></p>
+    </div>
 </div>

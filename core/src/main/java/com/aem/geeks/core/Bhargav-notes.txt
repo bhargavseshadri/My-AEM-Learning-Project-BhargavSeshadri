@@ -98,6 +98,16 @@ PROBLEM:  So for this one SERVICE there is two implimentations, so in this scena
 
 - Filter demo & using of these services: com/aem/geeks/core/models/impl/ProductModelImpl.java
 
+--------------------------------------------
+COMPOSITE MULTIFIELD - SLING MODEL
+
+Step:1 : Create a component with composite multifield -> apps/aemgeeks/components/content/slingmodelproductcomp/_cq_dialog/.content.xml
+
+-> We can render the multifield values using two ways one is using MAP and the other way is using JAVA BEAN
+a) USING MAP
+Step:2 : Write the logic in Sling Model to render those item nodes of that comp multifield  -> com/aem/geeks/core/models/impl/ProductModelImpl.java
+Step:3 : in htl I am printing those values -> apps/aemgeeks/components/content/slingmodelproductcomp/slingmodelproductcomp.html
+
 =============================================================================================
 
 
