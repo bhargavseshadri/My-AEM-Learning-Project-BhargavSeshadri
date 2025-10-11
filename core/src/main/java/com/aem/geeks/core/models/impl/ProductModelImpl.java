@@ -2,12 +2,12 @@ package com.aem.geeks.core.models.impl;
 
 
 import com.aem.geeks.core.models.ProductModel;
+import com.aem.geeks.core.services.BhargavOsgiConfigService;
 import com.aem.geeks.core.services.DemoProductService;
 import com.aem.geeks.core.services.ProductService;
 import com.day.cq.wcm.api.Page;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
-import org.apache.sling.models.annotations.Default;
 import org.apache.sling.models.annotations.DefaultInjectionStrategy;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.OSGiService;
@@ -82,6 +82,7 @@ public class ProductModelImpl implements ProductModel{
         return demoProductService.returnName();
     }
 
+/*********************************************************MULTIFIELD RELATED CODE***************************************************************/
 
 //BhargavSeshadri - From here Composite multifield related code (Step:2 )(Step:1 apps/aemgeeks/components/content/slingmodelproductcomp/_cq_dialog/.content.xml)
 //here this multifield will take a every set of values and store them in a new node. and using the below java logic we will render those values on page
@@ -109,5 +110,40 @@ public class ProductModelImpl implements ProductModel{
         return productDetailsMap;
     }
 //For Step:3 : render these values using htl -> apps/aemgeeks/components/content/slingmodelproductcomp/slingmodelproductcomp.html
+
+
+/*********************************************************NORMAL CONFIGURATION RELATED CODE***************************************************************/
+//BhargavSeshadri - Normal OSGI Configuration - STEP:4 - Using/calling the service in SLING MODEL
+// FOR STEP:3 got to com/aem/geeks/core/services/impl/BhargavOsgiConfigServiceImpl.java
+// for STEP:5 (last step) - go to apps/aemgeeks/components/content/slingmodelproductcomp/slingmodelproductcomp.html
+
+    @OSGiService
+    BhargavOsgiConfigService bhargavOsgiConfigService;  //getting the service linked to our configuration
+
+    @Override
+    public int getNumber(){
+        return bhargavOsgiConfigService.getPhoneNumber();
+    }
+
+    @Override
+    public String getName(){
+        return bhargavOsgiConfigService.getName();
+    }
+
+    @Override
+    public String getFavMovie(){
+        return bhargavOsgiConfigService.getFavMovie();
+    }
+
+    @Override
+    public String[] getCountries(){
+        return bhargavOsgiConfigService.getCountries();
+    }
+
+    @Override
+    public String getRunModes(){
+        return bhargavOsgiConfigService.getRunModes();
+    }
+
 
 }

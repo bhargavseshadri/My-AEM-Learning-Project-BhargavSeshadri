@@ -17,7 +17,8 @@ Basic Important Points
 DEFINITIONS
 1) Resource : Resource can be anything, it can be COMPONENT, NODE, PAGE.
 2) Immediate = true -> Whenever we want to activate the service immediately after the bundle gets started in that place we use this.
-3)req.setAttribute() AND req.getAttribute() :  storing temporary data in the HttpServletRequest object using setAttribute() and later read it back using getAttribute().
+3) req.setAttribute() AND req.getAttribute() :  storing temporary data in the HttpServletRequest object using setAttribute() and later read it back using getAttribute().
+4) Headless CMS : and application or the CMS seperate there content from any other layer like presentation layer, and that seperated content will we served by the third party system, then it is called headless.
 
 =============================================================================================
 AEM & OSGI ARCHITECTURE
@@ -73,7 +74,7 @@ SCHEDULERS
 
 =============================================================================================
 OSGI CONFIGURATIONS:
-Definition: Initial set of inputs given to a bundle. like giving the input to pur java file or component in that case we use osgi configurations
+Definition: Initial set of inputs given to a bundle. like giving the input to our java file or component in that case we use osgi configurations
 
 -> Type of inputs: Text Field, Multifield, Checkbox, Dropdown
 

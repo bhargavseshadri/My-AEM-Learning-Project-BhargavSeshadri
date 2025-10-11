@@ -106,17 +106,22 @@ Step:1 : Create a component with composite multifield -> apps/aemgeeks/component
 -> We can render the multifield values using two ways one is using MAP and the other way is using JAVA BEAN
 a) USING MAP
 Step:2 : Write the logic in Sling Model to render those item nodes of that comp multifield  -> com/aem/geeks/core/models/impl/ProductModelImpl.java
-Step:3 : in htl I am printing those values -> apps/aemgeeks/components/content/slingmodelproductcomp/slingmodelproductcomp.html
+Step:3(last step) : in htl I am printing those values -> apps/aemgeeks/components/content/slingmodelproductcomp/slingmodelproductcomp.html
 
 =============================================================================================
+7) CONFIGURATIONS
+a) Normal Configuration
+STEP:1 - com/aem/geeks/core/config/BhargavOSGiConfig.java -- Create an annotation class with osgi config code stating what are the values our configuration should take
+STEP:2 - Create a Service interface -- com/aem/geeks/core/services/BhargavOsgiConfigService.java
+STEP:3 - Create a service implimentation and link it with our osgi config, and then write the java logic based on need
+         - com/aem/geeks/core/services/impl/BhargavOsgiConfigServiceImpl.java
+STEP:4 - Using/calling this in SLING MODEL -- com/aem/geeks/core/models/impl/ProductModelImpl.java
+STEP:5(last step) - Printing the data on page using HTL -- apps/aemgeeks/components/content/slingmodelproductcomp/slingmodelproductcomp.html
+-> To see the output : Goto system/console/configmgr  -> search for your configuration -> give the values and save -> drag and drop the component in which you have
+                    printing those values for this it is "slingmodelproductcomp"
 
-
-
-
-
-
-
-
+--------------------------------------------
+b) Factory Configuration
 
 
 

@@ -5,12 +5,27 @@
     <li>${obj.getCurrentPageTitle}</li>
     <li>${obj.returnName}</li>
 
+<!--****************************** Composite Multifield related code *********************************************************************************-->
     ==========Rendering Composite Multifield using MAP=============
-    <div data-sly-list="${obj.getProductDetailsWithMap}">  <!--Step:3 -Composite Multifield - here we are getting the list with maps containing our values and
+    <div data-sly-list="${obj.getProductDetailsWithMap}">  <!--Step:3(last step) -Composite Multifield - here we are getting the list with maps containing our values and
                                                                                             iterating here one by one and printing the values-->
         ----------Book: ${itemList.count}-----------
         <p>Product : <b>${item.productname}</b></p>
         <p>Product : <b>${item.buyername}</b></p>
         <p>Product : <b>${item.quantity}</b></p>
     </div>
+
+
+    <!--****************************** Normal OSGI Configuration related code *********************************************************************************-->
+
+    ============Bhargav - Normal OSGI Configuration=================
+    <div><p> Name : <b>${obj.getName}</b></p></div>       <!--BhargavSeshadri - STEP:5(last step) - Printing the values of our osgi config using our sling model(for step:4 - com/aem/geeks/core/models/impl/ProductModelImpl.java)-->
+    <div><p> Number : <b>${obj.getNumber}</b></p></div>
+    <div><p> Fav Movie : <b>${obj.getFavMovie}</b></p></div>
+    <div><p> Run Mode : <b>${obj.runModes}</b></p></div>
+    <div><b>Countries</b></div>
+    <ul data-sly-list="${obj.countries}">
+        <li>${item}</li>
+    </ul>
+
 </div>

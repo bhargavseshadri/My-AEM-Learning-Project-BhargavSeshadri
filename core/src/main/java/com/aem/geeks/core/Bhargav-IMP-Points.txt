@@ -42,7 +42,7 @@ Page page=pageManager.getPage("/content/aemgeeks/us/en");
 =============================================================================================
 5) @Component
 --> Servlets : @Component(service = Servlet.class)
---> OSGI Configuration : @Component(service = OSGiConfig.class,immediate = true)
+--> OSGI Configuration : @Component(service = OSGiConfigService.class,immediate = true)
 --> Schedulers
 - Runnable : @Component(immediate = true, service = Runnable.class)
 - Job :  @Component(immediate = true, service = Job.class)
@@ -52,7 +52,8 @@ Page page=pageManager.getPage("/content/aemgeeks/us/en");
 =============================================================================================
 6) ANNOTATIONS:
 @Activate : when we want something to load or activate at the time of this service initializations, there we use this
-
+@ObjectClassDefinition(name, definition) : used for defining osgi configuration.
+@Activate : when we want something to be load or executed at the time of this service initiation
 =============================================================================================
 7) SERVLETS - GET and POST requests explanation
 
@@ -121,3 +122,10 @@ dispatcher.forward(req, res);
 - TRUE : In this case if we provide a two sets of values to the multified in the comp dialog, it will create a node under our component node(with name we have give
           for multified in xml) and then under that node it will create a two item nodes for those two sets of values.
 - we use false when we have a single field in the multifield, and true when we have a multiple fields in the multifield.
+-> We can render the multifield values using two ways one is using MAP and the other way is using JAVA BEAN
+
+=============================================================================================
+11) Sling Model Content Exporter (Content as a Service)
+- AEM comes up with OOTB content exporter funtionality, means AEM can export content to third party systems in form of JSON or XML.
+
+=============================================================================================

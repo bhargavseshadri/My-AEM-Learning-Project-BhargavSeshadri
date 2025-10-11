@@ -10,5 +10,11 @@ public interface ProductModel {
     public String getCurrentPageTitle();
     public String isReturnName();
 
-    List<Map<String, String>> getProductDetailsWithMap();
+    List<Map<String, String>> getProductDetailsWithMap();  //this is multifield method
+
+    int getNumber();  //these are osgi config related methods
+    String getName();
+    String getFavMovie();
+    String[] getCountries();
+    String getRunModes();
 }
