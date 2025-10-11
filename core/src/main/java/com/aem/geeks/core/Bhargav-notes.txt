@@ -53,8 +53,16 @@ b) If you get the forbidden error then your path is missing in the servlet execu
 Step:3 (Only for POST METHOD) : apps/aemgeeks/components/content/formforpathtypeservlet/formforpathtypeservlet.html
 * Go to the form component and there add you path (eg: /bin/pages) in the form "action" attribute and for the "method" attribute give post.
 
+-------------------------------------------------------------------------
+4) QUERY PARAMETERS FETCHING USING PATH TYPE SERVLET DEMO
+
+Servlet usage: this servlet will get executed when we hit the path /bin/queryparamdemo and then in response it will give the info present in the query params.
+Step: (only step) : com/aem/geeks/core/servlets/BhargavPathTypeServletQP.java
+
+To execute the servlet : http://localhost:4502/bin/queryparamdemo?name=Bhargav&age=25
+
 =============================================================================================
-4) JSON DEMOs
+5) JSON DEMOs
 
 a) Create a json with all the pages where KEY will be the page title amd VALUE will be the page path.
 Demo file : com/aem/geeks/core/servlets/GeeksPathTypeServlet.java
