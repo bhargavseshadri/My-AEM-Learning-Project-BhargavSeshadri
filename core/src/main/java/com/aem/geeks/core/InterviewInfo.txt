@@ -105,3 +105,14 @@ CRXDE FOLDER STRUCTURE
 -> libs: OOTB things present here, we can use this but we cant modify
 
 =============================================================================================
+MODELS & SERVICES
+
+PROBLEM: for one SERVICE interface class ,there is two implimentation classes, so in this scenario, which service have to executed?
+
+-> In this case we have two options
+1) @ServiceRanking(1000) : class level annotation so according to this, which service have the higher service rank; then that service gets executed.
+2) @OSGiService(filter="(component.name=__________)") : the other option is using "filter" in sling model, so based on which
+                                                        service name we have given to the filter that service gets executed for that sling model.
+                                                        Note: for this we have to give a name to the service in @Component.
+
+=============================================================================================

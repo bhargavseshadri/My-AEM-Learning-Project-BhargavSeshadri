@@ -67,9 +67,38 @@ To execute the servlet : http://localhost:4502/bin/queryparamdemo?name=Bhargav&a
 a) Create a json with all the pages where KEY will be the page title amd VALUE will be the page path.
 Demo file : com/aem/geeks/core/servlets/GeeksPathTypeServlet.java
 
+=============================================================================================
+6) SLING MODELS & SERVICES
 
+Step:1 - create a component : apps/aemgeeks/components/content/slingmodelproductcomp
+Step:2 - create a Sling Model : com/aem/geeks/core/models/ProductModel.java
+Step:3 - create a Sling Model Implimentation : com/aem/geeks/core/models/impl/ProductModelImpl.java
 
+* Linking it with a SERVICE - com/aem/geeks/core/services/impl/ProductServiceImpl.java
+* Linking the Service to an another Service : com/aem/geeks/core/services/ProductPriceBranchService.java
 
+Step:4 - Rendering the Values in HTL Script : apps/aemgeeks/components/content/slingmodelproductcomp/slingmodelproductcomp.html
+
+--------------------------------------------
+Multiple Service Implimentations Linked to one Service Interface
+
+Main Service interface: com/aem/geeks/core/services/DemoProductService.java
+
+->Implimentations of this one interface service
+a) com/aem/geeks/core/services/impl/DemoProductModelServiceOneImpl.java
+b) com/aem/geeks/core/services/impl/DemoProductModelServiceTwoImpl.java
+
+PROBLEM:  So for this one SERVICE there is two implimentations, so in this scenario, which service have to executed?
+
+-> In this case we have two options
+1) @ServiceRanking(1000) : class level annotation so according to this, which service have the higher service rank; then that service gets executed.
+2) @OSGiService(filter="(component.name=__________)") : the other option is using "filter" in sling model, so based on which
+                                                        service name we have given to the filter that service gets executed for that sling model.
+                                                        Note: for this we have to give a name to the service in @Component.
+
+- Filter demo & using of these services: com/aem/geeks/core/models/impl/ProductModelImpl.java
+
+=============================================================================================
 
 
 

@@ -47,6 +47,8 @@ Page page=pageManager.getPage("/content/aemgeeks/us/en");
 - Runnable : @Component(immediate = true, service = Runnable.class)
 - Job :  @Component(immediate = true, service = Job.class)
 
+--> Service : @Component(Service = bhargavService.class)
+
 =============================================================================================
 6) ANNOTATIONS:
 @Activate : when we want something to load or activate at the time of this service initializations, there we use this
@@ -71,7 +73,7 @@ d) doPost reads req.getParameter() (for form), validates input, performs DB/JCR 
 f) doPost typically returns: HttpStatus codes and then Client receives response and acts accordingly.
 
 =============================================================================================
-8) req.setAttribute() AND req.getAttribute()  Explanation with Example
+9) req.setAttribute() AND req.getAttribute()  Explanation with Example
 
 Q) What is an “attribute” in a request?
 Answer: You can store temporary data in the HttpServletRequest object using setAttribute() and later read it back using getAttribute().
