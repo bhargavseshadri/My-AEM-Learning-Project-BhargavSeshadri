@@ -5,6 +5,7 @@ QUICK IMPORTANT NOTES
 IMPORTANT PATHS
 -> For Configurations(crx) : apps/system/config, (preferred path is /apps/my-prjt/osgiconfig/config)
 -> For Checking the sling Adapters : /system/console/adapters
+-> (CRXDE)New Configuration values stored under : /apps/system/config
 
 =============================================================================================
 2) Global Objects available in HTL (most common ones)
