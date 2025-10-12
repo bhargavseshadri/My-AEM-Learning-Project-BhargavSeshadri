@@ -1,4 +1,9 @@
-<div data-sly-use.obj="com.aem.geeks.core.models.ProductModel">
+
+==========-------Bhargav Personal Component--------=============
+
+<!--****************************** Normal OSGI Configuration related code *********************************************************************************-->
+==========Basic Sling Model Output=============
+<div data-sly-use.obj="com.aem.geeks.core.models.ProductModel">  <!--BhargavSeshadri - Sling Model - Step:5(Last Step) - Rendering the Values in HTL Script; (for step:4 go to sling model- com/aem/geeks/core/models/impl/ProductModelImpl.java)-->
     <li>${obj.getProductName}</li>
     <li>${obj.getProductPrice}</li>
     <li>${obj.manufacturerName}</li>
@@ -16,7 +21,7 @@
     </div>
 
 
-    <!--****************************** Normal OSGI Configuration related code *********************************************************************************-->
+<!--****************************** Normal OSGI Configuration related code *********************************************************************************-->
 
     ============Bhargav - Normal OSGI Configuration=================
     <div><p> Name : <b>${obj.getName}</b></p></div>       <!--BhargavSeshadri - STEP:5(last step) - Printing the values of our osgi config using our sling model(for step:4 - com/aem/geeks/core/models/impl/ProductModelImpl.java)-->

@@ -44,7 +44,7 @@ public class ProductModelImpl implements ProductModel{
     private Page currentPage;
 
     @OSGiService
-    private ProductService productService;
+    private ProductService productService;     //BhargavSeshadri - Step:4 - Sling Model - Using of Service in our model
 
     @Override
     public String getManufacturerName() {
@@ -74,7 +74,7 @@ public class ProductModelImpl implements ProductModel{
         return currentPage.getTitle();
     }
 
-    @OSGiService(filter = "(component.name=ServiceTwo)")   //demo for using "filter"
+    @OSGiService(filter = "(component.name=ServiceTwo)")   //BhargavSeshadri - demo for using "filter"
     private DemoProductService demoProductService;
 
     @Override
