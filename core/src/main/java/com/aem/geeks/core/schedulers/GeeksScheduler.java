@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 /*BhargavSeshadri - STEP:1 - Runnable Scheduler
 * Here we create a scheduler
 * STEP: 2: com/aem/geeks/core/config/SchedulerConfiguration.java - create a configuration and then come here and connect that config and use the values
-* STEP:3 (LAST STEP) it is also here in this file - add al the required scheduler code using osgi config values
+* STEP:3 (LAST STEP) it is also here in this file - add all the required scheduler code using osgi config values
 * */
 
 

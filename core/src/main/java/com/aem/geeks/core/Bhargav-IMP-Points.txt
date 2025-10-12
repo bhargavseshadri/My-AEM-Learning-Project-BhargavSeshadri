@@ -48,7 +48,7 @@ d) Configurations:
                                   c) UnBind Method
 e) Schedulers : we have two types of schedulers 1) Runnable, 2)Job Schedulet
                 1)Runnable : RUN() method is the manditory one. "activate method", Not a manditory method, but to get the config values we define it
-
+                2)Job  : execute(JobContext jobContext) is the manditory method, "activate method", Not a manditory method, but to get the config values we define it
 
 =============================================================================================
 4) PAGE MANAGER
@@ -188,6 +188,14 @@ AEM automatically picks the correct configuration based on its active run mode.â
 14) SCHEDULERS
 a) Runnable scheduler
 - impliments runnable interface
+- With this we can execute only one job.
 
 b) Job Scheduler
 - Impliments JOB interface
+---> USE OF THIS JOB SCHEDULER
+- Lets say we have a component and a scheduler, the component displays the data and he scheduler fetches the data from some service and update the data in the component.
+lets say we have three countries INDIA(12:00AM), GERMANY(12:00 AM), USA(12:00 AM), and from these three countries we are getting the data. our scheduler executes at midnight
+12:00 AM and fetches the data of covid 19 patients from some service.
+Our servers are in india so for india it is fine but for the usa and germany 12AM IST is not a 12AM for them (INDIA 12AM -- USA 1:30PM -- GERMANY 4:30PM),
+so based on this to meet the requirement our scheduler should execute at three different times, and for that writing three Runnable Schedulers(different corns) is not a feasable way.
+In this scenario JOB SCHEDULERS enter, we can write three jobs for these three countries in one scheduler.

@@ -5,6 +5,14 @@ import org.osgi.service.metatype.annotations.AttributeType;
 import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 
 //BhargavSeshadri - STEP:2 - Runnable Scheduler - here using this config we take the values for our scheduler
+//For step:3 - again go to -> com/aem/geeks/core/schedulers/GeeksScheduler.java
+
+//BhargavSeshadri - STEP:2 - JOB Scheduler - here using this config we take the values for our scheduler
+//For step:3 - again go to -> com/aem/geeks/core/schedulers/GeeksSchedulerJobs.java
+
+//Both Schedulers using the same Configuration file
+
+
 
 @ObjectClassDefinition(
         name = "AEM Geeks - Scheduler Configuration",
