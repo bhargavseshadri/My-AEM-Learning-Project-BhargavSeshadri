@@ -156,6 +156,7 @@ STEP:4 - (Last Step) - apps/aemgeeks/components/content/slingmodelproductcomp/sl
 - Now on the page, drag and drop the COMPONENT,  where you have called your sling model (here we used in apps/aemgeeks/components/content/slingmodelproductcomp/slingmodelproductcomp.html).
 - Now you can see the values of the multiple config instances.
 
+=============================================================================================
 
 
 

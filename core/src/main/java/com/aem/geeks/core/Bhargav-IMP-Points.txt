@@ -5,8 +5,8 @@ QUICK IMPORTANT NOTES
 IMPORTANT PATHS
 -> For Configurations(crx) : apps/system/config, (preferred path is /apps/my-prjt/osgiconfig/config)
 -> For Checking the sling Adapters : /system/console/adapters
--> (CRXDE)New Configuration values stored under : /apps/system/config
 -> AEM replication agents : /etc/replication/agents.author.html
+-> Check the available run modes : /system/console/status-slingsettings
 
 =============================================================================================
 2) Global Objects available in HTL (most common ones)
@@ -42,6 +42,9 @@ c) Servlets :
         - PathType     : No manditory Methods, but based on the requirement we will use doGet, doPost, doPut, doDelete
 d) Configurations:
         - Normal   : No manditory method, but have to define "activate" method to get the config values
+        - Factory Configuration : a) Activate - not a manditiory, but have to define for getting the config values.
+                                  b) BIND Method
+                                  c) UnBind Method
 
 =============================================================================================
 4) PAGE MANAGER
@@ -146,3 +149,35 @@ dispatcher.forward(req, res);
 
 =============================================================================================
 12) Utility Functions available in Sightly: in, format, join
+
+=============================================================================================
+13) RUN MODES
+- Run Modes in AEM are a way to customize the behavior and configuration of an AEM instance for different environments (like author, publish, dev, stage, prod, etc.)
+  using the same codebase.
+        PURPOSE of runmodes:
+        *Separate configurations for Author and Publish.
+        *Maintain different settings for Dev / QA / Prod.
+        *Control which components, workflows, or OSGi configurations are active.
+- When we want to identify our AEM instance uniquely, either in code or in osgi configs, we set run modes. run modes are two types.
+a) Installation Run modes (permanant run modes) : these we will set while installing aem instance. and we cannot change these runmodes,  these are four types
+                                                1. Author
+                                                2. Publisher
+                                                3. SampleContent  - Means aem will give you the basic sample pages like WE-RETAIL
+                                                4. NoSampleContent - no sample or demo sites (means no we retail or wknd)
+   - Author & Publisher, sampleContent & NoSampleContent are mutually exclusive means we cannot use them together.
+   - By default if we do not set anything, aem will automay=tically create Author with SampleContent.
+
+b) Customized Run Modes : Runmodes we create like Prod, Stg, Qa, Ciqa
+
+=> Creation of Run Modes, we have 5 ways
+1) Sling.Properties : we wont prefer this because we won't have permissions. and it is OOTB file so we should not change.
+2) system properties (-D) -Dsling.run.modes=publish,prod,us : this we can create while starting our aem instance
+3) Filename Detection - aem-publsh-p4503 (most commonly used): we remane a file, and then while installing the aem will understand what run mode it is.
+4) -r option -  java-jar file-r publish,prod,us: here while starting the aem we update the start script so then it will create a run mode, (2nd and 4th options are almost same)
+Note : we can check the available run modes at /system/console/status-slingsettings
+
+Q) How do you configure OSGi differently for Author and Publish?
+ans. “By placing configuration files inside run mode–specific folders like /apps/project/config.author and /apps/project/config.publish.
+AEM automatically picks the correct configuration based on its active run mode.”
+
+=============================================================================================
