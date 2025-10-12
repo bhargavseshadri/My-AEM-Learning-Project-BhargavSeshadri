@@ -157,6 +157,13 @@ STEP:4 - (Last Step) - apps/aemgeeks/components/content/slingmodelproductcomp/sl
 - Now you can see the values of the multiple config instances.
 
 =============================================================================================
+8) SCHEDULERS
+a) Runnable scheduler
+STEP:1 - Create a Scheduler : com/aem/geeks/core/schedulers/GeeksScheduler.java
+STEP:2 - Create a OSGI Configuration to take the values for scheduler : com/aem/geeks/core/config/SchedulerConfiguration.java
+STEP:3(LAST STEP) - Connect and Use that configuration values in the scheduler : com/aem/geeks/core/schedulers/GeeksScheduler.java
+
+b) Job Scheduler
 
 
 

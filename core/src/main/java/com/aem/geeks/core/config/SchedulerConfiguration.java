@@ -4,6 +4,8 @@ import org.osgi.service.metatype.annotations.AttributeDefinition;
 import org.osgi.service.metatype.annotations.AttributeType;
 import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 
+//BhargavSeshadri - STEP:2 - Runnable Scheduler - here using this config we take the values for our scheduler
+
 @ObjectClassDefinition(
         name = "AEM Geeks - Scheduler Configuration",
         description = "Sling scheduler configuration"
@@ -20,6 +22,6 @@ public @interface SchedulerConfiguration {
             name = "Cron Expression",
             description = "Cron expression used by the scheduler",
             type = AttributeType.STRING)
-    public String cronExpression() default "0/20 * * * * ?"; // runs every 10 seconds
+    public String cronExpression(); //default "0/20 * * * * ?";   //cron expression - uncomment the corn expression to execute
 }
 

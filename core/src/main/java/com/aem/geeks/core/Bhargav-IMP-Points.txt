@@ -7,6 +7,7 @@ IMPORTANT PATHS
 -> For Checking the sling Adapters : /system/console/adapters
 -> AEM replication agents : /etc/replication/agents.author.html
 -> Check the available run modes : /system/console/status-slingsettings
+-> To Check the status of the scheduler : /system/console/status-slingscheduler
 
 =============================================================================================
 2) Global Objects available in HTL (most common ones)
@@ -45,6 +46,9 @@ d) Configurations:
         - Factory Configuration : a) Activate - not a manditiory, but have to define for getting the config values.
                                   b) BIND Method
                                   c) UnBind Method
+e) Schedulers : we have two types of schedulers 1) Runnable, 2)Job Schedulet
+                1)Runnable : RUN() method is the manditory one. "activate method", Not a manditory method, but to get the config values we define it
+
 
 =============================================================================================
 4) PAGE MANAGER
@@ -58,9 +62,9 @@ Page page=pageManager.getPage("/content/aemgeeks/us/en");
 5) @Component
 --> Servlets : @Component(service = Servlet.class)
 --> OSGI Configuration : @Component(service = OSGiConfigService.class,immediate = true)
---> Schedulers
-- Runnable : @Component(immediate = true, service = Runnable.class)
-- Job :  @Component(immediate = true, service = Job.class)
+--> Schedulers :
+                - Runnable : @Component(immediate = true, service = Runnable.class)
+                - Job :  @Component(immediate = true, service = Job.class)
 
 --> Service : @Component(Service = bhargavService.class)  - bhargavService is my interface and I am linking it to my implimentation class using @Component
 
@@ -181,3 +185,9 @@ ans. “By placing configuration files inside run mode–specific folders like /
 AEM automatically picks the correct configuration based on its active run mode.”
 
 =============================================================================================
+14) SCHEDULERS
+a) Runnable scheduler
+- impliments runnable interface
+
+b) Job Scheduler
+- Impliments JOB interface
