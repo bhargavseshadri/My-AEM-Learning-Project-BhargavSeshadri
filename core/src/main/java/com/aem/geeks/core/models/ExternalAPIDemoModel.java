@@ -2,7 +2,9 @@ package com.aem.geeks.core.models;
 
 
 
-/*BHARGAVSESHADRI - Step:1 - FETCHING DATA FROM EXTERNAL API - here just creating an interface method */
+/*BHARGAVSESHADRI - Step:1 - FETCHING DATA FROM EXTERNAL API - here just creating an interface method
+* For STEP:2 -> com/aem/geeks/core/models/impl/apirelated/ExternalAPIDemoModelImpl.java
+* */
 
 public interface ExternalAPIDemoModel {
 

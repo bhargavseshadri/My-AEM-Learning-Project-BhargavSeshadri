@@ -1,5 +1,11 @@
 Bhargav Personal Component : apps/aemgeeks/components/content/slingmodelproductcomp
 
+My Components:
+a) Personal Component : apps/aemgeeks/components/content/slingmodelproductcomp
+b) API Component : apps/aemgeeks/components/content/bhargavapicomp
+c) Registration Form Comp (for ResourceType Post Servlet) : apps/aemgeeks/components/content/registrationformservlet
+d) Registration Form Comp (for PathType Post Servlet) : apps/aemgeeks/components/content/formforpathtypeservlet
+
 =============================================================================================
 1) Resource Resolver related Notes is in
 - Main: com/aem/geeks/core/utils/ResolverUtil.java
@@ -13,24 +19,28 @@ Bhargav Personal Component : apps/aemgeeks/components/content/slingmodelproductc
 2) FETCHING DATA FROM EXTERNAL API (using sling model)
 - Main:
 STEP:1(just Interface) : com/aem/geeks/core/models/ExternalAPIDemoModel.java
-STEP:2(sling model implimentation) : FETCHING DATA: com/aem/geeks/core/models/impl/ExternalAPIDemoModel.java
-STEP:3 : RENDERING THE DATA ON FRONTEND: apps/aemgeeks/components/helloworld/helloworld.html
+STEP:2(sling model implimentation) :(MAIN) FETCHING DATA from API logic: com/aem/geeks/core/models/impl/apirelated/ExternalAPIDemoModelImpl.java
+HELPER POJO CLASS: com/aem/geeks/core/models/impl/apirelated/ExternalData.java
+STEP:3 : RENDERING THE DATA ON FRONTEND: apps/aemgeeks/components/content/bhargavapicomp/bhargavapicomp.html
 
 =============================================================================================
 3) SERVLET
 
 a) ResourceType Servlet:
 * MY EXAMPLE
--> GET : (only step) : com/aem/geeks/core/servlets/BhargavResourceTypeGETServlet.java
+-> GET : (only step) (MAIN LOGIC): com/aem/geeks/core/servlets/BhargavResourceTypeGETServlet.java
+
 -> POST:
-Servelt Usage: Here this Servlet will work for a REGISTRATION FORM component, there when a user adds his details in the form and submits it then this post servlet
+Servlet Usage: Here this Servlet will work for a REGISTRATION FORM component, there when a user adds his details in the form and submits it then this post servlet
                gets called and then it will create a new node(usernode) under the provided "page resource", and in that node it will store the user given data
 
 Step: 1 - apps/aemgeeks/components/content/registrationformservlet/registrationformservlet.html
 - you should have a component or some resource, so here we have a form and when ever we give the value and hit the submit button the post servlet
 will execute and posts the data to our JCR, (optional part)GET method will give the response after that.
 
-Step: 2 (last step) - ResourceType Post Servlet : com/aem/geeks/core/servlets/BhargavResourceTypePostServlet.java
+Step: 2 -(MAIN LOGIC) ResourceType Post Servlet : com/aem/geeks/core/servlets/BhargavResourceTypePostServlet.java
+Step: 3(last step) : Go to the component and check in the form, if it has the "method" & "action" attributes correctly set, if not set them
+<form method="post"  action="current page jcr:content path with selectors">
 
 
 * AEM GEEKS EXAMPLE
@@ -43,7 +53,7 @@ Servlet Usage: here we are writing a path bound servlet, which is bound to paths
                * in GET method we will create a json with all the pages where KEY will be the page title amd VALUE will be the page path
                * in POST method we will submit the form data to this servlet and later on print that data in logs
 
-Step:1 - Defining a Servlet : com/aem/geeks/core/servlets/GeeksPathTypeServlet.java
+Step:1 - Defining a Servlet :(MAIN LOGIC) com/aem/geeks/core/servlets/GeeksPathTypeServlet.java
 Step:2 (last step for GET method) - Calling the servlet
 a) Hit this path (because we have bound our servlet to /bin/pages): http://localhost:4502/bin/pages
 b) If you get the forbidden error then your path is missing in the servlet execution paths, add you path in those execution paths.
@@ -67,7 +77,7 @@ To execute the servlet : http://localhost:4502/bin/queryparamdemo?name=Bhargav&a
 =============================================================================================
 5) JSON DEMOs
 
-a) Create a json with all the pages where KEY will be the page title amd VALUE will be the page path.
+a) Creating a json with all the pages where KEY will be the page title amd VALUE will be the page path.
 Demo file : com/aem/geeks/core/servlets/GeeksPathTypeServlet.java
 
 =============================================================================================
@@ -127,6 +137,25 @@ STEP:5(last step) - Printing the data on page using HTL -- apps/aemgeeks/compone
 
 --------------------------------------------
 b) Factory Configuration
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

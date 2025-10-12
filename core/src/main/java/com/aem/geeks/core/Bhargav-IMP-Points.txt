@@ -4,6 +4,7 @@ QUICK IMPORTANT NOTES
 =============================================================================================
 IMPORTANT PATHS
 -> For Configurations(crx) : apps/system/config, (preferred path is /apps/my-prjt/osgiconfig/config)
+-> For Checking the sling Adapters : /system/console/adapters
 
 =============================================================================================
 2) Global Objects available in HTL (most common ones)
@@ -30,10 +31,19 @@ IMPORTANT PATHS
 -> Demo code available here: apps/aemgeeks/components/content/author-books/author-books.html
 
 =============================================================================================
-3) Utility Functions available in Sightly: in, format, join
+3) MANDITORY METHODS
+
+a) Sling Models : No manditory methods
+b) Services : No manditory methods
+c) Servlets :
+        - ResourceType : No manditory Methods, but based on the requirement we will use doGet, doPost, doPut, doDelete
+        - PathType     : No manditory Methods, but based on the requirement we will use doGet, doPost, doPut, doDelete
+d) Configurations:
+        - Normal   : No manditory method, but have to define "activate" method to get the config values
 
 =============================================================================================
-4) pageManeger: using this we can get the page we want.
+4) PAGE MANAGER
+pageManeger: using this we can get the page we want.
 eg:
 @ScriptVariable
 PageManager pageManager;
@@ -47,13 +57,14 @@ Page page=pageManager.getPage("/content/aemgeeks/us/en");
 - Runnable : @Component(immediate = true, service = Runnable.class)
 - Job :  @Component(immediate = true, service = Job.class)
 
---> Service : @Component(Service = bhargavService.class)
+--> Service : @Component(Service = bhargavService.class)  - bhargavService is my interface and I am linking it to my implimentation class using @Component
 
 =============================================================================================
 6) ANNOTATIONS:
 @Activate : when we want something to load or activate at the time of this service initializations, there we use this
 @ObjectClassDefinition(name, definition) : used for defining osgi configuration.
 @Activate : when we want something to be load or executed at the time of this service initiation
+
 =============================================================================================
 7) SERVLETS - GET and POST requests explanation
 
@@ -129,3 +140,4 @@ dispatcher.forward(req, res);
 - AEM comes up with OOTB content exporter funtionality, means AEM can export content to third party systems in form of JSON or XML.
 
 =============================================================================================
+12) Utility Functions available in Sightly: in, format, join

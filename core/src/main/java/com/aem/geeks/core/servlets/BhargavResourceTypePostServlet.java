@@ -14,8 +14,9 @@ import java.io.IOException;
 
 
 
-/*BhargavSeshadri : Step:2 for RESOURCETYPE - POST SERVLET
- * For step:2 : apps/aemgeeks/components/content/registrationformservlet/registrationformservlet.html
+/*BhargavSeshadri - Step:2 - for RESOURCETYPE - POST SERVLET
+ * For step:1 : apps/aemgeeks/components/content/registrationformservlet/registrationformservlet.html
+ * For step:3(last step) : go to apps/aemgeeks/components/content/registrationformservlet/registrationformservlet.html -- and set the POST AND ACTION ATTRIBUTE
  *
  * Here this servlet will gets executed when ever the user gives the form values and hits the submit
  * And then in CRX under it will create a new newUser node with user details, for every new user It creates a new node under "/content/aemgeeks/us/en/registration-form-post-servlet/jcr:content"
