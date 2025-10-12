@@ -75,6 +75,6 @@ public class GeeksSchedulerJobs implements Job {   //Implimenting the JOB interf
     @Override
     public void execute(JobContext jobContext) {         //JOBCONTEXT : using this we can add & get the job specific custom data and print it.
            LOG.info("\n =======> COUNTRY {} : URL {} ",jobContext.getConfiguration().get("country"),  //using this ".getConfiguration()" we can get the data from the map we have passed to the .config(Map) above.
-                   jobContext.getConfiguration().get("url"));   //Whatecer JOB is executing then this ".getConfiguration()" have that job specific values.
+                   jobContext.getConfiguration().get("url"));   //Whatever JOB is executing then this ".getConfiguration()" have that job specific values.
     }
 }

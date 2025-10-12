@@ -199,3 +199,5 @@ lets say we have three countries INDIA(12:00AM), GERMANY(12:00 AM), USA(12:00 AM
 Our servers are in india so for india it is fine but for the usa and germany 12AM IST is not a 12AM for them (INDIA 12AM -- USA 1:30PM -- GERMANY 4:30PM),
 so based on this to meet the requirement our scheduler should execute at three different times, and for that writing three Runnable Schedulers(different corns) is not a feasable way.
 In this scenario JOB SCHEDULERS enter, we can write three jobs for these three countries in one scheduler.
+
+=============================================================================================

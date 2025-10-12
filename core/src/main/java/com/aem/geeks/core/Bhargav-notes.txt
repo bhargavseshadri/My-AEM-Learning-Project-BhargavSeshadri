@@ -167,9 +167,9 @@ STEP:3(LAST STEP) - Connect and Use that configuration values in the scheduler :
 b) Job Scheduler
 STEP:1 - Create a JOB Scheduler : com/aem/geeks/core/schedulers/GeeksSchedulerJobs.java
 STEP:2 - Create a OSGI Configuration to take the values for scheduler : com/aem/geeks/core/config/SchedulerConfiguration.java
-STEP:3 - Connect and Use that configuration values in the scheduler : com/aem/geeks/core/schedulers/GeeksSchedulerJobs.java
+STEP:3(LAST STEP) - Connect and Use that configuration values in the scheduler : com/aem/geeks/core/schedulers/GeeksSchedulerJobs.java
 
-
+=============================================================================================
 
 
 

@@ -140,3 +140,47 @@ PROBLEM: for one SERVICE interface class ,there is two implimentation classes, s
                                                         Note: for this we have to give a name to the service in @Component.
 
 =============================================================================================
+BASEPAGE COMPONENT
+- The Base Page Component in AEM is a common parent component that defines the shared structure and behavior for all pages. Other page components like
+  homepage or content page extend it using sling:resourceSuperType, so they automatically inherit its HTML structure and scripts. It helps maintain
+  consistency, reuse, and easy maintenance across all pages.
+  Example: -> create your own base page component and point it to core page component using sling:resourceSupertype.
+           -> And based on our need we can create a components and give the sling:ResourceType points to our base page component (in these comps we can use/inherit the files which are
+           either present in our page component or base core base page comp)
+
+
+-------------------------------------------
+TEAMPLETS IN AEM
+- In AEM, a template defines the structure of a page — i.e., what components can appear, and how the page looks.
+- When you create a new page, you select a template — that template decides: layout/structure of the page, Which components authors can use, Default content policies
+
+* STATIC TEMPLATES:
+- Static templates are the older way of creating templates in AEM. They are stored under /apps, and their structure is fixed and not editable by authors.
+- page structure and allowed components are fixed and can only be changed through code.
+- Structure of this template is Defined using a static .content.xml and a page component.
+- Authors cannot modify structure (like adding new components or layouts).
+- Uses Design mode in classic UI to control allowed components.
+- Developers must change code to modify template structure.
+- These templates are Fixed (developer controlled)
+
+** CREATING STATIC TEMPPLATE : we have to create a template and that template resourceType should point to our page component or component we want.
+
+* EDITABLE TEMPLATES:
+- Editable templates are the modern, flexible templates introduced in AEM 6.2+. They are stored under /conf, and allow authors (not just developers) to
+  control structure and policies via the Template Editor UI.
+- Controlled via Content Policies in Template Editor.
+- no developer needed to change structure
+- These templates are Dynamic (author controlled)
+
+-------------------------------------------
+CONTENT POLICIES - THINGS WE CAN DO IN IT
+
+- In here we can control what authors can do and how components behave/look, without touching the actual component code.
+USES: - Control which components are allowed
+      - Define Styles : we can define CSS style classes that authors can apply to components.
+      - Define Responsive Behavior : Control layout settings (e.g., grid sizes, breakpoints) for different devices.
+
+Q) What is the link between content policy and component?
+→ Each component instance on a page references a policy via cq:policy property.
+
+=============================================================================================
