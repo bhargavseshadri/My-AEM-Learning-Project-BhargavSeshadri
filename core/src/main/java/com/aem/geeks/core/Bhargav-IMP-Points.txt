@@ -6,6 +6,7 @@ IMPORTANT PATHS
 -> For Configurations(crx) : apps/system/config, (preferred path is /apps/my-prjt/osgiconfig/config)
 -> For Checking the sling Adapters : /system/console/adapters
 -> (CRXDE)New Configuration values stored under : /apps/system/config
+-> AEM replication agents : /etc/replication/agents.author.html
 
 =============================================================================================
 2) Global Objects available in HTL (most common ones)
@@ -65,6 +66,9 @@ Page page=pageManager.getPage("/content/aemgeeks/us/en");
 @Activate : when we want something to load or activate at the time of this service initializations, there we use this
 @ObjectClassDefinition(name, definition) : used for defining osgi configuration.
 @Activate : when we want something to be load or executed at the time of this service initiation
+@Modified : It is a lifecycle callback method annotation used in OSGi components. It marks a method that should be called whenever the OSGi configuration for that component is changed at runtime, without restarting the bundle.
+- In simple words, When you change configuration values, AEM will automatically re-invoke the method annotated with @Modified, So your service picks up
+the new configuration immediately — without redeploying or restarting AEM.
 
 =============================================================================================
 7) SERVLETS - GET and POST requests explanation

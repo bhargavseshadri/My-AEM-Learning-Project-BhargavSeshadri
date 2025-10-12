@@ -36,6 +36,14 @@ AEM ARCHITECTURE:
 --> OSGI JAVA CONTAINER(apache felix): used for moduler development, and provides various functionalities in form of modules, components etc
 
 =============================================================================================
+==> Lifecycle in OSGi
+- A typical OSGi component has 3 important lifecycle annotations:
+1) @Activate - When the component is first started (activated), it Initialize resources, read configuration
+2) @Modified - When configuration is changed dynamically, it Re-read and apply new config
+3) @Deactivate - When the component is stopped
+
+
+=============================================================================================
 ==> SERVLETS
 
 -> When a servlet runs, Sling (and the underlying web server Jetty) automatically gives it two key objects:
@@ -75,8 +83,23 @@ SCHEDULERS
 =============================================================================================
 OSGI CONFIGURATIONS:
 Definition: Initial set of inputs given to a bundle. like giving the input to our java file or component in that case we use osgi configurations
-
 -> Type of inputs: Text Field, Multifield, Checkbox, Dropdown
+
+- Factory Configuration: When we want to create more than one instance on the configuration, in that case we create factory configuration.
+Normal congfig to Factory Config : @Designate(ocd = BhargavFactoryOSGiConfig.class, factory=true)
+
+==> cardinality = ReferenceCardinality.MULTIPLE, policy = ReferencePolicy.DYNAMIC
+- sometimes, we may have: Multiple implementations of the same interface (or) Services that appear or disappear dynamically (e.g., bundles starting/stopping).
+(Or) we may want to handle such changes gracefully. then in that case ReferenceCardinality and ReferencePolicy come into play.
+- ReferenceCardinality → How many services can be injected
+                    a) MANDATORY : Must have exactly one service available. If not present, this component won’t activate.
+                    b) OPTIONAL : May or may not have one service
+                    c) MULTIPLE  : Can have many implementations injected (a list).
+                    d) AT_LEAST_ONE : Must have at least one available.
+
+- ReferencePolicy → When to update the reference
+                  a) STATIC :  It won't considers the unbind method with bind method. Injects dependency only once during activation.
+                  b) DYNAMIC : It will automatically considers the unbind method with bind method. Automatically updates the reference at runtime when services appear/disappear.
 
 =============================================================================================
 RUN MODES: in AEM are like environment identifiers that tell AEM how it should behave in different environments — for example: author, publish, development, staging, production, etc.

@@ -33,4 +33,17 @@
         <li>${item}</li>
     </ul>
 
+
+<!--****************************** FACTORY OSGI Configuration related code *********************************************************************************-->
+<!--BhargavSeshadri - STEP:4(last step) - Printing the values of our osgi config using our sling model(for step:4 - com/aem/geeks/core/models/impl/ProductModelImpl.java)-->
+
+    ============Bhargav - Factory OSGI Configuration=================
+
+    <div data-sly-list="${obj.allOSGiConfigs}">    <!--Here we are iterating through the available list, and for every iteration ITEM will have the complete data of that instance-->
+        ------Config # <b>${itemList.count}</b>-----
+        <div><p> Config ID: <b>${item.configID}</b></p></div>  <!--here we are getting the individual values of the item-->
+        <div><p> Service Name: <b>${item.serviceName}</b></p></div>
+        <div><p> Service URL : <b>${item.serviceURL}</b></p></div>
+    </div>
+
 </div>

@@ -11,15 +11,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@Component (service = OSGiFactoryConfig.class,configurationPolicy = ConfigurationPolicy.REQUIRE)
-@Designate (ocd = GeeksOSGiFactoryConfig.class, factory = true)
+/*BhargavSeshadri - STEP:2 - Service For OSGI Factory Configuration
+* For - STEP:1 Go to -> com/aem/geeks/core/config/GeeksOSGiFactoryConfig.java
+* For - STEP:3 Go to -> com/aem/geeks/core/models/impl/ProductModelImpl.java
+* */
+
+@Component (service = OSGiFactoryConfig.class,configurationPolicy = ConfigurationPolicy.REQUIRE)      //here this OSGiFactoryConfig.class is just the interface for this service
+@Designate (ocd = GeeksOSGiFactoryConfig.class, factory = true)                                     //factory = true - makes the normal configuration in to factory configuration and @Designate will designate our config to this service
 public class OSGiFactoryConfigImpl implements OSGiFactoryConfig {
     private static final Logger LOGGER = LoggerFactory.getLogger(OSGiFactoryConfigImpl.class);
 
     private int configID;
     private String serviceName;
     private String serviceURL;
-    private List<OSGiFactoryConfig> configsList;
+    private List<OSGiFactoryConfig> configsList;        //IMPORTANT - here we are creating one list and we put all the factory config instances in to this list and then we pass this
 
     @Activate
     @Modified
@@ -30,15 +35,15 @@ public class OSGiFactoryConfigImpl implements OSGiFactoryConfig {
     }
 
     @Reference(service = OSGiFactoryConfig.class, cardinality = ReferenceCardinality.MULTIPLE, policy = ReferencePolicy.DYNAMIC)
-    public void bindOSGiFactoryConfig(final OSGiFactoryConfig config) {
+    public void bindOSGiFactoryConfig(final OSGiFactoryConfig config) {    //Bind Method - here we are binding our service to this method
         if (configsList == null){
-            configsList = new ArrayList<>();
+            configsList = new ArrayList<>();  //here we are creating a new list, so whenever the configuration is created or available at that time it will create this new list
         }
-        configsList.add(config);
+        configsList.add(config);        //adding our configurations to the list, and after the first time for the next set of configurations it will store to this list
 
     }
 
-    public void unbindOSGiFactoryConfig(final OSGiFactoryConfig config) {
+    public void unbindOSGiFactoryConfig(final OSGiFactoryConfig config) {   //when we remove the configuration then this unbind method will trigger and remove that config from the list
         configsList.remove(config);
     }
 
@@ -57,12 +62,12 @@ public class OSGiFactoryConfigImpl implements OSGiFactoryConfig {
 
 
     @Override
-    public List<OSGiFactoryConfig> getAllConfigs(){
+    public List<OSGiFactoryConfig> getAllConfigs(){  //here in this method we are returning our list
         return configsList;
     }
 
     @Override
-    public OSGiFactoryConfig get(int configID) {
+    public OSGiFactoryConfig get(int configID) {   //for now dont consider this method
         for (OSGiFactoryConfig confFact : configsList) {
             if (configID==confFact.getConfigID())
                 return confFact;

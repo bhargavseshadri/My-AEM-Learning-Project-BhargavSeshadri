@@ -4,6 +4,7 @@ package com.aem.geeks.core.models.impl;
 import com.aem.geeks.core.models.ProductModel;
 import com.aem.geeks.core.services.BhargavOsgiConfigService;
 import com.aem.geeks.core.services.DemoProductService;
+import com.aem.geeks.core.services.OSGiFactoryConfig;
 import com.aem.geeks.core.services.ProductService;
 import com.day.cq.wcm.api.Page;
 import org.apache.sling.api.SlingHttpServletRequest;
@@ -143,6 +144,21 @@ public class ProductModelImpl implements ProductModel{
     @Override
     public String getRunModes(){
         return bhargavOsgiConfigService.getRunModes();
+    }
+
+
+/*********************************************************FACTORY CONFIGURATION RELATED CODE***************************************************************/
+/*BhargavSeshadri - Step:3 - using the osgi factory configuration service here
+* For Step:2 - com/aem/geeks/core/services/impl/OSGiFactoryConfigImpl.java
+* For Step:4 (Last Step) - apps/aemgeeks/components/content/slingmodelproductcomp/slingmodelproductcomp.html
+* */
+
+    @OSGiService
+    OSGiFactoryConfig oSGiFactoryConfig;   //creating our service object
+
+    @Override
+    public List<OSGiFactoryConfig> getAllOSGiConfigs() {  //here we are returning the list
+        return oSGiFactoryConfig.getAllConfigs();
     }
 
 

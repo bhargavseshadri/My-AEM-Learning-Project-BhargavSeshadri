@@ -146,6 +146,15 @@ Step:4 - Now for the node add the properties of your config fields (these also y
 --------------------------------------------
 b) Factory Configuration
 
+STEP:1 - com/aem/geeks/core/config/GeeksOSGiFactoryConfig.java - Create an annotation class with osgi config code stating what are the values our configuration should take
+STEP:2 -(MAIN Logic) com/aem/geeks/core/services/impl/OSGiFactoryConfigImpl.java - Creating a Service with all the logic
+STEP:3 - com/aem/geeks/core/models/impl/ProductModelImpl.java   - using the service in a sling model
+STEP:4 - (Last Step) - apps/aemgeeks/components/content/slingmodelproductcomp/slingmodelproductcomp.html - printing the values in htl
+
+==> To see the output
+- Go to your configuration in system/console/configmgr and give the value and save
+- Now on the page, drag and drop the COMPONENT,  where you have called your sling model (here we used in apps/aemgeeks/components/content/slingmodelproductcomp/slingmodelproductcomp.html).
+- Now you can see the values of the multiple config instances.
 
 
 

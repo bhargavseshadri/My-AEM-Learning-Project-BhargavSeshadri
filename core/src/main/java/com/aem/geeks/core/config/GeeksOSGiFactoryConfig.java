@@ -4,7 +4,13 @@ import org.osgi.service.metatype.annotations.AttributeDefinition;
 import org.osgi.service.metatype.annotations.AttributeType;
 import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 
-@ObjectClassDefinition(name="AEM Geeks - OSGi Factory Configuration",
+
+
+/*BhargavSeshadri - Step:1 - OSGI Factory Configuration
+* For Step:2 go to file ->  com/aem/geeks/core/services/impl/OSGiFactoryConfigImpl.java
+* */
+
+@ObjectClassDefinition(name="Bhargav - OSGi Factory Configuration",
         description = "OSGi Factory Configuration demo.")
 public @interface GeeksOSGiFactoryConfig {
     @AttributeDefinition(

@@ -1,5 +1,7 @@
 package com.aem.geeks.core.models;
 
+import com.aem.geeks.core.services.OSGiFactoryConfig;
+
 import java.util.List;
 import java.util.Map;
 
@@ -17,4 +19,6 @@ public interface ProductModel {
     String getFavMovie();
     String[] getCountries();
     String getRunModes();
+
+    List<OSGiFactoryConfig> getAllOSGiConfigs();
 }
