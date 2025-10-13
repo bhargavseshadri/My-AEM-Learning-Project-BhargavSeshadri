@@ -11,7 +11,6 @@ import org.apache.sling.servlets.annotations.SlingServletResourceTypes;
 import org.osgi.service.component.annotations.Component;
 
 import javax.servlet.Servlet;
-import javax.sql.rowset.serial.SerialException;
 import java.io.IOException;
 
 
@@ -27,8 +26,6 @@ import java.io.IOException;
         selectors = "demo"
 )
 public class BhargavResourceTypeGETServlet extends SlingSafeMethodsServlet {
-    private static final long serialVersionUID = 1L;
-    private static int count = 0;
 
     @Override
     protected void doGet(final SlingHttpServletRequest request, final SlingHttpServletResponse response) throws IOException {  //One of the method from SlingSafeMethodsServlet

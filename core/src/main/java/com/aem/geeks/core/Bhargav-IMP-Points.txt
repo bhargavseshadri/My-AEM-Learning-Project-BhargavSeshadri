@@ -201,3 +201,38 @@ so based on this to meet the requirement our scheduler should execute at three d
 In this scenario JOB SCHEDULERS enter, we can write three jobs for these three countries in one scheduler.
 
 =============================================================================================
+15) USING ResourceResolver and Session and modifying the nodes (Basic Codes)
+
+- In SERVLET(where the methods give us in-built Request) (So we get a resourceResolver using that request)
+Steps:
+1 - Getting the "Request"
+    ->  doGet(SlingHttpServletRequest request, SlingHttpServletResponse response)
+
+2 - Getting ResourceResolver from the request
+    -> ResourceResolver resourceResolver = request.getResourceResolver();
+
+3 - Converting the ResourceResolver to session(something like datatype conversion) (we can only get the session when we have a resourceResolver)
+    -> Session session = resourceResolver.adaptTo(Session.class);
+
+4 - Basic page path
+    -> String parentPath = "/content/aemgeeks/us/en";
+
+5 - getting hold of the page resource using ResourceResolver
+    ->Resource parentResource = resourceResolver.getResource(parentPath);
+
+6 - Converting or Resource to Node, so that we can do the modifications
+    -> Node parentNode = parentResource.adaptTo(Node.class);
+
+7 - Doing some node modifications
+    -> Node newNode = parentNode.addNode("sampleNode", "nt:unstructured");
+                       newNode.setProperty("title", "My Sample Node");
+                       newNode.setProperty("createdBy", "Bhargav");
+                       newNode.setProperty("year", 2025);
+
+8 - Saving the session
+    -> session.save();
+
+
+** In sling model we get the "ResourceResolver" using
+   @SlingObject
+    private ResourceResolver resourceResolver;

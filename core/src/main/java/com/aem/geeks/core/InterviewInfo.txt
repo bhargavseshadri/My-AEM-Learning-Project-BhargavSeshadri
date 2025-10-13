@@ -198,6 +198,30 @@ Q) What is the link between content policy and component?
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 =============================================================================================
 ALL ABOUT **JAVA**
 - Java is a high-level, object-oriented programming language.
@@ -213,6 +237,7 @@ Quick Important Points
 * To convert and array in to a List -> Arrays.asList(arrName);
 * To convert a List to an Array -> v1.toArray()
 * We cant give primitive datatypes(int, String, Boolean) to generics.
+* In collection Hashtable, TreeSet won't take null values.
 
 =============================================================================================
 
@@ -319,7 +344,7 @@ Eg: Method overloading(Compile-time Polymorphism), method overriding(Runtime Pol
 OPTIONAL OOPS (Association, Aggregation, Composition)
 
 
-a) Association : (here both classes are independable) Association is a relationship between two separate classes where one class uses or interacts with another class,
+a) Association : (here both classes are independent) Association is a relationship between two separate classes where one class uses or interacts with another class,
                  but both can exist independently. It represents a “uses-a” relationship.
 Eg:
 class Teacher {
@@ -347,7 +372,7 @@ public class Main {
 
 
 ----------------------------------
-2) Aggregation (here both classes are independable)
+2) Aggregation (here both classes are independent)
 - Aggregation is a special form of association that represents a “Has-A” relationship between two classes.
 - Aggregation is a relationship where one class owns or uses another class, but the contained object can exist independently of the container object. The part can exist without the whole.
 - Has-A relationship but can live without it.
@@ -413,7 +438,7 @@ COLLECTIONS
 - The Java collection framework is a set of classes and interfaces that provide a standard way of representing, manipulating and storing collections of objects .
 
 * Important Points:
-- List: an ordered collection of elements that allows duplicates.
+- List: an ordered collection of elements that allows duplicates and nulls.
 - Set: a collection of elements that do not allow duplicates.
 - Map: a collection of key-value pairs, where each key is unique.
 - Queue: a queue is a data structure that is used to store elements in a First-In-First-Out (FIFO) manner.
