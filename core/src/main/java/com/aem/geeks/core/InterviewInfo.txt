@@ -184,3 +184,263 @@ Q) What is the link between content policy and component?
 → Each component instance on a page references a policy via cq:policy property.
 
 =============================================================================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+=============================================================================================
+ALL ABOUT **JAVA**
+- Java is a high-level, object-oriented programming language.
+- Java → Statically typed (type is checked at compile time).
+=============================================================================================
+Quick Important Points
+* Array is mutable we can modify it. we can change the value in the purticular place but we cant change the size of an array.
+* String is immutable.
+* Private method can't be overriden.
+* FINAL METHOD cannot be overloaded and overridden in child classes.
+* Abstract method: method with no body.
+* Concrete method: Method with body.
+* To convert and array in to a List -> Arrays.asList(arrName);
+* To convert a List to an Array -> v1.toArray()
+* We cant give primitive datatypes(int, String, Boolean) to generics.
+
+=============================================================================================
+
+1) Call by value : In Java, call by value means that when you pass a variable to a method, a copy of the variable’s value is passed — not the actual
+variable itself. So, any changes made to the parameter inside the method do not affect the original variable outside the method.
+
+-----------------------------------------------------------
+2) Garbage Collection : Garbage Collection in Java is a process by which Java automatically removes unused or unreferenced objects from memory (the heap) to free up space.
+- When you create objects in Java using new, they take up memory. If no part of your program is using that object anymore (no references to it), Java will
+   automatically detect it and delete it from memory — this process is called Garbage Collection.
+
+- Types of memories in java:
+    a)Stack: For method calls and local variables. Stack memory is used for method execution. It stores local variables and method calls. The memory is automatically cleared when the method finishes.
+    b)Heap : For objects and instance variables. Heap memory is used to store objects created using new. It is shared by all parts of the program. Objects in the heap stay there until they are no longer referenced,
+             then garbage collection removes them.
+
+-----------------------------------------------------------
+3) STATIC
+- static in Java means something that belongs to the class, not to any object, and it can be accessed without creating an object.
+- The main use of static is to define common things that should be shared across all objects — and to access them without creating an object.
+* To access a non-static method from static, we have to create an object.
+* Static method can only access the static variables.
+* Static methods can only access static methods
+* Non-Static can access both static and non-static methods
+
+-----------------------------------------------------------
+4) Dynamic Binding (also called Late Binding or Runtime Polymorphism) : it means that the method to be called is decided at runtime, not at compile time.
+- here we create a reference for a parent class and assign to the child object.
+
+-----------------------------------------------------------
+5) ABSTRACT CLASS
+
+- An abstract class in Java is a class that cannot be instantiated on its own and can have abstract methods (methods without a body)
+  as well as regular methods (with a body).
+- Declared using the keyword abstract.
+- Can have both abstract and concrete methods.
+- A subclass that extends an abstract class must implement all abstract methods (unless it’s also abstract).
+- Used To define a template for subclasses.
+- To allow code reuse by including concrete methods in the abstract class.
+
+eg:
+abstract class Animal {
+    // Abstract method (no body)
+    abstract void sound();
+
+    // Regular method
+    void sleep() {
+        System.out.println("Animal is sleeping");
+    }
+}
+
+-> Animal obj = new Animal(); //Not allowed
+
+Note: Cannot be instantiated” means that you cannot create an object of that class directly using the new keyword.
+
+-----------------------------------------------------------
+6) INTERFACES
+- Its like a plan for a classes
+- Interfaces are used to define a contract that classes must follow. Any class that implements an interface must provide the implementation
+  for its abstract methods.
+- Interfaces contains only abstract methods.
+- In interfaces all the methods are abstract and all the variables are public, static, final
+- Using this we can achieve multiple inheritance (since Java does not support multiple class inheritance).
+- we cannot create object for interfaces.
+
+
+-----------------------------------------------------------
+-----------------------------------------------------------
+OOPS
+
+1) Abstraction :
+- Abstraction is the concept of hiding the internal implementation of a class and showing only the functionality to the user.
+- We hide the unnecessary details.
+
+Eg: Interfaces, Abstract classes
+
+------------------------
+2) Inheritance : Inheritance in Java is a concept where one class can use the properties and methods of another class.
+- Types of inheritance that java supports:
+a) Single Inheritance [SUPPORTED]
+b) Multilevel Inheritance : b inherits a , and c inherits b [SUPPORTED]
+c) Hierarchical Inheritance: Multiple classes inherit from one parent class. [SUPPORTED]
+eg: class A { }
+    class B extends A { }
+    class C extends A { }
+
+d) Multiple Inheritance (by classes) : A class inherits from more than one class. [NOT SUPPORTED], and this can be possible using interfaces
+
+------------------------
+3) Encapsulation (here we restrict the direct access to our main class, we use private methods for that)
+- Encapsulation is the process of bundling variables and methods (functions) that operate on the data within a "single unit", known as a class.
+   It helps protect an object’s internal state by restricting direct access to its attributes and providing controlled access through public methods.
+- Encapsulation is the concept of hiding the internal details of a class and only allowing access through public methods. (DATA HIDING)
+- we use public getter and setter methods to access and update the variables.
+
+------------------------
+4) POLYMORPHISM
+- Polymorphism means one thing can take many forms.
+- In Java, it allows a single method or object to behave differently in different situations.
+Eg: Method overloading(Compile-time Polymorphism), method overriding(Runtime Polymorphism)
+
+-----------------------------------------------------------
+-----------------------------------------------------------
+OPTIONAL OOPS (Association, Aggregation, Composition)
+
+
+a) Association : (here both classes are independable) Association is a relationship between two separate classes where one class uses or interacts with another class,
+                 but both can exist independently. It represents a “uses-a” relationship.
+Eg:
+class Teacher {
+    String name;
+    Teacher(String name) { this.name = name; }
+}
+
+class Student {
+    String name;
+    Student(String name) { this.name = name; }
+
+    void assignTeacher(Teacher t) {  //here we are using the Association
+        System.out.println(this.name + " is assigned to teacher " + t.name);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Teacher t1 = new Teacher("Mr. Sharma");
+        Student s1 = new Student("Bhargav");
+
+        s1.assignTeacher(t1); // Bhargav is assigned to teacher Mr. Sharma
+    }
+}
+
+
+----------------------------------
+2) Aggregation (here both classes are independable)
+- Aggregation is a special form of association that represents a “Has-A” relationship between two classes.
+- Aggregation is a relationship where one class owns or uses another class, but the contained object can exist independently of the container object. The part can exist without the whole.
+- Has-A relationship but can live without it.
+
+EG:
+class Department {
+    String name;
+    Department(String name) { this.name = name; }
+}
+
+class College {
+    String name;
+    Department dept;    //AGGREGATION  <-------------------------
+
+    College(String name, Department dept) {
+        this.name = name;
+        this.dept = dept;
+    }
+
+    void show() {
+        System.out.println(name + " has department " + dept.name);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Department d = new Department("Computer Science");
+        College c = new College("SRKR College", d);
+        c.show(); // SRKR College has department Computer Science
+    }
+}
+
+----------------------------------
+3) Composition (Both classes are dependable)
+- Composition is a stronger form of aggregation. In composition, the contained object cannot exist without the container —
+  both have a dependent life cycle.
+- Has-A relationship and cannot live without it.
+
+Eg:
+class Engine {
+    void start() {
+        System.out.println("Engine started");
+    }
+}
+
+class Car {
+    private Engine engine;
+
+    Car() {
+        engine = new Engine(); // created inside the class → tightly bound    <----------------------------
+    }
+
+    void startCar() {
+        engine.start();
+        System.out.println("Car started");
+    }
+}
+
+
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+COLLECTIONS
+- The Java collection framework is a set of classes and interfaces that provide a standard way of representing, manipulating and storing collections of objects .
+
+* Important Points:
+- List: an ordered collection of elements that allows duplicates.
+- Set: a collection of elements that do not allow duplicates.
+- Map: a collection of key-value pairs, where each key is unique.
+- Queue: a queue is a data structure that is used to store elements in a First-In-First-Out (FIFO) manner.
+
+1) List:
+- It is an ordered collection of objects, where each element has a distinct position in the list.
+- allows duplicates and nulls.
+
+a) ArrayList
+- its a growable or resizable array.
+- It maintains order
+- Allows duplicates
+
+b) LinkedList
+- It can impliment either List or Queue.
+- It is good for inserting and deleting at the beginning and middle
+- it is like a chain of nodes where each node can point to the previous and next node.
+
+---------------------------
+*) Iterator
+- we use this when we want to go through every element in the list and access the elements accordingly.
+- Its a one directional means can go from start to end (.hasNext()).
+- Its an interface
+
+*) ListIterator
+- it is only applicable for the classes which are only implimenting list interface.
+- its a bi-directional. (.hasNext(), .hasPrevious()) and it has read and write access.
+
+---------------------------
+*) Generics : To restrict the datatype of the elements you want to store in the list.
