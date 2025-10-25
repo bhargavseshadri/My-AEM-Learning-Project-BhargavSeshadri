@@ -29,7 +29,7 @@ import java.util.Set;
         service = WorkflowProcess.class,
         immediate = true,
         property = {
-                "process.label" + " = Bhargav Workflow Process",  /*MANDITORY property: whatever label we have provided here, then with the same name this
+                "process.label" + " = Bhargav Custom Workflow Process",  /*MANDITORY property: whatever label we have provided here, then with the same name this
                                                                     process will be available in the process step dropdown*/
                 Constants.SERVICE_VENDOR + "= BhargavSeshadri",
                 Constants.SERVICE_DESCRIPTION + " = Bhargav Custom  workflow Process."

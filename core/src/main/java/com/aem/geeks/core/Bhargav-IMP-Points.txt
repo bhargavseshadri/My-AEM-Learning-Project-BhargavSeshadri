@@ -11,6 +11,7 @@ IMPORTANT PATHS
 -> Workflow model usually stored in to places in our jcr
        1. Design Model - Stored Under (crx) : /conf/global/settings/workflow/models
        2. Runtime Model - Stored Under (crx) : /conf/global/settings/workflow/models
+       * The WF STEP dialog values are stored inside : /conf/global/settings/workflow/models/bhargav-personal-workflow/jcr:content/flow/geeksworkflowstep/metaData
 
 =============================================================================================
 ***VERY IMPORTANT NOTES***
@@ -239,7 +240,7 @@ In this scenario JOB SCHEDULERS enter, we can write three jobs for these three c
 ----------------------------------------
 * Custom WF Process
 - When no existing process is available based on our requirement then we can write our own custon WF process. This "CUSTOM WF PROCESS" is available in
-  the dropdown Of PROCESS STEP. this will won't have a dialog.
+  the dropdown Of "PROCESS STEP"(this process step is provoded by aem only in this we use it). this will won't have its own dialog.
 - To write this we have to impliment an interface called "WorkflowProcess"
 
 NOTE: execute(WorkItem workItem, WorkflowSession workflowSession, MetaDataMap processArguments) uses of these parameters in this manditory method
@@ -250,6 +251,29 @@ NOTE: execute(WorkItem workItem, WorkflowSession workflowSession, MetaDataMap pr
                     .that payload and the other information should be available in our Custom WF Process and that all information is available in "WorkItem".
                     apart from the available information we can also pass the other information as we want.
 
+----------------------------------------
+Note: Custom WF Process and Custom WF step is not same, the difference is Custom WF Process is a backend module and it won't have it own step
+      we use the already available "PROCESS STEP" to use this Custom WF Process, But in "Custom WF step" we have a Custom WF Process and also
+      its own step in the available steps and also have its own dialog box.
+
+----------------------------------------
+* Custom Workflow STEP
+- Combination of Custom WF Process + Component(this comp wont have any rendering script and backend module) is called a Custom Workflow STEP.
+- The comp will have a cq:dialg, cq:editConfig
+- this step will be available in the available steps in the WF Model console.
+
+* COMPONENT:
+- (IMP) The comp will have a cq:dialg, cq:editConfig. and  cq:editConfig has a child node called cq:formParameters and in that there is a property called "PROCESS"
+        , for that property we give the value of our custom wf process, so in this way using that property we link this comp to our custom wf process.
+- And in our component "sling:resourceSuperType="cq/workflow/components/model/process", means our comp is just inheriting the existing "PROCESS STEP" by pointing to it.
+- In cq:formParameters node for "PROCESS" property we give the custom wf process as a value.
+    eg: PROCESS="com.aem.geeks.core.workflows.GeeksWorkflowStep"
+
+- (IMP) In the component the dialog fields name property value should be given with metadata.
+            - Eg: for brand field name:./metaData/BRAND
+            - So this is because when the model is saved this will save the data in a node called metadata.
+
+- All the values given in the WF STEP dialog box are stored inside this metadata node:  /conf/global/settings/workflow/models/bhargav-personal-workflow/jcr:content/flow/geeksworkflowstep/metaData
 
 =============================================================================================
 16) USING ResourceResolver and Session and modifying the nodes (Basic Codes)

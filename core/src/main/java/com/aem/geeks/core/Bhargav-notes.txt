@@ -208,6 +208,34 @@ STEP: 3 -(specific to here use case) : give some info in arguments in process st
 STEP: 4 - Now trigger the WF by providing the page path, after wf gets completed you can see the process step arguments data we given
           got added in the page jcr:content node as a properties.
 
+-------------------------------------------------------------
+* CUSTOM WORKFLOW STEP
+- Combination of Custom WF Process + Component(this comp wont have any rendering script and backend module) is called a Custom Workflow STEP.
+-IMP- The comp will have a cq:dialg, cq:editConfig. and  cq:editConfig has a child node called cq:formParameters and in that there is a property called "PROCESS"
+      , for that property we give the value of our custom wf process, so in this way using that property we link this comp to our custom wf process.
+
+STEP: 1 - Creating a custom WF Process for Custom Workflow STEP - com/aem/geeks/core/workflows/GeeksWorkflowStep.java
+STEP: 2 - Creating a Component - apps/aemgeeks/components/workflow/geeksworkflowstep
+Step: 3 - Add you step in the WF Model.
+
+
+* NOTE:  If you didn't find your step in the available steps, this means our Comp group is not allowed. so add your comp group in design node.
+- So open the properties in that WF Model console. and go to advanced tab and copy the default design node.
+- In crx go to our design node "/libs/settings/wcm/designs/default" and then inside go to /jcr:content/model/flow and in the "components" check of your component
+   group is present or not.
+- If not present then we have to add our component group. but modifying /libs/ path is not at all advisable. so we have to overlay (or) the override the that libs design node.
+
+* OVERLAYING (or) OVERRIDING THE LIBS NODE (doing in crx, but we can do through code also by pkging it out and putting in our code folder and giving a push)
+STEP: 1 - Copy the design node "/libs/settings/wcm/designs/default"
+STEP: 2 - Go to "apps/settings/wcm/designs" node and paste it there and rename the node from default to whatever you want.
+STEP: 3 - Remove all the other nodes and folder, which we dont use. and keep /jcr:content/model
+STEP: 4 - Do the modifications needed.
+
+- Following steps are only specific to this use case.
+STEP: 7 - Here in this use case add the component group in component property inside /jcr:content/model/flow node.
+STEP: 6 - Now in the WF Model console -> in properties -> in advanced tab -> give our own overridden design node "/apps/settings/wcm/designs/geeks"
+STEP: 7 - Now you can see your WF Step in the available steps. Drag and drop it.
+
 =============================================================================================
 
 
