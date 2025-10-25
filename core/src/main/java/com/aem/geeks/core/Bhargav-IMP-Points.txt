@@ -13,12 +13,12 @@ IMPORTANT PATHS
        2. Runtime Model - Stored Under (crx) : /conf/global/settings/workflow/models
 
 =============================================================================================
-MAIN
+***VERY IMPORTANT NOTES***
 -> From Request --> we can get Resource --> We get ValueMap
 -> From Request  --> We can get ResourceResolver  --> From ResourceResolver we can get PAGEMANAGER  --> From PageManeger we can get the page
                                                   --> From ResourceResolver we can get the SESSION  --> From Session we can get the NODE
                                                   --> From ResourceResolver we can get the Resource(using GetResource())  --> From Resource we can get the NODE
-
+-> In WF Process --> Using "WorkflowSession" we get the "ResourceResolver", "Session".
 =============================================================================================
 2) Global Objects available in HTL (most common ones)
 
@@ -51,14 +51,19 @@ b) Services : No manditory methods
 c) Servlets :
         - ResourceType : No manditory Methods, but based on the requirement we will use doGet, doPost, doPut, doDelete
         - PathType     : No manditory Methods, but based on the requirement we will use doGet, doPost, doPut, doDelete
+
 d) Configurations:
         - Normal   : No manditory method, but have to define "activate" method to get the config values
         - Factory Configuration : a) Activate - not a manditiory, but have to define for getting the config values.
                                   b) BIND Method
                                   c) UnBind Method
+
 e) Schedulers : we have two types of schedulers 1) Runnable, 2)Job Scheduler
                 1)Runnable : RUN() method is the manditory one. "activate method", Not a manditory method, but to get the config values we define it
                 2)Job  : execute(JobContext jobContext) is the manditory method, "activate method", Not a manditory method, but to get the config values we define it
+
+f) Workflow :
+            1) Custom WF Process : execute(WorkItem workItem, WorkflowSession workflowSession, MetaDataMap processArguments)
 
 =============================================================================================
 4) PAGE MANAGER
@@ -230,6 +235,20 @@ In this scenario JOB SCHEDULERS enter, we can write three jobs for these three c
 - Two make the changes go from Design to Runtime we have to click the "SYNC".
 * Basically to trigger a workflow we need Two things 1.Workflow Model, 2.Payload(means the content path on which we want to run our WF, like page, asset etc)
     - Incase of triggering WF using code, then in that case to get this Payload we will use "WorkflowSession"
+
+----------------------------------------
+* Custom WF Process
+- When no existing process is available based on our requirement then we can write our own custon WF process. This "CUSTOM WF PROCESS" is available in
+  the dropdown Of PROCESS STEP. this will won't have a dialog.
+- To write this we have to impliment an interface called "WorkflowProcess"
+
+NOTE: execute(WorkItem workItem, WorkflowSession workflowSession, MetaDataMap processArguments) uses of these parameters in this manditory method
+        * WorkflowSession: Using this we can get the backend objects, using this only we get the ResourceResolver, Session using this WorkflowSession.
+        * MetaDataMap : If we pass any data to the dialog, that data we can get using this.(in case of custom WF process we get the data we have
+                        given in "ARGUMENTS" process step dialog box)(in case of normal process step we can get the data we have given in dialog box of that step).
+        * WorkItem : we might have the steps before and after our process step, and there will be an information and payload flowing from starting of our WF model till end
+                    .that payload and the other information should be available in our Custom WF Process and that all information is available in "WorkItem".
+                    apart from the available information we can also pass the other information as we want.
 
 
 =============================================================================================
