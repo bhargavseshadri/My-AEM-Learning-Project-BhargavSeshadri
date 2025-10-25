@@ -12,6 +12,11 @@ Basic Important Points
 -> For textfield or text areas : maxLength = "{Long}10"
 -> For setting range : min = "{double}1000" , max = "{double}1000"
 -> cq:design_dialog only used for static templates
+-> immediate=true Whenever we want to activate the service immediately after the bundle gets started in that place we use this.
+-> Apache Sling : Apache Sling is a web framework used by AEM that maps HTTP requests to content resources stored in the JCR (Java Content Repository) and
+                  renders responses dynamically.
+-> OSGI : OSGi (Open Services Gateway initiative) is a Java-based modular framework that allows AEM to run applications as independent, reusable, and dynamically
+          updatable components called bundles.
 
 =============================================================================================
 DEFINITIONS
@@ -19,6 +24,9 @@ DEFINITIONS
 2) Immediate = true -> Whenever we want to activate the service immediately after the bundle gets started in that place we use this.
 3) req.setAttribute() AND req.getAttribute() :  storing temporary data in the HttpServletRequest object using setAttribute() and later read it back using getAttribute().
 4) Headless CMS : and application or the CMS seperate there content from any other layer like presentation layer, and that seperated content will we served by the third party system, then it is called headless.
+5) ValueMap : In AEM, valueMap is a special map like object that store and retrives properties of a JCR node in a convinient way, its a wrapper around our node and hepls us in
+                accessing the properties of that node.
+6) Services: AEM Services are OSGi components (Java classes) that contain business logic or reusable functionality, and can be shared across different parts of the AEM application.
 
 =============================================================================================
 AEM & OSGI ARCHITECTURE
@@ -30,10 +38,10 @@ OSGI ARCHITECTURE:
 4. Execution environment: It is the runtime environment of the java and responsible for loading the relevant classes at the time of execution
 
 AEM ARCHITECTURE:
---> Application layer : Here we have various ca[pabilities like sites, forms, etc
---> WEB APPLICATION FRAMEWORK(apache sling) : rest based web application framework, helps in cosuming and exposing the content in jcr and interaction with osgi java container
---> JCR Repositiry(apache jack rabbit oak)(storage layer): what ever the content that author added will be stored here
---> OSGI JAVA CONTAINER(apache felix): used for moduler development, and provides various functionalities in form of modules, components etc
+-->4. Application layer : Here we have various ca[pabilities like sites, forms, etc
+-->3. WEB APPLICATION FRAMEWORK(apache sling) : rest based web application framework, helps in cosuming and exposing the content in jcr and interaction with osgi java container
+-->2. JCR Repositiry(apache jack rabbit oak)(storage layer): what ever the content that author added will be stored here
+-->1. OSGI JAVA CONTAINER(apache felix): used for moduler development, and provides various functionalities in form of modules, components etc
 
 =============================================================================================
 ==> Lifecycle in OSGi
@@ -45,6 +53,7 @@ AEM ARCHITECTURE:
 
 =============================================================================================
 ==> SERVLETS
+- A Servlet is a Java class that  handles HTTP requests (like GET, POST) and generates HTTP responses (like HTML, JSON, XML).
 
 -> When a servlet runs, Sling (and the underlying web server Jetty) automatically gives it two key objects:
    SlingHttpServletRequest → the HTTP request (what the browser sent)
@@ -57,13 +66,18 @@ a) ResourceType Servlets
 -> Here we can use extensions, Selectors, and methods
 - these servlets can be accessed controlled using a jcr repo ACL
 - if we do not provide any method then the default method is GET
+-> Cases when we prefer ResourceType
+a) Dynamic component behavior: When the servlet needs to render or process requests specific to a component.
+b) Component-based JSON export: For example, exporting data only for a news-page component.
+c) Great for component-specific functionality.
 
 b) PathType Servlets
 -> Path @SlingServletPaths(value=__)
 -> ACL access is not present
 -> fixed url endpoint
 
--> Benifits
+-> Benifits of pathType
+- when we want our servlet to be Independent of page/component structure then we use this pathType.
 - Creating utility endpoints (like APIs)
 - Handling AJAX calls from frontend
 - Exposing data externally
@@ -129,7 +143,7 @@ CRXDE FOLDER STRUCTURE
 -> libs: OOTB things present here, we can use this but we cant modify
 
 =============================================================================================
-MODELS & SERVICES
+SLING MODELS & SERVICES
 
 PROBLEM: for one SERVICE interface class ,there is two implimentation classes, so in this scenario, which service have to executed?
 
@@ -145,7 +159,7 @@ BASEPAGE COMPONENT
   homepage or content page extend it using sling:resourceSuperType, so they automatically inherit its HTML structure and scripts. It helps maintain
   consistency, reuse, and easy maintenance across all pages.
   Example: -> create your own base page component and point it to core page component using sling:resourceSupertype.
-           -> And based on our need we can create a components and give the sling:ResourceType points to our base page component (in these comps we can use/inherit the files which are
+           -> And based on our need we can create a Templates and pages and give the sling:ResourceType points to our base page component (in these comps we can use/inherit the files which are
            either present in our page component or base core base page comp)
 
 

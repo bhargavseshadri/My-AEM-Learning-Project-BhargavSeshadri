@@ -10,6 +10,13 @@ IMPORTANT PATHS
 -> To Check the status of the scheduler : /system/console/status-slingscheduler
 
 =============================================================================================
+MAIN
+-> From Request --> we can get Resource --> We get ValueMap
+-> From Request  --> We can get ResourceResolver  --> From ResourceResolver we can get PAGEMANAGER  --> From PageManeger we can get the page
+                                                  --> From ResourceResolver we can get the SESSION  --> From Session we can get the NODE
+                                                  --> From ResourceResolver we can get the Resource(using GetResource())  --> From Resource we can get the NODE
+
+=============================================================================================
 2) Global Objects available in HTL (most common ones)
 
 -> Enumerable Objects : These objects provides a "VALUEMAP" which contains the information, we can access that info.
@@ -46,7 +53,7 @@ d) Configurations:
         - Factory Configuration : a) Activate - not a manditiory, but have to define for getting the config values.
                                   b) BIND Method
                                   c) UnBind Method
-e) Schedulers : we have two types of schedulers 1) Runnable, 2)Job Schedulet
+e) Schedulers : we have two types of schedulers 1) Runnable, 2)Job Scheduler
                 1)Runnable : RUN() method is the manditory one. "activate method", Not a manditory method, but to get the config values we define it
                 2)Job  : execute(JobContext jobContext) is the manditory method, "activate method", Not a manditory method, but to get the config values we define it
 
@@ -67,15 +74,14 @@ Page page=pageManager.getPage("/content/aemgeeks/us/en");
                 - Job :  @Component(immediate = true, service = Job.class)
 
 --> Service : @Component(Service = bhargavService.class)  - bhargavService is my interface and I am linking it to my implimentation class using @Component
-
+--> Workflow : @Component(service=workflowProcess.class)
 =============================================================================================
 6) ANNOTATIONS:
 @Activate : when we want something to load or activate at the time of this service initializations, there we use this
 @ObjectClassDefinition(name, definition) : used for defining osgi configuration.
-@Activate : when we want something to be load or executed at the time of this service initiation
 @Modified : It is a lifecycle callback method annotation used in OSGi components. It marks a method that should be called whenever the OSGi configuration for that component is changed at runtime, without restarting the bundle.
 - In simple words, When you change configuration values, AEM will automatically re-invoke the method annotated with @Modified, So your service picks up
-the new configuration immediately — without redeploying or restarting AEM.
+  the new configuration immediately — without redeploying or restarting AEM.
 
 =============================================================================================
 7) SERVLETS - GET and POST requests explanation

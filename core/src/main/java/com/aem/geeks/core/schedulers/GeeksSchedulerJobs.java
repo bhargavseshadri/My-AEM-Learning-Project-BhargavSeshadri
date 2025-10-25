@@ -54,8 +54,8 @@ public class GeeksSchedulerJobs implements Job {   //Implimenting the JOB interf
         inMap.put("country","IN");                         //we are putting the data in to the map
         inMap.put("url","www.in.com");
         in.config(inMap);                       //we are getting ".config(Map)" method from ScheduleOptions
-
         scheduler.schedule(this,in);
+
         ScheduleOptions de = scheduler.EXPR("0 04 17 1/1 * ? *");
         Map<String, Serializable> deMap=new HashMap<>();
         deMap.put("country","DE");

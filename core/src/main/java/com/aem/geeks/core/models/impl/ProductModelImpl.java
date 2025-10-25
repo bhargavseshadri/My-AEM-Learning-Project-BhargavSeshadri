@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 
-//BhargavSeshadri: Sling Model Demo, here we have all the info about sling model and services
+//BhargavSeshadri - STEP:3 - Sling Model Demo, here we have all the info about sling model and services
 //Note: The Sling Model Should adapt either Resource.class or SlingHttpServletRequest.class. or both
 @Model(adaptables = {Resource.class, SlingHttpServletRequest.class}, adapters = ProductModel.class, defaultInjectionStrategy = DefaultInjectionStrategy.OPTIONAL)
 public class ProductModelImpl implements ProductModel{
@@ -92,7 +92,7 @@ public class ProductModelImpl implements ProductModel{
 
     @Override
     public List<Map<String, String>> getProductDetailsWithMap() {
-        List<Map<String, String>> productDetailsMap=new ArrayList<>();  //here we are creating a map
+        List<Map<String, String>> productDetailsMap=new ArrayList<>();  //here we are creating a list
         try {
             Resource productDetail=componentResource.getChild("productdetails");  //here we got the current resource using componentResource and from there we are going to the child multifield node
             if(productDetail!=null){

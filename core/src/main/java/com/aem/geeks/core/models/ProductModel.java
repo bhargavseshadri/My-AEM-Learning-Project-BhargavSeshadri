@@ -5,6 +5,8 @@ import com.aem.geeks.core.services.OSGiFactoryConfig;
 import java.util.List;
 import java.util.Map;
 
+//BhargavSeshadr - STEP:2 - SLING MODEL
+
 public interface ProductModel {
     public String getProductName();
     public String getProductPrice();
