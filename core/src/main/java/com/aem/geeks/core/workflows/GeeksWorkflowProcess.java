@@ -57,7 +57,7 @@ public class GeeksWorkflowProcess implements WorkflowProcess {
             if (workflowData.getPayloadType().equals("JCR_PATH")) {
                 Session session = workflowSession.adaptTo(Session.class); //getting the session using "WorkflowSession"
 
-                //here we are getting the payload and then we are going to the /jcr:content node of that.
+                //here we are getting the payload as a string and then we are going to the /jcr:content node of that.
                 String path = workflowData.getPayload().toString() + "/jcr:content";
 
                 //converting that string path in to a Node and getting hold of that node.

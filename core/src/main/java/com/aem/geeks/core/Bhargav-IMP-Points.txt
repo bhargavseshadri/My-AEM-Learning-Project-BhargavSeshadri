@@ -14,12 +14,7 @@ IMPORTANT PATHS
        * The WF STEP dialog values are stored inside : /conf/global/settings/workflow/models/bhargav-personal-workflow/jcr:content/flow/geeksworkflowstep/metaData
 
 =============================================================================================
-***VERY IMPORTANT NOTES***
--> From Request --> we can get Resource --> We get ValueMap
--> From Request  --> We can get ResourceResolver  --> From ResourceResolver we can get PAGEMANAGER  --> From PageManeger we can get the page
-                                                  --> From ResourceResolver we can get the SESSION  --> From Session we can get the NODE
-                                                  --> From ResourceResolver we can get the Resource(using GetResource())  --> From Resource we can get the NODE
--> In WF Process --> Using "WorkflowSession" we get the "ResourceResolver", "Session".
+
 =============================================================================================
 2) Global Objects available in HTL (most common ones)
 
@@ -276,7 +271,7 @@ Note: Custom WF Process and Custom WF step is not same, the difference is Custom
 - All the values given in the WF STEP dialog box are stored inside this metadata node:  /conf/global/settings/workflow/models/bhargav-personal-workflow/jcr:content/flow/geeksworkflowstep/metaData
 
 =============================================================================================
-16) USING ResourceResolver and Session and modifying the nodes (Basic Codes)
+16) USING ResourceResolver and Session and modifying the nodes (Basic Codes) (IN-DEPTH ABOUT THIS IN NEXT BLOCK)
 
 - In SERVLET(where the methods give us in-built Request) (So we get a resourceResolver using that request)
 Steps:
@@ -311,3 +306,204 @@ Steps:
 ** In sling model we get the "ResourceResolver" using
    @SlingObject
     private ResourceResolver resourceResolver;
+
+=============================================================================================
+*** VERY IMPORTANT NOTES **** GETTING ResourceResolver, Resource, Request, Session, Node ***
+
+IMP POINTS:
+> Session always comes from ResourceResolver, and ResourceResolver comes from request, resource, or resolverFactory depending on context.
+> In Servlets or Sling Models, AEM automatically provides a ResourceResolver because they are request-based (A Sling request gives you a resolver).
+> But in Services, Schedulers, or Workflows, there is no request and no automatic context — so AEM doesn’t know who is trying to access the repository.
+  in that cases we need "ResourceResolverFactory" to get the ResourceResolver.
+> In WF Process --> Using "WorkflowSession" we get the "ResourceResolver", "Session".
+>
+---------------------------------------
+* WAYS OF GETTING HOLD OF NODE and DOING READ AND WRITE AND THEN SAVING IT
+
+1) Using ResourceResolver (Common way – read + write)
+        - Getting the hold of resource using ResourceResolver
+            Resource resource = resourceResolver.getResource("/content/mySite/page/jcr:content");
+
+        - Reading the node properties of that resource
+            Node node = resource.adaptTo(Node.class);    //here we are converting our resource to node.
+            String title = node.getProperty("jcr:title").getString();
+
+        - Reading the node properties of that resource and saving the session.
+            Node node = resource.adaptTo(Node.class);
+            node.setProperty("jcr:description", "Updated via ResourceResolver");
+            node.getSession().save();
+
+---------------------------------------
+2) Using JCR Session
+        - Getting the session using ResourceResolver
+            ResourceResolver resourceResolver = request.getResourceResolver();
+            Session session = resourceResolver.adaptTo(Session.class);
+
+        - Reading
+            Node node = session.getNode("/content/mySite/page/jcr:content");
+            String title = node.getProperty("jcr:title").getString();
+
+        - Writing and saving
+            node.setProperty("jcr:description", "Updated via Session");
+            session.save();
+
+---------------------------------------
+3) In SLING MODEL : in sling model we can directly get the resource, without using ResourceResolver.
+
+    - getting the current resource
+            @Inject
+            private Resource resource;
+
+    - Getting the Node and reading
+            Node node = resource.adaptTo(Node.class);
+            String propValue = node.getProperty("jcr:title").getString();
+
+    - Writing and saving
+            node.setProperty("jcr:description", desc);
+            node.getSession().save();
+
+* Here using @SlingObject also we can get the ResourceResolver
+            @SlingObject
+             private ResourceResolver resourceResolver;
+
+---------------------------------------
+4) In Servlet :
+* The methods like doGet and doPost will in-built give the "SlingHttpServletRequest request" from the request we can get the "ResourceResolver"
+    - Getting the ResourceResolver
+            protected void doGet(SlingHttpServletRequest request, SlingHttpServletResponse response){
+                    ResourceResolver resolver = request.getResourceResolver();
+
+    - Using this ResourceResolver we get the hold of resource
+            Resource resource = resolver.getResource("/content/mySite/page/jcr:content");
+
+    - Coverting the available resource to node
+            Node node = resource.adaptTo(Node.class);
+
+    - Reading, writing and saving
+            String title = node.getProperty("jcr:title").getString();
+
+            node.setProperty("jcr:description", "Updated via Servlet");
+            node.getSession().save();
+
+---------------------------------------
+5) In Service, Scheduler :
+* Here in service we use "ResourceResolverFactory" to get the ResourceResolver.
+* Demo for this refer
+    1) com/aem/geeks/core/utils/ResolverUtil.java
+    2) com/aem/geeks/core/services/impl/ComponentsInfoServiceImpl.java
+
+    - Getting ResourceResolverFactory
+            @Reference
+            private ResourceResolverFactory resolverFactory;
+
+    - Getting ResourceResolver using ResourceResolverFactory
+            final Map<String, Object> paramMap = new HashMap<String, Object>();
+            paramMap.put( ResourceResolverFactory.SUBSERVICE, GEEKS_SERVICE_USER );
+            ResourceResolver resolver = resourceResolverFactory.getServiceResourceResolver(paramMap);  //here we got the ResourceResolver
+
+    - Getting the resource using ResourceResolver
+            Resource resource = resolver.getResource("/content/mySite/page/jcr:content");
+
+    - Converting this resource to node
+            Node node = resource.adaptTo(Node.class);
+
+    - Reading, Writing and saving
+            String title = node.getProperty("jcr:title").getString();
+            node.setProperty("jcr:description", "Updated via OSGi Service");
+            node.getSession().save();
+
+---------------------------------------
+6) In Workflow
+* Using "WorkflowSession" we get the "ResourceResolver", "Session".
+* Reference is in ->  com/aem/geeks/core/workflows/GeeksWorkflowProcess.java
+
+    - Getting the JCR:Session and Payload path
+            public void execute(WorkItem workItem, WorkflowSession workflowSession, MetaDataMap processArguments) {
+                    Session session = workflowSession.adaptTo(Session.class);   //Got the session
+                    WorkflowData workflowData = workItem.getWorkflowData();
+                    String path = workflowData.getPayload().toString() + "/jcr:content";   // got the payload resource path as a string
+
+    - Getting Node using session
+            Node node = (Node) session.getItem(path);
+
+    - Writing and saving
+            node.setProperty("jcr:description", "I am in Workflow");
+            session.save();
+
+---------------------------------------
+7) Special mention - Using Page API
+    - Getting hold of resource
+          Page page = pageManager.getPage("/content/mySite/page");
+          Resource contentRes = page.getContentResource();  //here we directly got the jcr:content
+
+    - Reading using ValueMap
+          ValueMap props = contentRes.getValueMap();
+          String title = props.get("jcr:title", String.class);
+
+    - Reading, Writing and saving using node
+          Node node = contentRes.adaptTo(Node.class);
+          String title = node.getProperty("jcr:title").getString();
+          node.setProperty("jcr:description", "Updated via Page API");
+          node.getSession().save();
+
+---------------------------------------
+* MAPS - COMPLETE IMPORTANT map showing how Resource, ResourceResolver, Node, Session, and related APIs connect across AEM.
+
+[ ResourceResolverFactory ]
+          │
+          ▼
+ [ ResourceResolver ] ────► provides access to Repository (read/write)
+          │
+          ├──► getResource("/path/to/node")
+          │        │
+          │        ▼
+          │    [ Resource ]  ← Sling representation of a JCR node
+          │        │
+          │        ├──► adaptTo(ValueMap) → for reading properties
+          │        └──► adaptTo(Node) → for direct JCR access
+          │                 │
+          │                 ├──► getProperty("jcr:title") → read
+          │                 ├──► setProperty("prop", "value") → write
+          │                 └──► getSession() → obtain Session
+          │
+          └──► adaptTo(Session)
+                     │
+                     ▼
+              [ JCR Session ]
+                     │
+                     ├──► getNode("/path/to/node")
+                     ├──► save()   ← commits changes
+                     └──► logout() ← closes session
+
+---------------------------------------
+* Common Flows
+
+-> READING
+        ResourceResolver → getResource(path)
+               ↓
+        Resource → adaptTo(Node)
+               ↓
+        Node → getProperty("propName")
+
+-> WRITING
+        ResourceResolver → getResource(path)
+               ↓
+        Resource → adaptTo(Node)
+               ↓
+        Node → setProperty("prop", "value")
+               ↓
+        Node.getSession().save()
+
+
+-> Just One Line Summary
+        ResourceResolverFactory
+           ↓
+        ResourceResolver
+           ↓ getResource()
+        Resource
+           ↓ adaptTo(Node)
+        Node
+           ↓ getSession()
+        Session.save()
+
+=============================================================================================
