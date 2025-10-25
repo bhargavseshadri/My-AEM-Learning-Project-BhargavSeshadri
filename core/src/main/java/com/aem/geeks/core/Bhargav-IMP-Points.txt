@@ -8,6 +8,9 @@ IMPORTANT PATHS
 -> AEM replication agents : /etc/replication/agents.author.html
 -> Check the available run modes : /system/console/status-slingsettings
 -> To Check the status of the scheduler : /system/console/status-slingscheduler
+-> Workflow model usually stored in to places in our jcr
+       1. Design Model - Stored Under (crx) : /conf/global/settings/workflow/models
+       2. Runtime Model - Stored Under (crx) : /conf/global/settings/workflow/models
 
 =============================================================================================
 MAIN
@@ -207,7 +210,30 @@ so based on this to meet the requirement our scheduler should execute at three d
 In this scenario JOB SCHEDULERS enter, we can write three jobs for these three countries in one scheduler.
 
 =============================================================================================
-15) USING ResourceResolver and Session and modifying the nodes (Basic Codes)
+15) WORKFLOWS in AEM
+- Workflow model usually stored in to places in our jcr
+    1. Design Model - Stored Under : /conf/global/settings/workflow/models
+    2. Runtime Model - Stored Under : /conf/global/settings/workflow/models   -> when the workflow executes then this run time model will be used.
+
+- Workflow Steps are of Four Types:
+          1. Container Step : When we want to trigger an another model or another WF, in those case we use this step
+          2. Participant step : When we want a human interraction in our WF, like assigning a task to a human, in those case we use this step.
+          3. Decision Step : Performing a task based on a condition, mainly when we need a branching in our WF, in those case we use this step.
+                                  -> This is two types : OR, AND
+          4. Process Step : Custom WF processess are used using this process step. we will write our own custom process code and then we link that code with this step.
+
+- Calling of the Model : there are mainly 3 ways
+                                    1. Manual Trigger
+                                    2. Using Launcher : automating the trigger
+                                    3. Using API/Code : we can trigger the WF using any of the backend module like servlet, scheduler, Models etc
+
+- Two make the changes go from Design to Runtime we have to click the "SYNC".
+* Basically to trigger a workflow we need Two things 1.Workflow Model, 2.Payload(means the content path on which we want to run our WF, like page, asset etc)
+    - Incase of triggering WF using code, then in that case to get this Payload we will use "WorkflowSession"
+
+
+=============================================================================================
+16) USING ResourceResolver and Session and modifying the nodes (Basic Codes)
 
 - In SERVLET(where the methods give us in-built Request) (So we get a resourceResolver using that request)
 Steps:

@@ -170,7 +170,36 @@ STEP:2 - Create a OSGI Configuration to take the values for scheduler : com/aem/
 STEP:3(LAST STEP) - Connect and Use that configuration values in the scheduler : com/aem/geeks/core/schedulers/GeeksSchedulerJobs.java
 
 =============================================================================================
+8) WORKFLOWS in AEM
 
+* TRIGGERING THE WORKFLOW USING LAUNCHER
+- USE CASE: we will create a model which will create the page versions, when the WF executes.
+a) Creating a WF Model (No Code) IN AEM - /conf/global/settings/workflow/models/bhargav-personal-workflow.html
+1) Go to WF models console -> Create -> Give Title -> Done = Dummy Model is created in two places a) Design(/conf/global/settings/workflow/models), b)Runtime(/var/workflow/models)
+2) Adding the Steps : Go to your Model and delete any steps avaliable -> Now add the create version step from OOTB available steps -> and give that step a name and description. -> SYNC - That's it
+
+b) Creating a Launcher(No Code) : We create the laucher on the basis, as soon as my page is modified then that launcher should trigger the WF and then it should create a page version.
+1) go to tools -> Workflows -> Launchers -> Create -> Give the required fields like when it  should trigger(Node Created or Node Modified or Node Removed), and link it to the WF you want
+   (here we give NODE MODIFY, Our page path, type: CQ:PAGE, and Bhargav-Personal-Workflow)-> Then Activate the toggle button and then click Create. - Thats IT.
+-> Now go and modify your page.
+
+-------------------------------------------------------------
+* TRIGGERING THE WORKFLOW USING CODE/API in Backend
+NOTE: Incase of triggering WF using code, then in that case to give which "WF MODEL" to execute  and on which "PAYLOAD", we will use "WorkflowSession".
+
+-> Here we are triggering the WF using code in Servlet
+* SERVLET WORK: here whenever we hit the servlet path by providing the qurey parameter(here we give our pagepath as a query param) then the servlet executes and then
+                trigger the Workflow we have given.
+
+STEP: 1 (Only Step)- com/aem/geeks/core/servlets/ExecuteWorkflow.java
+* TO TRIGGER THE SERVLET -> http://localhost:4502/bin/executeworkflow?page=/content/aemgeeks/us/en/bhargavseshadritestpage
+- Then this servlet gets triggerrd and then it will go and trigger our WF.
+
+-------------------------------------------------------------
+* Writing Custom Workflow Process
+
+
+=============================================================================================
 
 
 
@@ -191,7 +220,7 @@ STEP:3(LAST STEP) - Connect and Use that configuration values in the scheduler :
 
 
 =============================================================================================
-3) HTL
+10) HTL
 a)data-sly-list:  LOOPING
 -> apps/aemgeeks/components/content/author-books/author-books.html
 -> Its model is in : com/aem/geeks/core/models/impl/AuthorBooksImpl.java
