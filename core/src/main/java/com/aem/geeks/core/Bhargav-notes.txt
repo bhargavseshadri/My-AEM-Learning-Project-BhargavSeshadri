@@ -202,7 +202,7 @@ STEP: 1 (Only Step)- com/aem/geeks/core/servlets/ExecuteWorkflow.java
 
 - WORK OF THIS "CUSTOM WF PROCESS" : We will provide some DATA in the "arguments" in the process step dialog box, and then we add that data we have given,
                                      in the jcr:properties of that payload or page.
-STEP: 1 - com/aem/geeks/core/workflows/GeeksWorkflowStep.java
+STEP: 1 - com/aem/geeks/core/workflows/GeeksWorkflowProcess.java
 STEP: 2 - in our WF model drag and drop the "Process Step" -> and in that dialog box dropdown, you can see our new CUSTOM WF Process with labe we given. select that.
 STEP: 3 -(specific to here use case) : give some info in arguments in process step dialog box. eg: approver:bhargav.
 STEP: 4 - Now trigger the WF by providing the page path, after wf gets completed you can see the process step arguments data we given
