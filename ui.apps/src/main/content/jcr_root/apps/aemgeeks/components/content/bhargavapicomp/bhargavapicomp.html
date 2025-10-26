@@ -13,5 +13,18 @@ STEP:3(LAST STEP) FETCHING DATA FROM THIRD PART API (step:1 com/aem/geeks/core/m
 <p>Number: ${obj.number}</p>
 <p>Street: ${obj.street}</p>
 <p>city: ${obj.city}</p>
+<h3>-------------------------------</h3>
+
+======================FETCHING EXTERNAL API DATA using ACCESS TOKEN=============================
+<!--BhargavSeshadri - STEP: 4 - By using a HTL in component, we render the data we got from the api
+For step:3 -> com/aem/geeks/core/models/UserAPISlingModel.java
+-->
+
+<sly data-sly-use.model="com.aem.geeks.core.models.UserAPISlingModel">
+    <div class="dummyjson-component">
+        <h3>DummyJSON: /auth/me user response</h3>
+        <pre>${model.meJsonString @ context='text'}</pre>
+    </div>
+</sly>
 
 
