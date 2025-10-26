@@ -21,9 +21,29 @@ For step:3 -> com/aem/geeks/core/models/UserAPISlingModel.java
 -->
 
 <sly data-sly-use.model="com.aem.geeks.core.models.UserAPISlingModel">
-    <div class="dummyjson-component">
-        <h3>DummyJSON: /auth/me user response</h3>
-        <pre>${model.meJsonString @ context='text'}</pre>
+
+    <div class="dummyjson-card" style="
+         width: 300px;
+         border: 1px solid #ccc;
+         border-radius: 10px;
+         overflow: hidden;
+         font-family: Arial, sans-serif;
+         padding: 15px;
+         color: #333;
+         box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    ">
+    	<img src="${model.imageUrl @ context='uri'}" alt="${model.firstName}"
+             style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover; margin-bottom: 15px;" />
+        <h2>${model.firstName} ${model.lastName} (${model.maidenName})</h2>
+        <ul style="list-style: none; padding: 0; margin: 0;">
+            <li><strong>Age:</strong> ${model.age}</li>
+            <li><strong>Gender:</strong> ${model.gender}</li>
+            <li><strong>Email:</strong> ${model.email}</li>
+            <li><strong>Phone:</strong> ${model.phone}</li>
+            <li><strong>Username:</strong> ${model.username}</li>
+            <li><strong>Password:</strong> ${model.password}</li>
+            <li><strong>Birth Date:</strong> ${model.birthDate}</li>
+        </ul>
     </div>
 </sly>
 

@@ -19,7 +19,7 @@ import javax.annotation.PostConstruct;
 
 /*BhargavSeshadri - STEP: 3 - Creating  a Sling Model So using that we can render the API info on page
  * For Step: 2 Go to -> com/aem/geeks/core/services/impl/UserAPIServiceImpl.java
- * For STEP: 4 go to -> apps/aemgeeks/components/content/bhargavapicomp/bhargavapicomp.html
+ * For STEP: 4 go to component and render it on page using htl -> apps/aemgeeks/components/content/bhargavapicomp/bhargavapicomp.html
  * */
 
 @Model(adaptables = {Resource.class, SlingHttpServletRequest.class}, adapters = UserAPISlingModel.class, defaultInjectionStrategy = DefaultInjectionStrategy.OPTIONAL)
@@ -33,23 +33,97 @@ public class UserAPISlingModelImpl implements UserAPISlingModel {
 
     private String userJsonString;
 
+    //Data fields in the Json Response from https://dummyjson.com/auth/me
+    private String firstName;
+    private String lastName;
+    private String maidenName;
+    private int age;
+    private String gender;
+    private String email;
+    private String phone;
+    private String username;
+    private String password;
+    private String birthDate;
+    private String imageUrl;
+
     @PostConstruct
     protected void init() {
         try {
-            JsonNode node = userAPIService != null ? userAPIService.getMeData() : null;
-            if (node != null) {
-                ObjectMapper mapper = new ObjectMapper();
-                userJsonString = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(node);
-            } else {
-                userJsonString = "{\"error\":\"no-data\"}";
+            //Here userAPIService.getMeData() will give a mapper object, and from that mapper object we can able to get all the fields using "JsonNode"
+            // from the  json we got in response from our API
+            //Clear MapperObject example is in com/aem/geeks/core/services/impl/UserAPIServiceImpl.java
+            JsonNode jsonNode = userAPIService != null ? userAPIService.getMeData() : null;
+            if (jsonNode != null) {
+                firstName = jsonNode.path("firstName").asText("");
+                lastName = jsonNode.path("lastName").asText("");
+                maidenName = jsonNode.path("maidenName").asText("");
+                age = jsonNode.path("age").asInt(0);
+                gender = jsonNode.path("gender").asText("");
+                email = jsonNode.path("email").asText("");
+                phone = jsonNode.path("phone").asText("");
+                username = jsonNode.path("username").asText("");
+                password = jsonNode.path("password").asText("");
+                birthDate = jsonNode.path("birthDate").asText("");
+                imageUrl = jsonNode.path("image").asText("");
             }
-        } catch (Exception e) {
+        }catch (Exception e) {
             userJsonString = "{\"error\":\"exception\",\"message\":\"" + e.getMessage() + "\"}";
         }
     }
 
+    //Creating Getters of that JSON fields to use in HTL to render on page.
     @Override
-    public String getMeJsonString() {
-        return userJsonString;
+    public String getFirstName() {
+        return firstName;
+    }
+
+    @Override
+    public String getLastName() {
+        return lastName;
+    }
+
+    @Override
+    public String getMaidenName() {
+        return maidenName;
+    }
+
+    @Override
+    public int getAge() {
+        return age;
+    }
+
+    @Override
+    public String getEmail() {
+        return email;
+    }
+
+    @Override
+    public String getGender() {
+        return gender;
+    }
+
+    @Override
+    public String getPhone() {
+        return phone;
+    }
+
+    @Override
+    public String getUsername() {
+        return username;
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public String getBirthDate() {
+        return birthDate;
+    }
+
+    @Override
+    public String getImageUrl() {
+        return imageUrl;
     }
 }

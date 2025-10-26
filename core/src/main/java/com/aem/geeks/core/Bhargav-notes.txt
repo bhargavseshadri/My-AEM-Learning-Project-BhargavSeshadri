@@ -16,7 +16,7 @@ d) Registration Form Comp (for PathType Post Servlet) : apps/aemgeeks/components
 - In Bundles my core bundle name is--> aemgeeks.core
 
 =============================================================================================
-2) FETCHING DATA FROM EXTERNAL API (using sling model)
+2) FETCHING DATA FROM EXTERNAL API - NO ACCESS TOKEN NEEDED - (using sling model)
 
 a) Directly fetching the data from the endpoint with no credentials and token:
 STEP:1(just Interface) : com/aem/geeks/core/models/ExternalAPIDemoModel.java
@@ -25,9 +25,9 @@ HELPER POJO CLASS: com/aem/geeks/core/models/impl/apirelated/ExternalData.java
 STEP:3 : RENDERING THE DATA ON FRONTEND: apps/aemgeeks/components/content/bhargavapicomp/bhargavapicomp.html
 
 -------------------------------------------------
-b) Here fetching the data from the endpoint which needs a access token:
+b) FETCHING THE DATA FROM THIRD PARTY ENDPOINT WHICH NEED A ACCESS TOKEN - ACCESS TOKEN NEEDED - (using Service)
 
-STEP:1 check if that purticular API is working or not and that user creds are working or not using powershell by running the below commands
+STEP:A check if that purticular API is working or not and that user creds are working or not using powershell by running the below commands
 
 * Step 1: Login and get token
 $response = curl -Method POST "https://dummyjson.com/auth/login" `
@@ -40,26 +40,32 @@ curl -Uri "https://dummyjson.com/auth/me" `
   ConvertFrom-Json
 
 - using the token we will get all the info about that user.
-* Now if you got the response with no issues then the API is working fine, and now we will do the same thing will get the response using AEM.
+* If we get the response with no issues then the API is working fine, and now we will do the same thing will get the response from API using AEM.
 
+******************
 IMP Info:
 a) for getting token : https://dummyjson.com/auth/login
                        Creds we use : username : emilys, password : emilyspass
 
 b) Using the token we hit this API to get the response : https://dummyjson.com/auth/me
+******************
+STEP: B - Get the response from API using AEM.
 
-
+* Use case : Here using "OSGI CONFIG" we take the Required API details, and then in "OSGI Service" we get the token with creds and then using that token we
+             get the json data of the user and after getting the json we pu that in a MapperObject as a String, and this service return the MapperObject.
+             Now in "Sling model" we get the MapperObject and store the response fields in a Variables. Then in HTL we get the data using Sling model getters
+             and render that data on page as a card.
 
 STEP: 1 : Create OSGi configuration, so we can give the username/password/endpoints in the configuration.
          com/aem/geeks/core/config/BhargavConfigForUserAPI.java
 
-STEP: 2 : Creating a OSGI Service to use the above config values to login → get token → call protected API -> and getting the response
+STEP: 2 : MAIN LOGIC - Creating a OSGI Service to use the above config values to login → get token → call protected API -> and getting the response
           com/aem/geeks/core/services/impl/UserAPIServiceImpl.java
 
 STEP: 3 : Creating  a Sling Model So using that we can render the API info on page
-          com/aem/geeks/core/models/UserAPISlingModel.java
+          com/aem/geeks/core/models/impl/apirelated/UserAPISlingModelImpl.java
 
-STEP: 4 : By using a HTL in component, we render the data we got from the api
+STEP: 4 (Last Step) : By using a HTL in component, we render the data we got from the api
           apps/aemgeeks/components/content/bhargavapicomp/bhargavapicomp.html
 
 - To see the output
@@ -68,9 +74,10 @@ STEP: 4 : By using a HTL in component, we render the data we got from the api
         > protectedUserUrl = https://dummyjson.com/auth/me
         > Username = emilys
         > Password = emilyspass
-        > Note : got the user data from : https://dummyjson.com/users
+        > Note : got the user creds and data from : https://dummyjson.com/users
 
-2 - Drag you component on the page, you will see the data from API.
+2 - Drag the component apps/aemgeeks/components/content/bhargavapicomp on the page, you will see the data getting fetched in a card
+    with firtname, lastname, dob, etc from API.
 
 
 =============================================================================================
