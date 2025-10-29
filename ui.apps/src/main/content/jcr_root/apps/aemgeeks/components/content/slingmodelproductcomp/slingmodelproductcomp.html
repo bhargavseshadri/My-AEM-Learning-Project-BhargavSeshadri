@@ -9,8 +9,10 @@
     <li>${obj.manufacturerName}</li>
     <li>${obj.getCurrentPageTitle}</li>
     <li>${obj.returnName}</li>
+    <img src="${obj.productImageReference @ context='uri'}" alt="Product Image"/>
 
-<!--****************************** Composite Multifield related code *********************************************************************************-->
+
+    <!--****************************** Composite Multifield related code *********************************************************************************-->
     ==========Rendering Composite Multifield using MAP=============
     <div data-sly-list="${obj.getProductDetailsWithMap}">  <!--Step:3(last step) -Composite Multifield - here we are getting the list with maps containing our values and
                                                                                             iterating here one by one and printing the values-->

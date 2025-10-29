@@ -8,6 +8,8 @@ import java.util.Map;
 //BhargavSeshadr - STEP:2 - SLING MODEL
 
 public interface ProductModel {
+    public String getProductImageReference();
+
     public String getProductName();
     public String getProductPrice();
     public String getManufacturerName();

@@ -18,6 +18,14 @@
                         jcr:title="Basic"
                         sling:resourceType="granite/ui/components/coral/foundation/container">
                         <items jcr:primaryType="nt:unstructured">
+
+                            <productImage jcr:primaryType="nt:unstructured"
+                                           sling:resourceType="/libs/cq/gui/components/authoring/dialog/fileupload"
+                                           fieldLabel="Product Image"
+                                           mimeTypes="[image/png,image/jpeg,image/jpg]"
+                                           fileReferenceParameter="./productImageReference"
+                                           name="./productImage"/>
+
                             <productname
                                 jcr:primaryType="nt:unstructured"
                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"

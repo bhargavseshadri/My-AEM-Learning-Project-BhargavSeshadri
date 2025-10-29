@@ -41,6 +41,9 @@ public class ProductModelImpl implements ProductModel{
     @ValueMapValue
     private String productPrice;
 
+    @ValueMapValue
+    private String productImageReference;
+
     @ScriptVariable
     private Page currentPage;
 
@@ -50,6 +53,11 @@ public class ProductModelImpl implements ProductModel{
     @Override
     public String getManufacturerName() {
         return manufacturerName;
+    }
+
+    @Override
+    public String getProductImageReference() {
+        return productImageReference;
     }
 
     @Override

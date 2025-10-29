@@ -3,6 +3,7 @@ package com.aem.geeks.core.models.impl.apirelated;
 
 import com.aem.geeks.core.models.UserAPISlingModel;
 import com.aem.geeks.core.services.UserAPIService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.sling.api.SlingHttpServletRequest;
@@ -46,12 +47,14 @@ public class UserAPISlingModelImpl implements UserAPISlingModel {
     private String birthDate;
     private String imageUrl;
 
+    private String meJsonString;
+
     @PostConstruct
     protected void init() {
         try {
             //Here userAPIService.getMeData() will give a mapper object, and from that mapper object we can able to get all the fields using "JsonNode"
             // from the  json we got in response from our API
-            //Clear MapperObject example is in com/aem/geeks/core/services/impl/UserAPIServiceImpl.java
+            //Clearcut MapperObject example is in com/aem/geeks/core/services/impl/UserAPIServiceImpl.java
             JsonNode jsonNode = userAPIService != null ? userAPIService.getMeData() : null;
             if (jsonNode != null) {
                 firstName = jsonNode.path("firstName").asText("");
@@ -125,5 +128,19 @@ public class UserAPISlingModelImpl implements UserAPISlingModel {
     @Override
     public String getImageUrl() {
         return imageUrl;
+    }
+
+
+
+
+    //Here we are directly printing the json on the page just for my testing : This piece is useful to just see the json response directly on the page in real world cases, before going ahead
+    //Go and see the "apps/aemgeeks/components/content/bhargavapicomp/bhargavapicomp.html" htl, there I just printing the json
+    @Override
+    public String getMeJsonString() throws JsonProcessingException {
+        JsonNode jsonNode = userAPIService != null ? userAPIService.getMeData() : null;
+
+        ObjectMapper mapper = new ObjectMapper();
+        meJsonString = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(jsonNode);
+        return meJsonString;
     }
 }

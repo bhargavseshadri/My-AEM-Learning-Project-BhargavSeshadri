@@ -1,5 +1,7 @@
 package com.aem.geeks.core.models;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+
 public interface UserAPISlingModel {
 
     //Creating Getters of that JSON fields to use in HTL to render on page.
@@ -24,4 +26,6 @@ public interface UserAPISlingModel {
     String getBirthDate();
 
     String getImageUrl();
+
+    String getMeJsonString() throws JsonProcessingException;
 }

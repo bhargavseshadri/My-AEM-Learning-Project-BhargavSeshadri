@@ -45,6 +45,13 @@ For step:3 -> com/aem/geeks/core/models/UserAPISlingModel.java
             <li><strong>Birth Date:</strong> ${model.birthDate}</li>
         </ul>
     </div>
+
+
+    <!--Just for testing purposes : Here I am printing the response json here directly on page-->
+    <div class="dummyjson-component">
+        <h3>DummyJSON: /auth/me response</h3>
+        <pre>${model.meJsonString @ context='text'}</pre>
+    </div>
 </sly>
 
 
