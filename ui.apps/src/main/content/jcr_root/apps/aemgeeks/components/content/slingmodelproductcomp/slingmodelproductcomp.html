@@ -1,7 +1,7 @@
 <h1>Personal Component - Bhargav</h1>
 
 
-<!--****************************** Normal OSGI Configuration related code *********************************************************************************-->
+<!--****************************** Basic Sling Model related code *********************************************************************************-->
 ==========Basic Sling Model Output=============
 <div data-sly-use.obj="com.aem.geeks.core.models.ProductModel">  <!--BhargavSeshadri - Sling Model - Step:5(Last Step) - Rendering the Values in HTL Script; (for step:4 go to sling model- com/aem/geeks/core/models/impl/ProductModelImpl.java)-->
     <li>${obj.getProductName}</li>
@@ -10,6 +10,13 @@
     <li>${obj.getCurrentPageTitle}</li>
     <li>${obj.returnName}</li>
     <img src="${obj.productImageReference @ context='uri'}" alt="Product Image"/>
+
+    *****NORMAL MULTIFIELD*****
+    <ul>
+        <sly data-sly-list.item="${obj.getMultifieldvalues}">
+            <li>${item}</li>
+        </sly>
+    </ul>
 
 
     <!--****************************** Composite Multifield related code *********************************************************************************-->

@@ -150,6 +150,12 @@ Step:3 - create a Sling Model Implimentation : com/aem/geeks/core/models/impl/Pr
 Step:4 - Using the Services In our Sling Model : com/aem/geeks/core/models/impl/ProductModelImpl.java
 Step:5 - Rendering the Values in HTL Script : apps/aemgeeks/components/content/slingmodelproductcomp/slingmodelproductcomp.html
 
+* All Mutifields Code is in this comp only
+ -> com/aem/geeks/core/models/impl/ProductModelImpl.java
+ -> apps/aemgeeks/components/content/slingmodelproductcomp/slingmodelproductcomp.html
+
+* In this Component xml we have the conditional showing fields in the dialog box.
+
 --------------------------------------------
 Multiple Service Implimentations Linked to one Service Interface
 

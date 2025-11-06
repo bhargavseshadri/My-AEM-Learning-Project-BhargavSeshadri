@@ -16,6 +16,8 @@ public interface ProductModel {
     public String getCurrentPageTitle();
     public String isReturnName();
 
+    String[] getMultifieldvalues();
+
     List<Map<String, String>> getProductDetailsWithMap();  //this is multifield method
 
     int getNumber();  //these are osgi config related methods

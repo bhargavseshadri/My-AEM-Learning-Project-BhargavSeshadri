@@ -91,6 +91,16 @@ public class ProductModelImpl implements ProductModel{
         return demoProductService.returnName();
     }
 
+
+    //Normal Multifield
+    @ValueMapValue
+    private String[] multifieldvalues;
+
+    @Override
+    public String[] getMultifieldvalues(){
+        return multifieldvalues;
+    }
+
 /*********************************************************MULTIFIELD RELATED CODE***************************************************************/
 
 //BhargavSeshadri - From here Composite multifield related code (Step:2 )(Step:1 apps/aemgeeks/components/content/slingmodelproductcomp/_cq_dialog/.content.xml)

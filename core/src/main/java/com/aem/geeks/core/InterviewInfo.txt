@@ -215,7 +215,14 @@ WORKFLOWS in AEM
                                   3. Using API/Code : we can trigger the WF using any of the backend module like servlet, scheduler, Models etc
 
 =============================================================================================
+CLIENTLIBRARIES
 
+* If the clientlib is in our component, in that case we need not to include that clientlib category manually in our comp xml.
+* If the Clientlib is not under our component, if it in a shared or global path like /apps/yourproject/clientlibs then you must manually reference
+it in your component dialog or template, because AEM won’t auto-link global dialog clientlibs.
+
+Including it in component or editable templates/page components XML: <cq:includeClientLib categories="myproject.dialog"/>
+=============================================================================================
 
 
 
