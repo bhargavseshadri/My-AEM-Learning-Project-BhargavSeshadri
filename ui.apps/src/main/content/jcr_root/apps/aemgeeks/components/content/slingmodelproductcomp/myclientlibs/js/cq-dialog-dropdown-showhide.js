@@ -10,7 +10,7 @@
             function showHideFields() {
                 var value = $select.val();
                 $(target).each(function () {
-                    var $field = $(this);īō
+                    var $field = $(this);
                     if ($field.data("showhidetargetvalue") === value) {
                         $field.show();
                     } else {

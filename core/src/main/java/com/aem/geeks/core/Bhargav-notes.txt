@@ -154,7 +154,8 @@ Step:5 - Rendering the Values in HTL Script : apps/aemgeeks/components/content/s
  -> com/aem/geeks/core/models/impl/ProductModelImpl.java
  -> apps/aemgeeks/components/content/slingmodelproductcomp/slingmodelproductcomp.html
 
-* In this Component xml we have the conditional showing fields in the dialog box.
+* In this Component xml we have the conditional showing fields in the dialog box. So make that showhide work we need show/hide JavaScript clientlib.
+  Added this in apps/aemgeeks/components/content/slingmodelproductcomp
 
 --------------------------------------------
 Multiple Service Implimentations Linked to one Service Interface
