@@ -265,7 +265,7 @@ ALL ABOUT **JAVA**
 - Java → Statically typed (type is checked at compile time).
 =============================================================================================
 Quick Important Points
-* Array is mutable we can modify it. we can change the value in the purticular place but we cant change the size of an array.
+* Array is mutable we can modify it. we can change the value in the particular place but we cant change the size of an array.
 * String is immutable.
 * Private method can't be overriden.
 * FINAL METHOD cannot be overloaded and overridden in child classes.
@@ -273,8 +273,11 @@ Quick Important Points
 * Concrete method: Method with body.
 * To convert and array in to a List -> Arrays.asList(arrName);
 * To convert a List to an Array -> v1.toArray()
-* We cant give primitive datatypes(int, String, Boolean) to generics.
+* We can't give primitive datatypes(int, String, Boolean) to generics.
+* The collections that implement the Set interface don’t allow duplicates. (HashSet, LinkedHashSet, TreeSet)
 * In collection Hashtable, TreeSet won't take null values.
+* We cannot directly create an object of an abstract class or an interface in Java. because they have unimplemented (abstract) methods — so
+  Java doesn’t know how to create a complete object from it.
 
 =============================================================================================
 
@@ -287,22 +290,38 @@ variable itself. So, any changes made to the parameter inside the method do not 
    automatically detect it and delete it from memory — this process is called Garbage Collection.
 
 - Types of memories in java:
-    a)Stack: For method calls and local variables. Stack memory is used for method execution. It stores local variables and method calls. The memory is automatically cleared when the method finishes.
-    b)Heap : For objects and instance variables. Heap memory is used to store objects created using new. It is shared by all parts of the program. Objects in the heap stay there until they are no longer referenced,
-             then garbage collection removes them.
+    a)Stack: For Reference variables, method calls and local variables. Stack memory is used for method execution. It stores local variables and method calls.
+             The memory is automatically cleared when the method finishes.
+    b)Heap : For objects and instance variables. Heap memory is used to store objects created using new. It is shared by all parts of the program.
+             Objects in the heap stay there until they are no longer referenced, then garbage collection removes them.
 
 -----------------------------------------------------------
 3) STATIC
-- static in Java means something that belongs to the class, not to any object, and it can be accessed without creating an object.
-- The main use of static is to define common things that should be shared across all objects — and to access them without creating an object.
-* To access a non-static method from static, we have to create an object.
+- static in Java means something that belongs to the class, not to any object, and it "can be accessed" without creating an object using classname.
+- The main use of static is to define common things that should be shared across all objects — and to access them without creating an object. and it is
+  helpful for memory management.
+* To access a non-static method in static method, we have to create an object.
 * Static method can only access the static variables.
+* To Access normal instance variables we have to create a object of that class and through that obj we access those class instance variables.
 * Static methods can only access static methods
-* Non-Static can access both static and non-static methods
+* Non-Static can access both static and non-static methods.
+* Static does not support "this" and "super"
+* And we don't give the access modifier for the variables defined inside the static method.
 
 -----------------------------------------------------------
 4) Dynamic Binding (also called Late Binding or Runtime Polymorphism) : it means that the method to be called is decided at runtime, not at compile time.
 - here we create a reference for a parent class and assign to the child object.
+
+Eg: Animal a;
+
+    if (userInput.equals("dog")) {
+        a = new Dog();
+    } else {
+        a = new Cat();
+    }
+
+    a.sound();  // Which method should run? Java decides at runtime, based on the user given data, if he gives dog then it picks the Dog object
+
 
 -----------------------------------------------------------
 5) ABSTRACT CLASS
@@ -339,7 +358,6 @@ Note: Cannot be instantiated” means that you cannot create an object of that c
 - In interfaces all the methods are abstract and all the variables are public, static, final
 - Using this we can achieve multiple inheritance (since Java does not support multiple class inheritance).
 - we cannot create object for interfaces.
-
 
 -----------------------------------------------------------
 -----------------------------------------------------------
@@ -411,7 +429,8 @@ public class Main {
 ----------------------------------
 2) Aggregation (here both classes are independent)
 - Aggregation is a special form of association that represents a “Has-A” relationship between two classes.
-- Aggregation is a relationship where one class owns or uses another class, but the contained object can exist independently of the container object. The part can exist without the whole.
+- Aggregation is a relationship where one class owns or uses another class, but the contained object can exist independently of the container object.
+  The part can exist without the whole.
 - Has-A relationship but can live without it.
 
 EG:
@@ -476,12 +495,17 @@ COLLECTIONS
 
 * Important Points:
 - List: an ordered collection of elements that allows duplicates and nulls.
-- Set: a collection of elements that do not allow duplicates.
 - Map: a collection of key-value pairs, where each key is unique.
+- HashMap: Here it dont follow any order or insertion order.
+- LinkedHashMap: Combination of HashMap and linkedList, Maintains insertion order (the order you added keys)
 - Queue: a queue is a data structure that is used to store elements in a First-In-First-Out (FIFO) manner.
+- Deque: can be used both as FIFO and LIFO.
+- Set: a unordered collection of elements that do not allow duplicates.
+- Sorted set: Maintains the elements in a ascending order.
+- Hash set : it used hashing mechanism(hash code) to store the unique elements.
 
 1) List:
-- It is an ordered collection of objects, where each element has a distinct position in the list.
+- It is an ordered collection of elements, where each element has a distinct position in the list.
 - allows duplicates and nulls.
 
 a) ArrayList
