@@ -487,6 +487,96 @@ class Car {
     }
 }
 
+-----------------------------------------------------------
+-----------------------------------------------------------
+OBJECT
+
+- in Java, we can use objects in multiple ways: like creating, passing, returning, referencing, casting, etc.
+
+1) Passing an Object as a Parameter: Objects can be passed to methods.
+Eg: class Car {
+        String name;
+        Car(String name) {
+            this.name = name;
+        }
+    }
+
+    class Garage {
+        void park(Car c) {
+            System.out.println(c.name + " parked");
+        }
+    }
+
+    public class Main {
+        public static void main(String[] args) {
+            Car car = new Car("BMW");
+            Garage g = new Garage();
+            g.park(car); // passing object
+        }
+    }
+----------------------------------
+
+2) Returning an Object from a Method
+Eg: class Car {
+        String name;
+        Car(String name) {
+            this.name = name;
+        }
+    }
+
+    class Factory {
+        Car buildCar() {
+            return new Car("Tesla");
+        }
+    }
+
+    public class Main {
+        public static void main(String[] args) {
+            Factory f = new Factory();
+            Car c = f.buildCar(); // method returned object
+            System.out.println(c.name);
+        }
+    }
+----------------------------------
+
+3) Using Objects in Collections
+Eg: import java.util.*;
+
+    class Car {
+        String name;
+        Car(String name) { this.name = name; }
+    }
+
+    public class Main {
+        public static void main(String[] args) {
+            List<Car> cars = new ArrayList<>();
+            cars.add(new Car("BMW"));
+            cars.add(new Car("Tesla"));
+
+            for (Car c : cars) {
+                System.out.println(c.name);
+            }
+        }
+    }
+----------------------------------
+
+4) Passing this as an Object
+Eg: class Car {
+        void display(Car c) {
+            System.out.println("Got car object");
+        }
+        void show() {
+            display(this); // passing current object
+        }
+    }
+
+    public class Main {
+        public static void main(String[] args) {
+            Car c = new Car();
+            c.show();
+        }
+    }
+
 
 --------------------------------------------------------------------------
 --------------------------------------------------------------------------
@@ -501,12 +591,14 @@ COLLECTIONS
 - Queue: a queue is a data structure that is used to store elements in a First-In-First-Out (FIFO) manner.
 - Deque: can be used both as FIFO and LIFO.
 - Set: a unordered collection of elements that do not allow duplicates.
-- Sorted set: Maintains the elements in a ascending order.
-- Hash set : it used hashing mechanism(hash code) to store the unique elements.
+- SortedSet: Maintains the elements in a ascending order.
+- HashSet: it used hashing mechanism(hash code) to store the unique elements.
+- TreeSet: Sorted unique items, means it put the elements in a unique and ascending order.
 
 1) List:
 - It is an ordered collection of elements, where each element has a distinct position in the list.
 - allows duplicates and nulls.
+- used When we need ordered data and duplicates allowed.
 
 a) ArrayList
 - its a growable or resizable array.
@@ -517,6 +609,24 @@ b) LinkedList
 - It can impliment either List or Queue.
 - It is good for inserting and deleting at the beginning and middle
 - it is like a chain of nodes where each node can point to the previous and next node.
+
+Example: import java.util.*;
+
+         public class Example1 {
+             public static void main(String[] args) {
+                 List<String> list = new ArrayList<>();
+                 list.add("Apple");
+                 list.add("Banana");
+                 list.add("Apple"); // duplicate allowed
+
+                 Iterator<String> it = list.iterator();
+                 while (it.hasNext()) {
+                     System.out.println(it.next());
+                 }
+             }
+         }
+
+
 
 ---------------------------
 *) Iterator
