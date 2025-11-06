@@ -1,29 +1,27 @@
-(function ($, $document) {
-    "use strict";
+document.addEventListener("dialog-ready", function () {
+  const dropdowns = document.querySelectorAll(".cq-dialog-dropdown-showhide");
 
-    $document.on("dialog-ready", function () {
+  dropdowns.forEach((dropdown) => {
+    const targetSelector = dropdown.dataset.cqDialogDropdownShowhideTarget;
 
-        $(".cq-dialog-dropdown-showhide").each(function () {
-            var $select = $(this);
-            var target = $select.data("cq-dialog-dropdown-showhide-target");
+    function updateVisibility() {
+      const value = dropdown.value;
+      const targets = document.querySelectorAll(targetSelector);
 
-            function showHideFields() {
-                var value = $select.val();
-                $(target).each(function () {
-                    var $field = $(this);
-                    if ($field.data("showhidetargetvalue") === value) {
-                        $field.show();
-                    } else {
-                        $field.hide();
-                    }
-                });
-            }
+      targets.forEach((field) => {
+        const showValue = field.dataset.showhidetargetvalue;
+        if (showValue === value) {
+          field.style.display = "block";
+        } else {
+          field.style.display = "none";
+        }
+      });
+    }
 
-            // Initial call
-            showHideFields();
+    // Run on load
+    updateVisibility();
 
-            // On change
-            $select.on("change", showHideFields);
-        });
-    });
-})(Granite.$, jQuery(document));
+    // Listen for changes
+    dropdown.addEventListener("change", updateVisibility);
+  });
+});
