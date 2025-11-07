@@ -12,6 +12,7 @@ IMPORTANT PATHS
        1. Design Model - Stored Under (crx) : /conf/global/settings/workflow/models
        2. Runtime Model - Stored Under (crx) : /conf/global/settings/workflow/models
        * The WF STEP dialog values are stored inside : /conf/global/settings/workflow/models/bhargav-personal-workflow/jcr:content/flow/geeksworkflowstep/metaData
+-> We can find all the available users( and also deactivate the user here) : /security/users.html
 
 =============================================================================================
 
@@ -505,5 +506,42 @@ IMP POINTS:
         Node
            ↓ getSession()
         Session.save()
+
+=============================================================================================
+MSM:
+* MSM helps you manage multiple websites that share common content or structure. It lets you reuse pages, but still localize or update them differently
+  in other sites.
+
+* Structure Map:
+/content
+ └── we-retail
+      ├── blueprint (source)
+      │    ├── en
+      │    │    ├── us
+      │    │    └── uk
+      │    └── fr
+      │         ├── fr
+      │         └── ca
+      │
+      ├── language-copies
+      │    ├── en
+      │    └── fr
+      │
+      └── live-copies (targets)
+           ├── us-site  ← (Live Copy from blueprint/en/us)
+           ├── uk-site  ← (Live Copy from blueprint/en/uk)
+           └── fr-site  ← (Live Copy from blueprint/fr/fr)
+
+
+* Blueprint(Master site): The master/source site from which other sites (Live Copies) are created.
+  Eg: /content/we-retail/blueprint/en
+
+* Language Copy(Translated version): - A copy of a site in another language.
+                 - Once you create a Language Copy(fr), AEM just duplicates the content into another language folder — and then stops tracking it.
+                 - After that, the two are completely independent(en and fr).
+                 - There’s no automatic sync or inheritance like Live Copies have.
+  Eg: From /content/we-retail/en → you create /content/we-retail/fr.
+
+* Live Copy(Automatically synced child of Blueprint): A site that inherits content from a Blueprint (or another source) through MSM.
 
 =============================================================================================

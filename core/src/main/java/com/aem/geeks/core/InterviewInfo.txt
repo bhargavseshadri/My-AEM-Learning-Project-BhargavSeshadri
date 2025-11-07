@@ -261,10 +261,12 @@ Including it in component or editable templates/page components XML: <cq:include
 
 =============================================================================================
 ALL ABOUT **JAVA**
-- Java is a high-level, object-oriented programming language.
+- Java is a high-level, object-oriented programming language. that runs on the JVM and is widely used for building web, desktop, and mobile applications.
 - Java → Statically typed (type is checked at compile time).
+
 =============================================================================================
 Quick Important Points
+
 * Array is mutable we can modify it. we can change the value in the particular place but we cant change the size of an array.
 * String is immutable.
 * Private method can't be overriden.
@@ -275,7 +277,7 @@ Quick Important Points
 * To convert a List to an Array -> v1.toArray()
 * We can't give primitive datatypes(int, String, Boolean) to generics.
 * The collections that implement the Set interface don’t allow duplicates. (HashSet, LinkedHashSet, TreeSet)
-* In collection Hashtable, TreeSet won't take null values.
+* In collection, TreeSet won't take null values.
 * We cannot directly create an object of an abstract class or an interface in Java. because they have unimplemented (abstract) methods — so
   Java doesn’t know how to create a complete object from it.
 
@@ -300,6 +302,10 @@ Quick Important Points
         - A special memory area in heap where String literals are stored. If two strings have same literal, both refer to the same object to save memory.
           String s1 = "Java";
           String s2 = "Java"; // refers to same object
+
+* Difference between Collection and Collections
+        - Collection → Interface (root of all collection types).
+        - Collections → Utility class (with static methods like sort(), reverse()).
 
 =============================================================================================
 
@@ -663,4 +669,4 @@ Example: import java.util.*;
 - its a bi-directional. (.hasNext(), .hasPrevious()) and it has read and write access.
 
 ---------------------------
-*) Generics : To restrict the datatype of the elements you want to store in the list.
+*) Generics : To restrict the datatype of the elements you want to store in the list. acts like a datatype placeholders
