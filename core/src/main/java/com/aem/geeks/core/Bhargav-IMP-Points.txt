@@ -8,9 +8,9 @@ IMPORTANT PATHS
 -> AEM replication agents : /etc/replication/agents.author.html
 -> Check the available run modes : /system/console/status-slingsettings
 -> To Check the status of the scheduler : /system/console/status-slingscheduler
--> Workflow model usually stored in to places in our jcr
+-> Workflow model usually stored in two places in our jcr
        1. Design Model - Stored Under (crx) : /conf/global/settings/workflow/models
-       2. Runtime Model - Stored Under (crx) : /conf/global/settings/workflow/models
+       2. Runtime Model - Stored Under (crx) : /var/workflow/models
        * The WF STEP dialog values are stored inside : /conf/global/settings/workflow/models/bhargav-personal-workflow/jcr:content/flow/geeksworkflowstep/metaData
 -> We can find all the available users( and also deactivate the user here) : /security/users.html
 
