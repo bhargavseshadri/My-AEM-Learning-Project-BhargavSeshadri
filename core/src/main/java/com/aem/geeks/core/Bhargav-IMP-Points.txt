@@ -73,7 +73,7 @@ Page page=pageManager.getPage("/content/aemgeeks/us/en");
 =============================================================================================
 5) @Component
 --> Servlets : @Component(service = Servlet.class)
---> OSGI Configuration : @Component(service = OSGiConfigService.class,immediate = true)
+--> OSGI Configuration Service : @Component(service = OSGiConfigService.class,immediate = true)
 --> Schedulers :
                 - Runnable : @Component(immediate = true, service = Runnable.class)
                 - Job :  @Component(immediate = true, service = Job.class)
@@ -84,7 +84,8 @@ Page page=pageManager.getPage("/content/aemgeeks/us/en");
 6) ANNOTATIONS:
 @Activate : when we want something to load or activate at the time of this service initializations, there we use this
 @ObjectClassDefinition(name, definition) : used for defining osgi configuration.
-@Modified : It is a lifecycle callback method annotation used in OSGi components. It marks a method that should be called whenever the OSGi configuration for that component is changed at runtime, without restarting the bundle.
+@Modified : It is a lifecycle callback method annotation used in OSGi components. It marks a method that should be called
+            whenever the OSGi configuration for that component is changed at runtime, without restarting the bundle.
 - In simple words, When you change configuration values, AEM will automatically re-invoke the method annotated with @Modified, So your service picks up
   the new configuration immediately — without redeploying or restarting AEM.
 
@@ -167,20 +168,21 @@ dispatcher.forward(req, res);
 
 =============================================================================================
 13) RUN MODES
-- Run Modes in AEM are a way to customize the behavior and configuration of an AEM instance for different environments (like author, publish, dev, stage, prod, etc.)
-  using the same codebase.
+- Run Modes in AEM are a way to customize the behavior and configuration of an AEM instance for different environments (like author, publish, dev,
+  stage, prod, etc.) using the same codebase.
         PURPOSE of runmodes:
         *Separate configurations for Author and Publish.
         *Maintain different settings for Dev / QA / Prod.
         *Control which components, workflows, or OSGi configurations are active.
 - When we want to identify our AEM instance uniquely, either in code or in osgi configs, we set run modes. run modes are two types.
-a) Installation Run modes (permanant run modes) : these we will set while installing aem instance. and we cannot change these runmodes,  these are four types
+a) Installation Run modes (permanant run modes) : these we will set while installing aem instance. and we cannot change these runmodes,  these are four
+                                                  types
                                                 1. Author
                                                 2. Publisher
                                                 3. SampleContent  - Means aem will give you the basic sample pages like WE-RETAIL
                                                 4. NoSampleContent - no sample or demo sites (means no we retail or wknd)
    - Author & Publisher, sampleContent & NoSampleContent are mutually exclusive means we cannot use them together.
-   - By default if we do not set anything, aem will automay=tically create Author with SampleContent.
+   - By default if we do not set anything, aem will automaytically create Author with SampleContent.
 
 b) Customized Run Modes : Runmodes we create like Prod, Stg, Qa, Ciqa
 
@@ -188,7 +190,8 @@ b) Customized Run Modes : Runmodes we create like Prod, Stg, Qa, Ciqa
 1) Sling.Properties : we wont prefer this because we won't have permissions. and it is OOTB file so we should not change.
 2) system properties (-D) -Dsling.run.modes=publish,prod,us : this we can create while starting our aem instance
 3) Filename Detection - aem-publsh-p4503 (most commonly used): we remane a file, and then while installing the aem will understand what run mode it is.
-4) -r option -  java-jar file-r publish,prod,us: here while starting the aem we update the start script so then it will create a run mode, (2nd and 4th options are almost same)
+4) -r option -  java-jar file-r publish,prod,us: here while starting the aem we update the start script so then it will create a run mode,
+    (2nd and 4th options are almost same)
 Note : we can check the available run modes at /system/console/status-slingsettings
 
 Q) How do you configure OSGi differently for Author and Publish?
@@ -312,7 +315,7 @@ Steps:
 *** VERY IMPORTANT NOTES **** GETTING ResourceResolver, Resource, Request, Session, Node ***
 
 IMP POINTS:
-> Session always comes from ResourceResolver, and ResourceResolver comes from request, resource, or resolverFactory depending on context.
+> Session always comes from ResourceResolver, and ResourceResolver comes from 1) request, 2) resource, 3) resolverFactory depending on context.
 > In Servlets or Sling Models, AEM automatically provides a ResourceResolver because they are request-based (A Sling request gives you a resolver).
 > But in Services, Schedulers, or Workflows, there is no request and no automatic context — so AEM doesn’t know who is trying to access the repository.
   in that cases we need "ResourceResolverFactory" to get the ResourceResolver.
@@ -372,10 +375,10 @@ IMP POINTS:
 * The methods like doGet and doPost will in-built give the "SlingHttpServletRequest request" from the request we can get the "ResourceResolver"
     - Getting the ResourceResolver
             protected void doGet(SlingHttpServletRequest request, SlingHttpServletResponse response){
-                    ResourceResolver resolver = request.getResourceResolver();
+                    ResourceResolver resourceResolver = request.getResourceResolver();
 
     - Using this ResourceResolver we get the hold of resource
-            Resource resource = resolver.getResource("/content/mySite/page/jcr:content");
+            Resource resource = resourceResolver.getResource("/content/mySite/page/jcr:content");
 
     - Coverting the available resource to node
             Node node = resource.adaptTo(Node.class);
@@ -438,7 +441,7 @@ IMP POINTS:
           Resource contentRes = page.getContentResource();  //here we directly got the jcr:content
 
     - Reading using ValueMap
-          ValueMap props = contentRes.getValueMap();
+          ValueMap props = contentRes.getValueMap();  // here it will allow you to read all the properties in that resource node
           String title = props.get("jcr:title", String.class);
 
     - Reading, Writing and saving using node

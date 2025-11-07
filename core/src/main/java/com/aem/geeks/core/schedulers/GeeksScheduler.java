@@ -41,7 +41,8 @@ public class GeeksScheduler implements Runnable {  //Here we are implimenting Ru
     }
 
     protected void addScheduler(SchedulerConfiguration config) {   //Main Logic
-        ScheduleOptions scheduleOptions = scheduler.EXPR(config.cronExpression());  // here we got the ScheduleOptions using scheduler, and for that ScheduleOptions we are providing our cron expression
+        ScheduleOptions scheduleOptions = scheduler.EXPR(config.cronExpression());  /* here we got the ScheduleOptions using scheduler,
+                                                                                     and for that ScheduleOptions we are providing our cron expression*/
         scheduleOptions.name(String.valueOf(schedulerId));  //we should always add an uniquely identifing name
         //scheduleOptions.canRunConcurrently(true);
         scheduler.schedule(this, scheduleOptions);   //here using ".schedule" we are scheduling the scheduler

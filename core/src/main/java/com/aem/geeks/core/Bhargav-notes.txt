@@ -138,7 +138,7 @@ a) Creating a json with all the pages where KEY will be the page title amd VALUE
 Demo file : com/aem/geeks/core/servlets/GeeksPathTypeServlet.java
 
 =============================================================================================
-6) SLING MODELS & SERVICES
+6) SLING MODELS & SERVICES  (Service(optional) -> Sling model -> HTL)
 
 Step:1 - create a component : apps/aemgeeks/components/content/slingmodelproductcomp
 Step:2 - create a Sling Model : com/aem/geeks/core/models/ProductModel.java
@@ -187,7 +187,7 @@ Step:2 : Write the logic in Sling Model to render those item nodes of that comp 
 Step:3(last step) : in htl I am printing those values -> apps/aemgeeks/components/content/slingmodelproductcomp/slingmodelproductcomp.html
 
 =============================================================================================
-7) CONFIGURATIONS
+7) CONFIGURATIONS  (OSGI CONFIGURATION -> Service -> Sling Model -> HTL)
 
 a) Normal Configuration
 STEP:1 - com/aem/geeks/core/config/BhargavOSGiConfig.java -- Create an annotation class with osgi config code stating what are the values our configuration should take
@@ -221,7 +221,7 @@ STEP:4 - (Last Step) - apps/aemgeeks/components/content/slingmodelproductcomp/sl
 - Now you can see the values of the multiple config instances.
 
 =============================================================================================
-8) SCHEDULERS
+8) SCHEDULERS  (Configuration(to take the values) -> Scheduler Service -> )
 a) Runnable scheduler
 STEP:1 - Create a Runnable Scheduler : com/aem/geeks/core/schedulers/GeeksScheduler.java
 STEP:2 - Create a OSGI Configuration to take the values for scheduler : com/aem/geeks/core/config/SchedulerConfiguration.java

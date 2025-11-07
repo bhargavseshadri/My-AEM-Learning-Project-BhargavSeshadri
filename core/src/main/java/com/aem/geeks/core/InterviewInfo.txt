@@ -17,6 +17,7 @@ Basic Important Points
 -> immediate=true Whenever we want to activate the service immediately after the bundle gets started in that place we use this.
 -> OSGI : OSGi (Open Services Gateway initiative) is a Java-based modular framework that allows AEM to run applications as independent, reusable, and dynamically
           updatable components called bundles.
+-> Sling:OsgiConfig : using this we can convert our osgi configuration file to node.
 
 =============================================================================================
 DEFINITIONS
@@ -92,6 +93,10 @@ declared as protected. So when you override them, you must keep the same access 
 
 =============================================================================================
 SCHEDULERS
+
+Defination: - A Scheduler in AEM is a background job (a Java class) that runs automatically at a fixed time or interval, without any user interaction.
+            - It’s used to perform repeated or time-based tasks — like clearing cache, syncing data, sending emails, at scheduled times.
+
 -> Runnable : imp method that starts the execution is -- run()
 -> Job : imp method that starts the execution is -- execute(JobContext jobContext)
 
@@ -99,7 +104,11 @@ SCHEDULERS
 
 =============================================================================================
 OSGI CONFIGURATIONS:
-Definition: Initial set of inputs given to a bundle. like giving the input to our java file or component in that case we use osgi configurations
+Definition: - Initial set of inputs given to a bundle. like giving the input to our java file or component in that case we use osgi configurations.
+            - A Configuration in AEM is a way to store settings that control how a feature, component, or service should work —
+              without changing or redeploying the code.
+            - It lets developers and administrators adjust values like URLs, API keys, paths, or feature toggles directly from AEM, instead of
+              hardcoding them in Java classes.
 -> Type of inputs: Text Field, Multifield, Checkbox, Dropdown
 
 - Factory Configuration: When we want to create more than one instance on the configuration, in that case we create factory configuration.
@@ -148,6 +157,15 @@ CRXDE FOLDER STRUCTURE
 
 =============================================================================================
 SLING MODELS & SERVICES
+
+Sling Model Defination :  - A Sling Model in AEM is a Java class used to fetch and use content from the JCR in an easy and clean way.
+                          - It connects the AEM component (HTML + dialog data) with the Java backend, so you can access component properties
+                            directly as Java variables instead of manually reading from the repository.
+
+Services Defination : - A Service in AEM (or OSGi Service) is a Java class that contains reusable business logic and can be shared across components,
+                        servlets, or models.
+                      - It’s registered in the OSGi container, and AEM automatically manages its lifecycle (create, start, stop).
+                      - @Component — registers it as an OSGi service.
 
 PROBLEM: for one SERVICE interface class ,there is two implimentation classes, so in this scenario, which service have to executed?
 
