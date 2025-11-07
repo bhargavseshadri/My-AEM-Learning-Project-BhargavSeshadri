@@ -279,6 +279,28 @@ Quick Important Points
 * We cannot directly create an object of an abstract class or an interface in Java. because they have unimplemented (abstract) methods — so
   Java doesn’t know how to create a complete object from it.
 
+* == compares reference (memory address).
+* equals() compares content/value if overridden (like in String, Integer, etc).
+* If no constructor is provided Compiler adds a default no-arg constructor automatically.
+
+* What happens during object creation in Java?
+            When you create an object using new, the following happens:
+            - JVM allocates memory for the object.
+            - All instance variables are initialized to their default values (e.g., 0, null, false).
+            - The constructor of the class is called.
+            - If it has a parent class, the parent constructor executes first (super()).
+            - Finally, a reference to the object is returned.
+
+* Why String is immutable in Java?
+  -> Because:
+        - It’s stored in String Pool.
+        - Helps with caching and security (e.g., for passwords, URLs).
+        - Prevents data corruption when shared among multiple threads.
+* What’s String Pool?
+        - A special memory area in heap where String literals are stored. If two strings have same literal, both refer to the same object to save memory.
+          String s1 = "Java";
+          String s2 = "Java"; // refers to same object
+
 =============================================================================================
 
 1) Call by value : In Java, call by value means that when you pass a variable to a method, a copy of the variable’s value is passed — not the actual
@@ -333,6 +355,7 @@ Eg: Animal a;
 - A subclass that extends an abstract class must implement all abstract methods (unless it’s also abstract).
 - Used To define a template for subclasses.
 - To allow code reuse by including concrete methods in the abstract class.
+- It can have a constructor.
 
 eg:
 abstract class Animal {
@@ -358,6 +381,7 @@ Note: Cannot be instantiated” means that you cannot create an object of that c
 - In interfaces all the methods are abstract and all the variables are public, static, final
 - Using this we can achieve multiple inheritance (since Java does not support multiple class inheritance).
 - we cannot create object for interfaces.
+- It can't have a constructor.
 
 -----------------------------------------------------------
 -----------------------------------------------------------
