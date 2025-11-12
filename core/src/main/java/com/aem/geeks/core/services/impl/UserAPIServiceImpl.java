@@ -120,11 +120,12 @@ public class UserAPIServiceImpl implements UserAPIService {
             //client.execute(post) sends the HTTP POST request to the server.
             //In this case, it sends a login request to  login API https://dummyjson.com/auth/login.
 
+            //client.execute(post) this will actually executes, all the lines before just sets the reqd things for this
             //resp variable here holds the response from the server (status code + headers + body).
             //So after this line, the server has received your login credentials, and now returned a response which includes access token also.
             try (CloseableHttpResponse resp = client.execute(post)) {
 
-                //Here get a HTTP response body and we are putting that in a String
+                // got a HTTP response body above and we are putting that in a String
                 String body = EntityUtils.toString(resp.getEntity(), StandardCharsets.UTF_8);
 
                 if (resp.getStatusLine().getStatusCode() >= 200 && resp.getStatusLine().getStatusCode() < 300) { //here we are just checking the status code

@@ -450,6 +450,14 @@ IMP POINTS:
           node.setProperty("jcr:description", "Updated via Page API");
           node.getSession().save();
 
+
+---------------------------------------
+8) Classes or interfaces that helps in Accessing HTTP & External API  (for REST / external systems)
+- HttpClient (HttpGet, HttpPost) : Used to make external REST API calls.
+- HttpURLConnection (Java standard) : Simplified way to call REST APIs using core Java.
+- CloseableHttpClient : Common AEM approach for secure API calls.
+- JSONObject / Gson : To parse and handle JSON responses from APIs.
+
 ---------------------------------------
 * MAPS - COMPLETE IMPORTANT map showing how Resource, ResourceResolver, Node, Session, and related APIs connect across AEM.
 
