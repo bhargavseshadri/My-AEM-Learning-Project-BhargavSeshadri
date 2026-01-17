@@ -3,11 +3,66 @@
 ## **For all the code details**
 com/aem/geeks/core/Bhargav-notes.txt
 
-## To Push The Code in to Git
+## **GIT Related**
+### To Push The Code in to Git
 git status                            
 git add .                              
 git commit -m "random commit"  
 git push origin main
+
+##### To check the status:
+git status
+
+##### to add the untracked file:
+git add core/src/main/java/com/aem/geeks/core/Bhargav-notes.txt
+
+## AEM Important Commands
+
+#### STARTING AEM SERVER IN DEBUG MODE
+`java -Xdebug -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=8080 -jar aem-author-p4502.jar -gui
+`
+
+### Common Maven Commands for AEM
+##### Build everything (all modules)
+`mvn clean install`
+- Run this from the root project folder (where the parent pom.xml is).
+- Cleans (target/ folders) and rebuilds all modules (core, ui.apps, ui.content, all).
+- Doesn’t deploy to AEM, just builds JARs/ZIPs in target/.
+
+##### Build and Deploy to AEM
+`mvn clean install -PautoInstallSinglePackage`
+- Use this when you want to build the whole project and install the full package (all module) into your local AEM instance.
+- Useful for fresh deployments.
+
+##### Build and Deploy Only One Module
+1. Core module (OSGi bundle):
+`--> cd core
+mvn clean install -PautoInstallBundle`
+- Deploys only the core bundle (Java code) to AEM.
+- Faster than full build when you just changed backend Java code.
+- UI modules (frontend / components):
+  cd ui.apps
+  mvn clean install -PautoInstallPackage
+  or
+- cd ui.content
+  mvn clean install -PautoInstallPackage
+
+- Deploys only that module’s package (JS, HTL, dialogs, content, etc.).
+- Faster if you only changed frontend code, dialogs, or content.
+
+##### Skip Tests for Faster Builds
+`mvn clean install -DskipTests`
+-Useful if you know tests are passing and want quicker builds.
+
+Combine with deploy:
+`mvn clean install -PautoInstallSinglePackage -DskipTests`
+
+##### Deploy Manually Built Package
+If you don’t want Maven auto-deploy:
+Build: mvn clean install
+Find the all package in:
+all/target/*.zip
+Upload it via AEM Package Manager (http://localhost:4502/crx/packmgr).
 
 ### **To Setup the AEM Instance**
 
