@@ -314,13 +314,13 @@ Quick Important Points
 * FINAL METHOD cannot be overloaded and overridden in child classes.
 * Abstract method: method with no body.
 * Concrete method: Method with body.
+* We cannot directly create an object of an abstract class or an interface in Java. because they have unimplemented (abstract) methods — so
+  Java doesn’t know how to create a complete object from it.
 * To convert and array in to a List -> Arrays.asList(arrName);
 * To convert a List to an Array -> v1.toArray()
 * We can't give primitive datatypes(int, String, Boolean) to generics.
 * The collections that implement the Set interface don’t allow duplicates. (HashSet, LinkedHashSet, TreeSet)
-* In collection, TreeSet won't take null values.
-* We cannot directly create an object of an abstract class or an interface in Java. because they have unimplemented (abstract) methods — so
-  Java doesn’t know how to create a complete object from it.
+* In collection, TreeSet won't take null values and duplicates.
 
 * == compares reference (memory address).
 * equals() compares content/value if overridden (like in String, Integer, etc).
@@ -354,21 +354,33 @@ Quick Important Points
 variable itself. So, any changes made to the parameter inside the method do not affect the original variable outside the method.
 
 -----------------------------------------------------------
-2) Garbage Collection : Garbage Collection in Java is a process by which Java automatically removes unused or unreferenced objects from memory (the heap) to free up space.
+2) Garbage Collection : Garbage Collection in Java is a process by which Java automatically removes unused or unreferenced objects
+                        from memory (the heap) to free up space.
+
 - When you create objects in Java using new, they take up memory. If no part of your program is using that object anymore (no references to it), Java will
    automatically detect it and delete it from memory — this process is called Garbage Collection.
+   Eg:- Person p1 = new Person(); // object created
+        p1.name = "Alice";
+        p1 = null; // no reference to the object anymore, The Person object is unreachable, Garbage Collector can remove it from memory
 
 - Types of memories in java:
-    a)Stack: For Reference variables, method calls and local variables. Stack memory is used for method execution. It stores local variables and method calls.
-             The memory is automatically cleared when the method finishes.
-    b)Heap : For objects and instance variables. Heap memory is used to store objects created using new. It is shared by all parts of the program.
-             Objects in the heap stay there until they are no longer referenced, then garbage collection removes them.
+    a)Stack: > For Reference variables, method calls and local variables Stack memory is used.
+             > And Stack memory is also used for method execution.
+             > It stores local variables and method calls.
+             > The memory is automatically cleared when the method finishes.
+
+    b)Heap : > For objects and instance variables.
+             > Heap memory is used to store objects created using new.
+             > It is shared by all parts of the program.
+             > Objects in the heap stay there until they are no longer referenced, then garbage collection removes them.
+             > String pool is also part of this.
 
 -----------------------------------------------------------
 3) STATIC
-- static in Java means something that belongs to the class, not to any object, and it "can be accessed" without creating an object using classname.
-- The main use of static is to define common things that should be shared across all objects — and to access them without creating an object. and it is
-  helpful for memory management.
+- static in Java means something that belongs to the class, not to any object, and it "can be accessed" without creating
+  an object using classname.
+- The main use of static is to define common things that should be shared across all objects — and to access them without creating
+  an object. and it is helpful for memory management.
 * To access a non-static method in static method, we have to create an object.
 * Static method can only access the static variables.
 * To Access normal instance variables we have to create a object of that class and through that obj we access those class instance variables.
