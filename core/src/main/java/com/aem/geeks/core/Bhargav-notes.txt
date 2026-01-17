@@ -381,3 +381,192 @@ i)data-sly-set : setting a variable in HTL, If you want a variable that should b
 10) currentPage : apps/aemgeeks/components/content/author-books/author-books.html
 11) resourceDesign : apps/aemgeeks/components/content/author-books/author-books.html
 12) wcmmode : apps/aemgeeks/components/content/author-books/author-books.html
+
+=================================================================================================
+=================================================================================================
+
+** AEM IMPORTANT QUERIES AND GROOVY SCRIPTS
+
+1. QUERY: if we want to know the references of a component or a template using sling:resourceType
+
+path=/content
+property=sling:resourceType
+property.value=intel/dm/components/content/contentwithvideo
+p.limit=10
+
+=============================================================================================================================
+2. if we want to know the available pages in the with the particular jcr property in the page
+
+path=/content
+type=cq:Page
+property=jcr:content/cq:lastReplicationAction
+property.value=Deactivate
+p.limit=-1
+
+=============================================================================================================================
+3. To check the usages in content/data
+
+path=/content/data
+1_property=sling:resourceType
+1_property.value=intel/commons/components/content/contactsupportgrid
+1_property.operation=like
+p.limit=-1
+
+=============================================================================================================================
+4. Ashwin query to To get all pages that use a particular component under /us/en pages
+
+path=/content/www/us/en
+type=nt:unstructured
+property=sling:resourceType
+property.value=intel/commons/components/content/toogleBar
+p.limit=-1
+
+=============================================================================================================================
+5. Query To get the images where the property is not equal to the given value like dam:scene7FileStatus value is not PublishComplete
+
+path=/content/dam
+type=dam:Asset
+property=jcr:content/metadata/dam:scene7FileStatus
+property.operation=unequals
+property.value=PublishComplete
+
+=================================================================================================
+6.query used to fetch the images which have dam:scene7FileStatus and and gives its value and dam:scene7FileStatus
+
+path=/content/dam
+type=dam:Asset
+1_property=jcr:content/metadata/dam:scene7FileStatus
+1_property.operation=exists
+
+p.limit=-1
+p.hits=selective
+p.properties=jcr:path jcr:content/metadata/dam:scene7FileStatus
+
+=================================================================================================
+7. Ashwin Query - To get the images which have one property with purticular value dam:scene7Type = Image ; and we fetch the selected properties
+                  of those images.
+
+path=/content/dam
+type=dam:Asset
+2_property=jcr:content/metadata/dam:scene7Type
+2_property.value=Image
+
+p.limit=-1
+p.hits=selective
+p.properties=jcr:path jcr:content/metadata/dam:scene7FileStatus jcr:content/metadata/dam:scene7ID jcr:content/metadata/dam:scene7LastModified jcr:content/metadata/dam:scene7File jcr:content/cq:lastReplicationAction jcr:content/metadata/dam:scene7UploadTimeStamp jcr:content/metadata/dam:scene7PublishTimeStamp jcr:content/metadata/dam:scene7Domain jcr:content/metadata/dam:scene7Folder jcr:content/metadata/dam:scene7Name
+
+=================================================================================================
+8. Query to fetch based on one json prop(here status), when that prop is not the value(here it gives all assets when status is not equals to Finished)
+
+path=/content/dam
+type=dam:Asset
+1_property=jcr:content/status
+1_property.value=Finished
+1_property.operation=unequals
+
+p.limit=-1
+p.hits=selective
+p.properties=jcr:path jcr:content/status jcr:content/metadata/dam:scene7PublishedBy jcr:content/metadata/dam:scene7FileStatus jcr:content/metadata/dam:scene7ID jcr:content/metadata/dam:scene7Domain
+
+=================================================================================================
+9. Fetching the assets, when one particular prop is absent in jcr props
+
+path=/content/dam
+type=dam:Asset
+property=jcr:content/metadata/dam:scene7File
+property.operation=not
+
+p.limit=50
+p.hits=selective
+p.properties=jcr:path jcr:content/metadata/dam:scene7ID jcr:content/metadata/dam:MIMEtype jcr:content/metadata/dam:scene7FileStatus jcr:content/metadata/dam:scene7Type
+
+==================================================================================================
+10. Fetching the assets, when a particular prop is starting with some word
+
+path=/content/dam
+type=dam:Asset
+1_property=jcr:content/metadata/dam:MIMEtype
+1_property.value=image/%
+1_property.operation=like
+
+p.limit=50
+p.hits=selective
+p.properties=jcr:path jcr:content/metadata/dam:scene7ID jcr:content/metadata/dam:scene7File
+
+===================================================================================================
+11. Fetching the assets based on different values for a prop
+
+path=/content/dam
+type=dam:Asset
+1_property=jcr:content/metadata/dam:MIMEtype
+1_property.1_value=image/png
+1_property.2_value=image/jpeg
+1_property.3_value=image/jpg
+
+p.limit=-1
+p.hits=selective
+p.properties=jcr:path jcr:content/metadata/dam:scene7ID jcr:content/metadata/dam:MIMEtype jcr:content/metadata/dam:scene7FileStatus jcr:content/metadata/dam:scene7File
+
+==================================================================================================
+12. Fetching the assets based on two properties
+
+path=/content/dam
+type=dam:Asset
+1_property=jcr:content/metadata/dam:MIMEtype
+1_property.1_value=image/png
+1_property.2_value=image/jpeg
+1_property.3_value=image/jpg
+1_group.p.or=true
+
+2_property=jcr:content/metadata/dam:scene7File
+2_property.operation=not
+
+p.limit=-1
+p.hits=selective
+p.properties=jcr:path jcr:content/metadata/dam:MIMEtype jcr:content/metadata/dam:scene7ID jcr:content/metadata/scene7Type
+
+===================================================================================================
+***GROOVY SCRIPTS***
+
+1. Fetching images based on the presence of some props
+
+import javax.jcr.Node
+import javax.jcr.Session
+import org.apache.commons.io.IOUtils
+import java.nio.charset.StandardCharsets
+
+
+def csvFilePath = "/content/dam/groovy-csv/imgsdatainlocal.csv"
+
+def csvAsset = resourceResolver.getResource(csvFilePath)?.adaptTo(com.day.cq.dam.api.Asset)
+if (!csvAsset) {
+    println "CSV file not found at: $csvFilePath"
+    return
+}
+
+def csvInputStream = csvAsset.getOriginal().getStream()
+def csvContent = IOUtils.toString(csvInputStream, StandardCharsets.UTF_8)
+
+def lines = csvContent.readLines()
+def header = lines[0]
+def paths = lines.drop(1)
+
+def session = resourceResolver.adaptTo(Session)
+def validImagePaths = []
+
+paths.each { path ->
+    try {
+        def metadataPath = "$path/jcr:content/metadata"
+        if (session.nodeExists(metadataPath)) {
+            Node metadataNode = session.getNode(metadataPath)
+            if (metadataNode.hasProperty("dam:scene7ID") && metadataNode.hasProperty("dam:scene7Domain")) {
+                validImagePaths << path
+            }
+        }
+    } catch (Exception e) {
+        println "Error processing path: $path -> ${e.message}"
+    }
+}
+
+println "=== Images with dam:scene7ID and dam:scene7Domain ==="
+validImagePaths.each { println it + ","}
