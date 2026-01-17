@@ -18,10 +18,11 @@ git push origin main
 * Maven - https://drive.google.com/file/d/1tEkH3D-5x7qXLGkQli19wR0_H2xr9CFa/view?usp=drive_link
 * NodeJs - https://drive.google.com/file/d/1nBOG65PiYltc7va_ESLZU5HgxU0NsCb_/view?usp=drive_link
 
-* Sample locations to place the files
+###### Sample locations to place the files
 * Node : C:\Program Files\nodejs
 * Java : C:\Program Files\Java\jdk1.8.0_202\jre
 * Maven : C:\Program Files\Maven\apache-maven-3.8.9
+
 
 ##### Step: 2 - after installing the above packages Setup Environment Variables
 
@@ -42,10 +43,7 @@ Note :  add for intellij also
     ![img_5.png](img_5.png)
 
 
-
-
-
-   
+**___________________BHARGAV Notes Ends_________________**
 
 # **AEM GEEKS NOTES - start**
 
