@@ -1,8 +1,7 @@
-# Bhargav Notes
+# **Bhargav Notes**
 
 ## **For all the code details**
 com/aem/geeks/core/Bhargav-notes.txt
-
 
 ## To Push The Code in to Git
 git status                            
@@ -10,20 +9,45 @@ git add .
 git commit -m "random commit"  
 git push origin main
 
+### **To Setup the AEM Instance**
+
+#### Manditory Packages
+
+##### Step: 1 - Download AEM instance and these pkgs
+* Java - https://drive.google.com/file/d/1iHlFc8p2RMhBcjT0Pc-5PHDyk65P1fAO/view?usp=drive_link
+* Maven - https://drive.google.com/file/d/1tEkH3D-5x7qXLGkQli19wR0_H2xr9CFa/view?usp=drive_link
+* NodeJs - https://drive.google.com/file/d/1nBOG65PiYltc7va_ESLZU5HgxU0NsCb_/view?usp=drive_link
+
+* Sample locations to place the files
+* Node : C:\Program Files\nodejs
+* Java : C:\Program Files\Java\jdk1.8.0_202\jre
+* Maven : C:\Program Files\Maven\apache-maven-3.8.9
+
+##### Step: 2 - after installing the above packages Setup Environment Variables
+
+* Java, Maven
+1. ![img.png](img.png)
+2. Go to path and edit 
+    ![img_1.png](img_1.png)
+
+3. And add that java and maven inside path like this
+   ![img_2.png](img_2.png)
+
+4. Add Nodejs also similarly
+    ![img_3.png](img_3.png)
+
+Note :  add for intellij also
+1. ![img_4.png](img_4.png)
+2. Add it in the path as well
+    ![img_5.png](img_5.png)
 
 
 
 
 
+   
 
-
-
-
-
-
-==================================================================================================================================
-
-# AEM GEEKS NOTES - start
+# **AEM GEEKS NOTES - start**
 
 # Sample AEM project template
 
