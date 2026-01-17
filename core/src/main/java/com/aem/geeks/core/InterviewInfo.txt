@@ -665,7 +665,20 @@ Eg: class Car {
 --------------------------------------------------------------------------
 --------------------------------------------------------------------------
 COLLECTIONS
-- The Java collection framework is a set of classes and interfaces that provide a standard way of representing, manipulating and storing collections of objects .
+- The Java collection framework is a set of classes and interfaces that provide a standard way of representing, manipulating
+  and storing collections of objects.
+- https://medium.com/@mbanaee61/mastering-the-java-collections-framework-hierarchy-with-java-code-and-junit-testing-ab2eb87746ed
+
+List : ArrayList -	Resizable array that maintains order and allows duplicates
+       LinkedList -	List with fast insert and remove operations
+
+Set	:  HashSet	-   Unordered collection of unique elements
+       TreeSet	- Sorted set of unique elements (natural order)
+       LinkedHashSet - Maintains the order in which elements were inserted
+
+Map :  HashMap	- Stores key/value pairs with no specific order
+       TreeMap	- Sorted map based on the natural order of keys
+       LinkedHashMap - Maintains the order in which keys were inserted
 
 * Important Points:
 - List: an ordered collection of elements that allows duplicates and nulls.
