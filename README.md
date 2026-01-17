@@ -1,3 +1,30 @@
+# Bhargav Notes
+
+## **For all the code details**
+com/aem/geeks/core/Bhargav-notes.txt
+
+
+## To Push The Code in to Git
+git status                            
+git add .                              
+git commit -m "random commit"  
+git push origin main
+
+
+
+
+
+
+
+
+
+
+
+
+==================================================================================================================================
+
+# AEM GEEKS NOTES - start
+
 # Sample AEM project template
 
 This is a project template for AEM-based applications. It is intended as a best-practice set of examples as well as a potential starting point to develop your own functionality.
@@ -19,7 +46,7 @@ To build all the modules run in the project root directory the following command
 
     mvn clean install
 
-If you have a running AEM instance you can build and package the whole project and deploy into AEM with
+If you have a running AEM instance - To build and package the whole project and deploy into AEM with
 
     mvn clean install -PautoInstallPackage
 
@@ -31,7 +58,7 @@ Or alternatively
 
     mvn clean install -PautoInstallPackage -Daem.port=4503
 
-Or to deploy only the bundle to the author, run
+Or to deploy only the purticular bundle to the author, run
 
     mvn clean install -PautoInstallBundle
 
