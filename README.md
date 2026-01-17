@@ -3,6 +3,40 @@
 ## **For all the code details**
 com/aem/geeks/core/Bhargav-notes.txt
 
+### **To Setup the AEM Instance**
+
+#### Manditory Packages
+
+##### Step: 1 - Download AEM instance and these pkgs
+* Java - https://drive.google.com/file/d/1iHlFc8p2RMhBcjT0Pc-5PHDyk65P1fAO/view?usp=drive_link
+* Maven - https://drive.google.com/file/d/1tEkH3D-5x7qXLGkQli19wR0_H2xr9CFa/view?usp=drive_link
+* NodeJs - https://drive.google.com/file/d/1nBOG65PiYltc7va_ESLZU5HgxU0NsCb_/view?usp=drive_link
+
+###### Sample locations to place the files
+* Node : C:\Program Files\nodejs
+* Java : C:\Program Files\Java\jdk1.8.0_202\jre
+* Maven : C:\Program Files\Maven\apache-maven-3.8.9
+
+
+##### Step: 2 - after installing the above packages Setup Environment Variables
+
+* Java, Maven
+1. ![img.png](img.png)
+2. Go to path and edit
+   ![img_1.png](img_1.png)
+
+3. And add that java and maven inside path like this
+   ![img_2.png](img_2.png)
+
+4. Add Nodejs also similarly
+   ![img_3.png](img_3.png)
+
+Note :  add for intellij also
+1. ![img_4.png](img_4.png)
+2. Add it in the path as well
+   ![img_5.png](img_5.png)
+
+
 ## **GIT Related**
 ### To Push The Code in to Git
 git status                            
@@ -64,38 +98,218 @@ Find the all package in:
 all/target/*.zip
 Upload it via AEM Package Manager (http://localhost:4502/crx/packmgr).
 
-### **To Setup the AEM Instance**
 
-#### Manditory Packages
+# **Very Important Query Builder - Queries and Groovys**
 
-##### Step: 1 - Download AEM instance and these pkgs
-* Java - https://drive.google.com/file/d/1iHlFc8p2RMhBcjT0Pc-5PHDyk65P1fAO/view?usp=drive_link
-* Maven - https://drive.google.com/file/d/1tEkH3D-5x7qXLGkQli19wR0_H2xr9CFa/view?usp=drive_link
-* NodeJs - https://drive.google.com/file/d/1nBOG65PiYltc7va_ESLZU5HgxU0NsCb_/view?usp=drive_link
-
-###### Sample locations to place the files
-* Node : C:\Program Files\nodejs
-* Java : C:\Program Files\Java\jdk1.8.0_202\jre
-* Maven : C:\Program Files\Maven\apache-maven-3.8.9
+#### 1. QUERY: if we want to know the references of a component or a template using sling:resourceType
+`path=/content
+property=sling:resourceType
+property.value=intel/dm/components/content/contentwithvideo
+p.limit=10`
 
 
-##### Step: 2 - after installing the above packages Setup Environment Variables
+#### 2. if we want to know the available pages in the with the particular jcr property in the page
 
-* Java, Maven
-1. ![img.png](img.png)
-2. Go to path and edit 
-    ![img_1.png](img_1.png)
+path=/content
+type=cq:Page
+property=jcr:content/cq:lastReplicationAction
+property.value=Deactivate
+p.limit=-1
 
-3. And add that java and maven inside path like this
-   ![img_2.png](img_2.png)
 
-4. Add Nodejs also similarly
-    ![img_3.png](img_3.png)
+#### 3. To check the usages in content/data
 
-Note :  add for intellij also
-1. ![img_4.png](img_4.png)
-2. Add it in the path as well
-    ![img_5.png](img_5.png)
+path=/content/data
+1_property=sling:resourceType
+1_property.value=intel/commons/components/content/contactsupportgrid
+1_property.operation=like
+p.limit=-1
+
+
+#### 5. Ashwin query to To get all pages that use a particular component under /us/en pages
+
+path=/content/www/us/en
+type=nt:unstructured
+property=sling:resourceType
+property.value=intel/commons/components/content/toogleBar
+p.limit=-1
+
+
+#### 6. Query To get the images where the property is not equal to the given value like dam:scene7FileStatus value is not PublishComplete
+
+path=/content/dam
+type=dam:Asset
+property=jcr:content/metadata/dam:scene7FileStatus
+property.operation=unequals
+property.value=PublishComplete
+
+
+#### 7. query used to fetch the images which have dam:scene7FileStatus and and gives its value and dam:scene7FileStatus
+
+path=/content/dam
+type=dam:Asset
+1_property=jcr:content/metadata/dam:scene7FileStatus
+1_property.operation=exists
+
+p.limit=-1
+p.hits=selective
+p.properties=jcr:path jcr:content/metadata/dam:scene7FileStatus
+
+=================================================================================================
+
+=> Ashwin Query  DM:
+
+path=/content/dam
+type=dam:Asset
+2_property=jcr:content/metadata/dam:scene7Type
+2_property.value=Image
+
+p.limit=-1
+p.hits=selective
+p.properties=jcr:path jcr:content/metadata/dam:scene7FileStatus jcr:content/metadata/dam:scene7ID jcr:content/metadata/dam:scene7LastModified jcr:content/metadata/dam:scene7File jcr:content/cq:lastReplicationAction jcr:content/metadata/dam:scene7UploadTimeStamp jcr:content/metadata/dam:scene7PublishTimeStamp jcr:content/metadata/dam:scene7Domain jcr:content/metadata/dam:scene7Folder jcr:content/metadata/dam:scene7Name
+
+=================================================================================================
+
+=> Query to fetch based on one json prop(here status), when that prop is not the value(here it gives all assets when status is not equals to Finished)
+
+path=/content/dam
+type=dam:Asset
+1_property=jcr:content/status
+1_property.value=Finished
+1_property.operation=unequals
+
+p.limit=-1
+p.hits=selective
+p.properties=jcr:path jcr:content/status jcr:content/metadata/dam:scene7PublishedBy jcr:content/metadata/dam:scene7FileStatus jcr:content/metadata/dam:scene7ID jcr:content/metadata/dam:scene7Domain
+
+=================================================================================================
+
+===> Fetching the assets, when one particular prop is absent in jcr props
+
+path=/content/dam
+type=dam:Asset
+property=jcr:content/metadata/dam:scene7File
+property.operation=not
+
+p.limit=50
+p.hits=selective
+p.properties=jcr:path jcr:content/metadata/dam:scene7ID jcr:content/metadata/dam:MIMEtype jcr:content/metadata/dam:scene7FileStatus jcr:content/metadata/dam:scene7Type
+
+give 3 lakhs results for currect dm issue scenario
+
+==================================================================================================
+
+===> Fetching the assets, when a particular prop is starting with some word
+
+path=/content/dam
+type=dam:Asset
+1_property=jcr:content/metadata/dam:MIMEtype
+1_property.value=image/%
+1_property.operation=like
+
+p.limit=50
+p.hits=selective
+p.properties=jcr:path jcr:content/metadata/dam:scene7ID jcr:content/metadata/dam:scene7File
+
+===================================================================================================
+
+===> Fetching the assets based on different values for a prop
+
+path=/content/dam
+type=dam:Asset
+1_property=jcr:content/metadata/dam:MIMEtype
+1_property.1_value=image/png
+1_property.2_value=image/jpeg
+1_property.3_value=image/jpg
+
+p.limit=-1
+p.hits=selective
+p.properties=jcr:path jcr:content/metadata/dam:scene7ID jcr:content/metadata/dam:MIMEtype jcr:content/metadata/dam:scene7FileStatus jcr:content/metadata/dam:scene7File
+
+==================================================================================================
+
+===> Fetching the props based on two properties
+
+path=/content/dam
+type=dam:Asset
+1_property=jcr:content/metadata/dam:MIMEtype
+1_property.1_value=image/png
+1_property.2_value=image/jpeg
+1_property.3_value=image/jpg
+1_group.p.or=true
+
+2_property=jcr:content/metadata/dam:scene7File
+2_property.operation=not
+
+p.limit=-1
+p.hits=selective
+p.properties=jcr:path jcr:content/metadata/dam:MIMEtype jcr:content/metadata/dam:scene7ID jcr:content/metadata/scene7Type
+
+
+===================================================================================================
+
+GROOVY
+
+Fetching images based on the presence of some props
+
+import javax.jcr.Node
+import javax.jcr.Session
+import org.apache.commons.io.IOUtils
+import java.nio.charset.StandardCharsets
+
+
+def csvFilePath = "/content/dam/groovy-csv/imgsdatainlocal.csv"
+
+def csvAsset = resourceResolver.getResource(csvFilePath)?.adaptTo(com.day.cq.dam.api.Asset)
+if (!csvAsset) {
+println "CSV file not found at: $csvFilePath"
+return
+}
+
+def csvInputStream = csvAsset.getOriginal().getStream()
+def csvContent = IOUtils.toString(csvInputStream, StandardCharsets.UTF_8)
+
+def lines = csvContent.readLines()
+def header = lines[0]
+def paths = lines.drop(1)
+
+def session = resourceResolver.adaptTo(Session)
+def validImagePaths = []
+
+paths.each { path ->
+try {
+def metadataPath = "$path/jcr:content/metadata"
+if (session.nodeExists(metadataPath)) {
+Node metadataNode = session.getNode(metadataPath)
+if (metadataNode.hasProperty("dam:scene7ID") && metadataNode.hasProperty("dam:scene7Domain")) {
+validImagePaths << path
+}
+}
+} catch (Exception e) {
+println "Error processing path: $path -> ${e.message}"
+}
+}
+
+println "=== Images with dam:scene7ID and dam:scene7Domain ==="
+validImagePaths.each { println it + ","}
+
+
+////THE ABOVE IS WORKING
+
+
+==========================================================================================================================
+__________________________________________________________________________________________________________________________
+==========================================================================================================================
+AEM SERVER START
+
+
+java -jar AEM_6.5_Quickstart-author-p4502.jar
+
+2==>(not using) java -Xdebug -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=8080 -jar AEM_6.5_Quickstart-author-p4502.jar
+
+aem-author-p4502
+
+(in use) java -Xdebug -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=8080 -jar aem-author-p4502.jar
 
 
 **___________________BHARGAV Notes Ends_________________**
