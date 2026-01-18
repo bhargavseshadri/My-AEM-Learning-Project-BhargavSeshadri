@@ -667,30 +667,30 @@ Eg: class Car {
 COLLECTIONS
 - The Java collection framework is a set of classes and interfaces that provide a standard way of representing, manipulating
   and storing collections of objects.
-- https://medium.com/@mbanaee61/mastering-the-java-collections-framework-hierarchy-with-java-code-and-junit-testing-ab2eb87746ed
+- Represents a group of objects known as elements.
+- Methods include add, remove, contains, size, etc.
+- https://medium.com/@cibofdevs/collections-in-java-a-comprehensive-guide-1d63f8cd5c05
 
-List : ArrayList -	Resizable array that maintains order and allows duplicates
-       LinkedList -	List with fast insert and remove operations
+List : an "ordered" collection of elements that allows duplicates and nulls.
+           ArrayList -	Resizable array that maintains order and allows duplicates
+           LinkedList -	List with fast insert and remove operations
 
-Set	:  HashSet	-   Unordered collection of unique elements
-       TreeSet	- Sorted set of unique elements (natural order)
-       LinkedHashSet - Maintains the order in which elements were inserted
+Set	: A unordered collection of elements that do not allow duplicates.
+           HashSet	-   Unordered collection of unique elements
+           TreeSet	- Sorted set of unique elements (natural order), means it put the elements in a unique and ascending order.
+           LinkedHashSet - Maintains the order in which elements were inserted
+           SortedSet: Maintains the elements in a ascending order.
 
-Map :  HashMap	- Stores key/value pairs with no specific order
-       TreeMap	- Sorted map based on the natural order of keys
-       LinkedHashMap - Maintains the order in which keys were inserted
+Map : a collection of key-value pairs, where each key is unique.
+           HashMap	- Stores key/value pairs with no specific order or insertion order.
+           TreeMap	- Sorted map based on the natural order of keys
+           LinkedHashMap - Maintains the order in which keys were inserted
 
-* Important Points:
-- List: an ordered collection of elements that allows duplicates and nulls.
-- Map: a collection of key-value pairs, where each key is unique.
-- HashMap: Here it dont follow any order or insertion order.
-- LinkedHashMap: Combination of HashMap and linkedList, Maintains insertion order (the order you added keys)
-- Queue: a queue is a data structure that is used to store elements in a First-In-First-Out (FIFO) manner.
-- Deque: can be used both as FIFO and LIFO.
-- Set: a unordered collection of elements that do not allow duplicates.
-- SortedSet: Maintains the elements in a ascending order.
-- HashSet: it used hashing mechanism(hash code) to store the unique elements.
-- TreeSet: Sorted unique items, means it put the elements in a unique and ascending order.
+Queue: a queue is a data structure that is used to store elements in a First-In-First-Out (FIFO) manner.
+Deque: can be used both as FIFO and LIFO.
+
+
+* When and where we use a particular collection
 
 1) List:
 - It is an ordered collection of elements, where each element has a distinct position in the list.
@@ -732,7 +732,7 @@ Example: import java.util.*;
 - Its an interface
 
 *) ListIterator
-- it is only applicable for the classes which are only implimenting list interface.
+- it is only applicable for the classes which are only implementing list interface.
 - its a bi-directional. (.hasNext(), .hasPrevious()) and it has read and write access.
 
 ---------------------------
