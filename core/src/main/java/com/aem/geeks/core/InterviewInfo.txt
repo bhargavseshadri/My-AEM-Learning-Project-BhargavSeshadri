@@ -669,6 +669,7 @@ COLLECTIONS
   and storing collections of objects.
 - Represents a group of objects known as elements.
 - Methods include add, remove, contains, size, etc.
+- com/aem/geeks/core/javarelatedcodes/CollectionExampleCodes.java
 - https://medium.com/@cibofdevs/collections-in-java-a-comprehensive-guide-1d63f8cd5c05
 
 List : an "ordered" collection of elements that allows duplicates and nulls.
