@@ -9,7 +9,8 @@ import org.osgi.service.metatype.annotations.Designate;
 
 //BhargavSeshadri - Step:3 - NORMAL OSGI CONFIGURATION (step:2 is this class interface class)
 // for STEP:4 - go to com/aem/geeks/core/models/impl/ProductModelImpl.java
-@Component(service = BhargavOsgiConfigService.class, immediate = true)  //immediate=true Whenever we want to activate the service immediately after the bundle gets started in that place we use this.
+//immediate=true When we want to activate the service immediately after the bundle gets started in that place we use this.
+@Component(service = BhargavOsgiConfigService.class, immediate = true)
 @Designate(ocd = BhargavOSGiConfig.class)  //here we are Designating this service to the osgi configuration
 public class BhargavOsgiConfigServiceImpl implements BhargavOsgiConfigService{
 

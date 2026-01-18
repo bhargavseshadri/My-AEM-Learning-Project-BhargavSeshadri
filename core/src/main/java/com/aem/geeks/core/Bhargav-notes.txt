@@ -190,14 +190,15 @@ Step:3(last step) : in htl I am printing those values -> apps/aemgeeks/component
 7) CONFIGURATIONS  (OSGI CONFIGURATION -> Service -> Sling Model -> HTL)
 
 a) Normal Configuration
-STEP:1 - com/aem/geeks/core/config/BhargavOSGiConfig.java -- Create an annotation class with osgi config code stating what are the values our configuration should take
+STEP:1 - com/aem/geeks/core/config/BhargavOSGiConfig.java -- Create an annotation class with osgi config code stating what
+                                                             are the values our configuration should take.
 STEP:2 - Create a Service interface -- com/aem/geeks/core/services/BhargavOsgiConfigService.java
 STEP:3 - Create a service implimentation and link it with our osgi config, and then write the java logic based on need
          - com/aem/geeks/core/services/impl/BhargavOsgiConfigServiceImpl.java
 STEP:4 - Using/calling this service in SLING MODEL -- com/aem/geeks/core/models/impl/ProductModelImpl.java
 STEP:5(last step) - Printing the data on page using HTL -- apps/aemgeeks/components/content/slingmodelproductcomp/slingmodelproductcomp.html
--> To see the output : Goto system/console/configmgr  -> search for your configuration -> give the values and save -> drag and drop the component in which you have
-                    printing those values for this it is "slingmodelproductcomp"
+-> To see the output : Goto system/console/configmgr  -> search for your configuration -> give the values and save -> drag and drop
+                                                         the component in which you have printing those values for this it is "slingmodelproductcomp".
 
 
 **NOTE: Converting an OSGI Configuration config file to NODE in CRXDE (For this demo too we are using the above BhargavOsgiConfigServiceImp)
@@ -223,14 +224,14 @@ STEP:4 - (Last Step) - apps/aemgeeks/components/content/slingmodelproductcomp/sl
 =============================================================================================
 8) SCHEDULERS  (Configuration(to take the values) -> Scheduler Service -> )
 a) Runnable scheduler
-STEP:1 - Create a Runnable Scheduler : com/aem/geeks/core/schedulers/GeeksScheduler.java
-STEP:2 - Create a OSGI Configuration to take the values for scheduler : com/aem/geeks/core/config/SchedulerConfiguration.java
+STEP:1 - Create a OSGI Configuration to take the values for scheduler : com/aem/geeks/core/config/SchedulerConfiguration.java
+STEP:2 - Create a Runnable Scheduler : com/aem/geeks/core/schedulers/GeeksScheduler.java
 STEP:3(LAST STEP) - Connect and Use that configuration values in the scheduler : com/aem/geeks/core/schedulers/GeeksScheduler.java
 
 --------------------------------------------
 b) Job Scheduler
-STEP:1 - Create a JOB Scheduler : com/aem/geeks/core/schedulers/GeeksSchedulerJobs.java
-STEP:2 - Create a OSGI Configuration to take the values for scheduler : com/aem/geeks/core/config/SchedulerConfiguration.java
+STEP:1 - Create a OSGI Configuration to take the values for scheduler : com/aem/geeks/core/config/SchedulerConfiguration.java
+STEP:2 - Create a JOB Scheduler : com/aem/geeks/core/schedulers/GeeksSchedulerJobs.java
 STEP:3(LAST STEP) - Connect and Use that configuration values in the scheduler : com/aem/geeks/core/schedulers/GeeksSchedulerJobs.java
 
 =============================================================================================

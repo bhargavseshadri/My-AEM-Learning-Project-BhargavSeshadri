@@ -13,6 +13,7 @@ IMPORTANT PATHS
        2. Runtime Model - Stored Under (crx) : /var/workflow/models
        * The WF STEP dialog values are stored inside : /conf/global/settings/workflow/models/bhargav-personal-workflow/jcr:content/flow/geeksworkflowstep/metaData
 -> We can find all the available users( and also deactivate the user here) : /security/users.html
+-> To create new service user : /crx/explorer/index.jsp
 
 =============================================================================================
 
@@ -57,7 +58,8 @@ d) Configurations:
 
 e) Schedulers : we have two types of schedulers 1) Runnable, 2)Job Scheduler
                 1)Runnable : RUN() method is the manditory one. "activate method", Not a manditory method, but to get the config values we define it
-                2)Job  : execute(JobContext jobContext) is the manditory method, "activate method", Not a manditory method, but to get the config values we define it
+                2)Job  : execute(JobContext jobContext) is the manditory method, "activate method", Not a manditory method,
+                         but to get the config values we define it.
 
 f) Workflow :
             1) Custom WF Process : execute(WorkItem workItem, WorkflowSession workflowSession, MetaDataMap processArguments)
@@ -113,7 +115,8 @@ f) doPost typically returns: HttpStatus codes and then Client receives response 
 
 Q) What is an “attribute” in a request?
 Answer: You can store temporary data in the HttpServletRequest object using setAttribute() and later read it back using getAttribute().
---> Think of a HttpServletRequest (or SlingHttpServletRequest) object as a container or bag that travels from the browser → AEM → servlet → JSP → other servlets.
+--> Think of a HttpServletRequest (or SlingHttpServletRequest) object as a container or bag that travels from the
+    browser → AEM → servlet → JSP → other servlets.
 --> That bag can carry
 a) Parameters (from the user input, like req.getParameter("name"))
 b) Headers (like cookies, content-type)
@@ -207,11 +210,12 @@ a) Runnable scheduler
 b) Job Scheduler
 - Impliments JOB interface
 ---> USE OF THIS JOB SCHEDULER
-- Lets say we have a component and a scheduler, the component displays the data and he scheduler fetches the data from some service and update the data in the component.
-lets say we have three countries INDIA(12:00AM), GERMANY(12:00 AM), USA(12:00 AM), and from these three countries we are getting the data. our scheduler executes at midnight
-12:00 AM and fetches the data of covid 19 patients from some service.
-Our servers are in india so for india it is fine but for the usa and germany 12AM IST is not a 12AM for them (INDIA 12AM -- USA 1:30PM -- GERMANY 4:30PM),
-so based on this to meet the requirement our scheduler should execute at three different times, and for that writing three Runnable Schedulers(different corns) is not a feasable way.
+- Lets say we have a component and a scheduler, the component displays the data and the scheduler fetches the data from some
+service and update the data in the component. lets say we have three countries INDIA(12:00AM), GERMANY(12:00 AM), USA(12:00 AM),
+and from these three countries we are getting the data. our scheduler executes at midnight 12:00 AM and fetches the data of
+covid 19 patients from some service. Our servers are in india so for india it is fine but for the usa and germany 12AM IST
+is not a 12AM for them (INDIA 12AM -- USA 1:30PM -- GERMANY 4:30PM), so based on this to meet the requirement our scheduler should
+execute at three different times, and for that writing three Runnable Schedulers(different corns) is not a feasable way.
 In this scenario JOB SCHEDULERS enter, we can write three jobs for these three countries in one scheduler.
 
 =============================================================================================

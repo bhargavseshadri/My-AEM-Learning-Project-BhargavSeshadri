@@ -8,9 +8,9 @@ import org.osgi.service.metatype.annotations.Designate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/*BhargavSeshadri - STEP:1 - Runnable Scheduler
+/*BhargavSeshadri - STEP:2 - Runnable Scheduler
 * Here we create a scheduler
-* STEP: 2: com/aem/geeks/core/config/SchedulerConfiguration.java - create a configuration and then come here and connect that config and use the values
+* STEP: 1: com/aem/geeks/core/config/SchedulerConfiguration.java - create a configuration and then come here and connect that config and use the values
 * STEP:3 (LAST STEP) it is also here in this file - add all the required scheduler code using osgi config values
 * */
 
@@ -25,8 +25,9 @@ public class GeeksScheduler implements Runnable {  //Here we are implimenting Ru
     @Reference
     private Scheduler scheduler;      //we are getting the scheduler obj to use it
 
+    //here in this activate method we are getting the Configuration object to get the values
     @Activate
-    protected void activate(SchedulerConfiguration config) {  //here in this activate method we are getting the Configuration object to get the values
+    protected void activate(SchedulerConfiguration config) {
         schedulerId = config.schedulerName().hashCode();
         addScheduler(config);
     }
@@ -48,12 +49,18 @@ public class GeeksScheduler implements Runnable {  //Here we are implimenting Ru
         scheduler.schedule(this, scheduleOptions);   //here using ".schedule" we are scheduling the scheduler
 
 
-        //So in some case, we have set the scheduler to exceute at 10 AM in the morning, so after newly/freshly the scheduler gets deployed today at 8pm, the in that case for
-        //between 8pm and 10 am the scheduler wont run and the frontend will be empty, to resolve this problem
-        ScheduleOptions scheduleOptionsNow = scheduler.NOW(); /*with this the scheduler wii deploy one time immediately after deployed, so as soon as the
-                                                                code deployed the run method will execute once.*/
-        ScheduleOptions scheduleOptionsTimes = scheduler.NOW(3,5); /*So according to this the scheduler will execute 3-times with 5-second time interval,
-                                                                        and after third time then it will execute based on the give corn */
+        //So in some case, we have set the scheduler to exceute at 10 AM in the morning, so after newly/freshly the scheduler gets deployed today at 8pm,
+        // the in that case for between 8pm and 10 am the scheduler wont run and the frontend will be empty, to resolve this problem
+
+        /*with this the scheduler wii deploy one time immediately after deployed, so as soon as the
+          code deployed the run method will execute once.*/
+        ScheduleOptions scheduleOptionsNow = scheduler.NOW();
+
+        /*So according to this the scheduler will execute 3-times with 5-second time interval,
+          and after third time then it will execute based on the give corn */
+        ScheduleOptions scheduleOptionsTimes = scheduler.NOW(3,5);
+
+
         scheduler.schedule(this, scheduleOptionsNow);
 
     }

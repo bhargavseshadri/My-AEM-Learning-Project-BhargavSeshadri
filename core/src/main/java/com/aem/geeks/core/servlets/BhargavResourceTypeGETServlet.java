@@ -15,7 +15,9 @@ import java.io.IOException;
 
 
 //BhargavSeshadri - (Only Step) - ResourceType Servlet - GET
-//Here we hit the PAGE which have this Resource(aemgeeks/components/structure/content), then this servlet will runs and GETs and gives us the data we have asked for.
+//Here we hit the PAGE which have this Resource(aemgeeks/components/structure/content), then this servlet will runs and GETs and
+// gives us the data we have asked for.
+
 //Hit the below url to GET the data(here page title) you asked for
 //http://localhost:4502/content/aemgeeks/us/en/bhargavseshadritestpage/jcr:content.demo.xml
 @Component(service = Servlet.class)

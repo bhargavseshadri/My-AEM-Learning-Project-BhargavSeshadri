@@ -25,7 +25,8 @@ public class OSGiFactoryConfigImpl implements OSGiFactoryConfig {
     private String serviceName;
     private String serviceURL;
 
-    private List<OSGiFactoryConfig> configsList;        //IMPORTANT - here we are creating one list and we put all the factory config instances in to this list and then we pass this
+    //IMPORTANT - here we are creating one list and we put all the factory config instances in to this list and then we pass this
+    private List<OSGiFactoryConfig> configsList;
 
     @Activate
     @Modified

@@ -17,8 +17,8 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-/*BhargavSeshadri - STEP:1 - JOB SCHEDULER
-* for Step:2 - create a configuration to take the values for this scheduler -  com/aem/geeks/core/config/SchedulerConfiguration.java
+/*BhargavSeshadri - STEP:2 - JOB SCHEDULER
+* for Step:1 - create a configuration to take the values for this scheduler -  com/aem/geeks/core/config/SchedulerConfiguration.java
 * STEP:3 (LAST STEP) it is also here in this file - add all the required scheduler code using osgi config values
 * */
 
@@ -74,7 +74,8 @@ public class GeeksSchedulerJobs implements Job {   //Implimenting the JOB interf
     //MANDITORY METHOD - this will get executed based on the provide cron expression
     @Override
     public void execute(JobContext jobContext) {         //JOBCONTEXT : using this we can add & get the job specific custom data and print it.
-           LOG.info("\n =======> COUNTRY {} : URL {} ",jobContext.getConfiguration().get("country"),  //using this ".getConfiguration()" we can get the data from the map we have passed to the .config(Map) above.
+        //using this ".getConfiguration()" we can get the data from the map we have passed to the .config(Map) above.
+        LOG.info("\n =======> COUNTRY {} : URL {} ",jobContext.getConfiguration().get("country"),
                    jobContext.getConfiguration().get("url"));   //Whatever JOB is executing then this ".getConfiguration()" have that job specific values.
     }
 }
