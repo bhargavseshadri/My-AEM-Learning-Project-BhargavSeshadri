@@ -1,5 +1,7 @@
 package com.aem.geeks.core.javarelatedcodes;
 
+import java.util.Arrays;
+
 public class LargestNumInArray {
     public static void main(String[] args) {
         int[] arr = {3, 7, 2, 9};
@@ -10,5 +12,10 @@ public class LargestNumInArray {
             }
         }
         System.out.println(max);
+
+
+        //or simply we can also write like this
+        Arrays.sort(arr);
+        System.out.println(arr[arr.length-1]);
     }
 }

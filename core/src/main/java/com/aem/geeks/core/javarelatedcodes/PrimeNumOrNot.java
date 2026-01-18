@@ -11,7 +11,6 @@ public class PrimeNumOrNot {
         } else {
             //here acc to maths we dont need to check all numbers up to the given num. just up to num / 2 is sufficient.
             for (int i = 2; i <= num / 2; i++) {
-                System.out.println(i + " bhagi");
                 if (num % i == 0) {
                     isPrime = false;
                     break;

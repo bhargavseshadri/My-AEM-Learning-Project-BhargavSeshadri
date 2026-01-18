@@ -348,6 +348,17 @@ Quick Important Points
         - Collection → Interface (root of all collection types).
         - Collections → Utility class (with static methods like sort(), reverse()).
 
+* Difference between length and length()?
+ans. length : Used with arrays
+     eg: int[] arr = {1, 2, 3};
+         System.out.println(arr.length);
+
+    length() : Used with String
+    eg: String s = "Hello";
+        System.out.println(s.length());
+
+
+
 =============================================================================================
 
 1) Call by value : In Java, call by value means that when you pass a variable to a method, a copy of the variable’s value is passed — not the actual
