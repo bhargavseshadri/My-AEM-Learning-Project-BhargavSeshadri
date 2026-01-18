@@ -679,7 +679,6 @@ Set	: A unordered collection of elements that do not allow duplicates.
            HashSet	-   Unordered collection of unique elements
            TreeSet	- Sorted set of unique elements (natural order), means it put the elements in a unique and ascending order.
            LinkedHashSet - Maintains the order in which elements were inserted
-           SortedSet: Maintains the elements in a ascending order.
 
 Map : a collection of key-value pairs, where each key is unique.
            HashMap	- Stores key/value pairs with no specific order or insertion order.
