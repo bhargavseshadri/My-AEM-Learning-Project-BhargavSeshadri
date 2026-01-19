@@ -367,6 +367,8 @@ h)data-sly-resource : used to include resources.
 --------------------
 i)data-sly-set : setting a variable in HTL, If you want a variable that should be available through out the HTL file then we use this
 
+<sly data-sly-set.imageData="${articleIntro.ImageRenditionsBean}"/>
+
 =================================
 => USING GLOBAL OBJECTS
 > Enumerable Objects
