@@ -329,8 +329,8 @@ a)data-sly-list:  LOOPING
 -> apps/aemgeeks/components/content/author-books/author-books.html
 -> Its model is in : com/aem/geeks/core/models/impl/AuthorBooksImpl.java
 
-b)data-sly-repeat: everything is exactly similar to data-sly-list but only difference is in page html structure list-have only one parent container and inside it it have <p> tags,
-but Repeat creates div containers for every iteration
+b)data-sly-repeat: everything is exactly similar to data-sly-list but only difference is in page html structure list-have only one
+ parent container and inside it it have <p> tags, but Repeat creates div containers for every iteration
 
 -> data-sly-list with ITERATOR :
 eg scenario: want to iterate the child pages of a purticular page and then display that info to htl

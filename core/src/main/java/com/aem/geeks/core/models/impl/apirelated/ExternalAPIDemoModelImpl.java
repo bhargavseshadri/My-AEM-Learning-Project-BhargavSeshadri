@@ -65,10 +65,12 @@ public class ExternalAPIDemoModelImpl implements ExternalAPIDemoModel {
             Gson gson = new Gson();
             //with the next line : up to now we have all the data in "conn", so now we are converting that data in to STREAM using "conn.getInputStream()"
             // in simple word we get all the individual data and the we convert in to our class ExternalData.class
-            ExternalData data = gson.fromJson(new InputStreamReader(conn.getInputStream()), ExternalData.class);  /*ExternalData - It is just a helper pojo class to store the data, (and here we are just using the another class here without rxtending
-                                                                                                                                    or creating any object because gson will automatically creates a object for our ExternalData class
-                                                                                                                                    GSON - Create the object for you (new ExternalData() under the hood)
-                                                                                                                                         - Read the JSON and Map matching keys to Java fields*/
+            ExternalData data = gson.fromJson(new InputStreamReader(conn.getInputStream()), ExternalData.class);
+            /*ExternalData - It is just a helper pojo class to store the data, (and here we are just using the another class here without extending
+            or creating any object because gson will automatically creates a object for our ExternalData class
+            GSON - Create the object for you (new ExternalData() under the hood)
+                 - Read the JSON and Map matching keys to Java fields*/
+
 
             this.id = data.getId();             //after ExtrenalData gets the data here we gets that data to store in this class variables and use accordingly
             this.name = data.getName();

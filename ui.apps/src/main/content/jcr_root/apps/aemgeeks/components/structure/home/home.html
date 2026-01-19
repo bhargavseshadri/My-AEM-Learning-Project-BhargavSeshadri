@@ -1,7 +1,7 @@
 <!--BhargavSeshadri -
->>STEP:2 - Getting the file where we defined the template || data-sly-use.head="head.html" :: In this line we are getting the file
+>>STEP:2 - Getting the file where we defined the template || data-sly-use.headObj="head.html" :: In this line we are getting the file
             where our template(reusable code) is present ||
- head : this is just a variable we are created here -->
+ headObj : this is just a variable we are created here -->
 
 <!--STEP:3 (Last Step) - Calling the template || data-sly-call="${head.head @ page = page}"  :: Here in this line we are saying from -> head(the
                             variable we have created in step:2 and assigned a file to it) that file -->
@@ -13,11 +13,11 @@ to that template so that it can use) -->
 
 
 <!DOCTYPE HTML>
-<html data-sly-use.page="com.adobe.cq.wcm.core.components.models.Page" lang="${page.language}"
-      data-sly-use.head="head.html"
+<html data-sly-use.pageObj="com.adobe.cq.wcm.core.components.models.Page" lang="${page.language}"
+      data-sly-use.headObj="head.html"
       data-sly-use.footer="footer.html"
       data-sly-use.redirect="redirect.html">
-    <head data-sly-call="${head.head @ page = page}"></head>
+    <head data-sly-call="${headObj.head @ page = pageObj}"></head>
     <body class="${page.cssClassNames}" id="page-top">
         <sly data-sly-test.isRedirectPage="${page.redirectTarget && (wcmmode.edit || wcmmode.preview)}"
              data-sly-call="${redirect.redirect @ redirectTarget = page.redirectTarget}"></sly>

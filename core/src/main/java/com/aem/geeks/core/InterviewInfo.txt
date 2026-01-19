@@ -250,7 +250,7 @@ it in your component dialog or template, because AEM won’t auto-link global di
 * Including it in component or editable templates/page components XML: <cq:includeClientLib categories="myproject.dialog"/>
 
 * Why we give "allowProxy = true" in AEM clientlibrary properties?
-Ans. - When you create a Client Library (clientlib) under /apps/..., by default it cannot be accessed publicly — because the /apps path is not exposed on
+Ans. - When you create a Client Library (clientlib) under /apps/..., by default it cannot be accessed publicly to anonymous users — because the /apps path is not exposed on
        the publish instance (for security reasons). To make it accessible in a safe and public way, we set this property.
      - If you forget it On publish, clientlibs won’t load → 404 errors in browser console.
      - When allowProxy=true, AEM allows the clientlib to be accessed through a proxy path: /etc.clientlibs/<your-project>/clientlibs/<clientlib-name>
