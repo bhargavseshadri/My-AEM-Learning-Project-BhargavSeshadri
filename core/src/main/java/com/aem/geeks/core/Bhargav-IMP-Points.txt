@@ -325,7 +325,7 @@ IMP POINTS:
             Node node = resource.adaptTo(Node.class);    //here we are converting our resource to node.
             String title = node.getProperty("jcr:title").getString();
 
-        - Reading the node properties of that resource and saving the session.
+        - writing the node properties of that resource and saving the session.
             Node node = resource.adaptTo(Node.class);
             node.setProperty("jcr:description", "Updated via ResourceResolver");
             node.getSession().save();
@@ -430,12 +430,13 @@ IMP POINTS:
 ---------------------------------------
 7) Special mention - Using Page API
     - Getting hold of resource
+          PageManager pageManager=resourceResolver.adaptTo(PageManager.class);
           Page page = pageManager.getPage("/content/mySite/page");
           Resource contentRes = page.getContentResource();  //here we directly got the jcr:content
 
     - Reading using ValueMap
-          ValueMap props = contentRes.getValueMap();  // here it will allow you to read all the properties in that resource node
-          String title = props.get("jcr:title", String.class);
+          ValueMap valueMap = contentRes.getValueMap();  // here it will allow you to read all the properties in that resource node
+          String title = valueMap.get("jcr:title", String.class);
 
     - Reading, Writing and saving using node
           Node node = contentRes.adaptTo(Node.class);
