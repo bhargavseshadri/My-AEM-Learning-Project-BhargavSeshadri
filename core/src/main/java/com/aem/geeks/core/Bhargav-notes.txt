@@ -88,8 +88,9 @@ a) ResourceType Servlet:
 -> GET : (only step) (MAIN LOGIC): com/aem/geeks/core/servlets/BhargavResourceTypeGETServlet.java
 
 -> POST:
-Servlet Usage: Here this Servlet will work for a REGISTRATION FORM component, there when a user adds his details in the form and submits it then this post servlet
-               gets called and then it will create a new node(usernode) under the provided "page resource", and in that node it will store the user given data
+Servlet Usage: Here this Servlet will work for a REGISTRATION FORM component, there when a user adds his details in the
+               form and submits it then this post servlet gets called and then it will create a new node(usernode) under
+               the provided "page resource", and in that node it will store the user given data.
 
 Step: 1 - apps/aemgeeks/components/content/registrationformservlet/registrationformservlet.html
 - you should have a component or some resource, so here we have a form and when ever we give the value and hit the submit button the post servlet
@@ -126,7 +127,8 @@ Step:3 (Only for POST METHOD) : apps/aemgeeks/components/content/formforpathtype
 -------------------------------------------------------------------------
 4) QUERY PARAMETERS FETCHING USING PATH TYPE SERVLET DEMO
 
-Servlet usage: this servlet will get executed when we hit the path /bin/queryparamdemo and then in response it will give the info present in the query params.
+Servlet usage: this servlet will get executed when we hit the path /bin/queryparamdemo and then in response it will give the info present
+                in the query params.
 Step: (only step) : com/aem/geeks/core/servlets/BhargavPathTypeServletQP.java
 
 To execute the servlet : http://localhost:4502/bin/queryparamdemo?name=Bhargav&age=25

@@ -68,7 +68,7 @@ OSGI ARCHITECTURE:
 a) ResourceType Servlets
 -> Methods, extensions and Selectors will only work for resourceType servlets. (ResourceType is manditory in these and others are optional)
 -> so we give a Resource in the servlet, and whenever that resource is accessed, our servlet will be "CALLED".
--> ResourceType Servlets : @SlingServletResourceType()
+-> ResourceType Servlets : @SlingServletResourceTypes()
 -> Here we can use extensions, Selectors, and methods
 - these servlets can be accessed controlled using a jcr repo ACL
 - if we do not provide any method then the default method is GET
@@ -131,7 +131,7 @@ Normal config to Factory Config : @Designate(ocd = BhargavFactoryOSGiConfig.clas
                                 when services appear/disappear.
 
 =============================================================================================
-RUN MODES: in AEM they are like environment identifiers that tell AEM how it should behave in different environments —
+RUN MODES: in AEM they are like "environment identifiers" that tell AEM how it should behave in different environments —
            for example: author, publish, development, staging, production, etc.
 In short:
    Run modes allow you to configure AEM differently for different environments without changing the code.
@@ -232,7 +232,8 @@ WORKFLOWS in AEM
         2. Participant step : When we want a human interraction in our WF, like assigning a task to a human, in those case we use this step.
         3. Decision Step : Performing a task based on a condition, mainly when we need a branching in our WF, in those case we use this step.
                                 -> This is two types : OR, AND
-        4. Process Step : Custom WF processess are used using this process step. we will write our own custom process code and then we link that code with this step.
+        4. Process Step : Custom WF processess are used using this process step. we will write our own custom process code and then we
+                          link that code with this step.
 
 - Calling of the Model : there are mainly 3 ways
                                   1. Manual Trigger

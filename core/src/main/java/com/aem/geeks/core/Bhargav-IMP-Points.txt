@@ -177,7 +177,7 @@ dispatcher.forward(req, res);
         *Separate configurations for Author and Publish.
         *Maintain different settings for Dev / QA / Prod.
         *Control which components, workflows, or OSGi configurations are active.
-- When we want to identify our AEM instance uniquely, either in code or in osgi configs, we set run modes. run modes are two types.
+- When we want to identify our AEM instance uniquely, either in code(slingSettingService.getRunModes()) or in osgi configs, we set run modes. run modes are two types.
 a) Installation Run modes (permanant run modes) : these we will set while installing aem instance. and we cannot change these runmodes,  these are four
                                                   types
                                                 1. Author
@@ -222,19 +222,7 @@ In this scenario JOB SCHEDULERS enter, we can write three jobs for these three c
 15) WORKFLOWS in AEM
 - Workflow model usually stored in to places in our jcr
     1. Design Model - Stored Under : /conf/global/settings/workflow/models
-    2. Runtime Model - Stored Under : /conf/global/settings/workflow/models   -> when the workflow executes then this run time model will be used.
-
-- Workflow Steps are of Four Types:
-          1. Container Step : When we want to trigger an another model or another WF, in those case we use this step
-          2. Participant step : When we want a human interraction in our WF, like assigning a task to a human, in those case we use this step.
-          3. Decision Step : Performing a task based on a condition, mainly when we need a branching in our WF, in those case we use this step.
-                                  -> This is two types : OR, AND
-          4. Process Step : Custom WF processess are used using this process step. we will write our own custom process code and then we link that code with this step.
-
-- Calling of the Model : there are mainly 3 ways
-                                    1. Manual Trigger
-                                    2. Using Launcher : automating the trigger
-                                    3. Using API/Code : we can trigger the WF using any of the backend module like servlet, scheduler, Models etc
+    2. Runtime Model - Stored Under : /var/workflow/models   -> when the workflow executes then this run time model will be used.
 
 - Two make the changes go from Design to Runtime we have to click the "SYNC".
 * Basically to trigger a workflow we need Two things 1.Workflow Model, 2.Payload(means the content path on which we want to run our WF, like page, asset etc)
@@ -262,12 +250,13 @@ Note: Custom WF Process and Custom WF step is not same, the difference is Custom
 ----------------------------------------
 * Custom Workflow STEP
 - Combination of Custom WF Process + Component(this comp wont have any rendering script and backend module) is called a Custom Workflow STEP.
-- The comp will have a cq:dialg, cq:editConfig
+- The comp will have a cq:dialog, cq:editConfig
 - this step will be available in the available steps in the WF Model console.
 
 * COMPONENT:
-- (IMP) The comp will have a cq:dialg, cq:editConfig. and  cq:editConfig has a child node called cq:formParameters and in that there is a property called "PROCESS"
-        , for that property we give the value of our custom wf process, so in this way using that property we link this comp to our custom wf process.
+- (IMP) The comp will have a cq:dialg, cq:editConfig. and  cq:editConfig has a child node called cq:formParameters and in that there is a property
+        called "PROCESS", for that property we give the value of our custom wf process, so in this way using that property we link this comp to
+        our custom wf process.
 - And in our component "sling:resourceSuperType="cq/workflow/components/model/process", means our comp is just inheriting the existing "PROCESS STEP" by pointing to it.
 - In cq:formParameters node for "PROCESS" property we give the custom wf process as a value.
     eg: PROCESS="com.aem.geeks.core.workflows.GeeksWorkflowStep"

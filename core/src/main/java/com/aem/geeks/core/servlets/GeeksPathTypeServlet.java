@@ -60,10 +60,13 @@ public class GeeksPathTypeServlet extends SlingAllMethodsServlet {
     @Override
     protected void doGet(final SlingHttpServletRequest req, final SlingHttpServletResponse resp) throws ServletException, IOException {
         final ResourceResolver resourceResolver = req.getResourceResolver();  //here we are getting the getResourceResolver
-        Page page = resourceResolver.adaptTo(PageManager.class).getPage("/content/aemgeeks/us/en"); //here we are adapting it to PAGEMANAGER and then getting the page
+
+        //here we are adapting it to PAGEMANAGER and then getting the page
+        Page page = resourceResolver.adaptTo(PageManager.class).getPage("/content/aemgeeks/us/en");
         JSONArray pagesArray = new JSONArray();
         try {
-            Iterator<Page> childPages = page.listChildren(); //using listChildren() method we are getting the child pages under our page "/content/aemgeeks/us/en"
+            //using listChildren() method we are getting the child pages under our page "/content/aemgeeks/us/en"
+            Iterator<Page> childPages = page.listChildren();
             while (childPages.hasNext()) {
                 Page childPage = childPages.next();  //getting hold of each page
                 JSONObject pageObject = new JSONObject();   // and now creating a JSON object

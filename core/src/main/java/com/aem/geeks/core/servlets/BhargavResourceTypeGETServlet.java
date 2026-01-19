@@ -22,7 +22,7 @@ import java.io.IOException;
 //http://localhost:4502/content/aemgeeks/us/en/bhargavseshadritestpage/jcr:content.demo.xml
 @Component(service = Servlet.class)
 @SlingServletResourceTypes(
-        resourceTypes = "aemgeeks/components/structure/content",  //So what ever page we hits with the below extensions and selector, then immediately our servlet runs.
+        resourceTypes = "aemgeeks/components/structure/content",  //So when we hit the page with that resourceType page and with the below extensions and selector, then immediately our servlet runs.
         methods = {HttpConstants.METHOD_GET},
         extensions = "xml",
         selectors = "demo"
@@ -32,7 +32,7 @@ public class BhargavResourceTypeGETServlet extends SlingSafeMethodsServlet {
     @Override
     protected void doGet(final SlingHttpServletRequest request, final SlingHttpServletResponse response) throws IOException {  //One of the method from SlingSafeMethodsServlet
         final Resource resource = request.getResource();  //here it will get the resource they hit
-        response.setContentType("text/plain");             //In which type of format it should to us
-        response.getWriter().write("Page Title = " + resource.getValueMap().get(JcrConstants.JCR_TITLE));  //getting the title to show to us
+        response.setContentType("text/plain");             //In which type of format it should give response to us
+        response.getWriter().write("Page Title = " + resource.getValueMap().get(JcrConstants.JCR_TITLE) + " :: Resource Path : "+ resource.getPath());  //getting the title to show to us
     }
 }
