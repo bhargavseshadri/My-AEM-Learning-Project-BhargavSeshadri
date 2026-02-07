@@ -1,1 +1,77 @@
-Complete Junit Related Notes Present Here
+***Complete Junit Related Notes***
+
+Important Points:
+> Whenever we are testing something like testing some method in one class, Then we have to create an instance of that class. For static methods its not required.
+
+======================================================================================================
+Junit Notes:
+
+a) Test Lifecycle: four types, Used to manage shared resources, initialization, and cleanup.
+1. Before all tests
+2. Before each test
+3. After each test
+4. After all tests
+
+------------------------------------------------------------------
+b) Core Annotations
+
+1. @Test
+> To tell the junit that this is a test method, so Execute it. if we put this annotation then the Junit know that this method needs to run.
+> It is used to mark a method as a test case so the JUnit Platform can discover it and execute it.
+> The central annotation for writing tests.
+
+2. @BeforeEach
+> Runs before every test method.
+> Used for per-test initialization.
+> for creating fresh objects.
+
+3. @AfterEach
+> Runs after every test method.
+> Used for cleanup.
+> Close resources, reset external state.
+
+4. @BeforeAll
+> Runs once before all tests in the class.
+> Must be static by default.
+> Typical use: Expensive setup (database, server, shared resources).
+
+5. @AfterAll
+> Runs once after all tests in the class.
+> Must be static by default.
+> Typical use: Global cleanup.
+
+6. @Disabled
+> Disables a test or test class.
+
+------------------------------------------------------------------
+c) Assertions (Verification API) (Assertions validate expected outcomes.)
+
+Main Assertions Methods
+
+1. assertEquals : Verifies expected value equals actual value.
+2. assertNotEquals : Verifies values are different.
+3. assertTrue: Verifies a condition is true.
+4. assertFalse: Verifies a condition is false.
+5. assertNull: Verifies an object is null.
+6. assertNotNull: Verifies an object is not null.
+7. assertSame: Verifies two references point to the same object.
+8. assertNotSame: Verifies two references do not point to the same object.
+9. assertArrayEquals: Verifies array contents are equal.
+
+> Exception Assertions
+1. assertThrows: Verifies that a specific exception is thrown.
+2. assertDoesNotThrow: Verifies that no exception is thrown
+
+> Grouped Assertions
+1. assertAll: Executes multiple assertions and reports all failures together.
+
+======================================================================================================
+
+
+
+======================================================================================================
+YT Tutorial
+
+Basic Junit reference code is in these files
+> Java Class : com/aem/geeks/core/javarelatedcodes/junitrelated/AddClass.java
+> Test Class : com/aem/geeks/core/javarelatedcodes/junitrelated/AddClassTest.java
