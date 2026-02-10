@@ -34,15 +34,20 @@ Basic Important Points
 
 =============================================================================================
 DEFINITIONS
-1) Resource :  - In Sling a resource is basically any node or file in the jcr that sling can access and maps it to a url.
+1) Resource :  - A resource is basically any node or file in the jcr that sling can access and maps it to a url.
                - Resource can be anything, it can be COMPONENT, NODE, PAGE.
+
 2) Immediate = true -> Whenever we want to activate the service immediately after the bundle gets started in that place we use this.
+
 3) req.setAttribute() AND req.getAttribute() :  storing temporary data in the HttpServletRequest object using setAttribute() and
                                                 later read it back using getAttribute().
+
 4) Headless CMS : application or the CMS seperate there content from any other layer like presentation layer, and that seperated
                   content will we served by the third party system, then it is called headless.
+
 5) ValueMap : In AEM, valueMap is a special map like object that helps us to retrive properties of a JCR node in a convenient way,
               its a wrapper around our node and helps us in accessing the properties of that node.
+
 6) Services: AEM Services are OSGi components (Java classes) that contain business logic or reusable functionality, and can be shared across different
              parts of the AEM application.
 
