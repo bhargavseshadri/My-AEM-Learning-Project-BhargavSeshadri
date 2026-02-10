@@ -369,7 +369,7 @@ Quick Important Points
 * Concrete method: Method with body.
 * We cannot directly create an object of an abstract class or an interface in Java. because they have unimplemented (abstract) methods — so
   Java doesn’t know how to create a complete object from it.
-* To convert and array in to a List -> Arrays.asList(arrName);
+* To convert an array in to a List -> Arrays.asList(arrName);
 * To convert a List to an Array -> v1.toArray()
 * We can't give primitive datatypes(int, String, Boolean) to generics.
 * The collections that implement the Set interface don’t allow duplicates. (HashSet, LinkedHashSet, TreeSet)
@@ -430,7 +430,6 @@ variable itself. So, any changes made to the parameter inside the method do not 
 - Types of memories in java:
     a)Stack: > For Reference variables, method calls and local variables Stack memory is used.
              > And Stack memory is also used for method execution.
-             > It stores local variables and method calls.
              > The memory is automatically cleared when the method finishes.
 
     b)Heap : > For objects and instance variables.
@@ -448,8 +447,8 @@ Example Code : com/aem/geeks/core/javarelatedcodes/StaticExamples.java
   an object. and it is helpful for memory management.
 * To access a non-static method in static method, we have to create an object.
 * Static method can only access the static variables.
-* To Access normal instance variables we have to create a object of that class and through that obj we access those class instance variables.
-* Static methods can only access static methods
+* To Access normal instance variables we have to create an object of that class and through that obj we access those class instance variables.
+* Static methods can only access static methods.
 * Non-Static can access both static and non-static methods.
 * Static does not support "this" and "super"
 * And we don't give the access modifier for the variables defined inside the static method.
@@ -742,7 +741,7 @@ List : an "ordered" collection of elements that allows duplicates and nulls.
 
 Set	: A unordered collection of elements that do not allow duplicates.
            HashSet	-   Unordered collection of unique elements
-           TreeSet	- Sorted set of unique elements (natural order), means it put the elements in a unique and ascending order.
+           TreeSet	- Sorted set of unique elements (natural order), means it put the elements in a unique and ascending order. It won't allow duplicates and null values.
            LinkedHashSet - Maintains the order in which elements were inserted
 
 Map : a collection of key-value pairs, where each key is unique.
@@ -792,7 +791,7 @@ Example: import java.util.*;
 ---------------------------
 *) Iterator
 - we use this when we want to go through every element in the list and access the elements accordingly.
-- Its a one directional means can go from start to end (.hasNext()).
+- It's a one directional means can go from start to end (.hasNext()).
 - Its an interface
 
 *) ListIterator
