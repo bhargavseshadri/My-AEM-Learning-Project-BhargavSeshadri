@@ -51,7 +51,8 @@ IMPORTANT PATHS
 - componentContext : It is open for each conmponent, Independent of wcmmode.
 - resource : object of current resource(when we drag and drop a comp on page, then the created node of that comp in that page is called as current Resource).
 - resourcePage : On the page where we drag and drop the component, It provides the information of that page means the current page
-- currentDesign : there is a design node available to store the template level properties, that info we can get through this. if nothing is set then it gives the default libs design node path
+- currentDesign : there is a design node available to store the template level properties, that info we can get through this. if nothing is set
+                  then it gives the default libs design node path
 - currentNode : when we drag and drop a component on a page, then that comp node is treated as a current node.
 - currentPage
 - resourceDesign : it is the same as the current design
@@ -85,6 +86,7 @@ f) Workflow :
 =============================================================================================
 4) PAGE MANAGER
 pageManeger: using this we can get the page we want.
+
 eg:
 @ScriptVariable
 PageManager pageManager;
@@ -93,7 +95,7 @@ Page page=pageManager.getPage("/content/aemgeeks/us/en");
 =============================================================================================
 5) @Component
 --> Servlets : @Component(service = Servlet.class)
---> OSGI Configuration Service : @Component(service = OSGiConfigService.class,immediate = true)
+--> OSGI Configuration Service : @Component(service = OSGiConfigService.class,immediate = true)   [OSGiConfigService.class  -> this is just my interface service I created]
 --> Schedulers :
                 - Runnable : @Component(immediate = true, service = Runnable.class)
                 - Job :  @Component(immediate = true, service = Job.class)
@@ -174,15 +176,15 @@ dispatcher.forward(req, res);
 =============================================================================================
 10) MULTIFIELD - COMPOSITE PROPERTY (composite="{Boolean}true")
 - we will add this property while defining a multifield in content dialog, by default it is false
-- FALSE : In this case, if we give two set of values to the multified in the comp dialog, then it store those two sets values in a "STRING ARRAY" inside component node.
-- TRUE : In this case if we provide a two sets of values to the multified in the comp dialog, it will create a node under our component node(with name we have give
-          for multified in xml) and then under that node it will create a two item nodes for those two sets of values.
+- FALSE : In this case, if we give two set of values to the multifield in the comp dialog, then it store those two sets values in a "STRING ARRAY" inside component node.
+- TRUE : In this case if we provide two sets of values to the multifield in the comp dialog, it will create a node under our component node(with name we have give
+          for multifield in xml) and then under that node it will create a two item nodes for those two sets of values.
 - we use false when we have a single field in the multifield, and true when we have a multiple fields in the multifield.
 -> We can render the multifield values using two ways one is using MAP and the other way is using JAVA BEAN
 
 =============================================================================================
 11) Sling Model Content Exporter (Content as a Service)
-- AEM comes up with OOTB content exporter funtionality, means AEM can export content to third party systems in form of JSON or XML.
+- AEM comes up with OOTB content exporter functionality, means AEM can export content to third party systems in form of JSON or XML.
 
 =============================================================================================
 12) Utility Functions available in Sightly: in, format, join
@@ -222,11 +224,11 @@ AEM automatically picks the correct configuration based on its active run mode.â
 =============================================================================================
 14) SCHEDULERS
 a) Runnable scheduler
-- impliments runnable interface
+- implements runnable interface
 - With this we can execute only one job.
 
 b) Job Scheduler
-- Impliments JOB interface
+- Implements JOB interface
 ---> USE OF THIS JOB SCHEDULER
 - Lets say we have a component and a scheduler, the component displays the data and the scheduler fetches the data from some
 service and update the data in the component. lets say we have three countries INDIA(12:00AM), GERMANY(12:00 AM), USA(12:00 AM),
@@ -238,7 +240,7 @@ In this scenario JOB SCHEDULERS enter, we can write three jobs for these three c
 
 =============================================================================================
 15) WORKFLOWS in AEM
-- Workflow model usually stored in to places in our jcr
+- Workflow model usually stored in two places in our jcr
     1. Design Model - Stored Under : /conf/global/settings/workflow/models
     2. Runtime Model - Stored Under : /var/workflow/models   -> when the workflow executes then this run time model will be used.
 
@@ -302,7 +304,7 @@ Note: Custom WF Process and Custom WF step is not same, the difference is Custom
 =============================================================================================
 17) adaptTo()
 
-* It simply like converting, eg: Node node = resource.adaptTo(Node.class);  -> here we are converting our resource to node.
+* It is simply like a variable converting thing, eg: Node node = resource.adaptTo(Node.class);  -> here we are converting our resource to node.
 
 * Different Types:
 1. Resource â†’ adaptTo(ValueMap.class)
@@ -413,7 +415,7 @@ IMP POINTS:
 3) In SLING MODEL : in sling model we can directly get the resource, without using ResourceResolver.
 
     - getting the current resource
-            @Inject
+            @Inject   (only @inject may give null sometimes, so either use both @inject, @self or use @SlingObject)
             private Resource resource;
 
     - Getting the Node and reading
