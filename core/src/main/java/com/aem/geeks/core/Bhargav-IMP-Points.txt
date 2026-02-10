@@ -426,7 +426,7 @@ IMP POINTS:
             node.setProperty("jcr:description", desc);
             node.getSession().save();
 
-* Here using @SlingObject also we can get the ResourceResolver
+* Here using @SlingObject also we can get the ResourceResolver, Resource
             @SlingObject
              private ResourceResolver resourceResolver;
 
@@ -518,6 +518,16 @@ IMP POINTS:
 - HttpURLConnection (Java standard) : Simplified way to call REST APIs using core Java.
 - CloseableHttpClient : Common AEM approach for secure API calls.
 - JSONObject / Gson : To parse and handle JSON responses from APIs.
+
+---------------------------------------
+* Getting Node My Understanding
+
+ResourceResolver
+│
+├──► session ──► Node node = session.getNode("/content/mySite/page/jcr:content"); ──► String title = node.getProperty("jcr:title").getString();
+|
+├──► Resource ──► Node node = resource.adaptTo(node.class) ──► String title = node.getProperty("jcr:title").getString();
+
 
 ---------------------------------------
 * MAPS - COMPLETE IMPORTANT map showing how Resource, ResourceResolver, Node, Session, and related APIs connect across AEM.
