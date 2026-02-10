@@ -163,7 +163,8 @@ In short:
 =============================================================================================
 CORE COMPONENTS & PROXY COMPONENTS
 
--> CORE COMPONENTS: Core Components are a set of ready-made, production-ready components provided by Adobe (like Text, Image, Carousel, Button, Title, etc.) as part of AEM.'
+-> CORE COMPONENTS: Core Components are a set of ready-made, production-ready components provided by Adobe (like Text, Image, Carousel, Button, Title, etc.)
+                    as part of AEM.'
 path : /apps/core/wcm/components/...
 
 -> PROXY COMPONENTS: A proxy component is a lightweight wrapper around a core component. It doesn’t add new logic — it just points to a core component using
@@ -255,6 +256,7 @@ WORKFLOWS in AEM
                                 -> This is two types : OR, AND
         4. Process Step : Custom WF processess are used using this process step. we will write our own custom process code and then we
                           link that code with this step.
+        5. Dynamic Participant Step : here this step will assign the participant dynamically at the time of workflow execution.
 
 - Calling of the Model : there are mainly 3 ways
                                   1. Manual Trigger
@@ -272,7 +274,7 @@ Client libraries help optimize the delivery of front-end assets and improve webs
 * If the Clientlib is not under our component, if it in a shared or global path like /apps/yourproject/clientlibs then you must manually reference
 it in your component dialog or template, because AEM won’t auto-link global dialog clientlibs.
 
-* Including it in component or editable templates/page components XML: <cq:includeClientLib categories="myproject.dialog"/>
+* Including it in component or editable templates/page components -->  <cq:includeClientLib categories="myproject.dialog"/>
 
 * Why we give "allowProxy = true" in AEM clientlibrary properties?
 Ans. - When you create a Client Library (clientlib) under /apps/..., by default it cannot be accessed publicly to anonymous users — because the /apps path is not exposed on
@@ -291,9 +293,11 @@ cq:ClientLibraryFolder:	/apps/.../clientlibs	  : Defines a client library (CSS/J
 cq:Dialog	          : Under component	Represents a component dialog in Classic UI.
 cq:EditConfig	      : Under component	Defines component behavior in authoring mode (like drag/drop, inplace editing).
 cq:Widget	          : In dialogs	              :Defines a Classic UI widget type.
-cq:WorkflowModel	  : /var/workflow/models	  : Defines a workflow model.
+cq:WorkflowModel	  : Defines a workflow model.
 cq:Workflow           : Runtime workflow instance.
 cq:Page               : In design mode of a Workflow model it has this PrimaryType - /conf/global/settings/workflow/models
+cq:Page               : Experience Fragment
+dam:Asset             : Content Fragment
 
 
 =============================================================================================
