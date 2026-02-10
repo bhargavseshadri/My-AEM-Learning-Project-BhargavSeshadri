@@ -87,7 +87,7 @@ OSGI ARCHITECTURE:
    SlingHttpServletResponse → the HTTP response (what you send back)
 
 a) ResourceType Servlets
--> Methods, extensions and Selectors will only work for resourceType servlets. (ResourceType is manditory in these and others are optional)
+-> ResourceType, Methods, extensions and Selectors will only work for resourceType servlets. (ResourceType is manditory in these and others are optional)
 -> so we give a Resource in the servlet, and whenever that resource is accessed, our servlet will be "CALLED".
 -> ResourceType Servlets : @SlingServletResourceTypes()
 -> Here we can use extensions, Selectors, and methods
