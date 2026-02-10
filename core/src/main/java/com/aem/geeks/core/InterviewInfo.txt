@@ -1,6 +1,19 @@
 ONLY INTERVIEW RELATED MATERIAL
 
 =============================================================================================
+Q. What is AEM and what problems does it solve?
+Ans. AEM (Adobe Experience Manager) is a content management system (CMS) built on Java. It provides a platform for creating, managing, and
+     delivering digital experiences across various channels, including websites, mobile apps, and marketing campaigns. It is part of the Adobe Experience Cloud.
+
+AEM solves several problems related to digital experience management:
+
+-> Proper Content managing: It centralizes content creation and management, preventing content duplication and inconsistencies across different channels.
+-> Scalability: It provides a scalable architecture to handle increasing content volumes and user traffic.
+-> Personalization: It enables businesses to deliver personalized experiences to customers based on their behavior, and preferences.
+-> Workflow Management: It streamlines content approval processes and publishing workflows.
+-> Integration: AEM integrates well with other Adobe marketing cloud products
+
+=============================================================================================
 Basic Important Points
 
 -> Implimentation used for creating AEM is - APACHE JACKRABBIT OAK
@@ -32,6 +45,9 @@ DEFINITIONS
               its a wrapper around our node and helps us in accessing the properties of that node.
 6) Services: AEM Services are OSGi components (Java classes) that contain business logic or reusable functionality, and can be shared across different
              parts of the AEM application.
+
+7) OSGi : It  is a framework for modular development. In AEM, OSGi allows you to deploy components as individual modules or bundles. Each bundle can be
+          started, stopped, or updated independently without affecting the entire application.
 
 =============================================================================================
 AEM & OSGI ARCHITECTURE
@@ -243,6 +259,10 @@ WORKFLOWS in AEM
 =============================================================================================
 CLIENTLIBRARIES
 
+* In Adobe Experience Manager (AEM), a client library (or clientlib) is a container for client-side resources such as CSS, JavaScript, images, and fonts.
+It allows you to organize and manage these resources in a modular way, making it easier to include them in your AEM components and pages.
+Client libraries help optimize the delivery of front-end assets and improve website performance.
+
 * If the clientlib is in our component, in that case we need not to include that clientlib category manually in our comp xml.
 * If the Clientlib is not under our component, if it in a shared or global path like /apps/yourproject/clientlibs then you must manually reference
 it in your component dialog or template, because AEM won’t auto-link global dialog clientlibs.
@@ -271,6 +291,26 @@ cq:Workflow           : Runtime workflow instance.
 cq:Page               : In design mode of a Workflow model it has this PrimaryType - /conf/global/settings/workflow/models
 
 
+=============================================================================================
+AEM Scenario Based Questions
+
+1. What are the core components of AEM?
+Ans. a. Content Repository (JCR)
+     b. Sling : A RESTful, resource-centric framework that maps request URLs to content nodes in the JCR.
+     c. OSGi
+     d. Dispatcher
+     e. Workflow Engine
+
+
+2. What's the difference between GET and POST methods in Sling?
+Ans. In Sling, both GET and POST are HTTP methods used for interacting with resources, but they serve different purposes:
+
+* GET : GET is primarily used to retrieve a resource. It's a safe method, meaning it should not have any side
+        effects on the server. GET requests typically pass parameters in the URL.
+
+* POST : POST, on the other hand, is used to create or update a resource. POST requests typically send data in
+         the request body. Sling uses the POST method extensively for actions such as creating new nodes, updating properties, or triggering processes.
+         Therefore, Sling's resource-centric nature means POST requests are essential for modifying the repository.
 
 
 

@@ -265,10 +265,54 @@ Note: Custom WF Process and Custom WF step is not same, the difference is Custom
             - Eg: for brand field name:./metaData/BRAND
             - So this is because when the model is saved this will save the data in a node called metadata.
 
-- All the values given in the WF STEP dialog box are stored inside this metadata node:  /conf/global/settings/workflow/models/bhargav-personal-workflow/jcr:content/flow/geeksworkflowstep/metaData
+- All the values given in the WF STEP dialog box are stored inside this metadata node:
+    /conf/global/settings/workflow/models/bhargav-personal-workflow/jcr:content/flow/geeksworkflowstep/metaData
 
 =============================================================================================
-16) USING ResourceResolver and Session and modifying the nodes (Basic Codes) (IN-DEPTH ABOUT THIS IN NEXT BLOCK)
+16) Asset API --> Asset asset = resource.adaptTo(Asset.class);
+
+- By doing this "Asset asset = resource.adaptTo(Asset.class);", we are converting the generic resource into an AEM DAM Asset API object
+  that provides higher-level methods.
+
+- for example:
+* asset.getMetadataValue("dc:title")
+* asset.getOriginal()
+* asset.getRenditions()
+* asset.addRendition(...)
+* asset.getMimeType()
+
+=============================================================================================
+17) adaptTo()
+
+* It simply like converting, eg: Node node = resource.adaptTo(Node.class);  -> here we are converting our resource to node.
+
+* Different Types:
+1. Resource → adaptTo(ValueMap.class)
+ - Use when: you only need properties of the resource. use when we just want the properties stored on this resource.
+ - Eg: Read title, description, custom component fields, Fetch simple configuration values, Access metadata properties quickly.
+ - Code eg : ValueMap props = resource.adaptTo(ValueMap.class);
+             String title = props.get("jcr:title", String.class);
+
+2. Resource → adaptTo(Node.class)
+ - Use when: you need low-level JCR operations.
+ - eg: Add/remove nodes manually, Set properties using JCR APIs.
+ - Code eg: Node node = resource.adaptTo(Node.class);
+            node.setProperty("myProp", "value");
+
+3. Resource → adaptTo(Page.class)
+ - Use when: the resource represents a page and you need page-specific methods.
+ - eg: Get page title, template, parent page, Navigate site structure, Check if page is valid or published.
+ - Code eg: Page page = resource.adaptTo(Page.class);
+            String title = page.getTitle();
+
+4. Resource → adaptTo(Asset.class)
+ - Use when: the resource represents a DAM asset and you need asset functionality.
+ - eg: Read asset metadata, Get renditions (original, thumbnails), Access binary streams, Add new renditions.
+ - Code eg: Asset asset = resource.adaptTo(Asset.class);
+            String mimeType = asset.getMimeType();
+
+=============================================================================================
+18) USING ResourceResolver and Session and modifying the nodes (Basic Codes) (IN-DEPTH ABOUT THIS IN NEXT BLOCK)
 
 - In SERVLET(where the methods give us in-built Request) (So we get a resourceResolver using that request)
 Steps:
@@ -305,7 +349,7 @@ Steps:
     private ResourceResolver resourceResolver;
 
 =============================================================================================
-*** VERY IMPORTANT NOTES **** GETTING ResourceResolver, Resource, Request, Session, Node ***
+*** VERY IMPORTANT NOTES **** GETTING ResourceResolver, Resource, Request, Session, Node *** (In-Depth)
 
 IMP POINTS:
 > Session always comes from ResourceResolver, and ResourceResolver comes from 1) request, 2) resource, 3) resolverFactory depending on context.
@@ -313,7 +357,10 @@ IMP POINTS:
 > But in Services, Schedulers, or Workflows, there is no request and no automatic context — so AEM doesn’t know who is trying to access the repository.
   in that cases we need "ResourceResolverFactory" to get the ResourceResolver.
 > In WF Process --> Using "WorkflowSession" we get the "ResourceResolver", "Session".
->
+> We have to close the "ResourceResolver" after using. ->  resourceResolver.close();,
+   - And importantly we have to Close the resolver only when we created it(means resolverFactory.getServiceResourceResolver(...)).
+   - Short memory trick ---> Created it → close it :: Framework provided it → do not close it.
+
 ---------------------------------------
 * WAYS OF GETTING HOLD OF NODE and DOING READ AND WRITE AND THEN SAVING IT
 
