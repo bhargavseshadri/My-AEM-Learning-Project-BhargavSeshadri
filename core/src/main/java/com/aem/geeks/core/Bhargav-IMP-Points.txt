@@ -15,7 +15,25 @@ IMPORTANT PATHS
 -> We can find all the available users( and also deactivate the user here) : /security/users.html
 -> To create new service user : /crx/explorer/index.jsp
 
+-> In Manual System User creation,
+    - to create new user : crx/explorer/index.jsp
+    - To give the required permissions(ACL's) : /Useradmin
+    - Note: Service users are under this path (crx) : /home/users/system
+
+
 =============================================================================================
+1) Logger Levels
+        Trace
+        |
+        Debug
+        |
+        Info
+        |
+        Warn
+        |
+        Error
+
+* For Eg: If you give log level as "Info" for the log file, so in that file "Trace & Debug" logs wont print, "Info, Warn, Error" logs will print in that file.
 
 =============================================================================================
 2) Global Objects available in HTL (most common ones)
