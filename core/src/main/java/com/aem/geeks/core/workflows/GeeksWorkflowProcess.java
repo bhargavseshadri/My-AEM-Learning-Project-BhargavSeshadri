@@ -41,7 +41,7 @@ public class GeeksWorkflowProcess implements WorkflowProcess {
 
     //execute is a Manditory method -
     @Override
-    public void execute(WorkItem workItem, WorkflowSession workflowSession, MetaDataMap processArguments) {
+    public void execute(WorkItem workItem, WorkflowSession workflowSession, MetaDataMap metaDataMap) {
 
 /* WorkflowSession: Using this we can get the backend objects, using this only we get the ResourceResolver, Session using this WorkflowSession.
 *  MetaDataMap : If we pass any data to the dialog, that data we can get using this.(in case of custom WF process we get the data we have
@@ -64,7 +64,7 @@ public class GeeksWorkflowProcess implements WorkflowProcess {
                 Node node = (Node) session.getItem(path);
 
                 /*here we are getting the data we have provided as arguments, and we are splitting them using "," in case if multiple arguments are given  */
-                String[] processArgs = processArguments.get("PROCESS_ARGS", "string").toString().split(",");
+                String[] processArgs = metaDataMap.get("PROCESS_ARGS", "string").toString().split(",");
                 for (String wfArgs : processArgs){
                     String[] args = wfArgs.split(":");  //here we are splitting the individual argument we have given "approver:bhargav" and storing them in an array.
                     String prop = args[0];
