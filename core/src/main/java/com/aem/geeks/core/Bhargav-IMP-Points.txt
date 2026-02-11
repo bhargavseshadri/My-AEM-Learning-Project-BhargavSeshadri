@@ -116,6 +116,16 @@ Page page=pageManager.getPage("/content/aemgeeks/us/en");
 =============================================================================================
 7) SERVLETS - GET and POST requests explanation
 
+Simple understanding
+* Post : A POST servlet is used when the client sends data to the server.
+            - Save data into JCR
+            - Update existing content
+            - Trigger some backend processing
+            - Submit forms
+            - Or in some places it simple send the data to the server and that data we use in our code.
+
+* Get : A GET servlet is used when the client requests data from the server. used for mainly Reading data from JCR.
+
 --> GET FLOW
 a) Browser issues GET /path?query=abc HTTP/1.1 (headers, cookies).
 b) Server/router receives request, Sling/Servlet container resolves resource/servlet.

@@ -48,7 +48,9 @@ public class BhargavResourceTypePostServlet extends SlingAllMethodsServlet {
 
     @Override
     protected void doPost(final SlingHttpServletRequest req, final SlingHttpServletResponse res) throws IOException {
-        Session session = req.getResourceResolver().adaptTo(Session.class);   //Here I am getting the Session using resourceResolver
+
+        ResourceResolver resourceResolver =  req.getResourceResolver(); //getting the resourceResolver using Request
+        Session session = resourceResolver.adaptTo(Session.class);   //Here I am getting the Session using resourceResolver
 
         //Going down we are getting the node, modifying, adding the node and setting the properties using session
         try {
