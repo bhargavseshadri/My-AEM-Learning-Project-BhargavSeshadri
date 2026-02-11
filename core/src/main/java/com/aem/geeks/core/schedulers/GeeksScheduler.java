@@ -45,12 +45,15 @@ public class GeeksScheduler implements Runnable {  //Here we are implimenting Ru
         ScheduleOptions scheduleOptions = scheduler.EXPR(config.cronExpression());  /* here we got the ScheduleOptions using scheduler,
                                                                                      and for that ScheduleOptions we are providing our cron expression*/
         scheduleOptions.name(String.valueOf(schedulerId));  //we should always add an uniquely identifing name
+
+        //The below line is used in AEM Scheduler (OSGi Scheduler) to control whether multiple executions of the same scheduled job can run at the same time.
         //scheduleOptions.canRunConcurrently(true);
+
         scheduler.schedule(this, scheduleOptions);   //here using ".schedule" we are scheduling the scheduler
 
 
         //So in some case, we have set the scheduler to exceute at 10 AM in the morning, so after newly/freshly the scheduler gets deployed today at 8pm,
-        // the in that case for between 8pm and 10 am the scheduler wont run and the frontend will be empty, to resolve this problem
+        // then in that case for between 8pm and 10 am the scheduler wont run and the frontend will be empty, to resolve this problem
 
         /*with this the scheduler wii deploy one time immediately after deployed, so as soon as the
           code deployed the run method will execute once.*/

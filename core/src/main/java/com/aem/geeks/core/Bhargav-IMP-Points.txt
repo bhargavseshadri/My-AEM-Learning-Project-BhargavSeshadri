@@ -231,6 +231,7 @@ a) Runnable scheduler
 
 b) Job Scheduler
 - Implements JOB interface
+- With this, one scheduler can execute the job in different time frames.
 ---> USE OF THIS JOB SCHEDULER
 - Lets say we have a component and a scheduler, the component displays the data and the scheduler fetches the data from some
 service and update the data in the component. lets say we have three countries INDIA(12:00AM), GERMANY(12:00 AM), USA(12:00 AM),
