@@ -186,6 +186,7 @@ SLING MODELS & SERVICES
 Sling Model Defination :  - A Sling Model in AEM is a Java class used to fetch and use content from the JCR in an easy and clean way.
                           - It connects the AEM component (HTML + dialog data) with the Java backend, so you can access component properties
                             directly as Java variables instead of manually reading from the repository.
+                          - It contains component specific logic and it always a dependent on component.
 
 * A single Sling Model can be used by multiple components. It is not tied to one component unless you explicitly restrict it.
 --> Scenario 1 — Reusable across many components
@@ -209,7 +210,7 @@ Sling Model Defination :  - A Sling Model in AEM is a Java class used to fetch a
                         then the same model is usable only for those listed components.
 
 Services Defination : - A Service in AEM (or OSGi Service) is a Java class that contains reusable business logic and can be shared across components,
-                        servlets, or models.
+                        servlets, or models. It is not dependent on any component.
                       - It’s registered in the OSGi container, and AEM automatically manages its lifecycle (create, start, stop).
                       - @Component — registers our normal java class as an OSGi service.
 
