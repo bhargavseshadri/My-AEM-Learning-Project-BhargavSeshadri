@@ -22,7 +22,7 @@ import java.util.Map;
 * STEP:3 (LAST STEP) it is also here in this file - add all the required scheduler code using osgi config values
 * */
 
-@Component(immediate = true, service = Job.class)  //here we are making this class as a OSGI Componet, and maing our service as a job service
+@Component(immediate = true, service = Job.class)  //here we are making this class as a OSGI Component, and making our service as a job service
 @Designate(ocd = SchedulerConfiguration.class)  //here we are designation the configuration file to this service
 public class GeeksSchedulerJobs implements Job {   //Implimenting the JOB interface to make this as a job scheduler
     private static final Logger LOG = LoggerFactory.getLogger(GeeksSchedulerJobs.class);
@@ -47,7 +47,9 @@ public class GeeksSchedulerJobs implements Job {   //Implimenting the JOB interf
         scheduler.unschedule(String.valueOf(schedulerJobId));
     }
 
-    private void addSchedulerJob(SchedulerConfiguration config) {  //MAIN LOGIC - Here in this method we are defining three different jobs for three different countries with three different corns
+
+    //MAIN LOGIC - Here in this method we are defining three different jobs for three different countries with three different corns
+    private void addSchedulerJob(SchedulerConfiguration config) {
 
         ScheduleOptions in = scheduler.EXPR("0 03 17 1/1 * ? *");
         Map<String, Serializable> inMap=new HashMap<>();  //Here we are creating a map
