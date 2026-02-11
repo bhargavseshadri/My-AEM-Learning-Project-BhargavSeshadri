@@ -206,8 +206,14 @@ Sling Model Defination :  - A Sling Model in AEM is a Java class used to fetch a
                                 "project/components/componentB"
                             }
                         )
+                        * then the same model is usable only for those listed components.
 
-                        then the same model is usable only for those listed components.
+* Why we give "@Model(adaptables = {Resource.class, SlingHttpServletRequest.class}" in sling model?
+Ans. It is used to specify from which objects the model can be adapted.
+        - When the model is used in HTL, it is usually adapted from the SlingHttpServletRequest
+        - When the model is used in backend code (services, utilities), it may be adapted directly from the Resource
+                - MyModel model = resource.adaptTo(MyModel.class); ==>  For this, the model must support Resource.class.
+
 
 Services Defination : - A Service in AEM (or OSGi Service) is a Java class that contains reusable business logic and can be shared across components,
                         servlets, or models. It is not dependent on any component.
