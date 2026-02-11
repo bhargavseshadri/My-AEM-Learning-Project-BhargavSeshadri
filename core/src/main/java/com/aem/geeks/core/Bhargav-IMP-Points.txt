@@ -111,6 +111,8 @@ Page page=pageManager.getPage("/content/aemgeeks/us/en");
 - In simple words, When you change configuration values, AEM will automatically re-invoke the method annotated with @Modified, So your service picks up
   the new configuration immediately — without redeploying or restarting AEM.
 
+* immediate=true When we want to activate the service immediately after the bundle gets started in that place we use this.
+
 =============================================================================================
 7) SERVLETS - GET and POST requests explanation
 
