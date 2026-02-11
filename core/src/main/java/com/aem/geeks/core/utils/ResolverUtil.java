@@ -7,7 +7,8 @@ import org.apache.sling.api.resource.ResourceResolverFactory;
 import java.util.HashMap;
 import java.util.Map;
 
-//bhargavseshadri -(only step) - creating the resourceResolver using service user we have created in the pevious steps (previous steps : 1)created a services user,  2) linked it to the bundle "APACHE S;LING SERVICE USER ,APPER SERVICE AMENDMENT")
+//bhargavseshadri -(only step) - creating the resourceResolver using service user we have created in the pevious steps
+// (previous steps : 1)created a services user,  2) linked it to the bundle "APACHE SLING SERVICE USER ,APPER SERVICE AMENDMENT")
 
 
 
@@ -35,7 +36,7 @@ public final class ResolverUtil {
         return resolver;
     }
 
-    //we can use this resolver to do multiple operations based on the permitions we have given to it
+    //we can use this resolver to do multiple operations based on the permissions we have given to it
 
     //To see the example of using or calling this resourceResolver --> go to com/aem/geeks/core/services/impl/ComponentsInfoServiceImpl.java
 	

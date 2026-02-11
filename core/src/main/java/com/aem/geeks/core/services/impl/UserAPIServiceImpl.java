@@ -108,7 +108,7 @@ public class UserAPIServiceImpl implements UserAPIService {
             //prepares a POST request to the login URL.
             HttpPost post = new HttpPost(loginUrl);
 
-            //telling the server that we are sending JSON in the post request.
+            // Setting request Headers, telling the server that we are sending JSON in the post request.
             post.setHeader("Content-Type", "application/json");
 
             //Just JSON String with username & password.
@@ -152,10 +152,10 @@ public class UserAPIServiceImpl implements UserAPIService {
 
             //prepares a GET request to the protectedUserUrl endpoint.
             //This line just prepares the request, but it doesn’t send it yet.
-            //later we have to execute it with client.execute(get) and pass the token in the headers to fetch the user data.
+            //later we have to execute it with client.execute(get) and pass the token in the request headers to fetch the user data.
             HttpGet get = new HttpGet(protectedUserUrl);
 
-            //Here we are adding Authorization header → Bearer <token> means giving the access token we got from the above post request,
+            //Setting request header - Here we are setting Authorization header → Bearer <token> means giving the access token we got from the above post request,
             // so the server knows who is requesting.
             get.setHeader("Authorization", "Bearer " + token);
 

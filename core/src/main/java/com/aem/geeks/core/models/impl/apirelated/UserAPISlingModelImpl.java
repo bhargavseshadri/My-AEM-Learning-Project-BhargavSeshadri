@@ -134,7 +134,7 @@ public class UserAPISlingModelImpl implements UserAPISlingModel {
 
 
     //Here we are directly printing the json on the page just for my testing : This piece is useful to just see the json response directly on the page in real world cases, before going ahead
-    //Go and see the "apps/aemgeeks/components/content/bhargavapicomp/bhargavapicomp.html" htl, there I just printing the json
+    //Go and see the "apps/aemgeeks/components/content/bhargavapicomp/bhargavapicomp.html" htl, there I am just printing the json
     @Override
     public String getMeJsonString() throws JsonProcessingException {
         JsonNode jsonNode = userAPIService != null ? userAPIService.getMeData() : null;
