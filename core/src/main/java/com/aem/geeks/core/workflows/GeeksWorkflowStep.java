@@ -38,7 +38,7 @@ public class GeeksWorkflowStep implements WorkflowProcess {  //To write this we 
 
     //execute is a Manditory method -
     @Override
-    public void execute(WorkItem workItem, WorkflowSession workflowSession, MetaDataMap processArguments) {  //Manditory method
+    public void execute(WorkItem workItem, WorkflowSession workflowSession, MetaDataMap metaDataMap) {  //Manditory method
 
         /* WorkflowSession: Using this we can get the backend objects, using this only we get the ResourceResolver, Session using this WorkflowSession.
         *  MetaDataMap : If we pass any data to the dialog, that data we can get using this.(in case of custom WF process we get the data we have
@@ -61,15 +61,15 @@ public class GeeksWorkflowStep implements WorkflowProcess {  //To write this we 
                 //converting that string path in to a Node and getting hold of that node.
                 Node node = (Node) session.getItem(path);
 
-                //Here using "MetaDataMap processArguments" we are getting the value of BRAND field. so we get whatever value we give in step dialog box and storing brand variable.
-                String brand = processArguments.get("BRAND","");
+                //Here using "MetaDataMap metaDataMap" we are getting the value of BRAND field. so we get whatever value we give in step dialog box and storing brand variable.
+                String brand = metaDataMap.get("BRAND","");
 
-                //Here using "MetaDataMap processArguments" we are getting the value of MULTINATIONAL field. and storing it in a variable false is the default value we are giving here.
-                boolean multinational =processArguments.get("MULTINATIONAL",false);
+                //Here using "MetaDataMap metaDataMap" we are getting the value of MULTINATIONAL field. and storing it in a variable false is the default value we are giving here.
+                boolean multinational =metaDataMap.get("MULTINATIONAL",false);
                 LOG.info("\n BRAND : {} , MULTINATIONAL : {} ",brand,multinational);
 
                 //here we are getting the values of multifield and putting in a string array.
-                String[] countries = processArguments.get("COUNTRIES",new String[]{});
+                String[] countries = metaDataMap.get("COUNTRIES",new String[]{});
                 for (String country : countries) {
                     LOG.info("\n Countries {} ",country);  // looping through the array and printing it in logs
                 }
