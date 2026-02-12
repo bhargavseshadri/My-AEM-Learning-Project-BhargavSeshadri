@@ -104,14 +104,90 @@ Page page=pageManager.getPage("/content/aemgeeks/us/en");
 --> Workflow : @Component(service=workflowProcess.class)
 =============================================================================================
 6) ANNOTATIONS:
-@Activate : when we want something to load or activate at the time of this service initializations, there we use this
-@ObjectClassDefinition(name, definition) : used for defining osgi configuration.
+@Activate : when we want something to load or execute at the time of that particular service initializations, there we use this. for loading init type method.
+
+@PostConstruct : A method with this annotation is called after all the injections are done. It is mainly used for initialization logic.
+
+* immediate=true When we want to activate the service immediately after the bundle gets started in that place we use this.
+
 @Modified : It is a lifecycle callback method annotation used in OSGi components. It marks a method that should be called
             whenever the OSGi configuration for that component is changed at runtime, without restarting the bundle.
 - In simple words, When you change configuration values, AEM will automatically re-invoke the method annotated with @Modified, So your service picks up
   the new configuration immediately — without redeploying or restarting AEM.
 
-* immediate=true When we want to activate the service immediately after the bundle gets started in that place we use this.
+@ValueMapValue : Specifically used to get the node properties of the resource. for access node props, this is safer and cleaner than @inject.
+
+@Inject : Inject values from AEM resource in to model fields. it is more flexible and injects almost anything like requestAttributes, Resource Props etc.
+
+@Default : provides a default value if the actual property is missing.
+
+@SlingObject : Injects Sling objects such as ResourceResolver, Resource, SlingHttpServletRequest.
+
+@OSGiService : Injects an OSGi service into the Sling Model.
+
+@RequestAttribute : it is used to get a value that is passed only for that specific request.
+
+@ScriptVariable : Used in aem to get built-in objects from the htl script, like currentPage, resource, PageManager
+
+@Component : Marks a class as an OSGi service component. used for registering our service in osgi.
+
+@ObjectClassDefinition(name, definition) : used for defining osgi configuration.
+
+@AttributeDefinition : used for defining fields in the configuration.
+
+@Designate : Links configuration class to the component (used for OSGi configs).
+
+
+-------------------------
+@Self & @Via
+
+Note : First understand the situation
+* A Sling Model is created using something called an adaptable.
+* @Model(adaptables = SlingHttpServletRequest.class)
+        - Here the adaptable is request. But component properties usually exist in resource, not request. So Sling must sometimes be told where to take data from.
+
+* When Sling creates the model:
+  - It uses the adaptable (request or resource) to construct the model
+  - Then it processes every field separately
+  - Each field needs its own injection instruction
+  - adaptables: means we're saying to sling that this model can be created using a request. Mainly defines how model is created.
+  - @Self: using this we say that store that same request inside this variable. injects that adaptable into a field
+
+
+
+@Self : Give me the same object that created the model.
+  - adaptables: means we're saying to sling that this model can be created using a request. Mainly defines how model is created.
+  - @Self: using this we say that store that same request inside this variable. injects that adaptable into a field
+
+Eg : @Model(adaptables = SlingHttpServletRequest.class)
+     public class MyModel {
+
+         @Self
+         private SlingHttpServletRequest request;
+
+         public String getPath() {
+             return request.getRequestPathInfo().getResourcePath();
+         }
+     }
+ - If @Self is removed: private SlingHttpServletRequest request;   ---> then request will be null, even though the model was created using the request.
+
+
+
+@Via : Before injecting, go through this object first.
+* It is mainly used because most AEM models are adaptable from request, but properties are stored in resource.
+
+Eg : Model created using request, but property is inside resource.
+@Inject
+private String title;  // this will mostly gives null
+
+@Inject
+@Via("resource")       // This fixes the issue and get the props by looking in component resource properties.
+private String title;
+
+* Here the flow is
+    - Start with request.
+    - Go to request.getResource().
+    - Then read property title.
 
 =============================================================================================
 7) SERVLETS - GET and POST requests explanation
