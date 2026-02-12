@@ -781,6 +781,16 @@ Queue: a queue is a data structure that is used to store elements in a First-In-
 Deque: can be used both as FIFO and LIFO.
 
 
+Note: Types of defining
+a. Passing another collection --> ArrayList<String> list = new ArrayList<String>(books);
+       - Here books must be a Collection<String>. The new ArrayList is initialized with the elements of books.
+
+b. Passing an initial capacity --> ArrayList<String> list = new ArrayList<String>(50);
+        - But not all collections have capacity constructors. (LinkedList, TreeSet, TreeMap - these wont support capacity)
+
+c. ArrayList<String> list = new ArrayList<>();
+
+
 * When and where we use a particular collection
 
 1) List:
