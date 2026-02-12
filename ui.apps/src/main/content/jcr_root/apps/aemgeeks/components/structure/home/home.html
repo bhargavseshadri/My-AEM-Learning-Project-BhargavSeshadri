@@ -3,10 +3,10 @@
             where our template(reusable code) is present ||
  headObj : this is just a variable we are created here -->
 
-<!--STEP:3 (Last Step) - Calling the template || data-sly-call="${head.head @ page = page}"  :: Here in this line we are saying from -> head(the
-                            variable we have created in step:2 and assigned a file to it) that file -->
-<!--get me ->head(This the variable we have given to our template in the step:1(data-sly-template.head)) template.
-calling that needs a parameter(@ page) so give it @ page = page (simply we are assigning our sling model object to that variable, in a way sending
+<!--STEP:3 (Last Step) - Calling the template || data-sly-call="${headObj.head @ page = pageObj}"  :: Here in this line we are saying from -> head(the
+                            variable we have created in step:2 and assigned a file to it.  -->
+<!-- ->head(This the variable we have given to our template in the step:1(data-sly-template.head)) template.
+calling that needs a parameter(@ page), so to give it @ page = page (simply we are assigning our sling model object to that variable, in a way sending
 to that template so that it can use) -->
 
 <!-- Note: Passing only sling object is not a necessary, we can pass whatever we want to that template. -->
