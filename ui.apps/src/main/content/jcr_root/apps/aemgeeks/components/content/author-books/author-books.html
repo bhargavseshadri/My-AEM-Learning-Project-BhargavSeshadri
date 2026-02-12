@@ -68,7 +68,7 @@ file name here, because the file is in same directory and in this same component
 <!--BhargavSeshadri:
 
 EXAMPLE:1 - for using data-sly-resource, giving page path as a resource -->
-<!-- -> Below I have given my authored component on one page as a resource, so now what happens is whereever you add this comp then that authored content of the
+<!-- -> Below I have given my authored component path on one page as a resource, so now what happens is where ever you add this comp, then that authored content of the
 comp on that page will comes and renders in this page also -->
 <!-- <div data-sly-resource="${'/content/aemgeeks/us/en/bhargavseshadritestpage/jcr:content/parsys/author_books'}"></div> -->
 
@@ -77,20 +77,23 @@ comp on that page will comes and renders in this page also -->
 In this Example we gonna use selectors and also we "render the output of a file" lIke calling the file;
 -> Directly we cannot call the file using data-sly-resource, we can call using "selectors"
 -> I have created a file: apps/aemgeeks/components/content/author-books/dataSlyResourceTest.html we gonna print the content in that file
-->IMP:  Observe below that I am giving the "page path" as a resouurce and then giving the file name in the selector-->
+->IMP:  Observe below that I am giving the "page path" as a resouurce and then giving the file name in the selector
+* So if we hit the url with the selector then the html inside "dataSlyResourceTest.html" will execute. otherwise, it simply executes and
+  shows the resource wee have given.
+-->
 <div data-sly-resource="${'/content/aemgeeks/us/en/bhargavseshadritestpage/jcr:content/parsys/author_books' @ addSelectors='dataSlyResourceTest'}"></div>
 
 
 <!-- -> Here I can give my page path, component, node as a resource. -->
 <!-- EXAMPLE:3 -> Giving page as a resource:
 -> Now what happens is the complete resource output is renders, from this component. (here the page we included is comes on the
-page where we authored this comp)
+page, where we authored this comp)
 -> <div data-sly-resource="${'/content/aemgeeks/us/en/bhargavseshadritestpage'}"></div>
 -->
 
 
 <!-- EXAMPLE:4 -- We can also restrict the Resource when it has only some particular given "slingResourceType (our component path)"
--> so now it only renders the content of the resource we given when it have the mentioned "slingResourceType"
+-> so now it only renders the content of the resource we have given when it has the mentioned "slingResourceType"
 -> <div data-sly-resource="${'/content/aemgeeks/us/en/bhargavseshadritestpage/jcr:content/parsys/author_books' @ resourceType='aemgeeks/components/content/author-books'}"></div>
 -->
 
