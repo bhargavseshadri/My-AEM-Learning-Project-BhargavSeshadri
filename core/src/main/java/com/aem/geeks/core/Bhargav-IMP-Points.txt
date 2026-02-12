@@ -119,7 +119,7 @@ Page page=pageManager.getPage("/content/aemgeeks/us/en");
 
 @Inject : Inject values from AEM resource in to model fields. it is more flexible and injects almost anything like requestAttributes, Resource Props etc.
 
-@Default : provides a default value if the actual property is missing.
+@Default : provides a default value if the actual property value is missing.
 
 @SlingObject : Injects Sling objects such as ResourceResolver, Resource, SlingHttpServletRequest.
 
@@ -150,8 +150,8 @@ Note : First understand the situation
   - It uses the adaptable (request or resource) to construct the model
   - Then it processes every field separately
   - Each field needs its own injection instruction
-  - adaptables: means we're saying to sling that this model can be created using a request. Mainly defines how model is created.
-  - @Self: using this we say that store that same request inside this variable. injects that adaptable into a field
+  - adaptables: means we're saying to sling that this model can be created using a request or resource. Mainly defines how model is created.
+  - @Self: using this we say that store that same request or resource inside this variable. injects that adaptable into a field
 
 
 
