@@ -43,6 +43,9 @@ b) Core Annotations
 6. @Disabled
 > Disables a test or test class.
 
+7. @ParameterizedTest
+> 
+
 ------------------------------------------------------------------
 c) Assertions (Verification API) (Assertions validate expected outcomes.)
 
