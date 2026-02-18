@@ -72,11 +72,80 @@ Main Assertions Methods
 
 ======================================================================================================
 
-
-
-======================================================================================================
-YT Tutorial
-
-Basic Junit reference code is in these files
+* Basic Junit reference code is in these files - YT Tutorial example
 > Java Class : com/aem/geeks/core/javarelatedcodes/junitrelated/AddClass.java
 > Test Class : com/aem/geeks/core/javarelatedcodes/junitrelated/AddClassTest.java
+
+* All Junit code annotation examples are in these
+> com/aem/geeks/core/javarelatedcodes/junitrelated/JunitExampleClass.java
+> com/aem/geeks/core/javarelatedcodes/junitrelated/JunitExampleClassTest.java
+
+======================================================================================================
+MOCKITO
+
+1. @Mock
+> Creates a mock object — a fake version of a real class where you control the behavior of its methods.
+> Use it when your class under test depends on other classes (services, repositories, APIs, etc.) and you
+  want to avoid calling the real implementation. This helps isolate the unit you are testing.
+
+
+2. @InjectMocks
+> Creates an instance of the class being tested and automatically injects the mocks (created using @Mock) into it.
+
+
+3. @Spy
+> Creates a partial mock
+
+
+4. @Captor
+> Captures the values passed into method calls during the test so that you can later inspect them.
+> Use it when you need to verify what arguments were passed to a dependency method.
+> Very useful when the method parameters are complex objects and you need to confirm their internal values.
+
+
+5. @ExtendWith(MockitoExtension.class)
+> Enables Mockito annotations (@Mock, @InjectMocks, etc.) in the test class.
+> Required in JUnit 5 tests so Mockito can initialize all annotated objects automatically. Without this, annotations may not work.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
