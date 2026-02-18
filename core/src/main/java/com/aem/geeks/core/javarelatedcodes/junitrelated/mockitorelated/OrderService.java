@@ -1,5 +1,7 @@
 package com.aem.geeks.core.javarelatedcodes.junitrelated.mockitorelated;
 
+import java.util.List;
+
 public class OrderService {
 
     PaymentGateway paymentGateway;
@@ -22,15 +24,33 @@ public class OrderService {
             // while loop example
             int retry = 0;
             while (retry < 1) {
-                notificationService.send("Order successful");
+                notificationService.sendMsg("Order successful");
                 retry++;
             }
 
             return true;
         } else {
-            notificationService.send("Order failed");
+            notificationService.sendMsg("Order failed");
             return false;
         }
+    }
+
+    // ---------- ARRAYLIST EXAMPLE ----------
+    public int processBulkOrders(List<Double> amounts) {
+
+        int successCount = 0;
+
+        // iterating ArrayList using for-each
+        for (Double amt : amounts) {
+
+            if (paymentGateway.charge(amt)) {
+                successCount++;
+            }
+        }
+
+        notificationService.sendMsg("Processed orders: " + successCount);
+
+        return successCount;
     }
 }
 
