@@ -9,23 +9,29 @@ class JunitExampleClassTest {
 
     private JunitExampleClass junitExampleClass;
 
+    //JUnit creates new test object per test method - So according to that only a static increment variable will work. because static belongs to class not obj.
+    /*if you create the below variable without static then it won't increase, because for every test run junit creates a new obj and for every new obj the count var
+        set to "0" */
+    public static int count = 0;
+
     // Runs once before all test methods (must be static)
     @BeforeAll
     static void beforeAllTests() {
-        System.out.println("Before all tests executed");
+        System.out.println("Ran Before all tests executed");
     }
 
     // Runs before each test method
     @BeforeEach
     void setUp() {
+        count = count+1;
         junitExampleClass = new JunitExampleClass(); // fresh object before every test
-        System.out.println("Before each test");
+        System.out.println("running Before each test - " + count);
     }
 
     // Runs after each test method
     @AfterEach
     void tearDown() {
-        System.out.println("After each test");
+        System.out.println("Running After each test");
     }
 
     // Runs once after all test methods
@@ -76,7 +82,7 @@ class JunitExampleClassTest {
     void testAssertSame() {
         // verifies both references point to SAME object
         String str = junitExampleClass.getMessage();
-        assertSame(str, str);
+        assertSame("Hello", str);
     }
 
     @Test
@@ -115,6 +121,8 @@ class JunitExampleClassTest {
     }
 
 
+    //Executes the test multiple times
+    //Each row of @CsvSource is one test execution
     @ParameterizedTest  //Same test with multiple inputs
     @CsvSource({
             "2, 3, 6",

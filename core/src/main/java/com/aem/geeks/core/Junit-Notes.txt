@@ -2,6 +2,7 @@
 
 Important Points:
 > Whenever we are testing something like testing some method in one class, Then we have to create an instance of that class. For static methods its not required.
+> JUnit creates new test object per test method
 
 ======================================================================================================
 Junit Notes:
@@ -21,6 +22,7 @@ b) Core Annotations
 > The central annotation for writing tests.
 
 2. @BeforeEach
+> Mainly used for init logic.
 > Runs before every test method.
 > Used for per-test initialization.
 > for creating fresh objects.
@@ -44,7 +46,7 @@ b) Core Annotations
 > Disables a test or test class.
 
 7. @ParameterizedTest
-> 
+> Same test with multiple inputs
 
 ------------------------------------------------------------------
 c) Assertions (Verification API) (Assertions validate expected outcomes.)
