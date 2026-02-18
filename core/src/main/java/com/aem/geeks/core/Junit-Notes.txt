@@ -4,6 +4,12 @@ Important Points:
 > Whenever we are testing something like testing some method in one class, Then we have to create an instance of that class. For static methods its not required.
 > JUnit creates new test object per test method
 
+
+Mockito Imp Points
+> When objects are created using new inside the class, Mockito cannot replace them or mock them, so the mock can't be used.
+  - in our main class "private PaymentGateway paymentGateway = new PaymentGateway();" -- this is wrong.
+  - In your main class create it like this "PaymentGateway paymentGateway;" -- then @InjectMocks can inject the mocks correctly.
+
 ======================================================================================================
 Junit Notes:
 
