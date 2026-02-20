@@ -31,13 +31,13 @@ class OrderServiceTest {
        -------------------------------------------------- */
     @Test
     void testStaticDiscountCalculation() {
-
         try (MockedStatic<DiscountUtil> mockedStatic = mockStatic(DiscountUtil.class)) {
 
             // mocking static method
             mockedStatic.when(() -> DiscountUtil.getDiscount(anyDouble())).thenReturn(0.2);
 
-            when(paymentGateway.charge(anyDouble())).thenReturn(true);
+            when(paymentGateway.charge(anyDouble())).thenReturn(true);  //WHEN-THEN
+            assertTrue(paymentGateway.charge(anyDouble()));                //Assert
 
             orderService.processOrder(2000, 1);
 
@@ -80,11 +80,11 @@ class OrderServiceTest {
     void testForLoop_execution() {
 
         when(paymentGateway.charge(anyDouble())).thenReturn(true);
+        orderService.processOrder(500, 4); // so here we are giving 4 - based on our logic the for loop will iterate 5 times.
 
-        orderService.processOrder(500, 3);
-
-        // main observable behavior: charge still called once
-        verify(paymentGateway, times(1)).charge(anyDouble());
+        //calling the charge multiple times because in main for loop the charge method is inside for loop. and we give 5 because the iterations we give above is 4
+        // so length - 4 , index - 5
+        verify(paymentGateway, times(5)).charge(anyDouble());
     }
 
     /* --------------------------------------------------
@@ -93,12 +93,14 @@ class OrderServiceTest {
     @Test
     void testWhileLoop_notificationSentOnce() {
 
+        // So this line sends the flow in to if block
         when(paymentGateway.charge(anyDouble())).thenReturn(true);
 
+        //this line invokes the method
         orderService.processOrder(500, 1);
 
-        // while loop should send notification only once
-        verify(notificationService, times(1)).sendMsg(messageCaptor.capture());
+        // while loop should send notification three times acc to our logic, that's why we have given 3
+        verify(notificationService, times(3)).sendMsg(messageCaptor.capture());
 
         assertEquals("Order successful", messageCaptor.getValue());
     }

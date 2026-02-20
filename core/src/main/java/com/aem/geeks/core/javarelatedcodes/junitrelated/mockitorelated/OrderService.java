@@ -15,6 +15,7 @@ public class OrderService {
 
         // for loop example
         for (int i = 0; i < quantity; i++) {
+            paymentGateway.charge(finalAmount);  // here we are calling the charge method in our loop.
             System.out.println("Processing item " + i);
         }
 
@@ -23,7 +24,7 @@ public class OrderService {
 
             // while loop example
             int retry = 0;
-            while (retry < 1) {
+            while (retry < 3) {
                 notificationService.sendMsg("Order successful");
                 retry++;
             }
