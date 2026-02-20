@@ -115,18 +115,21 @@ class OrderServiceTest {
         amounts.add(300.0);
 
         // stub gateway to always succeed
-        when(paymentGateway.charge(anyDouble())).thenReturn(true);
+        when(paymentGateway.charge(anyDouble())).thenReturn(true);  // helps to get into  if block
 
-        int result = orderService.processBulkOrders(amounts);
+        int result = orderService.processBulkOrders(amounts);  // Here we are invoking that method in the java class
 
-        // verify all items processed
         assertEquals(3, result);
 
         // verify charge called 3 times (once per list element)
         verify(paymentGateway, times(3)).charge(anyDouble());
 
         // verify notification message
-        verify(notificationService).sendMsg("Processed orders: 3");
+        verify(notificationService).sendMsg("Processed orders: 3");  // using just a verify()
+
+        verify(notificationService).sendMsg(messageCaptor.capture());  // using argument captor
+        String capturedValue = messageCaptor.getValue();
+        assertEquals("Processed orders: 3", capturedValue);
     }
 
 }
