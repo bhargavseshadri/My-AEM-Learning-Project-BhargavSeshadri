@@ -91,6 +91,7 @@ Main Assertions Methods
 MOCKITO
 
 1. @Mock
+> It is mainly used to create the dummy objects.
 > Creates a mock object — a fake version of a real class where you control the behavior of its methods.
 > Use it when your class under test depends on other classes (services, repositories, APIs, etc.) and you
   want to avoid calling the real implementation. This helps isolate the unit you are testing.
@@ -115,6 +116,7 @@ MOCKITO
 -------------------------------------------
 
 5. @ExtendWith(MockitoExtension.class)
+> Using this we register our extension
 > Enables Mockito annotations (@Mock, @InjectMocks, etc.) in the test class.
 > Required in JUnit 5 tests so Mockito can initialize all annotated objects automatically. Without this, annotations may not work.
 
@@ -256,17 +258,42 @@ Correct way : when(service.method(anyInt(), eq("Hello")))
 - Eg : verify(service).sendMessage(eq("John"), contains("success"));
 
 
+======================================================================================================
+AEM GEEKS Notes
 
+* AEM Mocks (Aem specific API)
+- It provides a aem specific objects to write the unit tests.
+- a. Sling Mocks
+  b. OSGI Mocks
+  c. JCR Mocks
 
+---------------------------------------------------------------------------------------
+VERY IMPORTANT POINTS
 
+* @ExtendWith(AemContextExtension.class) -- For our AEM we use this to register the AemContextExtension
 
+* private final AemContext aemContext=new AemContext();  -- This will give us a context of AEM at the build time. it will give the aem specific objects we need
+* "AemContext" - by default, this will only provide sling related API's.
+               - To get the other api's :
+                        JCR related Api - a. new AemContext(ResourceResolverType.JCR_MOCK); (gives Sling API, JCR API)
+                                          b. new AemContext(ResourceResolverType.JCR_OCK);  (gives Sling API, JCR API, Node types, Observation, JCR Query)
 
+* To create a resource : aemContext.build().resource("/content/geeks/test", "jcr:title", "Geeks Page");
+        - here we are creating a resource and giving its title.
 
+To specify the Current Resource : aemContext.currentResource("/content/geeks/test");
+        - So here we are saying that "/content/geeks/test" this resource is the current resource.
 
+---------------------------------------------------------------------------------------
+1. Unit tests For Servlets
 
+a. Junit For ResourceType servlet - GET Method
+- Java : ResourceType servlet : com/aem/geeks/core/servlets/GeeksResourceTypesServlet.java
+- Junit : com/aem/geeks/core/servlets/GeeksResourceTypesServletTest.java
 
-
-
+* To write the unit test for doGet() method, we need SlingHttpServletRequest and SlingHttpServletResponse also, How do we get them in Junit?
+- AemContext will help us to get those objects with the help of mocking.
+        eg : MockSlingHttpServletRequest request = aemContext.request();
 
 
 
