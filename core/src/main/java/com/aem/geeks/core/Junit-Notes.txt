@@ -291,14 +291,18 @@ a. Junit For ResourceType servlet - GET Method
 - Java : ResourceType servlet : com/aem/geeks/core/servlets/GeeksResourceTypesServlet.java
 - Junit : com/aem/geeks/core/servlets/GeeksResourceTypesServletTest.java
 
+* This is a ResourceType servlet, only if we access that resource it will execute, so we have to create a resource.
 * To write the unit test for doGet() method, we need SlingHttpServletRequest and SlingHttpServletResponse also, How do we get them in Junit?
 - AemContext will help us to get those objects with the help of mocking.
         eg : MockSlingHttpServletRequest request = aemContext.request();
 
 
 
+b. Junit For ResourceType servlet - POST Method
+- JAVA : com/aem/geeks/core/servlets/GeeksResourceTypesServlet.java
+- Junit : com/aem/geeks/core/servlets/GeeksResourceTypesServletTest.java
 
-
+* This is a ResourceType servlet, only if we access that resource it will execute, so we have to create a resource.
 
 
 
