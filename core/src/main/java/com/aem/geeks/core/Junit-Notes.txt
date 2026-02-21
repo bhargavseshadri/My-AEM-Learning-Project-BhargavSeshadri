@@ -10,6 +10,8 @@ Mockito Imp Points
   - in our main class "private PaymentGateway paymentGateway = new PaymentGateway();" -- this is wrong.
   - In your main class create it like this "PaymentGateway paymentGateway;" -- then @InjectMocks can inject the mocks correctly.
   - When we write a WHEN-THEN then we have to write Assertion also.
+> in most cases, we use the "assert" when the method is returning something, if the method is like a void kind of method or it is not
+  returning anything there we dont use assert.
 
 ======================================================================================================
 Junit Notes:
@@ -304,7 +306,18 @@ b. Junit For ResourceType servlet - POST Method
 
 * This is a ResourceType servlet, only if we access that resource it will execute, so we have to create a resource.
 
+---------------------------------------------------------------------------------------
+2. Unit tests for OSGI Configurations
 
+- Java : com/aem/geeks/core/services/impl/OSGiConfigImpl.java
+- Junit : com/aem/geeks/core/services/impl/OSGiConfigImplTest.java
+
+* To mock our annotation class and create a obj of it : OSGiConfigImpl.ServiceConfig serviceConfig = Mockito.mock(OSGiConfigImpl.ServiceConfig.class);
+  - ServiceConfig : it is just the name of my annotation class I have created.
+* Have an Array Example in this.
+
+---------------------------------------------------------------------------------------
+3. Unit Tests for Osgi Service
 
 
 
