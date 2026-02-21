@@ -1,0 +1,397 @@
+***Complete Junit Related Notes***
+======================================================================================================
+
+** Important Points
+
+> Whenever we are testing something like testing some method in one class, Then we have to create an instance of that class. For static methods its not required.
+> JUnit creates new test object per test method
+> in most cases, we use the "assert" when the method is returning something, if the method is like a void kind of method or it is not
+  returning anything there we dont use assert.
+
+> We have multiple ways to create our actual java class objects in our test class :
+        1. Using @InjectMocks
+                eg: @InjectMocks
+                     OrderService orderService;
+
+        2. By Normally creating Objects
+                eg: OsgiDemoServiceImpl osgiDemoService = new OsgiDemoServiceImpl();
+
+        3. Using aemContext.registerService
+                eg: OSGiConfigImpl configTest = aemContext.registerService(new OSGiConfigImpl());
+
+----------------------------------------------------
+* Mockito Imp Points
+> When objects are created using new inside the class, Mockito cannot replace them or mock them, so the mock can't be used.
+  - in our main class "private PaymentGateway paymentGateway = new PaymentGateway();" -- this is wrong.
+  - In your main class create it like this "PaymentGateway paymentGateway;" -- then @InjectMocks can inject the mocks correctly.
+  - When we write a WHEN-THEN then we have to write Assertion also.
+
+======================================================================================================
+Junit Notes:
+
+a) Test Lifecycle: four types, Used to manage shared resources, initialization, and cleanup.
+1. Before all tests
+2. Before each test
+3. After each test
+4. After all tests
+
+------------------------------------------------------------------
+b) Core Annotations
+
+1. @Test
+> To tell the junit that this is a test method, so Execute it. if we put this annotation then the Junit know that this method needs to run.
+> It is used to mark a method as a test case so the JUnit Platform can discover it and execute it.
+> The central annotation for writing tests.
+
+2. @BeforeEach
+> Mainly used for init logic.
+> Runs before every test method.
+> Used for per-test initialization.
+> for creating fresh objects.
+
+3. @AfterEach
+> Runs after every test method.
+> Used for cleanup.
+> Close resources, reset external state.
+
+4. @BeforeAll
+> Runs once before all tests in the class.
+> Must be static by default.
+> Typical use: Expensive setup (database, server, shared resources).
+
+5. @AfterAll
+> Runs once after all tests in the class.
+> Must be static by default.
+> Typical use: Global cleanup.
+
+6. @Disabled
+> Disables a test or test class.
+
+7. @ParameterizedTest
+> Same test with multiple inputs
+
+------------------------------------------------------------------
+c) Assertions (Verification API) (Assertions validate expected outcomes.)
+
+Main Assertions Methods
+
+1. assertEquals : Verifies expected value equals actual value.
+2. assertNotEquals : Verifies values are different.
+3. assertTrue: Verifies a condition is true.
+4. assertFalse: Verifies a condition is false.
+5. assertNull: Verifies an object is null.
+6. assertNotNull: Verifies an object is not null.
+7. assertSame: Verifies two references point to the same object.
+8. assertNotSame: Verifies two references do not point to the same object.
+9. assertArrayEquals: Verifies array contents are equal.
+
+> Exception Assertions
+1. assertThrows: Verifies that a specific exception is thrown.
+2. assertDoesNotThrow: Verifies that no exception is thrown
+
+> Grouped Assertions
+1. assertAll: Executes multiple assertions and reports all failures together.
+
+======================================================================================================
+
+* Basic Junit reference code is in these files - YT Tutorial example
+> Java Class : com/aem/geeks/core/javarelatedcodes/junitrelated/AddClass.java
+> Test Class : com/aem/geeks/core/javarelatedcodes/junitrelated/AddClassTest.java
+
+* All Junit code annotation examples are in these
+> com/aem/geeks/core/javarelatedcodes/junitrelated/JunitExampleClass.java
+> com/aem/geeks/core/javarelatedcodes/junitrelated/JunitExampleClassTest.java
+
+======================================================================================================
+MOCKITO
+
+Mockito Code References:
+- Java : com/aem/geeks/core/javarelatedcodes/junitrelated/mockitorelated/OrderService.java
+- Junit : com/aem/geeks/core/javarelatedcodes/junitrelated/mockitorelated/OrderServiceTest.java
+
+-------------------------------------------
+1. @Mock
+> It is mainly used to create the dummy objects.
+> Creates a mock object — a fake version of a real class where you control the behavior of its methods.
+> Use it when your class under test depends on other classes (services, repositories, APIs, etc.) and you
+  want to avoid calling the real implementation. This helps isolate the unit you are testing.
+
+-------------------------------------------
+
+2. @InjectMocks
+> Creates an instance of the class being tested and automatically injects the mocks (created using @Mock) into it.
+
+-------------------------------------------
+
+3. @Spy
+> Creates a partial mock
+
+-------------------------------------------
+
+4. @Captor
+> Captures the values passed into method calls during the test so that you can later inspect them.
+> Use it when you need to verify what arguments were passed to a dependency method.
+> Very useful when the method parameters are complex objects and you need to confirm their internal values.
+
+-------------------------------------------
+
+5. @ExtendWith(MockitoExtension.class)
+> Using this we register our extension
+> Enables Mockito annotations (@Mock, @InjectMocks, etc.) in the test class.
+> Required in JUnit 5 tests so Mockito can initialize all annotated objects automatically. Without this, annotations may not work.
+
+-------------------------------------------
+
+6. Verify
+ - verify() is used to check whether a method was actually called on a mock object during test execution.
+ - It only checks interaction.
+
+* Why do we need verify()?
+Ans. In unit testing, there are two types of testing:
+1. State-based testing : we check the returned value.
+eg: result = service.calculate()
+    assertEquals(10, result)
+
+2. Behavior-based testing : You check that certain methods were called correctly.
+eg: Java - repository.save(user);
+    Junit - verify(repository).save(user)
+
+* Types of verify()
+a. Simple Verify (default = once) : method must be called exactly once.-->  verify(mock).method();
+b. times(n) : Method must be called exactly n times. Very common in loops and collections.  ---> verify(mock, times(3)).method();
+c. Static method verify : Special syntax because static methods need lambda. ---> mockedStatic.verify(() -> Class.staticMethod());
+
+
+Main eg:
+1.
+- Java : paymentGateway.charge(finalAmount)
+- junit verify : verify(paymentGateway).charge(anyDouble());
+
+2.
+- Java : notificationService.sendMsg("Order successful");
+- Junit : verify(notificationService, times(3)).sendMsg(messageCaptor.capture());  // we want it to run for 3 times
+
+-------------------------------------------
+7. ArgumentCaptor -- @Captor
+* @Captor
+  ArgumentCaptor<String> messageCaptor;
+
+- @Captor is used to capture the actual argument value passed to a mock method during execution, so you can inspect it later.
+- It is mainly used with verify().
+- Sometimes you don't just want to verify that a method was called. You want to verify, What exact value was passed.
+- Basic verify() only checks that a method was called. ArgumentCaptor allows you to capture and inspect the real value passed at runtime.
+- Captor is used only with verify().
+
+- ArgumentCaptor is generic.
+   > ArgumentCaptor<Integer>
+   > ArgumentCaptor<Double>
+   > ArgumentCaptor<String>
+
+- Can Capture Custom Objects
+    > ArgumentCaptor<User>
+    > ArgumentCaptor<Order>
+
+- Important Methods of ArgumentCaptor
+   > capture() : Captures argument during verification
+   > getValue() : Gets last captured value
+   > getAllValues() : Gets all captured values
+
+* Clear Example 1 :
+Java : notificationService.send("Order successful");
+
+Junit :
+- Instead of writing : verify(notificationService).send("Order successful");
+
+- We can capture it
+    verify(notificationService).send(messageCaptor.capture());
+    String capturedMessage = messageCaptor.getValue();
+
+- Than we can assert - assertEquals("Order successful", capturedMessage);
+
+
+* Example 2:
+Java : User user = new User("John", 25);
+       repository.save(user);
+
+Junit : verify(repository).save(userCaptor.capture());
+        User savedUser = userCaptor.getValue();          //Here it will give the last saved value
+        assertEquals("John", savedUser.getName());
+        assertEquals(25, savedUser.getAge());
+
+-------------------------------------------
+8. any()
+- any() is an argument matcher. it simply says "I don’t care what value is passed here — accept anything"
+- Mainly used in when(), verify().
+
+
+* Why Do We Need any()?
+- Normally, Mockito matches arguments exactly.
+
+Eg : when(paymentGateway.charge(500.0)).thenReturn(true);
+
+- This will only work if: charge(500.0)
+- If the method is called with: charge(600.0)  - the stub will NOT work.
+
+- With any() : when(paymentGateway.charge(anyDouble())).thenReturn(true);
+- Now it works for any double value, it simply says "Return true no matter what double value is passed." :
+charge(500.0)
+charge(600.0)
+charge(2000.0)
+
+
+* Types of any() Matchers
+    - any() : Matches any object (not primitives).
+    - anyInt(), anyLong(),anyDouble(), anyFloat(), anyBoolean(), anyChar()
+
+    * Object-specific : anyString()
+                        anyList()
+                        anyMap()
+                        anySet()
+                        any(ClassName.class)
+
+    * Combined with Conditions :
+      - eq(value) : The argument must be exactly match
+                    --> when(service.save(eq("John"), anyInt()))
+                    --> when(paymentGateway.charge(eq(1000.0))).thenReturn(true);
+
+       - isNull(): Method must be called with null.
+                   --> verify(service).process(isNull());
+                   --> when(userService.findUser(isNull())).thenReturn(null);
+
+       - notNull() : must not be null, Argument must not be null.
+                     --> verify(service).process(notNull());
+                     --> when(userService.save(notNull())).thenReturn(true);
+
+       - contains("text"): string contains (eg : "Order successful", "Payment success")
+                           --> verify(notificationService).send(contains("success"));
+                           --> when(notificationService.send(contains("success"))).thenReturn("OK");
+
+       - startsWith("Order") --> when(userService.findUser(startsWith("Order"))).thenReturn(user);
+       - endsWith("failed")
+
+
+* Imp Note : If you use one matcher, you must use matchers for ALL parameters.
+Wrong : when(service.method(anyInt(), "Hello"))
+Correct way : when(service.method(anyInt(), eq("Hello")))
+
+- Internally, Mockito works like this: Either it compares arguments normally OR it switches into matcher mode
+- Eg : verify(service).sendMessage(eq("John"), contains("success"));
+
+
+======================================================================================================
+======================================================================================================
+AEM GEEKS Notes
+
+* AEM Mocks (Aem specific API)
+- It provides a aem specific objects to write the unit tests.
+- a. Sling Mocks
+  b. OSGI Mocks
+  c. JCR Mocks
+
+---------------------------------------------------------------------------------------
+VERY IMPORTANT POINTS
+
+* @ExtendWith(AemContextExtension.class) -- For our AEM we use this to register the AemContextExtension
+
+* private final AemContext aemContext=new AemContext();  -- This will give us a context of AEM at the build time. it will give the aem specific objects we need
+* "AemContext" - by default, this will only provide sling related API's.
+               - To get the other api's :
+                        JCR related Api - a. new AemContext(ResourceResolverType.JCR_MOCK); (gives Sling API, JCR API)
+                                          b. new AemContext(ResourceResolverType.JCR_OCK);  (gives Sling API, JCR API, Node types, Observation, JCR Query)
+
+
+
+*********************  Things we can do with AEM CONTEXT  ****************************
+
+Note : aemContext will default gives sling API, so for any JCR Node level modifications  change the aemContext to JCR Api.
+
+* To create a dummy resource using aemContext
+        - aemContext.build().resource("/content/geeks/test", "jcr:title", "Geeks Page");
+        - here we are creating a resource and giving its title.
+        - Eg : reference is present in : com/aem/geeks/core/servlets/GeeksResourceTypesServletTest.java
+
+* To specify the Current Resource
+        - aemContext.currentResource("/content/geeks/test");
+        - So here we are saying that "/content/geeks/test" this resource is the current resource.
+        - Eg : reference is present in : com/aem/geeks/core/servlets/GeeksResourceTypesServletTest.java
+
+* AemContext will help us to get request
+        - "SlingHttpServletRequest" and response - "SlingHttpServletReponse" objects with the help of mocking.
+        eg : MockSlingHttpServletRequest request = aemContext.request();
+
+* AemContext will help us to get Page object also. we have multiple ways of creating page by giving different parameters using this AemContext only.
+        eg: example is in "com/aem/geeks/core/services/impl/OsgiDemoServiceImplTest.java"
+
+
+* AemContext will help us to get ResourceResolver
+        - ResourceResolver resourceResolver = aemContext.resourceResolver();
+        eg: com/aem/geeks/core/services/impl/OsgiDemoServiceImplTest.java
+
+---------------------------------------------------------------------------------------
+1. Unit tests For Servlets
+
+a. Junit For ResourceType servlet - GET Method
+- Java : ResourceType servlet : com/aem/geeks/core/servlets/GeeksResourceTypesServlet.java
+- Junit : com/aem/geeks/core/servlets/GeeksResourceTypesServletTest.java
+
+* This is a ResourceType servlet, only if we access that resource it will execute, so we have to create a resource.
+* To write the unit test for doGet() method, we need SlingHttpServletRequest and SlingHttpServletResponse also, How do we get them in Junit?
+- AemContext will help us to get those objects with the help of mocking.
+        eg : MockSlingHttpServletRequest request = aemContext.request();
+
+
+
+b. Junit For ResourceType servlet - POST Method
+- JAVA : com/aem/geeks/core/servlets/GeeksResourceTypesServlet.java
+- Junit : com/aem/geeks/core/servlets/GeeksResourceTypesServletTest.java
+
+* This is a ResourceType servlet, only if we access that resource it will execute, so we have to create a resource.
+
+
+
+* References in this file :
+- Creating dummy resources
+- And making that dummy resource as CurrentResource.
+
+---------------------------------------------------------------------------------------
+2. Unit tests for OSGI Configurations
+
+- Java : com/aem/geeks/core/services/impl/OSGiConfigImpl.java
+- Junit : com/aem/geeks/core/services/impl/OSGiConfigImplTest.java
+
+* To mock our annotation class and create a obj of it : OSGiConfigImpl.ServiceConfig serviceConfig = Mockito.mock(OSGiConfigImpl.ServiceConfig.class);
+  - ServiceConfig : it is just the name of my annotation class I have created.
+* Have an Array Example in this.
+
+
+
+* References in this file :
+- Mocking Annotation config java class and creating a mock object of it.
+- Stubbing (when/then).
+
+---------------------------------------------------------------------------------------
+3. Unit Tests for Osgi Service
+
+- Java : com/aem/geeks/core/services/impl/OsgiDemoServiceImpl.java
+- Junit : com/aem/geeks/core/services/impl/OsgiDemoServiceImplTest.java
+
+
+* References in this file :
+- Example for creating Page object in this file.
+- Example for Creating Dummy pages.
+- Example for Getting Page title, Page name, how many child pages are there using size().
+- Example for ResourceResolver.
+- Example for setting and getting the Node properties.
+
+
+---------------------------------------------------------------------------------------
+4. Unit Tests for Osgi Service
+
+- Java : com/aem/geeks/core/models/impl/ProductModelImpl.java
+- Junit : com/aem/geeks/core/models/impl/ProductModelImplTest.java
+
+---------------------------------------------------------------------------------------
+5. Unit test for API related code -  This API uses Access token to fetch the data
+
+- Java : com/aem/geeks/core/services/impl/UserAPIServiceImpl.java
+- Junit : com/aem/geeks/core/services/impl/UserAPIServiceImplTest.java
