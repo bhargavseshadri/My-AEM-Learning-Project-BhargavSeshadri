@@ -105,6 +105,10 @@ class OrderServiceTest {
         assertEquals("Order successful", messageCaptor.getValue());
     }
 
+        /* --------------------------------------------------
+       5. ArrayList TEST
+       -------------------------------------------------- */
+
     @Test
     void testProcessBulkOrders_arrayListExample() {
 
@@ -130,6 +134,39 @@ class OrderServiceTest {
         verify(notificationService).sendMsg(messageCaptor.capture());  // using argument captor
         String capturedValue = messageCaptor.getValue();
         assertEquals("Processed orders: 3", capturedValue);
+    }
+
+
+
+        /* --------------------------------------------------
+       6. Array TEST
+       -------------------------------------------------- */
+
+    @Test
+    void testProcessOrderArrays_successCase() {
+
+        int[] quantities = {2, 0, 3};
+        String[] customers = {"John", "Mike", "David"};
+
+        // Stub charge to always return true
+        when(paymentGateway.charge(anyDouble())).thenReturn(true);
+
+        int result = orderService.processOrderArrays(quantities, customers);
+
+        // Only quantities > 0 should trigger charge (2 and 3)
+        assertEquals(2, result);
+
+        // charge should be called 2 times
+        verify(paymentGateway, times(2)).charge(anyDouble());
+
+        // notification should be sent 2 times
+        verify(notificationService, times(2)).sendMsg(messageCaptor.capture());
+
+        // Capture all sent messages
+        List<String> messages = messageCaptor.getAllValues();
+
+        assertEquals("Order processed for John", messages.get(0));
+        assertEquals("Order processed for David", messages.get(1));
     }
 
 }

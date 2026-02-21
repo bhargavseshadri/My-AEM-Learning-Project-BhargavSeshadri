@@ -53,5 +53,34 @@ public class OrderService {
 
         return successCount;
     }
+
+    // ---------- ARRAY EXAMPLE ----------
+    // ---------- ARRAY (int[] + String[]) EXAMPLE ----------
+    public int processOrderArrays(int[] quantities, String[] customers) {
+
+        int totalSuccess = 0;
+
+        // Loop through both arrays
+        for (int i = 0; i < quantities.length; i++) {
+
+            // Business rule:
+            // if quantity > 0 → charge
+            if (quantities[i] > 0) {
+
+                boolean status = paymentGateway.charge(quantities[i]);
+
+                if (status) {
+                    totalSuccess++;
+
+                    notificationService.sendMsg(
+                            "Order processed for " + customers[i]
+                    );
+                }
+            }
+        }
+
+        return totalSuccess;
+    }
+
 }
 

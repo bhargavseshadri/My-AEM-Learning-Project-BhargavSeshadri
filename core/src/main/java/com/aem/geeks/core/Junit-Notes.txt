@@ -105,6 +105,11 @@ Main Assertions Methods
 ======================================================================================================
 MOCKITO
 
+Mockito Code References:
+- Java : com/aem/geeks/core/javarelatedcodes/junitrelated/mockitorelated/OrderService.java
+- Junit : com/aem/geeks/core/javarelatedcodes/junitrelated/mockitorelated/OrderServiceTest.java
+
+-------------------------------------------
 1. @Mock
 > It is mainly used to create the dummy objects.
 > Creates a mock object — a fake version of a real class where you control the behavior of its methods.
@@ -273,6 +278,7 @@ Correct way : when(service.method(anyInt(), eq("Hello")))
 - Eg : verify(service).sendMessage(eq("John"), contains("success"));
 
 
+======================================================================================================
 ======================================================================================================
 AEM GEEKS Notes
 
