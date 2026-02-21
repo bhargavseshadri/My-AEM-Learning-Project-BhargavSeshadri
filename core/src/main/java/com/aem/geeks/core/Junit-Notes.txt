@@ -379,6 +379,9 @@ b. Junit For ResourceType servlet - POST Method
 
 
 ---------------------------------------------------------------------------------------
+4. Unit Tests for Osgi Service
 
+- Java : com/aem/geeks/core/models/impl/ProductModelImpl.java
+- Junit : com/aem/geeks/core/models/impl/ProductModelImplTest.java
 
 
