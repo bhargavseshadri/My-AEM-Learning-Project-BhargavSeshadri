@@ -1,17 +1,30 @@
 ***Complete Junit Related Notes***
+======================================================================================================
 
-Important Points:
+** Important Points
+
 > Whenever we are testing something like testing some method in one class, Then we have to create an instance of that class. For static methods its not required.
 > JUnit creates new test object per test method
+> in most cases, we use the "assert" when the method is returning something, if the method is like a void kind of method or it is not
+  returning anything there we dont use assert.
 
+> We have multiple ways to create our actual java class objects in our test class :
+        1. Using @InjectMocks
+                eg: @InjectMocks
+                     OrderService orderService;
 
-Mockito Imp Points
+        2. By Normally creating Objects
+                eg: OsgiDemoServiceImpl osgiDemoService = new OsgiDemoServiceImpl();
+
+        3. Using aemContext.registerService
+                eg: OSGiConfigImpl configTest = aemContext.registerService(new OSGiConfigImpl());
+
+----------------------------------------------------
+* Mockito Imp Points
 > When objects are created using new inside the class, Mockito cannot replace them or mock them, so the mock can't be used.
   - in our main class "private PaymentGateway paymentGateway = new PaymentGateway();" -- this is wrong.
   - In your main class create it like this "PaymentGateway paymentGateway;" -- then @InjectMocks can inject the mocks correctly.
   - When we write a WHEN-THEN then we have to write Assertion also.
-> in most cases, we use the "assert" when the method is returning something, if the method is like a void kind of method or it is not
-  returning anything there we dont use assert.
 
 ======================================================================================================
 Junit Notes:
@@ -280,11 +293,33 @@ VERY IMPORTANT POINTS
                         JCR related Api - a. new AemContext(ResourceResolverType.JCR_MOCK); (gives Sling API, JCR API)
                                           b. new AemContext(ResourceResolverType.JCR_OCK);  (gives Sling API, JCR API, Node types, Observation, JCR Query)
 
-* To create a resource : aemContext.build().resource("/content/geeks/test", "jcr:title", "Geeks Page");
-        - here we are creating a resource and giving its title.
 
-To specify the Current Resource : aemContext.currentResource("/content/geeks/test");
+
+*********************  Things we can do with AEM CONTEXT  ****************************
+
+Note : aemContext will default gives sling API, so for any JCR Node level modifications  change the aemContext to JCR Api.
+
+* To create a dummy resource using aemContext
+        - aemContext.build().resource("/content/geeks/test", "jcr:title", "Geeks Page");
+        - here we are creating a resource and giving its title.
+        - Eg : reference is present in : com/aem/geeks/core/servlets/GeeksResourceTypesServletTest.java
+
+* To specify the Current Resource
+        - aemContext.currentResource("/content/geeks/test");
         - So here we are saying that "/content/geeks/test" this resource is the current resource.
+        - Eg : reference is present in : com/aem/geeks/core/servlets/GeeksResourceTypesServletTest.java
+
+* AemContext will help us to get request
+        - "SlingHttpServletRequest" and response - "SlingHttpServletReponse" objects with the help of mocking.
+        eg : MockSlingHttpServletRequest request = aemContext.request();
+
+* AemContext will help us to get Page object also. we have multiple ways of creating page by giving different parameters using this AemContext only.
+        eg: example is in "com/aem/geeks/core/services/impl/OsgiDemoServiceImplTest.java"
+
+
+* AemContext will help us to get ResourceResolver
+        - ResourceResolver resourceResolver = aemContext.resourceResolver();
+        eg: com/aem/geeks/core/services/impl/OsgiDemoServiceImplTest.java
 
 ---------------------------------------------------------------------------------------
 1. Unit tests For Servlets
@@ -306,6 +341,12 @@ b. Junit For ResourceType servlet - POST Method
 
 * This is a ResourceType servlet, only if we access that resource it will execute, so we have to create a resource.
 
+
+
+* References in this file :
+- Creating dummy resources
+- And making that dummy resource as CurrentResource.
+
 ---------------------------------------------------------------------------------------
 2. Unit tests for OSGI Configurations
 
@@ -316,15 +357,28 @@ b. Junit For ResourceType servlet - POST Method
   - ServiceConfig : it is just the name of my annotation class I have created.
 * Have an Array Example in this.
 
+
+
+* References in this file :
+- Mocking Annotation config java class and creating a mock object of it.
+- Stubbing (when/then).
+
 ---------------------------------------------------------------------------------------
 3. Unit Tests for Osgi Service
 
+- Java : com/aem/geeks/core/services/impl/OsgiDemoServiceImpl.java
+- Junit : com/aem/geeks/core/services/impl/OsgiDemoServiceImplTest.java
 
 
+* References in this file :
+- Example for creating Page object in this file.
+- Example for Creating Dummy pages.
+- Example for Getting Page title, Page name, how many child pages are there using size().
+- Example for ResourceResolver.
+- Example for setting and getting the Node properties.
 
 
-
-
+---------------------------------------------------------------------------------------
 
 
 
