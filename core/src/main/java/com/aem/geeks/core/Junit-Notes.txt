@@ -384,4 +384,8 @@ b. Junit For ResourceType servlet - POST Method
 - Java : com/aem/geeks/core/models/impl/ProductModelImpl.java
 - Junit : com/aem/geeks/core/models/impl/ProductModelImplTest.java
 
+---------------------------------------------------------------------------------------
+5. Unit test for API related code -  This API uses Access token to fetch the data
 
+- Java : com/aem/geeks/core/services/impl/UserAPIServiceImpl.java
+- Junit : com/aem/geeks/core/services/impl/UserAPIServiceImplTest.java
