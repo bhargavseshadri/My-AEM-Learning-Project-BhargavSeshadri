@@ -13,6 +13,7 @@ import org.apache.sling.models.annotations.DefaultInjectionStrategy;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.OSGiService;
 import org.apache.sling.models.annotations.injectorspecific.ScriptVariable;
+import org.apache.sling.models.annotations.injectorspecific.SlingObject;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -101,11 +102,16 @@ public class ProductModelImpl implements ProductModel{
         return multifieldvalues;
     }
 
+
+
+
+
+
 /*********************************************************MULTIFIELD RELATED CODE***************************************************************/
 
 //BhargavSeshadri - From here Composite multifield related code (Step:2 )(Step:1 apps/aemgeeks/components/content/slingmodelproductcomp/_cq_dialog/.content.xml)
 //here this multifield will take a every set of values and store them in a new node. and using the below java logic we will render those values on page
-    @Inject
+    @SlingObject            //here we can also use @Inject - but it will retun null sometimes.
     Resource componentResource;   //here we are injecting our component resource
 
     @Override
@@ -129,6 +135,12 @@ public class ProductModelImpl implements ProductModel{
         return productDetailsMap;
     }
 //For Step:3 : render these values using htl -> apps/aemgeeks/components/content/slingmodelproductcomp/slingmodelproductcomp.html
+
+
+
+
+
+
 
 
 /*********************************************************NORMAL CONFIGURATION RELATED CODE***************************************************************/
@@ -163,6 +175,12 @@ public class ProductModelImpl implements ProductModel{
     public String getRunModes(){
         return bhargavOsgiConfigService.getRunModes();
     }
+
+
+
+
+
+
 
 
 /*********************************************************FACTORY CONFIGURATION RELATED CODE***************************************************************/

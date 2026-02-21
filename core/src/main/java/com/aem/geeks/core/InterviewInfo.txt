@@ -825,6 +825,9 @@ Example: import java.util.*;
          }
 
 
+---------------------------
+*) Arrays Syntax
+- Refer this file for complete Array Syntax - com/aem/geeks/core/javarelatedcodes/ArrayRelatedCode.java
 
 ---------------------------
 *) Iterator
