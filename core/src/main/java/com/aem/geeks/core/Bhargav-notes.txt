@@ -304,8 +304,10 @@ STEP: 6 - Now in the WF Model console -> in properties -> in advanced tab -> giv
 STEP: 7 - Now you can see your WF Step in the available steps. Drag and drop it.
 
 =============================================================================================
+10) Clientlibraries
 
-
+Stet: 1 - Create a Clientlib folder and add your code in it : apps/aemgeeks/components/content/bhargavapicomp/clientlib
+Step: 2 - Include the clientlib in your component :
 
 
 
@@ -324,7 +326,7 @@ STEP: 7 - Now you can see your WF Step in the available steps. Drag and drop it.
 
 
 =============================================================================================
-10) HTL
+11) HTL
 a)data-sly-list:  LOOPING
 -> apps/aemgeeks/components/content/author-books/author-books.html
 -> Its model is in : com/aem/geeks/core/models/impl/AuthorBooksImpl.java

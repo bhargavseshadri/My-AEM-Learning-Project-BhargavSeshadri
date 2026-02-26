@@ -297,12 +297,10 @@ CLIENTLIBRARIES
 * In Adobe Experience Manager (AEM), a client library (or clientlib) is a container for client-side resources such as CSS, JavaScript, images, and fonts.
 It allows you to organize and manage these resources in a modular way, making it easier to include them in your AEM components and pages.
 Client libraries help optimize the delivery of front-end assets and improve website performance.
-
-* If the clientlib is in our component, in that case we need not to include that clientlib category manually in our comp xml.
-* If the Clientlib is not under our component, if it in a shared or global path like /apps/yourproject/clientlibs then you must manually reference
-it in your component dialog or template, because AEM won’t auto-link global dialog clientlibs.
-
-* Including it in component or editable templates/page components -->  <cq:includeClientLib categories="myproject.dialog"/>
+* Including it in component or editable templates/page components -->
+  - Jsp : <cq:includeClientLib categories="myproject.dialog"/>
+  - HTL : <sly data-sly-use.clientlib="/libs/granite/sightly/templates/clientlib.html"/>
+          <sly data-sly-call="${clientlib.css @ categories='bhargav.apiStyles'}"/>
 
 * Why we give "allowProxy = true" in AEM clientlibrary properties?
 Ans. - When you create a Client Library (clientlib) under /apps/..., by default it cannot be accessed publicly to anonymous users — because the /apps path is not exposed on
