@@ -57,41 +57,53 @@
 
                             </multifield>
 
-                            <typeSelect
+                            <layoutType
                                     jcr:primaryType="nt:unstructured"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/select"
-                                    fieldLabel="Select Type"
-                                    name="./type"
-                                    granite:class="cq-dialog-dropdown-showhide"
-                                    data-cq-dialog-dropdown-showhide-target=".type-target">
+                                    fieldLabel="Show/Hide Functionality"
+                                    name="./layoutType"
+                                    cq-dialog-dropdown-showhide=".layout-toggle">
+
                                 <items jcr:primaryType="nt:unstructured">
-                                    <option1
+                                    <image
                                             jcr:primaryType="nt:unstructured"
                                             text="Image"
                                             value="image"/>
-                                    <option2
+                                    <text
                                             jcr:primaryType="nt:unstructured"
-                                            text="Video"
-                                            value="video"/>
+                                            text="Text"
+                                            value="text"/>
                                 </items>
-                            </typeSelect>
+                            </layoutType>
 
-
-                            <videoField
+                            <imageWrapper
                                     jcr:primaryType="nt:unstructured"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                    fieldLabel="Video URL"
-                                    name="./videoUrl"
-                                    granite:class="type-target"
-                                    data-showhidetargetvalue="video" />
+                                    sling:resourceType="granite/ui/components/coral/foundation/container"
+                                    granite:class="layout-toggle"
+                                    showhidetargetvalue="image">
 
-                            <imageField
+                                <items jcr:primaryType="nt:unstructured">
+                                    <imagePath
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+                                            fieldLabel="Image Path"
+                                            name="./imagePath"/>
+                                </items>
+                            </imageWrapper>
+                            <textWrapper
                                     jcr:primaryType="nt:unstructured"
-                                    sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
-                                    fieldLabel="Select Image"
-                                    name="./imagePath"
-                                    granite:class="type-target"
-                                    data-showhidetargetvalue="image" />
+                                    sling:resourceType="granite/ui/components/coral/foundation/container"
+                                    granite:class="layout-toggle"
+                                    showhidetargetvalue="text">
+
+                                <items jcr:primaryType="nt:unstructured">
+                                    <textField
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                            fieldLabel="Text"
+                                            name="./text"/>
+                                </items>
+                            </textWrapper>
                         </items>
                     </basic>
                     <multifieldwithbean
