@@ -19,6 +19,7 @@ img {
 
 .dummyjson-card-data {
         list-style: none;
-        padding: 0;
+        padding: 6px;
         margin: 0;
+        background-color: #D9B2B2;
 }

@@ -20,6 +20,9 @@ IMPORTANT PATHS
     - To give the required permissions(ACL's) : /Useradmin
     - Note: Service users are under this path (crx) : /home/users/system
 
+-> Sometimes the new template(static or editable) you have created might not shows up in templates section or while creating a page - in that case
+   once go and check the "cq:allowedTemplates" property under "/content/aemgeeks/jcr:content".
+
 
 =============================================================================================
 1) Logger Levels
