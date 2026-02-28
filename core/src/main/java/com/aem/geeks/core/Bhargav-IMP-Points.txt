@@ -23,6 +23,10 @@ IMPORTANT PATHS
 -> Sometimes the new template(static or editable) you have created might not shows up in templates section or while creating a page - in that case
    once go and check the "cq:allowedTemplates" property under "/content/aemgeeks/jcr:content".
 
+-> If your Component won't need any dialog box, (it might fetch the content from API and prints it on page), the in that case we
+   won't use CQ;DIALOG, we use CQ:EditConfig.
+   - This Cq:EditConig is also just to show our component to drag and drop on page.
+   - apps/aemgeeks/components/content/bhargavapicomp/_cq_editConfig.
 
 =============================================================================================
 1) Logger Levels
