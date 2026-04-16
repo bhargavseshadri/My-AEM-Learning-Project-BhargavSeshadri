@@ -64,6 +64,11 @@ git add core/src/main/java/com/aem/geeks/core/Bhargav-notes.txt
 - Doesn’t deploy to AEM, just builds JARs/ZIPs in target/.
 
 ##### Build and Deploy to AEM
+
+`mvn clean install -PautoInstallPackage`
+- Use this when you want to build the whole project and install the full package into your local AEM instance. Complete build and install.
+- Useful for fresh deployments.
+
 `mvn clean install -PautoInstallSinglePackage`
 - Use this when you want to build the whole project and install the full package (all module) into your local AEM instance.
 - Useful for fresh deployments.
