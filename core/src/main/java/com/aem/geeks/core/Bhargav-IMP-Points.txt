@@ -28,6 +28,10 @@ IMPORTANT PATHS
    - This Cq:EditConig is also just to show our component to drag and drop on page.
    - apps/aemgeeks/components/content/bhargavapicomp/_cq_editConfig.
 
+-> To directly print the given dialog field value on the page(without using Sling Model) use "properties".
+        - ${properties.fieldName}
+        - Internally it simply means "resource.getValueMap()".
+
 =============================================================================================
 1) Logger Levels
         Trace

@@ -309,6 +309,13 @@ Ans. - When you create a Client Library (clientlib) under /apps/..., by default 
      - When allowProxy=true, AEM allows the clientlib to be accessed through a proxy path: /etc.clientlibs/<your-project>/clientlibs/<clientlib-name>
 
 =============================================================================================
+PROXY COMPONENTS
+
+-> To add any custom field for our Proxy component we have to override core comp CQ_DIALOG. That CQ_DIALOG we have to get it from the extended core component.
+-> Similarly To print that custom field on the page we have to override core comp HTML. That HTML we have to get it from the extended core component and add the
+   extra code needed to print you Custom field.
+
+=============================================================================================
 AEM SPECIFIC NODE TYPES
 
 cq:Page	             :  /content/...              : Represents a page. Has a child node jcr:content.

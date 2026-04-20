@@ -150,20 +150,19 @@
                                                     </cui>
                                                 </uiSettings>
                                             </text>
-
-                                            <name
-                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                fieldLabel="Name"
-                                                name="./name"
-                                                required="{Boolean}true"/>
-
-                                            <id sling:hideResource="{Boolean}true"
+                                            <id
                                                 jcr:primaryType="nt:unstructured"
                                                 sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
                                                 fieldDescription="HTML ID attribute to apply to the component."
                                                 fieldLabel="ID"
-                                                name="./id"
-                                                />
+                                                name="./id"/>
+
+                                            <customField
+                                                    jcr:primaryType="nt:unstructured"
+                                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                    fieldDescription="Custom Field added by ME"
+                                                    fieldLabel="Custom Field"
+                                                    name="./customField"/>
                                         </items>
                                     </column>
                                 </items>

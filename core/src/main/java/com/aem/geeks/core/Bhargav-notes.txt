@@ -5,6 +5,7 @@ a) Personal Component : apps/aemgeeks/components/content/slingmodelproductcomp
 b) API Component : apps/aemgeeks/components/content/bhargavapicomp
 c) Registration Form Comp (for ResourceType Post Servlet) : apps/aemgeeks/components/content/registrationformservlet
 d) Registration Form Comp (for PathType Post Servlet) : apps/aemgeeks/components/content/formforpathtypeservlet
+e) Complete "ResourceResolver, Resource, PageManager, Session" these things specific component
 
 =============================================================================================
 1) Resource Resolver related Notes is in
@@ -313,10 +314,10 @@ Step: 2 - Include the clientlib in your component : apps/aemgeeks/components/con
 11) Creating a Proxy Component
 -> apps/aemgeeks/components/bhargavtextproxy
 
-
-
-
-
+-> Overriding : From CRXDE get a package zip of CQ_DIALOG from core component you are extended. and add that in intellij.
+-> Overrided the Core comp dialog by adding a cq_dialog, which I got from the core comp. and add and extra custom field in it as well.
+-> To print the Custom field we have added - Override the HTML File. Copy all the Core Comp Html code and add it in proxy comp and then add
+   your custom field code to print it.
 
 
 
