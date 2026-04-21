@@ -15,3 +15,11 @@
 <div>
     ${properties.customField}
 </div>
+
+
+<!--BhargavSeshadri : Here we are printing these from Sling Model : com/aem/geeks/core/models/impl/BhargavTextProxyModelImpl.java-->
+<div data-sly-use.obj="com.aem.geeks.core.models.BhargavTextProxyModel">
+    <div>Printing the fields using Sling Model</div>
+    <div>${obj.getText}</div>
+    <div>${obj.getCustomField}</div>
+</div>

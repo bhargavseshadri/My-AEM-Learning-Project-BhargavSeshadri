@@ -31,6 +31,7 @@ Basic Important Points
 -> OSGI : OSGi (Open Services Gateway initiative) is a Java-based modular framework that allows AEM to run applications as independent,
           reusable, and dynamically updatable components called bundles.
 -> Sling:OsgiConfig : by giving this we can convert our osgi configuration file to node.
+-> In Case of Editable Templates, If you edit the template then that change will show in both old(existing pages) and new pages as well.
 
 =============================================================================================
 DEFINITIONS
@@ -314,6 +315,7 @@ PROXY COMPONENTS
 -> To add any custom field for our Proxy component we have to override core comp CQ_DIALOG. That CQ_DIALOG we have to get it from the extended core component.
 -> Similarly To print that custom field on the page we have to override core comp HTML. That HTML we have to get it from the extended core component and add the
    extra code needed to print you Custom field.
+-> sling:hideResource="{Boolean}true" : If you want to hide any field that comes from core component, In that case add this to that field "In the Overriden CQ_DIALOG".
 
 =============================================================================================
 AEM SPECIFIC NODE TYPES

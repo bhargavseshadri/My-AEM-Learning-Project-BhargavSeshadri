@@ -32,6 +32,8 @@ IMPORTANT PATHS
         - ${properties.fieldName}
         - Internally it simply means "resource.getValueMap()".
 
+-> sling:hideResource="{Boolean}true" : To Hide a Core component field in our proxy comp, Add this property to that in the overriden cq_dialog in proxy comp.
+
 =============================================================================================
 1) Logger Levels
         Trace
