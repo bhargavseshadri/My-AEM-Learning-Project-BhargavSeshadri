@@ -19,6 +19,7 @@ to that template so that it can use) -->
       data-sly-use.redirect="redirect.html">
     <head data-sly-call="${headObj.head @ page = pageObj}"></head>
     <body class="${page.cssClassNames}" id="page-top">
+    <h1>Added by BHARGAV</h1>
         <sly data-sly-test.isRedirectPage="${page.redirectTarget && (wcmmode.edit || wcmmode.preview)}"
              data-sly-call="${redirect.redirect @ redirectTarget = page.redirectTarget}"></sly>
         <sly data-sly-test="${!isRedirectPage}">

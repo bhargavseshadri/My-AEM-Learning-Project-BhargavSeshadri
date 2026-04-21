@@ -31,7 +31,9 @@ Basic Important Points
 -> OSGI : OSGi (Open Services Gateway initiative) is a Java-based modular framework that allows AEM to run applications as independent,
           reusable, and dynamically updatable components called bundles.
 -> Sling:OsgiConfig : by giving this we can convert our osgi configuration file to node.
--> In Case of Editable Templates, If you edit the template then that change will show in both old(existing pages) and new pages as well.
+
+-> Editable Templates : If you edit the template then that change will show in both old(existing pages) and new pages as well.
+-> Static Template : If you edit the template code and then deploy it, then that change will show in both old(existing pages) and new pages as well.
 
 =============================================================================================
 DEFINITIONS
