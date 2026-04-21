@@ -5,7 +5,7 @@ a) Personal Component : apps/aemgeeks/components/content/slingmodelproductcomp
 b) API Component : apps/aemgeeks/components/content/bhargavapicomp
 c) Registration Form Comp (for ResourceType Post Servlet) : apps/aemgeeks/components/content/registrationformservlet
 d) Registration Form Comp (for PathType Post Servlet) : apps/aemgeeks/components/content/formforpathtypeservlet
-e) Complete "ResourceResolver, Resource, PageManager, Session" these things specific component
+e) Complete "ResourceResolver, Resource, PageManager, Session" these API's specific component : apps/aemgeeks/components/bhargav-backend-aem-apis-comp
 
 =============================================================================================
 1) Resource Resolver related Notes is in

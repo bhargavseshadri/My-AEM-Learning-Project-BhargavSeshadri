@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0"
+    jcr:description="In this Component we explore Backend API's Like Resource, ResourceResolver, Session, ValueMap, Pagemanager etc"
+    jcr:primaryType="cq:Component"
+    jcr:title="Bhargav-Backend AEM API's Component"
+    componentGroup="AEM GEEKS - Content"/>

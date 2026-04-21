@@ -68,6 +68,7 @@ git add core/src/main/java/com/aem/geeks/core/Bhargav-notes.txt
 `mvn clean install -PautoInstallPackage`
 - Use this when you want to build the whole project and install the full package into your local AEM instance. Complete build and install.
 - Useful for fresh deployments.
+- Time taken cmd because it builds everything and deploys.
 
 `mvn clean install -PautoInstallSinglePackage`
 - Use this when you want to build the whole project and install the full package (all module) into your local AEM instance.
