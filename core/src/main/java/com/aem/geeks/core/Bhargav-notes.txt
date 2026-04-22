@@ -320,15 +320,18 @@ Step: 2 - Include the clientlib in your component : apps/aemgeeks/components/con
    your custom field code to print it.
 -> Sling Model for this Proxy Comp : com/aem/geeks/core/models/impl/BhargavTextProxyModelImpl.java
 
+=============================================================================================
+12) bhargav-backend-aem-apis-comp : apps/aemgeeks/components/bhargav-backend-aem-apis-comp
+-> In this component we use all the AEM Api's - Resource, ResourceResolver, Session, Node, Pagemanager, ValueMap, ResourceResolverFactory
 
-
+-> Sling Model : com/aem/geeks/core/models/bhargavBackendAemApisCompModel.java
 
 
 
 
 
 =============================================================================================
-12) HTL
+13) HTL
 a)data-sly-list:  LOOPING
 -> apps/aemgeeks/components/content/author-books/author-books.html
 -> Its model is in : com/aem/geeks/core/models/impl/AuthorBooksImpl.java

@@ -1,1 +1,16 @@
 <h1>bhargav-backend-aem-apis-comp</h1>
+
+
+==========Printing Basic Dialog Fields=============
+
+<div data-sly-use.obj="com.aem.geeks.core.models.BhargavBackendAemApisCompModel">
+    <p>Person Name : <b>${obj.getPersonName}</b></p>
+    <p>Father Name : <b>${obj.getFatherName}</b></p>
+    <p>Average Income : <b>${obj.getAverageIncome}</b></p>
+
+    <ul>
+        <sly data-sly-list.item="${obj.getMultifieldvalues}">
+            <li>${item}</li>
+        </sly>
+    </ul>
+</div>
