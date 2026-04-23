@@ -80,6 +80,19 @@ OSGI ARCHITECTURE:
 2) @Modified - When configuration is changed dynamically, it Re-read and apply new config
 3) @Deactivate - When the component is stopped
 
+=============================================================================================
+==> PageManager (Aem's API)
+- PageManager is a service API in AEM used to: find pages, create pages, move/delete pages, resolve paths → pages.
+- Its like a tool. Fetch/manage pages
+- Used in this file : com/aem/geeks/core/models/impl/BhargavBackendAemApisCompModelImpl.java
+
+
+==> Page (just a object) : Page is a Page object, It represents one specific page. And gives its properties, title, path, etc.
+- It just Read info of the current page.
+- Used in this file : com/aem/geeks/core/models/impl/BhargavBackendAemApisCompModelImpl.java
+
+Eg :
+- Using Page Maneger getting the Page : Page page = pageManager.getPage("/content/mysite/home");
 
 =============================================================================================
 ==> SERVLETS

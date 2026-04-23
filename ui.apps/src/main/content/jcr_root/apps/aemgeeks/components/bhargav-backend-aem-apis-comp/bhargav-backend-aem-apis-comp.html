@@ -1,34 +1,78 @@
+<sly data-sly-use.clientlib="/libs/granite/sightly/templates/clientlib.html"/>
+<sly data-sly-call="${clientlib.css @ categories='bhargav-backend-api-comp.AembackendApiCompStyles'}"/>
+
 <h1>bhargav-backend-aem-apis-comp</h1>
 
 
-==========Printing Basic Dialog Fields=============
+==============================================PrintingPrinting Basic Dialog Fields==============================================Printing
 
 <div data-sly-use.obj="com.aem.geeks.core.models.BhargavBackendAemApisCompModel">
-    <p>Person Name : <b>${obj.getPersonName}</b></p>
-    <p>Father Name : <b>${obj.getFatherName}</b></p>
-    <p>Average Income : <b>${obj.getAverageIncome}</b></p>
+    <div class="card-style">
+        <p>Person Name : <b>${obj.getPersonName}</b></p>
+        <p>Father Name : <b>${obj.getFatherName}</b></p>
+        <p>Average Income : <b>${obj.getAverageIncome}</b></p>
 
-    <ul>
-        <sly data-sly-list.item="${obj.getMultifieldvalues}">
-            <li>${item}</li>
-        </sly>
-    </ul>
+        <ul>
+            <sly data-sly-list.item="${obj.getMultifieldvalues}">
+                <li>${item}</li>
+            </sly>
+        </ul>
+    </div>
 </div>
 
 
-==========Printing using Backend API's================================================
+==============================================Printing using Backend API's==============================================
 </br>
-===Using Resource===
-<div><b>${obj.getResourcePath}</b></div>
-<div style="white-space: pre-line;"><b>${obj.getResourceDetails}</b></div>
-<div><b>${obj.isExpectedResourceType}</b></div>
+</br>
 
-<!--<sly data-sly-list.item="${obj.getChildrenList}">-->
-<!--    <div>Name : ${item.name}</div>-->
-<!--    <div>Path: ${item.path}</div>-->
-<!--</sly>-->
+=================================Using Resource=================================
+<div class="card-style">
+    <div>
+        <li><b>${obj.getResourcePath}</b></li>
+    </div>
+    <div class="nextLine-style">
+        <li><b>${obj.getResourceDetails}</b></li>
+    </div>
+    <div>
+        <li><b>${obj.isExpectedResourceType}</b></li>
+    </div>
+    </br>
 
+-> We got hold of these Child Pages of a Parent using "RESOURCE"
+    <sly data-sly-list.item="${obj.getChildrenList}">
+        <div><b>Name : ${item.name}</b></div>
+        <div><b>Page Path: ${itemList.count} - ${item.path}</b></div>
+    </sly>
+</div>
 </br>
 </br>
-===Using ValueMap===
-<div style="white-space: pre-line;"><b>${obj.getValueMapDetails}</b></div>
+
+
+=================================Using ValueMap=================================
+<div class="card-style">
+    <div class="nextLine-style">
+        <li><b>${obj.getValueMapDetails}</b></li>
+    </div>
+</div>
+</br>
+</br>
+
+
+=================================Using @ScriptVarisble=================================
+<div class="card-style">
+    <div class="nextLine-style">
+        <li><b>${obj.getCurrentPageDetails}</b></li>
+    </div>
+    </br>
+
+    -> Getting the ValueMap from Page Obj and printing the props of the Page.
+    <div class="nextLine-style">
+        <li><b>${obj.getPropsUsingValueMap}</b></li>
+    </div>
+    </br>
+
+    -> Printing all Child Pages
+    <sly data-sly-list.item="${obj.childPageDetails}">
+        <li>Page : ${itemList.count} : <b> ${item}</b></li>
+    </sly>
+</div>

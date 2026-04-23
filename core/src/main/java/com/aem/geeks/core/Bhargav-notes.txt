@@ -339,6 +339,22 @@ a)data-sly-list:  LOOPING
 b)data-sly-repeat: everything is exactly similar to data-sly-list but only difference is in page html structure list-have only one
  parent container and inside it it have <p> tags, but Repeat creates div containers for every iteration
 
+* Important Notes: Reference for below is present in -
+-> data-sly-list & data-sly-repeat while using these HTL internally creates two things item, itemList.
+    * item : it is just the current value.
+    * itemList : it is a loop helper object that HTL automatically creates when you use "data-sly-list or data-sly-repeat", It
+                 gives you metadata about the loop (index, position, etc.)
+                 - ItemList Capabilities :
+                        1. index (0-based) : ${itemList.index}
+                        2. count (1-based) : ${itemList.count}
+                        3. first (boolean) : ${itemList.first}
+                        4. last (boolean) : ${itemList.last}
+                        5. middle (boolean) : ${itemList.middle}
+                        6. odd (boolean) : ${itemList.odd}
+                        7. even (boolean) : ${itemList.even}
+
+
+
 -> data-sly-list with ITERATOR :
 eg scenario: want to iterate the child pages of a purticular page and then display that info to htl
 - so in our sling model we gonna get all the child pages using "Iterator<Page> pages=page.listChildren();" and then we get the iterator.
