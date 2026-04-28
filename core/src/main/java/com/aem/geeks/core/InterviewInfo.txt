@@ -81,20 +81,6 @@ OSGI ARCHITECTURE:
 3) @Deactivate - When the component is stopped
 
 =============================================================================================
-==> PageManager (Aem's API)
-- PageManager is a service API in AEM used to: find pages, create pages, move/delete pages, resolve paths → pages.
-- Its like a tool. Fetch/manage pages
-- Used in this file : com/aem/geeks/core/models/impl/BhargavBackendAemApisCompModelImpl.java
-
-
-==> Page (just a object) : Page is a Page object, It represents one specific page. And gives its properties, title, path, etc.
-- It just Read info of the current page.
-- Used in this file : com/aem/geeks/core/models/impl/BhargavBackendAemApisCompModelImpl.java
-
-Eg :
-- Using Page Maneger getting the Page : Page page = pageManager.getPage("/content/mysite/home");
-
-=============================================================================================
 ==> SERVLETS
 - A Servlet is a Java class that  handles HTTP requests (like GET, POST) and generates HTTP responses (like HTML, JSON, XML).
 
@@ -229,6 +215,27 @@ Ans. It is used to specify from which objects the model can be adapted.
         - When the model is used in HTL, it is usually adapted from the SlingHttpServletRequest
         - When the model is used in backend code (services, utilities), it may be adapted directly from the Resource
                 - MyModel model = resource.adaptTo(MyModel.class); ==>  For this, the model must support Resource.class.
+
+**Very Very Important :: Life Cycle Of Sling Model
+ -> Sometimes in sling model lines like below will through error by taking null values. and they got fixed when we move those lines in side a @PostConstruct Method
+    or and other method. Why Because.
+ -> Classic Tip : Do all the field initializations(assigning values to the variables) in sling model inside the @PostConstruct method or inside any other method.
+
+    * Eg Line : Page page = pageManager.getContainingPage(resource);
+-> Sling Model Life Cycle Steps: Step: 1 - Object is created (constructor runs)
+                                            -> Now at this moment all the @Inject fields or @ScriptVariable fields are not yet being set or injected.
+                                            -> But at this very moment if there is any fields then our sling model will run initialization for those
+                                               too so in this time those fields like above get Null values.
+
+                                 Step: 2 - - After sometime the object is created, then the @Inject and @ScriptVariable fields are injected by sling (values are set).
+                                           - But by this time if we wrote those line outside the method, then sling won't go back and look for those and set the values,
+                                             so those lines will keep taking null values.
+
+                                 Step: 3 - After all the fields are injected, then @PostConstruct method runs, so if we want to use those fields
+                                           then we have to use them inside this method or any other method which is called after this method.
+                                         - So by this time all the injections were done rt, so the field will get the appropriate value.
+
+                                 Step: 4 - Finally, the model is ready to be used in HTL or backend code.
 
 
 Services Defination : - A Service in AEM (or OSGi Service) is a Java class that contains reusable business logic and can be shared across components,

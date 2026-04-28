@@ -97,13 +97,25 @@ f) Workflow :
             1) Custom WF Process : execute(WorkItem workItem, WorkflowSession workflowSession, MetaDataMap processArguments)
 
 =============================================================================================
-4) PAGE MANAGER
-pageManeger: using this we can get the page we want.
+4) PAGE MANAGER(Aem's API) & Page
 
-eg:
-@ScriptVariable
-PageManager pageManager;
+Page → where you are
+pageManager → go anywhere
+
+==> PageManager
+- PageManager is a service API in AEM used to: find pages, create pages, move/delete pages, resolve paths → pages.
+- Its like a tool. Fetch/manage pages
+- Used in this file : com/aem/geeks/core/models/impl/BhargavBackendAemApisCompModelImpl.java
+
+
+==> Page (just a object) : Page is a Page object, It represents one specific page. And gives its properties, title, path, etc.
+- It just Read info of the current page.
+- Used in this file : com/aem/geeks/core/models/impl/BhargavBackendAemApisCompModelImpl.java
+
+Eg :
+- Using Page Maneger getting the Page : Page page = pageManager.getPage("/content/mysite/home");PageManager pageManager;
 Page page=pageManager.getPage("/content/aemgeeks/us/en");
+- Using Page getting the page info : String title = page.getTitle();
 
 =============================================================================================
 5) @Component
@@ -115,6 +127,7 @@ Page page=pageManager.getPage("/content/aemgeeks/us/en");
 
 --> Service : @Component(Service = bhargavService.class)  - bhargavService is my interface and I am linking it to my implimentation class using @Component
 --> Workflow : @Component(service=workflowProcess.class)
+
 =============================================================================================
 6) ANNOTATIONS:
 @Activate : when we want something to load or execute at the time of that particular service initializations, there we use this. for loading init type method.
@@ -149,7 +162,6 @@ Page page=pageManager.getPage("/content/aemgeeks/us/en");
 @AttributeDefinition : used for defining fields in the configuration.
 
 @Designate : Links configuration class to the component (used for OSGi configs).
-
 
 -------------------------
 @Self & @Via

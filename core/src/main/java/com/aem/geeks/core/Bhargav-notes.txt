@@ -321,9 +321,10 @@ Step: 2 - Include the clientlib in your component : apps/aemgeeks/components/con
 -> Sling Model for this Proxy Comp : com/aem/geeks/core/models/impl/BhargavTextProxyModelImpl.java
 
 =============================================================================================
-12) bhargav-backend-aem-apis-comp : apps/aemgeeks/components/bhargav-backend-aem-apis-comp
+12) bhargav-backend-aem-apis-comp
 -> In this component we use all the AEM Api's - Resource, ResourceResolver, Session, Node, Pagemanager, ValueMap, ResourceResolverFactory
 
+-> Component : apps/aemgeeks/components/bhargav-backend-aem-apis-comp
 -> Sling Model : com/aem/geeks/core/models/bhargavBackendAemApisCompModel.java
 
 

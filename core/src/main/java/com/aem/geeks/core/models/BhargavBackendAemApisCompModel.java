@@ -19,10 +19,14 @@ public interface BhargavBackendAemApisCompModel {
     String isExpectedResourceType();
     List<Resource> getChildrenList();
     String getValueMapDetails();
-
     String getCurrentPageDetails();
-
     String getPropsUsingValueMap();
-
     List<String> childPageDetails();
+    String getPageDetailsUsingPageManager();
+
+    String getQueryParam();
+
+    String[] getSelectors();
+
+    String getPath();
 }

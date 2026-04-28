@@ -3,6 +3,7 @@ package com.aem.geeks.core.models.impl;
 
 import com.aem.geeks.core.models.BhargavBackendAemApisCompModel;
 import com.day.cq.wcm.api.Page;
+import com.day.cq.wcm.api.PageManager;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ValueMap;
@@ -35,7 +36,7 @@ public class BhargavBackendAemApisCompModelImpl implements BhargavBackendAemApis
 
     @PostConstruct
     @Override
-    public String postConstructMethod(){
+    public String postConstructMethod() {
         return "Post Construct Method is Executed";
     }
 
@@ -61,10 +62,10 @@ public class BhargavBackendAemApisCompModelImpl implements BhargavBackendAemApis
     }
 
 
-/***********************************************USAGE OF BACKEND API's**********************/
+    /***********************************************USAGE OF BACKEND API's**********************/
 
-/*_______________Using Resource____________________
-  Resource : Current Resource - Means where am I in the repository */
+    /*_______________Using Resource____________________
+      Resource : Current Resource - Means where am I in the repository */
 
     //We can get the Resource using @ScriptVariable & @Inject also, by @SlingObject is preferrable
     @SlingObject
@@ -87,7 +88,7 @@ public class BhargavBackendAemApisCompModelImpl implements BhargavBackendAemApis
                 resource.isResourceType("aemgeeks/components/bhargav-backend-aem-apis-comp");
     }
 
-//Getting hold of child resources
+    //Getting hold of child resources
     @Override
     public List<Resource> getChildrenList() {
 
@@ -103,7 +104,7 @@ public class BhargavBackendAemApisCompModelImpl implements BhargavBackendAemApis
         }
         return childrenList;
     }
-
+/*--------------------------------------------------------------------------------------------------------------------------*/
 
 
 
@@ -128,6 +129,7 @@ public class BhargavBackendAemApisCompModelImpl implements BhargavBackendAemApis
 
         return "Person Name printing using ValueMap : " + personNameUsingValueMap + "\n" + "lastModifiedBy : " + lastModifiedBy;
     }
+/*--------------------------------------------------------------------------------------------------------------------------*/
 
 
 
@@ -156,16 +158,18 @@ public class BhargavBackendAemApisCompModelImpl implements BhargavBackendAemApis
         String templateTitle = currentPage.getTemplate().getTitle();
         String templatePath = currentPage.getTemplate().getPath();
         String language = currentPage.getLanguage().toString();
+        Boolean isHideInNav = currentPage.isHideInNav();
 
         // This will only print, If we give Page Title in the "Page Properties" of a page. Jcr:Title and this are not same.
         String pageTitle = currentPage.getPageTitle();
 
         return "Jcr:Title : " + jcrTitle + "\n" + "Page Path : " + pagePath + "\n" + "Parent Path : " + parentPath + "\n" + "Page Title : "
                 + pageTitle + "\n" + "Template Title : " + templateTitle + "\n" + "Template Path : " + templatePath + "\n"
-                + "JCR Content Resource Path : : " + contentResource + "\n" + "Language of the Page : " + language;
+                + "JCR Content Resource Path : : " + contentResource + "\n" + "Language of the Page : " + language + "Is Hide in Nav : " + isHideInNav;
 
     }
 
+    //Getting a ValueMap
     @Override
     public String getPropsUsingValueMap() {
 
@@ -185,11 +189,73 @@ public class BhargavBackendAemApisCompModelImpl implements BhargavBackendAemApis
 
         //Here We are going to "/content/aemgeeks/us/en"(Parent) from our current page and then we print all childs of "EN".
         Iterator<Page> childrenPages = currentPage.getParent().listChildren();
-        while (childrenPages.hasNext()){
+        while (childrenPages.hasNext()) {
             childPagesList.add(childrenPages.next().getPath());
         }
-
         return childPagesList;
+    }
+/*--------------------------------------------------------------------------------------------------------------------------*/
+
+
+
+
+    /*_______________Using PageManager Service API____________________
+    * Getting PageManager using @ScriptVariable
+    *  We Can Create, Delete, and Move the pages using this
+    - pageManager.create(...);
+    - pageManager.move(...);
+    - pageManager.delete(...);*/
+
+    @ScriptVariable
+    private PageManager pageManager;
+
+    @Override
+    public String getPageDetailsUsingPageManager() {
+
+   /* Using PageManager we can get the "Page" and from that we can get the details of that page.
+    Getting the CurrentPage - we can do it in two ways
+      1 - Directly Giving the path
+      Page page = pageManager.getPage("/content/mysite/about");*/
+
+      //2 - Using Resource
+        Page page = pageManager.getContainingPage(resource);
+        if (page != null) {
+            return "Using PageManager - Jcr:Title : " + page.getTitle();
+        } else {
+            return "Page not found";
+        }
+    }
+/*--------------------------------------------------------------------------------------------------------------------------*/
+
+
+
+
+    /*_______________Using SlingHttpServletRequest____________________
+    *
+    * This Mainly gives us the all the info about the request like Url Info, query parameters, headers, selectors, attributes.
+    *
+    * Now to get the values for the below methods we have to give selectors and query parameters in the URL like
+    * Eg: http://localhost:4502/content/aemgeeks/us/en/bhargav-backend-aem-apis-comp.selector1.selector2.html?name=bhargav
+    * */
+
+    @SlingObject
+    private SlingHttpServletRequest request;
+
+    @Override
+    public String getQueryParam() {
+        return "Query Parameter : " + request.getParameter("name");
+    }
+
+    @Override
+    public String[] getSelectors() {
+        return request.getRequestPathInfo().getSelectors();
+    }
+
+    //This will give the component path.
+    //eg : If we are on the page - /content/aemgeeks/us/en/jcr:content/root/container/bhargav-backend-aem-apis-comp.html
+    @Override
+    public String getPath() {
+        return "Request Path : " + request.getRequestPathInfo().getResourcePath();
     }
 
 }

@@ -75,4 +75,24 @@
     <sly data-sly-list.item="${obj.childPageDetails}">
         <li>Page : ${itemList.count} : <b> ${item}</b></li>
     </sly>
+    </br>
+
+    -> Using Page Manager API.
+    <div class="nextLine-style">
+        <li><b>${obj.getPageDetailsUsingPageManager}</b></li>
+    </div>
+</div>
+</br>
+</br>
+
+====================Printing the info using SlingHttpServletRequest request=================================
+<div class="card-style">
+    <div>
+        <li><b>${obj.getQueryParam}</b></li>
+        <li><b>${obj.getPath}</b></li>
+        <div data-sly-list.item="${obj.getSelectors}">
+            <li>Selector - ${itemList.count} : <b>${item}</b></li>
+        </div>
+    </div>
+
 </div>
