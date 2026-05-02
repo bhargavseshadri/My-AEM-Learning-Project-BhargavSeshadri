@@ -73,7 +73,7 @@ public class BhargavBackendAemApisCompModelImpl implements BhargavBackendAemApis
 
     @Override
     public String getResourcePath() {
-        return "Resource Path : " + resource.getPath();
+        return "Component Resource Path : " + resource.getPath();
     }
 
     @Override
@@ -83,12 +83,12 @@ public class BhargavBackendAemApisCompModelImpl implements BhargavBackendAemApis
         String resourseName = resource.getName();
 
         //This will give the sling:resourceType of the component (or current resourse we are on).
-        String resourceType = resource.getResourceType();
+        String compSlingResourceType = resource.getResourceType();
 
         Resource parentResourseDetails = resource.getParent();
         String parentResoursePath = resource.getParent().getPath();
 
-        return "Resource Name : " + resourseName + "\n" + "Resource Type : " + resourceType + "\n"
+        return "Resource Name : " + resourseName + "\n" + "Resource Type : " + compSlingResourceType + "\n"
                 + "Parent Resource Details : " + parentResourseDetails + "\n" + "Parent Resource Path : " + parentResoursePath;
     }
 
@@ -137,7 +137,7 @@ public class BhargavBackendAemApisCompModelImpl implements BhargavBackendAemApis
         String personNameUsingValueMap = valueMap.get("personName", String.class);
         String lastModifiedBy = valueMap.get("jcr:lastModifiedBy", String.class);
 
-        return "Person Name printing using ValueMap : " + personNameUsingValueMap + "\n" + "lastModifiedBy : " + lastModifiedBy;
+        return "Person Name(Dialog field) printing using ValueMap : " + personNameUsingValueMap + "\n" + "lastModifiedBy : " + lastModifiedBy;
     }
     /*--------------------------------------------------------------------------------------------------------------------------*/
 
@@ -158,24 +158,26 @@ public class BhargavBackendAemApisCompModelImpl implements BhargavBackendAemApis
     public String getCurrentPageDetails() {
 
         //Printing JCR:Title of a Page
-        String jcrTitle = currentPage.getTitle();
-
-        //Here we are directly getting hold of JCR:Content of the page
-        String contentResource = currentPage.getContentResource().getPath();
+        String jcrTitleOfCurrPage = currentPage.getTitle();
 
         String pagePath = currentPage.getPath();
         String parentPath = currentPage.getParent().getPath();
-        String templateTitle = currentPage.getTemplate().getTitle();
-        String templatePath = currentPage.getTemplate().getPath();
-        String language = currentPage.getLanguage().toString();
-        Boolean isHideInNav = currentPage.isHideInNav();
 
         // This will only print, If we give Page Title in the "Page Properties" of a page. Jcr:Title and this are not same.
         String pageTitle = currentPage.getPageTitle();
 
-        return "Jcr:Title : " + jcrTitle + "\n" + "Page Path : " + pagePath + "\n" + "Parent Path : " + parentPath + "\n" + "Page Title : "
+        String templateTitle = currentPage.getTemplate().getTitle();
+        String templatePath = currentPage.getTemplate().getPath();
+        String language = currentPage.getLanguage().toString();
+
+        //Here we are directly getting hold of JCR:Content of the page
+        String jcrContentResource = currentPage.getContentResource().getPath();
+
+        Boolean isHideInNav = currentPage.isHideInNav();
+
+        return "Jcr:Title : " + jcrTitleOfCurrPage + "\n" + "Page Path : " + pagePath + "\n" + "Parent Path : " + parentPath + "\n" + "Page Title : "
                 + pageTitle + "\n" + "Template Title : " + templateTitle + "\n" + "Template Path : " + templatePath + "\n"
-                + "JCR Content Resource Path : : " + contentResource + "\n" + "Language of the Page : " + language + "Is Hide in Nav : " + isHideInNav;
+                + "JCR Content Resource Path : : " + jcrContentResource + "\n" + "Language of the Page : " + language + "\n" + "Is Hide in Nav : " + isHideInNav;
 
     }
 
@@ -183,12 +185,12 @@ public class BhargavBackendAemApisCompModelImpl implements BhargavBackendAemApis
     @Override
     public String getPropsUsingValueMap() {
 
-        //Getting a ValueMap using Page Object and printing the Properties of the Page.
+        //Getting a ValueMap using Page Object and printing the Properties of the "Page".
         ValueMap allPageProperties = currentPage.getProperties();
-        String jcrTitle = allPageProperties.get("jcr:title", String.class);
+        String pageJcrTitle = allPageProperties.get("jcr:title", String.class);
         String cqTemplate = allPageProperties.get("cq:template", String.class);
 
-        return "Jcr:Title : " + jcrTitle + "\n" + "cqTemplate : " + cqTemplate;
+        return "Page Jcr:Title : " + pageJcrTitle + "\n" + "cqTemplate : " + cqTemplate;
 
     }
 
@@ -234,7 +236,7 @@ public class BhargavBackendAemApisCompModelImpl implements BhargavBackendAemApis
         String pagePath = pageManager.getContainingPage(resource).getPath();
 
         if (page != null) {
-            return "Using PageManager - Jcr:Title : " + pageTitle + "\n" + "Page Path : " + pagePath;
+            return "Using PageManager - Page Jcr:Title : " + pageTitle + "\n" + "Page Path : " + pagePath;
         } else {
             return "Page not found";
         }
@@ -260,7 +262,7 @@ public class BhargavBackendAemApisCompModelImpl implements BhargavBackendAemApis
 
         /*Important : request.getParameter(...) only returns form/query parameters (name/value pairs in the query string or POST body). It does NOT read
                       HTTP headers or the request URL*/
-        return "Query Parameter : " + request.getParameter("name") + "\n" + "Request URL : " + request.getRequestURI().toString();
+        return "Query Parameter : " + request.getParameter("name") + "\n" + "Request URL(Complete page url with .html) : " + request.getRequestURI().toString();
     }
 
     @Override
@@ -280,7 +282,7 @@ public class BhargavBackendAemApisCompModelImpl implements BhargavBackendAemApis
     //eg : If we are on the page - /content/aemgeeks/us/en/jcr:content/root/container/bhargav-backend-aem-apis-comp.html
     @Override
     public String getPath() {
-        return "Request Path : " + request.getRequestPathInfo().getResourcePath();
+        return "Request Path(it gives Current Resource Path) : " + request.getRequestPathInfo().getResourcePath();
     }
 
 }
