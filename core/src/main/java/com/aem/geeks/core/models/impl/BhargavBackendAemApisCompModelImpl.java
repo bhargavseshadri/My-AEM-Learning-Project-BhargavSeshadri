@@ -78,8 +78,18 @@ public class BhargavBackendAemApisCompModelImpl implements BhargavBackendAemApis
 
     @Override
     public String getResourceDetails() {
-        return "Resource Name : " + resource.getName() + "\n" + "Resource Type : " + resource.getResourceType() + "\n"
-                + "Parent Resource Details : " + resource.getParent() + "\n" + "Parent Resource Path : " + resource.getParent().getPath();
+
+        //This will give the name of our component inside the page structure.
+        String resourseName = resource.getName();
+
+        //This will give the sling:resourceType of the component (or current resourse we are on).
+        String resourceType = resource.getResourceType();
+
+        Resource parentResourseDetails = resource.getParent();
+        String parentResoursePath = resource.getParent().getPath();
+
+        return "Resource Name : " + resourseName + "\n" + "Resource Type : " + resourceType + "\n"
+                + "Parent Resource Details : " + parentResourseDetails + "\n" + "Parent Resource Path : " + parentResoursePath;
     }
 
     @Override
@@ -104,7 +114,7 @@ public class BhargavBackendAemApisCompModelImpl implements BhargavBackendAemApis
         }
         return childrenList;
     }
-/*--------------------------------------------------------------------------------------------------------------------------*/
+    /*--------------------------------------------------------------------------------------------------------------------------*/
 
 
 
@@ -129,7 +139,7 @@ public class BhargavBackendAemApisCompModelImpl implements BhargavBackendAemApis
 
         return "Person Name printing using ValueMap : " + personNameUsingValueMap + "\n" + "lastModifiedBy : " + lastModifiedBy;
     }
-/*--------------------------------------------------------------------------------------------------------------------------*/
+    /*--------------------------------------------------------------------------------------------------------------------------*/
 
 
 
@@ -194,7 +204,7 @@ public class BhargavBackendAemApisCompModelImpl implements BhargavBackendAemApis
         }
         return childPagesList;
     }
-/*--------------------------------------------------------------------------------------------------------------------------*/
+    /*--------------------------------------------------------------------------------------------------------------------------*/
 
 
 
@@ -212,42 +222,57 @@ public class BhargavBackendAemApisCompModelImpl implements BhargavBackendAemApis
     @Override
     public String getPageDetailsUsingPageManager() {
 
-   /* Using PageManager we can get the "Page" and from that we can get the details of that page.
-    Getting the CurrentPage - we can do it in two ways
-      1 - Directly Giving the path
-      Page page = pageManager.getPage("/content/mysite/about");*/
+        /* Using PageManager we can get the "Page" and from that we can get the details of that page.
+        Getting the CurrentPage - we can do it in two ways
+         1 - Directly Giving the path
+        Page page = pageManager.getPage("/content/mysite/about");*/
 
-      //2 - Using Resource
+        //2 - Using Resource
         Page page = pageManager.getContainingPage(resource);
+        String pageTitle = page.getTitle();
+
+        String pagePath = pageManager.getContainingPage(resource).getPath();
+
         if (page != null) {
-            return "Using PageManager - Jcr:Title : " + page.getTitle();
+            return "Using PageManager - Jcr:Title : " + pageTitle + "\n" + "Page Path : " + pagePath;
         } else {
             return "Page not found";
         }
     }
-/*--------------------------------------------------------------------------------------------------------------------------*/
+    /*--------------------------------------------------------------------------------------------------------------------------*/
 
 
 
 
     /*_______________Using SlingHttpServletRequest____________________
-    *
-    * This Mainly gives us the all the info about the request like Url Info, query parameters, headers, selectors, attributes.
-    *
-    * Now to get the values for the below methods we have to give selectors and query parameters in the URL like
-    * Eg: http://localhost:4502/content/aemgeeks/us/en/bhargav-backend-aem-apis-comp.selector1.selector2.html?name=bhargav
-    * */
+     *
+     * This Mainly gives us the all the info about the request like Url Info, query parameters, headers, selectors, attributes.
+     *
+     * Now to get the values for the below methods we have to give selectors and query parameters in the URL like
+     * Eg: http://localhost:4502/content/aemgeeks/us/en/bhargav-backend-aem-apis-comp.selector1.selector2.html?name=bhargav
+     * */
 
     @SlingObject
     private SlingHttpServletRequest request;
 
     @Override
     public String usingGetParameter() {
-        return "Query Parameter : " + request.getParameter("name") + "\n" + "Path : " + request.getParameter("path");
+
+        /*Important : request.getParameter(...) only returns form/query parameters (name/value pairs in the query string or POST body). It does NOT read
+                      HTTP headers or the request URL*/
+        return "Query Parameter : " + request.getParameter("name") + "\n" + "Request URL : " + request.getRequestURI().toString();
+    }
+
+    @Override
+    public String getRequestHeader() {
+
+        //To get the request header(you can see those in page network tab)
+        return "Request Headers - Accept-Language : " + request.getHeader("Accept-Language");
     }
 
     @Override
     public String[] getSelectors() {
+        //Here we are getting the selectors and returning them.
         return request.getRequestPathInfo().getSelectors();
     }
 
@@ -259,21 +284,6 @@ public class BhargavBackendAemApisCompModelImpl implements BhargavBackendAemApis
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

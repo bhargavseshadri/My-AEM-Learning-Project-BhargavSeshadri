@@ -34,6 +34,7 @@ AEM solves several problems related to digital experience management:
 
 -> Editable Templates : If you edit the template then that change will show in both old(existing pages) and new pages as well.
 -> Static Template : If you edit the template code and then deploy it, then that change will show in both old(existing pages) and new pages as well.
+-> request.getParameter(...) only returns form/query parameters (name/value pairs in the query string or POST body). It does NOT read HTTP headers or the request URL
 
 =============================================================================================
 ==> DEFINITIONS

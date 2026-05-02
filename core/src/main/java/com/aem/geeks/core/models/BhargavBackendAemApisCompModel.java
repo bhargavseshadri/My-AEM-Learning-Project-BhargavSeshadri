@@ -26,6 +26,8 @@ public interface BhargavBackendAemApisCompModel {
 
     String usingGetParameter();
 
+    String getRequestHeader();
+
     String[] getSelectors();
 
     String getPath();
