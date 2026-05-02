@@ -1,5 +1,7 @@
 <sly data-sly-use.clientlib="/libs/granite/sightly/templates/clientlib.html"/>
+<sly data-sly-call="${clientlib.js @ categories='granite.csrf.standalone'}"/>
 <sly data-sly-call="${clientlib.css @ categories='bhargav-backend-api-comp.AembackendApiCompStyles'}"/>
+<sly data-sly-call="${clientlib.js @ categories='bhargav-backend-api-comp.AembackendApiCompStyles'}"/>
 
 <h1>bhargav-backend-aem-apis-comp</h1>
 
@@ -95,5 +97,21 @@
             <li>Selector - ${itemList.count} : <b>${item}</b></li>
         </div>
     </div>
+
+</div>
+</br>
+</br>
+
+================Button - To add node prop to the resource using servlet================
+<!--Step : 1 - BhargavPropBtnPathServlet : creating the button
+    Step : 2 - apps/aemgeeks/components/bhargav-backend-aem-apis-comp/clientlib/BhargavPropBtn.js
+-->
+<div class="my-component">
+
+    <button class="add-property-btn" data-resource-path="${resource.path}">
+        Add Property
+    </button>
+
+    <p class="property-status"></p>
 
 </div>

@@ -85,7 +85,7 @@ STEP: 4 (Last Step) : By using a HTL in component, we render the data we got fro
 =============================================================================================
 3) SERVLET
 
-a) ResourceType Servlet:
+a) SERVLET : 1 - ResourceType Servlet:
 * MY EXAMPLE
 -> GET : (only step) (MAIN LOGIC): com/aem/geeks/core/servlets/BhargavResourceTypeGETServlet.java
 
@@ -107,7 +107,7 @@ Step: 3(last step) : Go to the component and check in the form, if it has the "m
 -> GET, POST : com/aem/geeks/core/servlets/GeeksResourceTypesServlet.java
 
 -----------------------------
-b) PathType Servlet: com/aem/geeks/core/servlets/GeeksPathTypeServlet.java
+b) SERVLET : 2 - PathType Servlet: com/aem/geeks/core/servlets/GeeksPathTypeServlet.java
 
 Servlet Usage: here we are writing a path bound servlet, which is bound to paths ""/bin/pages","/geeks/pages" with get and post methods
                * in GET method we will create a json with all the pages where KEY will be the page title amd VALUE will be the page path
@@ -127,7 +127,7 @@ Step:3 (Only for POST METHOD) : apps/aemgeeks/components/content/formforpathtype
 * Go to the form component and there add you path (eg: /bin/pages) in the form "action" attribute and for the "method" attribute give post.
 
 -------------------------------------------------------------------------
-4) QUERY PARAMETERS FETCHING USING PATH TYPE SERVLET DEMO
+c) SERVLET : 3 - PathType Servlet - QUERY PARAMETERS FETCHING USING PATH TYPE SERVLET DEMO
 
 Servlet usage: this servlet will get executed when we hit the path /bin/queryparamdemo and then in response it will give the info present
                 in the query params.
@@ -135,14 +135,25 @@ Step: (only step) : com/aem/geeks/core/servlets/BhargavPathTypeServletQP.java
 
 To execute the servlet : http://localhost:4502/bin/queryparamdemo?name=Bhargav&age=25
 
-=============================================================================================
-5) JSON DEMOs
+-------------------------------------------------------------------------
+d) SERVLET : 4 - PathType Servlet - JSON DEMOs
 
 a) Creating a json with all the pages where KEY will be the page title amd VALUE will be the page path.
 Demo file : com/aem/geeks/core/servlets/GeeksPathTypeServlet.java
 
+-------------------------------------------------------------------------
+e) Servlet : 5 - PathType Servlet - BhargavPropBtnPathServlet.java
+
+* The main work of this servlet is if we add the component "bhargav-backend-aem-apis-comp" it have one button, so if we click that button. then this Path Type Servlet
+  will get executed and then it will add one node property in the current resource node.
+
+- Step:1 - add the button : apps/aemgeeks/components/bhargav-backend-aem-apis-comp/bhargav-backend-aem-apis-comp.html
+- Step:2 - Js File : apps/aemgeeks/components/bhargav-backend-aem-apis-comp/clientlib/BhargavPropBtn.js
+- Step:3 - Servlet : com/aem/geeks/core/servlets/BhargavPropBtnPathServlet.java
+- Step:4 - Last Step - Node prop adding logic : com/aem/geeks/core/services/impl/BhargavPropertyBtnServiceImpl.java
+
 =============================================================================================
-6) SLING MODELS & SERVICES  (Service(optional) -> Sling model -> HTL)
+4) SLING MODELS & SERVICES  (Service(optional) -> Sling model -> HTL)
 
 Step:1 - create a component : apps/aemgeeks/components/content/slingmodelproductcomp
 Step:2 - create a Sling Model : com/aem/geeks/core/models/ProductModel.java
@@ -191,7 +202,7 @@ Step:2 : Write the logic in Sling Model to render those item nodes of that comp 
 Step:3(last step) : in htl I am printing those values -> apps/aemgeeks/components/content/slingmodelproductcomp/slingmodelproductcomp.html
 
 =============================================================================================
-7) CONFIGURATIONS  (OSGI CONFIGURATION -> Service -> Sling Model -> HTL)
+5) CONFIGURATIONS  (OSGI CONFIGURATION -> Service -> Sling Model -> HTL)
 
 a) Normal Configuration
 STEP:1 - com/aem/geeks/core/config/BhargavOSGiConfig.java -- Create an annotation class with osgi config code stating what
@@ -226,7 +237,7 @@ STEP:4 - (Last Step) - apps/aemgeeks/components/content/slingmodelproductcomp/sl
 - Now you can see the values of the multiple config instances.
 
 =============================================================================================
-8) SCHEDULERS  (Configuration(to take the values) -> Scheduler Service )
+6) SCHEDULERS  (Configuration(to take the values) -> Scheduler Service )
 a) Runnable scheduler
 STEP:1 - Create a OSGI Configuration to take the values for scheduler : com/aem/geeks/core/config/SchedulerConfiguration.java
 STEP:2 - Create a Runnable Scheduler : com/aem/geeks/core/schedulers/GeeksScheduler.java
@@ -239,7 +250,7 @@ STEP:2 - Create a JOB Scheduler : com/aem/geeks/core/schedulers/GeeksSchedulerJo
 STEP:3(LAST STEP) - Connect and Use that configuration values in the scheduler : com/aem/geeks/core/schedulers/GeeksSchedulerJobs.java
 
 =============================================================================================
-8) WORKFLOWS in AEM
+7) WORKFLOWS in AEM
 
 * TRIGGERING THE WORKFLOW USING LAUNCHER
 - USE CASE: we will create a model which will create the page versions, when the WF executes.
@@ -306,13 +317,13 @@ STEP: 6 - Now in the WF Model console -> in properties -> in advanced tab -> giv
 STEP: 7 - Now you can see your WF Step in the available steps. Drag and drop it.
 
 =============================================================================================
-10) Clientlibraries
+8) Clientlibraries
 
 Stet: 1 - Create a Clientlib folder and add your code in it : apps/aemgeeks/components/content/bhargavapicomp/clientlib
 Step: 2 - Include the clientlib in your component : apps/aemgeeks/components/content/bhargavapicomp/bhargavapicomp.html
 
 =============================================================================================
-11) Creating a Proxy Component
+9) Creating a Proxy Component
 -> apps/aemgeeks/components/bhargavtextproxy
 
 -> Overriding : From CRXDE get a package zip of CQ_DIALOG from the extended core component. and add that in intellij comp folder.
@@ -322,7 +333,7 @@ Step: 2 - Include the clientlib in your component : apps/aemgeeks/components/con
 -> Sling Model for this Proxy Comp : com/aem/geeks/core/models/impl/BhargavTextProxyModelImpl.java
 
 =============================================================================================
-12) bhargav-backend-aem-apis-comp
+10) bhargav-backend-aem-apis-comp
 -> In this component we use all the AEM Api's - Resource, ResourceResolver, Session, Node, Pagemanager, ValueMap, ResourceResolverFactory
 
 -> Component : apps/aemgeeks/components/bhargav-backend-aem-apis-comp
@@ -333,7 +344,7 @@ Step: 2 - Include the clientlib in your component : apps/aemgeeks/components/con
 
 
 =============================================================================================
-13) HTL
+11) HTL
 a)data-sly-list:  LOOPING
 -> apps/aemgeeks/components/content/author-books/author-books.html
 -> Its model is in : com/aem/geeks/core/models/impl/AuthorBooksImpl.java

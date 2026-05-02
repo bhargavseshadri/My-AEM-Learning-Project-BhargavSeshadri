@@ -37,6 +37,14 @@ IMPORTANT PATHS
 
 -> sling:hideResource="{Boolean}true" : To Hide a Core component field in our proxy comp, Add this property to that in the overriden cq_dialog in proxy comp.
 
+-> CSRF (Cross-Site Request Forgery) :
+        - In some cases a malicious site in the other tab may tricks a logged-in user’s browser into making a request to another site (like AEM)
+          without the user realizing it
+        - When you make a POST request to an AEM servlet, you need to include a special token called the CSRF token to ensure that the request is
+          legitimate and not coming from a malicious source.
+        - So the rule AEM follows is "I will only accept POST requests that include a secret token I generated".
+        - Without this csrf token, AEM will reject the POST request with a 403 Forbidden error, even if the user is authenticated.
+
 =============================================================================================
 1) Logger Levels
         Trace
