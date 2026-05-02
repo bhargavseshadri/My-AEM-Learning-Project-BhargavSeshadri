@@ -169,8 +169,16 @@ CORE COMPONENTS & PROXY COMPONENTS
                     as part of AEM.'
 path : /apps/core/wcm/components/...
 
+
+===== PROXY COMPONENTS =====
+
 -> PROXY COMPONENTS: A proxy component is a lightweight wrapper around a core component. It doesn’t add new logic — it just points to a core component using
  sling:resourceSuperType and gives it a project-specific name and path. and it allows future customization without touching core code.
+
+ -> To add any custom field for our Proxy component we have to override core comp CQ_DIALOG. That CQ_DIALOG we have to get it from the extended core component.
+ -> Similarly To print that custom field on the page we have to override core comp HTML. That HTML we have to get it from the extended core component and add the
+    extra code needed to print you Custom field.
+ -> sling:hideResource="{Boolean}true" : If you want to hide any field that comes from core component, In that case add this to that field "In the Overriden CQ_DIALOG".
 
 =============================================================================================
 CRXDE FOLDER STRUCTURE
@@ -331,13 +339,12 @@ Ans. - When you create a Client Library (clientlib) under /apps/..., by default 
      - If you forget it On publish, clientlibs won’t load → 404 errors in browser console.
      - When allowProxy=true, AEM allows the clientlib to be accessed through a proxy path: /etc.clientlibs/<your-project>/clientlibs/<clientlib-name>
 
-=============================================================================================
-PROXY COMPONENTS
+* What is the use of "Embed"(like embed="[my.site.A], ) property in client library?
+Ans : What it actually do is it, if we give some client library name(here my.site.A) in the embed property, then it will automatically include that client library
+      inside the current client library, so we don't have to include that client library separately in our component or page, it will automatically
+      get included in this client library because of this embed property. it will simply merge all those other client lib contents in to this client lib and
+      render it.
 
--> To add any custom field for our Proxy component we have to override core comp CQ_DIALOG. That CQ_DIALOG we have to get it from the extended core component.
--> Similarly To print that custom field on the page we have to override core comp HTML. That HTML we have to get it from the extended core component and add the
-   extra code needed to print you Custom field.
--> sling:hideResource="{Boolean}true" : If you want to hide any field that comes from core component, In that case add this to that field "In the Overriden CQ_DIALOG".
 
 =============================================================================================
 AEM SPECIFIC NODE TYPES

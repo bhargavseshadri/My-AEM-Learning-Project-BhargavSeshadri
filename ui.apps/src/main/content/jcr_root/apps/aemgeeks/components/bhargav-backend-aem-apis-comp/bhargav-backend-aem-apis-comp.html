@@ -4,7 +4,7 @@
 <h1>bhargav-backend-aem-apis-comp</h1>
 
 
-==============================================PrintingPrinting Basic Dialog Fields==============================================Printing
+==============================================Printing Basic Dialog Fields==============================================
 
 <div data-sly-use.obj="com.aem.geeks.core.models.BhargavBackendAemApisCompModel">
     <div class="card-style">
@@ -87,8 +87,8 @@
 
 ====================Printing the info using SlingHttpServletRequest request=================================
 <div class="card-style">
-    <div>
-        <li><b>${obj.getQueryParam}</b></li>
+    <div class="nextLine-style">
+        <li><b>${obj.usingGetParameter}</b></li>
         <li><b>${obj.getPath}</b></li>
         <div data-sly-list.item="${obj.getSelectors}">
             <li>Selector - ${itemList.count} : <b>${item}</b></li>

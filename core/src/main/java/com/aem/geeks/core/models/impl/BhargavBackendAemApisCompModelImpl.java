@@ -242,8 +242,8 @@ public class BhargavBackendAemApisCompModelImpl implements BhargavBackendAemApis
     private SlingHttpServletRequest request;
 
     @Override
-    public String getQueryParam() {
-        return "Query Parameter : " + request.getParameter("name");
+    public String usingGetParameter() {
+        return "Query Parameter : " + request.getParameter("name") + "\n" + "Path : " + request.getParameter("path");
     }
 
     @Override

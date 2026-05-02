@@ -24,7 +24,7 @@ public interface BhargavBackendAemApisCompModel {
     List<String> childPageDetails();
     String getPageDetailsUsingPageManager();
 
-    String getQueryParam();
+    String usingGetParameter();
 
     String[] getSelectors();
 

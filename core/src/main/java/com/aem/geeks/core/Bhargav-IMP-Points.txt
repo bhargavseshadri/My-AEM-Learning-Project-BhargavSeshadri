@@ -113,7 +113,9 @@ pageManager → go anywhere
 - Used in this file : com/aem/geeks/core/models/impl/BhargavBackendAemApisCompModelImpl.java
 
 Eg :
-- Using Page Maneger getting the Page : Page page = pageManager.getPage("/content/mysite/home");PageManager pageManager;
+- Using Page Maneger getting the Page.
+
+PageManager pageManager;
 Page page=pageManager.getPage("/content/aemgeeks/us/en");
 - Using Page getting the page info : String title = page.getTitle();
 
