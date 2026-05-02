@@ -20,6 +20,9 @@ IMPORTANT PATHS
     - To give the required permissions(ACL's) : /Useradmin
     - Note: Service users are under this path (crx) : /home/users/system
 
+=============================================================================================
+* Important Points
+
 -> Sometimes the new template(static or editable) you have created might not shows up in templates section or while creating a page - in that case
    once go and check the "cq:allowedTemplates" property under "/content/aemgeeks/jcr:content".
 
@@ -49,7 +52,7 @@ IMPORTANT PATHS
 * For Eg: If you give log level as "Info" for the log file, so in that file "Trace & Debug" logs wont print, "Info, Warn, Error" logs will print in that file.
 
 =============================================================================================
-2) Global Objects available in HTL (most common ones)
+2) (HTL) Global Objects available in HTL (most common ones)
 
 -> Enumerable Objects : These objects provides a "VALUEMAP" which contains the information, we can access that info.
 - properties : Provides the component properties, like whatever we save through dialog, we can access those props without using sling model.
@@ -59,7 +62,7 @@ IMPORTANT PATHS
 -> Demo code available here: apps/aemgeeks/components/content/author-books/author-books.html
 
 ---------------------------------------
--> Java-Backed-Object
+-> (HTL) Java-Backed-Object
 - Component : Provides the information of that component.
 - componentContext : It is open for each conmponent, Independent of wcmmode.
 - resource : object of current resource(when we drag and drop a comp on page, then the created node of that comp in that page is called as current Resource).
@@ -121,6 +124,7 @@ Page page=pageManager.getPage("/content/aemgeeks/us/en");
 
 =============================================================================================
 5) @Component
+
 --> Servlets : @Component(service = Servlet.class)
 --> OSGI Configuration Service : @Component(service = OSGiConfigService.class,immediate = true)   [OSGiConfigService.class  -> this is just my interface service I created]
 --> Schedulers :
@@ -132,6 +136,7 @@ Page page=pageManager.getPage("/content/aemgeeks/us/en");
 
 =============================================================================================
 6) ANNOTATIONS:
+
 @Activate : when we want something to load or execute at the time of that particular service initializations, there we use this. for loading init type method.
 
 @PostConstruct : A method with this annotation is called after all the injections are done. It is mainly used for initialization logic.
@@ -175,16 +180,16 @@ Note : First understand the situation
 
 * When Sling creates the model:
   - It uses the adaptable (request or resource) to construct the model
-  - Then it processes every field separately
-  - Each field needs its own injection instruction
+  -(Imp) Then it processes every field separately
+  -(Imp) Each field needs its own injection instruction
   - adaptables: means we're saying to sling that this model can be created using a request or resource. Mainly defines how model is created.
   - @Self: using this we say that store that same request or resource inside this variable. injects that adaptable into a field
 
 
 
 @Self : Give me the same object that created the model.
-  - adaptables: means we're saying to sling that this model can be created using a request. Mainly defines how model is created.
-  - @Self: using this we say that store that same request inside this variable. injects that adaptable into a field
+  - adaptables: means we're saying to sling that this model is created using a request or resource. Mainly defines how model is created.
+  - @Self: using this we say that store that same request or resource inside this variable. injects that adaptable into a field.
 
 Eg : @Model(adaptables = SlingHttpServletRequest.class)
      public class MyModel {

@@ -14,7 +14,7 @@ AEM solves several problems related to digital experience management:
 -> Integration: AEM integrates well with other Adobe marketing cloud products
 
 =============================================================================================
-Basic Important Points
+==> Basic Important Points
 
 -> Implimentation used for creating AEM is - APACHE JACKRABBIT OAK
 -> Implimentation used by JCR is - APACHE JACKRABBIT OAK, Apache oak
@@ -36,7 +36,7 @@ Basic Important Points
 -> Static Template : If you edit the template code and then deploy it, then that change will show in both old(existing pages) and new pages as well.
 
 =============================================================================================
-DEFINITIONS
+==> DEFINITIONS
 1) Resource :  - A resource is basically any node or file in the jcr that sling can access and maps it to a url.
                - Resource can be anything, it can be COMPONENT, NODE, PAGE.
 
@@ -58,7 +58,7 @@ DEFINITIONS
           started, stopped, or updated independently without affecting the entire application.
 
 =============================================================================================
-AEM & OSGI ARCHITECTURE
+==> AEM & OSGI ARCHITECTURE
 
 AEM ARCHITECTURE:
 -->1. OSGI JAVA CONTAINER(apache felix): used for moduler development, and provides various functionalities in form of modules, components etc
