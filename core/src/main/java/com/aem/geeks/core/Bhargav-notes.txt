@@ -8,7 +8,7 @@ d) Registration Form Comp (for PathType Post Servlet) : apps/aemgeeks/components
 e) Complete "ResourceResolver, Resource, PageManager, Session" these API's specific component : apps/aemgeeks/components/bhargav-backend-aem-apis-comp
 
 =============================================================================================
-1) Resource Resolver related Notes is in
+1) ResourceResolverFactory related Notes is in
 - Main: com/aem/geeks/core/utils/ResolverUtil.java
 - Eg: com/aem/geeks/core/services/impl/ComponentsInfoServiceImpl.java
 
@@ -20,6 +20,7 @@ e) Complete "ResourceResolver, Resource, PageManager, Session" these API's speci
 2) FETCHING DATA FROM EXTERNAL API - NO ACCESS TOKEN NEEDED - (using sling model)
 
 a) Directly fetching the data from the endpoint with no credentials and token:
+
 STEP:1(just Interface) : com/aem/geeks/core/models/ExternalAPIDemoModel.java
 STEP:2(sling model implimentation) :(MAIN) FETCHING DATA from API logic: com/aem/geeks/core/models/impl/apirelated/ExternalAPIDemoModelImpl.java
 HELPER POJO CLASS: com/aem/geeks/core/models/impl/apirelated/ExternalData.java
@@ -157,7 +158,7 @@ Step:5 - Rendering the Values in HTL Script : apps/aemgeeks/components/content/s
  -> com/aem/geeks/core/models/impl/ProductModelImpl.java
  -> apps/aemgeeks/components/content/slingmodelproductcomp/slingmodelproductcomp.html
 
-* In this Component xml we have the conditional showing fields in the dialog box. So make that showhide work we need show/hide JavaScript clientlib.
+* In this Component xml we have the conditional showing fields in the dialog box. So make that "showhide" work we need show/hide JavaScript clientlib.
   Added this in apps/aemgeeks/components/content/slingmodelproductcomp
 
 --------------------------------------------
