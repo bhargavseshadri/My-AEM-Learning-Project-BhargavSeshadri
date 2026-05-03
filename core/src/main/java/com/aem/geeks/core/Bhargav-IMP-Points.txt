@@ -784,7 +784,5 @@ MSM Important Points:
     --> Thats it now the live copy country site is craeted with all the language copies and pages linked to the master site.
 
 
-
-Note : Live Copy concept - Pages in Brazil auto-sync from language-masters through MSM
 =============================================================================================
 
