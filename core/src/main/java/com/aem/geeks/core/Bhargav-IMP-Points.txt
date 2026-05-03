@@ -783,6 +783,6 @@ MSM Important Points:
              and select the "ROLLOUT CONFIGUATION" as per the requirement and then click on create.
     --> Thats it now the live copy country site is craeted with all the language copies and pages linked to the master site.
 
-
+* You can see all you bluprint in this path - /apps/msm in crx
 =============================================================================================
 
