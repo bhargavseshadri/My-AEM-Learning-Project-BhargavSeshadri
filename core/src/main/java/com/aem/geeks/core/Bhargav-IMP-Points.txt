@@ -724,35 +724,67 @@ MSM:
 
 * Structure Map:
 /content
- └── we-retail
-      ├── blueprint (source)
-      │    ├── en
-      │    │    ├── us
-      │    │    └── uk
-      │    └── fr
-      │         ├── fr
-      │         └── ca
+ └── aem-geeks
+      ├── language-master  -> Blueprint Source Root - (Master site)
+      │    ├── en (Language Copy) (Blueprint source in English - MASTER for all English Live Copies)
+      │    │    ├── Page 1 (Blueprint)
+      │    │    └── Page 2 (Blueprint)
+      │    └── fr (Language Copy) (Blueprint source in French - MASTER for all French Live Copies)
+      │         ├── Page 3 (Blueprint)
+      │         └── Page 4 (Blueprint)
       │
-      ├── language-copies
-      │    ├── en
-      │    └── fr
+      ├
       │
-      └── live-copies (targets)
-           ├── us-site  ← (Live Copy from blueprint/en/us)
-           ├── uk-site  ← (Live Copy from blueprint/en/uk)
-           └── fr-site  ← (Live Copy from blueprint/fr/fr)
+      │
+      │
+      └── Brazil -->(Country Site - Live Copy Root)
+           ├── en (Live copy based on Blueprint source: → aem-geeks/language-masters/en)
+           ├    ├── Page 1 ← ← synced from master
+           ├    └── Page 2 ← ← synced from master
+           ├
+           └── fr  ← (Live Copy based on Blueprint source: → aem-geeks/language-masters/fr)
+                ├── Page 3 ← ← synced from master
+                └── Page 4 ← ← synced from master
+      │
+      └── Indonasia -->(Country Site - Live Copy Root)
+           ├── en (Live Copy based on Blueprint source: → aem-geeks/language-masters/en)
+           ├    ├── Page 1 ← ← synced from master
+           ├    └── Page 2 ← ← synced from master
+           ├
+           └── fr  ← (Live Copy based on Blueprint source: → aem-geeks/language-masters/fr)
+                ├── Page 3 ← ← synced from master
+                └── Page 4 ← ← synced from master
+
+MSM Important Points:
+* We have Blueprint source root or Language Master or Master site (language-masters), and we have Blueprint source Language Copies(language-masters/en, language-masters/fr)
+  in it and inside those we have Blueprint source Pages.
+* We have Live Copy roots of country sites, and inside those we have Live Copy Language Copies and inside those we have Live Copy Pages.
+*(IMP) So all the master site pages are in the language-masters and all the live copy pages are in the live copy country sites like Brazil, Indonasia are always linked.
+*(IMP) If we make any changes in the blueprint source page, then those changes will be reflected in the live copy pages when we do the sync using rollout configurations,
+       but if we make any changes in the live copy page, then those changes won't be reflected in the blueprint page because the flow
+       of data is only from blueprint to live copy, not the other way.
+
+* Creation of Language Copies:
+    Step : 1 - go to the language you want to create the copy and then click on create and in that select "Language Copy"
+    Step: 2 - Now select the source page from which you want to create the copy.
+    Step : 3 - Select the languages you want and also selete the required fields
+    Step : 4 - in the next step select "Create Multi-language Translation Project" option if you are creating for the first time, otherwise select
+                "Add to existing translation project" and then select the existing translation project and then click on "Create". Now you can see the Language Copies.
+
+* Creation of Language Masters (Country site)(Brazil, Indonasia) for Live copies:
+    Step:1 - First we need a Blueprint for this, so first create it.
+                a. go to tools -> sites -> Blueprints and then click on create
+                b. Then select "Create" and then select blueprint template.
+                c. Now select the source site you want to create the blueprint for. Eg : /content/aemgeeks/language-masters
+                d. Then give the name and title and then click on create.
+    Step:2 - Now we have the blueprint, now we will create the live copy root country site from our master site. go to sites and select your project
+             Eg : /content/aemgeeks and click on create and the select "site" and after select the blueprint you created for this.
+    Step:3 - Now you can look the available languages and pages in the master site you have selected. give title for the site and check the live copy option.
+             and select the "ROLLOUT CONFIGUATION" as per the requirement and then click on create.
+    --> Thats it now the live copy country site is craeted with all the language copies and pages linked to the master site.
 
 
-* Blueprint(Master site): The master/source site from which other sites (Live Copies) are created.
-  Eg: /content/we-retail/blueprint/en
 
-* Language Copy(Translated version): - A copy of a site in another language.
-                 - Once you create a Language Copy(fr), AEM just duplicates the content into another language folder — and then stops tracking it.
-                 - After that, the two are completely independent(en and fr).
-                 - There’s no automatic sync or inheritance like Live Copies have.
-  Eg: From /content/we-retail/en → you create /content/we-retail/fr.
-
-* Live Copy(Automatically synced child of Blueprint): A site that inherits content from a Blueprint (or another source) through MSM.
-
+Note : Live Copy concept - Pages in Brazil auto-sync from language-masters through MSM
 =============================================================================================
 
