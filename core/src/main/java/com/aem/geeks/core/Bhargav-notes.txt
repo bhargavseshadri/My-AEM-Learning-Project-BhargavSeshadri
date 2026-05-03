@@ -316,6 +316,18 @@ STEP: 7 - Here in this use case add the component group in component property in
 STEP: 6 - Now in the WF Model console -> in properties -> in advanced tab -> give our own overridden design node "/apps/settings/wcm/designs/geeks"
 STEP: 7 - Now you can see your WF Step in the available steps. Drag and drop it.
 
+
+*  Created a Workflow using Participant Step and Decision Step.
+
+  Workflow Name : Bhargav Content Review Workflow
+
+  Step :1 Created a Workflow Model, and after the start step added a OR STEP (DECISION STEP).
+  Step: 2 - Configured that OR step by giving one ecma script in branch-1 and a default in the branch-2.
+          - So its like if/else, I have given one condition IF the payload path contains "/content/www/us/en" then go to branch-1 otherwise go to branch-2.
+          - we can add more than 2 branches as well.
+  Step: 3 - So after the condition satisfies it goes to the branch 1 and there I have added a participant step and in that participant step
+             I have given the USER(we can get our user details from tools->security->users).
+          - So when ever the participant step executes then the notification sends to that user.
 =============================================================================================
 8) Clientlibraries
 
@@ -372,6 +384,11 @@ Step : 1 - Go to: Tools → Security → Users -> Create
 Step : 2 - Give the user name, password and other details and then click on create.
 Step : 3 - Now we have Assign Groups, this will decide the access for the user. in Groups tab add the groups for the user and save it.
 Step : 4 - Now select the use and click on "ENABLE" & "ACTIVATE".
+
+
+
+
+
 
 =============================================================================================
 *) HTL
