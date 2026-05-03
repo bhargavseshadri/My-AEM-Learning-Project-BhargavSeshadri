@@ -339,12 +339,42 @@ Step: 2 - Include the clientlib in your component : apps/aemgeeks/components/con
 -> Component : apps/aemgeeks/components/bhargav-backend-aem-apis-comp
 -> Sling Model : com/aem/geeks/core/models/bhargavBackendAemApisCompModel.java
 
+-> In this component we have one button, so if we click that button then it will execute the servlet "BhargavPropBtnPathServlet.java" and then
+   that servlet will add a property in the current resource node.
+   - Button code : apps/aemgeeks/components/bhargav-backend-aem-apis-comp/bhargav-backend-aem-apis-comp.html
+   - Js code for button : apps/aemgeeks/components/bhargav-backend-aem-apis-comp/clientlib/BhargavPropBtn.js
+   - Servlet : com/aem/geeks/core/servlets/BhargavPropBtnPathServlet.java
+   - Service to add the property : com/aem/geeks/core/services/impl/BhargavPropertyBtnServiceImpl.java
 
+=============================================================================================
+11) Creating a SYSTEM/SERVICE USER (Manual Way)
 
+* Main Note : Service users are designed for backend/programmatic access only, not for interactive UI login. so we can't able to login using service user.
+              They are used by OSGI services, Servlets, Workflows.
+
+Step : 1 - Go to crx/explorer/index.jsp and click on User Administration
+Step : 2 - Click on "Create System User" and give the user name and path as "system".
+Step : 3 - Now we have to give the permissions to this user, so for that go to "User Permissions : /useradmin" and
+           there search for the user you have created and then give the required permissions.
+
+Note : Now your user is created and got the permissions, you can check the user in crx - /home/users/system
+
+-> Now we have to map the user to a bundle.
+Step : 4 - Go to system/console/configmgr and search for "Apache Sling Service User Mapper Service Amendment". Its a factory config so create a new instance.
+Step : 5 - For Service Mapping give "aemgeeks.core:bhargavmainuser=bhargav-main-user" - here "aemgeeks.core" is our bundle name, "bhargav-main-user" is the
+           service name we give to our service user and "bhargav-main-user" is the user we created in step 1 and "bhargavmainuser" it is just a variable.
 
 
 =============================================================================================
-11) HTL
+12) Creating regular usetr (no a system/service user) through User Administration.
+
+Step : 1 - Go to: Tools → Security → Users -> Create
+Step : 2 - Give the user name, password and other details and then click on create.
+Step : 3 - Now we have Assign Groups, this will decide the access for the user. in Groups tab add the groups for the user and save it.
+Step : 4 - Now select the use and click on "ENABLE" & "ACTIVATE".
+
+=============================================================================================
+*) HTL
 a)data-sly-list:  LOOPING
 -> apps/aemgeeks/components/content/author-books/author-books.html
 -> Its model is in : com/aem/geeks/core/models/impl/AuthorBooksImpl.java
