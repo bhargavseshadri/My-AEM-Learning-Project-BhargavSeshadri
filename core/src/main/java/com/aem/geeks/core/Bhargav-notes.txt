@@ -378,14 +378,19 @@ Step : 5 - For Service Mapping give "aemgeeks.core:bhargavmainuser=bhargav-main-
 
 
 =============================================================================================
-12) Creating regular usetr (no a system/service user) through User Administration.
+12) Creating regular user (no a system/service user) through User Administration.
 
 Step : 1 - Go to: Tools → Security → Users -> Create
 Step : 2 - Give the user name, password and other details and then click on create.
 Step : 3 - Now we have Assign Groups, this will decide the access for the user. in Groups tab add the groups for the user and save it.
 Step : 4 - Now select the use and click on "ENABLE" & "ACTIVATE".
 
+=============================================================================================
+13) Creating Content Fragment Model and Using that CF Data in the Backend.
 
+Creation :
+Step :1 - Go to "Tools -> Assets -> Content Fragment Models" and create a new model with the required fields. (eg: Bhargav Personal CF Model).
+Step: 2 - Save the CF Model and Publish it.
 
 
 

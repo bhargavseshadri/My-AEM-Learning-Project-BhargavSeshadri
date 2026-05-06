@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:granite="http://www.adobe.com/jcr/granite/1.0"
+          xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
+          jcr:primaryType="nt:unstructured"
+          jcr:title="Weather Component"
+          sling:resourceType="cq/gui/components/authoring/dialog">
+    <content
+            granite:class="cmp-author_editor"
+            jcr:primaryType="nt:unstructured"
+            sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns">
+        <items jcr:primaryType="nt:unstructured">
+            <tabs
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="granite/ui/components/coral/foundation/tabs"
+                    maximized="{Boolean}true">
+                <items jcr:primaryType="nt:unstructured">
+                    <multifieldwithbean
+                            jcr:primaryType="nt:unstructured"
+                            jcr:title="Composite Multifield"
+                            sling:resourceType="granite/ui/components/coral/foundation/container">
+                        <items jcr:primaryType="nt:unstructured">
+                                    <faqcompmultifield
+                                            jcr:primaryType="nt:unstructured"
+                                            sling:resourceType="granite/ui/components/coral/foundation/form/multifield"
+                                            composite="{Boolean}true"
+                                            fieldDescription="composite multifield"
+                                            fieldLabel="Faq Details Composite Multifield"
+                                            required="{Boolean}false">
+                                        <field
+                                                jcr:primaryType="nt:unstructured"
+                                                sling:resourceType="granite/ui/components/coral/foundation/container"
+                                                emptyText="question and answer"
+                                                name="./compositemultifield">
+                                            <items jcr:primaryType="nt:unstructured">
+                                                <question
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                        emptyText="Product Name"
+                                                        fieldLabel="Question"
+                                                        name="./question"/>
+
+                                                <answer
+                                                        jcr:primaryType="nt:unstructured"
+                                                        sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                                        emptyText="answer"
+                                                        fieldLabel="answer"
+                                                        name="./answer"/>
+                                            </items>
+                                        </field>
+                                    </faqcompmultifield>
+                        </items>
+                    </multifieldwithbean>
+                </items>
+            </tabs>
+        </items>
+    </content>
+</jcr:root>

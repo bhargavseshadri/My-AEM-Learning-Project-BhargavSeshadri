@@ -1,0 +1,10 @@
+<h1>Composite Multifield Component</h1>
+
+<sly data-sly-use.model="com.aem.geeks.core.models.BhargavCompositeMultifieldModel">
+
+    <sly data-sly-list.item="${model.getItems}">
+        <h3>${item.question}</h3>
+        <p>${item.answer}</p>
+    </sly>
+
+</sly>
