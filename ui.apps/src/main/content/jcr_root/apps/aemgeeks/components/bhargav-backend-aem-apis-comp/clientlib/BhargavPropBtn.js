@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", function () {
             //dataset.resourcePath comes from HTL - so it will give resource path of the current node.
             const resourcePath = this.dataset.resourcePath;
 
-            //This will get the next immediate Element to show status message
+            //This will get the next immediate Element, so here we use it to show status message
             const statusEl = this.nextElementSibling;
 
             /*This calls AEM endpoint that returns the CSRF token, then uses that token to make a POST request to our custom servlet to add the property,
