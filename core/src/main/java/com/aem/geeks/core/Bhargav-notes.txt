@@ -165,10 +165,6 @@ Step:3 - create a Sling Model Implimentation : com/aem/geeks/core/models/impl/Pr
 Step:4 - Using the Services In our Sling Model : com/aem/geeks/core/models/impl/ProductModelImpl.java
 Step:5 - Rendering the Values in HTL Script : apps/aemgeeks/components/content/slingmodelproductcomp/slingmodelproductcomp.html
 
-* All Mutifields Code is in this comp only
- -> com/aem/geeks/core/models/impl/ProductModelImpl.java
- -> apps/aemgeeks/components/content/slingmodelproductcomp/slingmodelproductcomp.html
-
 * In this Component xml we have the conditional showing fields in the dialog box. So make that "showhide" work we need show/hide JavaScript clientlib.
   Added this in apps/aemgeeks/components/content/slingmodelproductcomp
 
@@ -191,9 +187,19 @@ PROBLEM:  So for this one SERVICE there is two implimentations, so in this scena
 
 - Filter demo & using of these services: com/aem/geeks/core/models/impl/ProductModelImpl.java
 
---------------------------------------------
+=============================================================================================
 COMPOSITE MULTIFIELD - SLING MODEL
 
+* Approach - 1 (Main)
+Step:1 - Create a Composite Multifield - apps/aemgeeks/components/content/bhargav-compmultifield
+Step:2 - Sling Model to for the Composite Multifield
+            Parent : com/aem/geeks/core/models/impl/compositemultifieldrltd/BhargavCompositeMultifieldModelImpl.java
+            Child : com/aem/geeks/core/models/impl/compositemultifieldrltd/BhargavCompositeMultifieldChildModel.java
+Step : 3 - Render the Multifield data in HTL : apps/aemgeeks/components/content/bhargav-compmultifield/bhargav-compmultifield.html
+
+--------------------------------------------
+
+* Approach - 2
 Step:1 : Create a component with composite multifield -> apps/aemgeeks/components/content/slingmodelproductcomp/_cq_dialog/.content.xml
 
 -> We can render the multifield values using two ways one is using MAP and the other way is using JAVA BEAN
@@ -391,6 +397,33 @@ Step : 4 - Now select the use and click on "ENABLE" & "ACTIVATE".
 Creation :
 Step :1 - Go to "Tools -> Assets -> Content Fragment Models" and create a new model with the required fields. (eg: Bhargav Personal CF Model).
 Step: 2 - Save the CF Model and Publish it.
+
+=============================================================================================
+New concepts to explore :
+
+- InheritanceValueMap inheritanceValueMap = new HierarchyNodeInheritanceValueMap();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
