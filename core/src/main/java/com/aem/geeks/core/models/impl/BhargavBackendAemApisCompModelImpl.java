@@ -103,10 +103,10 @@ public class BhargavBackendAemApisCompModelImpl implements BhargavBackendAemApis
     public List<Resource> getChildrenList() {
 
         List<Resource> childrenList = new ArrayList<>();
-        String parentPath = resource.getParent().toString();
+        Resource parentPath = resource.getParent();
 
         //Here I am going to the Parent because my Current Page have no Children.
-        Iterator<Resource> iterator = resource.getParent().listChildren();
+        Iterator<Resource> iterator = parentPath.listChildren();
 
         while (iterator.hasNext()) {
             Resource child = iterator.next();

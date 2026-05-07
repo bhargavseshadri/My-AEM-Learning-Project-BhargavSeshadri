@@ -16,7 +16,13 @@ import java.util.List;
 * For - STEP:3 Go to -> com/aem/geeks/core/models/impl/ProductModelImpl.java
 * */
 
-@Component (service = OSGiFactoryConfig.class,configurationPolicy = ConfigurationPolicy.REQUIRE)      //here this OSGiFactoryConfig.class is just the interface for this service
+//Below this OSGiFactoryConfig.class is just the interface for this service
+/*Below "configurationPolicy = ConfigurationPolicy.REQUIRE", this component/service must have an OSGi configuration present before for activation of thi service.
+* If No config is there then in this case component stays inactive, service is not registered, @Activate is not called. and the component be in UnSatisfied state.
+*
+* Available other types are -> Optional, Ignore.
+* */
+@Component (service = OSGiFactoryConfig.class,configurationPolicy = ConfigurationPolicy.REQUIRE)
 @Designate (ocd = GeeksOSGiFactoryConfig.class, factory = true)                                     //factory = true - makes the normal configuration in to factory configuration and @Designate will designate our config to this service
 public class OSGiFactoryConfigImpl implements OSGiFactoryConfig {
     private static final Logger LOGGER = LoggerFactory.getLogger(OSGiFactoryConfigImpl.class);
