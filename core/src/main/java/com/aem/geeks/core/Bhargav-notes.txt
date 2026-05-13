@@ -364,8 +364,8 @@ Step: 2 - Include the clientlib in your component : apps/aemgeeks/components/con
 -> Here in this component we mainly explore the dellegation concept in proxy components.
 -> Dellegation : refer interviewInfo.txt
 
--> Component : apps/aemgeeks/components/bhargavtextproxy-two
--> Sling Model : com/aem/geeks/core/models/BhargavTextProxyTwoModel.java
+->Step: 1 - Create Component : apps/aemgeeks/components/bhargavtextproxy-two
+->Step: 2 - Sling Model : com/aem/geeks/core/models/BhargavTextProxyTwoModel.java
 
 =============================================================================================
 10) bhargav-backend-aem-apis-comp
@@ -431,6 +431,12 @@ Imp:
 
 Step: 1 - Sling Model to get the CF data : com/aem/geeks/core/models/impl/BhargavContentFragmentRltdModelImpl.java
 Step: 2 - Using that sling model in HTL to render the data : apps/aemgeeks/components/content/bhargav-content-fragment-comp
+
+=============================================================================================
+14) Creating Custom Rollout Configuration
+
+
+
 
 =============================================================================================
 New concepts to explore :

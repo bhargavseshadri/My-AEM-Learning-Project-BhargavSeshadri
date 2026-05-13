@@ -9,6 +9,13 @@ import org.apache.sling.models.annotations.Via;
 import org.apache.sling.models.annotations.injectorspecific.Self;
 import org.apache.sling.models.annotations.via.ResourceSuperType;
 
+
+
+
+/*BhargavSeshadri - Step: 2 (last step)- Sling Model
+*
+* For Step: 1 - Create Component : apps/aemgeeks/components/bhargavtextproxy-two*/
+
 @Model(
         adaptables = {Resource.class,SlingHttpServletRequest.class},
         adapters = Text.class,
