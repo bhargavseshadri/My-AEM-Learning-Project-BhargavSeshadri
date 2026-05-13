@@ -44,6 +44,9 @@ IMPORTANT PATHS
         - So the rule AEM follows is "I will only accept POST requests that include a secret token I generated".
         - Without this csrf token, AEM will reject the POST request with a 403 Forbidden error, even if the user is authenticated.
 
+-> * We can have different variations(copies) of our Content Fragment, and to use that we have to pick the variation we want in the CF dialog box on the page.
+   * and we can also sync CF variation with CF master as well.
+
 =============================================================================================
 1) Logger Levels
         Trace

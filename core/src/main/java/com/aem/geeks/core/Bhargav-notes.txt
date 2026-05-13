@@ -6,6 +6,10 @@ b) API Component : apps/aemgeeks/components/content/bhargavapicomp
 c) Registration Form Comp (for ResourceType Post Servlet) : apps/aemgeeks/components/content/registrationformservlet
 d) Registration Form Comp (for PathType Post Servlet) : apps/aemgeeks/components/content/formforpathtypeservlet
 e) Complete "ResourceResolver, Resource, PageManager, Session" these API's specific component : apps/aemgeeks/components/bhargav-backend-aem-apis-comp
+f) Component for Content Fragment : apps/aemgeeks/components/content/bhargav-content-fragment-comp
+g) Component for Composite Multifield : apps/aemgeeks/components/content/bhargav-compmultifield
+h) Proxy Components : 1. apps/aemgeeks/components/bhargavtextproxy
+                      2. apps/aemgeeks/components/bhargavtextproxy-two
 
 =============================================================================================
 1) ResourceResolverFactory related Notes is in
@@ -342,13 +346,26 @@ Step: 2 - Include the clientlib in your component : apps/aemgeeks/components/con
 
 =============================================================================================
 9) Creating a Proxy Component
--> apps/aemgeeks/components/bhargavtextproxy
+
+* Proxy Component 1 - bhargavtextproxy
+-> Here in this component we mainly explored how to add a custom field and how to hide the existing core component field.
+-> Almost override everything from core comp.
+
+-> Component : apps/aemgeeks/components/bhargavtextproxy
+-> Sling Model for this Proxy Comp : com/aem/geeks/core/models/impl/BhargavTextProxyModelImpl.java
 
 -> Overriding : From CRXDE get a package zip of CQ_DIALOG from the extended core component. and add that in intellij comp folder.
--> Overrided the Core comp dialog by adding a cq_dialog, which I got from the core comp. and add and extra custom field in it as well.
+-> Overrided the Core comp dialog by adding a cq_dialog, which I got from the core comp. and now I will add an extra custom dialog field in it.
 -> To print the Custom field we have added - we should Override the HTML File. Copy all the Core Comp Html code and add it in proxy comp and then add
    your custom field code to print it.
--> Sling Model for this Proxy Comp : com/aem/geeks/core/models/impl/BhargavTextProxyModelImpl.java
+
+-------------------------------------------------------------
+* Proxy Component 2 - bhargavtextproxy-two
+-> Here in this component we mainly explore the dellegation concept in proxy components.
+-> Dellegation : refer interviewInfo.txt
+
+-> Component : apps/aemgeeks/components/bhargavtextproxy-two
+-> Sling Model : com/aem/geeks/core/models/BhargavTextProxyTwoModel.java
 
 =============================================================================================
 10) bhargav-backend-aem-apis-comp
@@ -395,13 +412,32 @@ Step : 4 - Now select the use and click on "ENABLE" & "ACTIVATE".
 13) Creating Content Fragment Model and Using that CF Data in the Backend.
 
 Creation :
-Step :1 - Go to "Tools -> Assets -> Content Fragment Models" and create a new model with the required fields. (eg: Bhargav Personal CF Model).
-Step: 2 - Save the CF Model and Publish it.
+Step :1 - Go to "Tools -> Assets -> Content Fragment Models" and create a new model with the required fields in which ever folder you want. (eg: Bhargav Personal CF Model).
+Step: 2 - Save the CF Model. So the model is created.
+Note : Publish the model when you want to send you model from author to publish, if you dont publish the model then you can use that model only in author,
+       you cant use that model in publish.
+Step: 3 - Now we have to create a content fragment based on that model, so for that go to "Assets(content/dam) -> Files -> Create ->
+          Content Fragment" and there select the model you have created in step 1 and then give the name and create it.
+Step: 4 - Now open the content fragment you have created and there you can see the fields which we have created in the model, so fill those fields and save it.
+Step: 5 - Now we can use this content fragment on the page - so go to your page and add the "Content Fragment" component and in that select the content fragment
+          you have created in step 3.
+
+* We can have different variations(copies) of our CF, and to use that we have to pick the variation we want in the dialog box on the page.
+* and we can also sync CF variation with master as well.
+
+Imp:
+* We can also use the content fragment data in the backend code like in sling model or servlet, for that we have to use "ContentFragment" API. and we use that data and
+  render it on the page using sling model and htl.
+
+Step: 1 - Sling Model to get the CF data : com/aem/geeks/core/models/impl/BhargavContentFragmentRltdModelImpl.java
+Step: 2 - Using that sling model in HTL to render the data : apps/aemgeeks/components/content/bhargav-content-fragment-comp
 
 =============================================================================================
 New concepts to explore :
-
-- InheritanceValueMap inheritanceValueMap = new HierarchyNodeInheritanceValueMap();
+1. InheritanceValueMap inheritanceValueMap = new HierarchyNodeInheritanceValueMap();
+2. Custom Rollout config
+3. Dialog level js validation
+4. Dispatcher setup and learn
 
 
 

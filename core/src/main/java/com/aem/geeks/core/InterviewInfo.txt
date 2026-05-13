@@ -75,7 +75,7 @@ OSGI ARCHITECTURE:
 4. Execution environment: It is the runtime environment of the java and responsible for loading the relevant classes at the time of execution
 
 =============================================================================================
-==> Lifecycle in OSGi
+==> Lifecycle annotations in OSGi
 - A typical OSGi component has 3 important lifecycle annotations:
 1) @Activate - When the component is first started (activated), it Initializes resources, read configuration
 2) @Modified - When configuration is changed dynamically, it Re-read and apply new config
@@ -180,6 +180,15 @@ path : /apps/core/wcm/components/...
  -> Similarly To print that custom field on the page we have to override core comp HTML. That HTML we have to get it from the extended core component and add the
     extra code needed to print you Custom field.
  -> sling:hideResource="{Boolean}true" : If you want to hide any field that comes from core component, In that case add this to that field "In the Overriden CQ_DIALOG".
+ -> Once we add a new custom field to our proxy component, to render that we have to override htl file, once we override it, then our aem only picks the custom html
+    from that time onwards
+
+-> Dellegation in Sling Models: Delegation in AEM means reusing methods & functionality from another Sling Model or Core Component by forwarding method calls instead of
+   rewriting logic. It is commonly implemented using @Via(ResourceSuperType.class) to delegate calls to the Core Component model while customizing only required methods.
+   Uses: reuse Adobe Core Component logic
+         override only required methods
+         avoid code duplication
+         inherit future features
 
 =============================================================================================
 CRXDE FOLDER STRUCTURE
@@ -228,9 +237,10 @@ Ans. It is used to specify from which objects the model can be adapted.
 **Very Very Important :: Life Cycle Of Sling Model
  -> Sometimes in sling model lines like below will through error by taking null values. and they got fixed when we move those lines in side a @PostConstruct Method
     or and other method. Why Because.
+        * Eg Line : Page page = pageManager.getContainingPage(resource);
+
  -> Classic Tip : Do all the field initializations(assigning values to the variables) in sling model inside the @PostConstruct method or inside any other method.
 
-    * Eg Line : Page page = pageManager.getContainingPage(resource);
 -> Sling Model Life Cycle Steps: Step: 1 - Object is created (constructor runs)
                                             -> Now at this moment all the @Inject fields or @ScriptVariable fields are not yet being set or injected.
                                             -> But at this very moment if there is any fields then our sling model will run initialization for those
@@ -363,7 +373,8 @@ cq:Workflow           : Runtime workflow instance.
 cq:Page               : In design mode of a Workflow model it has this PrimaryType - /conf/global/settings/workflow/models
 cq:Page               : Experience Fragment
 dam:Asset             : Content Fragment
-
+cq:RolloutConfig      : Rollout configuration for multi-site management.
+cq:LiveSyncAction     : Live action
 
 =============================================================================================
 AEM Scenario Based Questions
