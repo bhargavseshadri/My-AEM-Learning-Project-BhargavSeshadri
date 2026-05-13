@@ -791,6 +791,15 @@ MSM Important Points:
              and select the "ROLLOUT CONFIGUATION" as per the requirement and then click on create.
     --> Thats it now the live copy country site is craeted with all the language copies and pages linked to the master site.
 
-* You can see all you bluprint in this path - /apps/msm in crx
+* You can see all your bluprint in this path - /apps/msm in crx
+
+* In the create option you see three different options -> 1. Language copy, 2. Live copy, 3. Site. So the difference between these three is
+    - Language Copy : This is used to create the copy of different language "but in the same site", but in.
+                      Eg : we have a pages in english and we want to create the copy of those pages in french, then we will use this option.
+    - Live Copy : This is important, this will create a live copy of our pages or sites and be in link and sync with the master Blueprint.
+    - Site : * This is used to create the copy of a complete separate site. copy of our complete blueprint site.
+             * but this won't be in sync with the master blueprint, means if we make any changes in the master blueprint it won't reflect in this site.
+             * there is a check box called "LIVE COPY" while creating this, if you check it the this separate site will become a live copy and then it
+               will be in sync with the master blueprint, but if you do not check this then it will be a complete separate site and won't be in sync with the master blueprint.
 =============================================================================================
 
