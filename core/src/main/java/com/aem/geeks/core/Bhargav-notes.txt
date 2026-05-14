@@ -1,6 +1,5 @@
-Bhargav Personal Component : apps/aemgeeks/components/content/slingmodelproductcomp
-
 My Components:
+
 a) Personal Component : apps/aemgeeks/components/content/slingmodelproductcomp
 b) API Component : apps/aemgeeks/components/content/bhargavapicomp
 c) Registration Form Comp (for ResourceType Post Servlet) : apps/aemgeeks/components/content/registrationformservlet
@@ -401,7 +400,8 @@ Step : 5 - For Service Mapping give "aemgeeks.core:bhargavmainuser=bhargav-main-
 
 
 =============================================================================================
-12) Creating regular user (no a system/service user) through User Administration.
+12) Creating regular user (not a system/service user) through User Administration.
+- This is a regular user which we can use to login to AEM, and we can give the access to this user based on groups.
 
 Step : 1 - Go to: Tools → Security → Users -> Create
 Step : 2 - Give the user name, password and other details and then click on create.

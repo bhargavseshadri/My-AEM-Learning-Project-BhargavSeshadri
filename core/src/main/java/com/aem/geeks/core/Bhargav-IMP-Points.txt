@@ -48,7 +48,7 @@ IMPORTANT PATHS
    * and we can also sync CF variation with CF master as well.
 
 =============================================================================================
-1) Logger Levels
+*) Logger Levels
         Trace
         |
         Debug
@@ -62,7 +62,7 @@ IMPORTANT PATHS
 * For Eg: If you give log level as "Info" for the log file, so in that file "Trace & Debug" logs wont print, "Info, Warn, Error" logs will print in that file.
 
 =============================================================================================
-2) (HTL) Global Objects available in HTL (most common ones)
+*) (HTL) Global Objects available in HTL (most common ones)
 
 -> Enumerable Objects : These objects provides a "VALUEMAP" which contains the information, we can access that info.
 - properties : Provides the component properties, like whatever we save through dialog, we can access those props without using sling model.
@@ -87,7 +87,7 @@ IMPORTANT PATHS
 -> Demo code available here: apps/aemgeeks/components/content/author-books/author-books.html
 
 =============================================================================================
-3) MANDITORY METHODS
+*) MANDITORY METHODS
 
 a) Sling Models : No manditory methods
 b) Services : No manditory methods
@@ -110,7 +110,7 @@ f) Workflow :
             1) Custom WF Process : execute(WorkItem workItem, WorkflowSession workflowSession, MetaDataMap processArguments)
 
 =============================================================================================
-4) PAGE MANAGER(Aem's API) & Page
+*) PAGE MANAGER(Aem's API) & Page
 
 Page → where you are
 pageManager → go anywhere
@@ -133,7 +133,7 @@ Page page=pageManager.getPage("/content/aemgeeks/us/en");
 - Using Page getting the page info : String title = page.getTitle();
 
 =============================================================================================
-5) @Component
+*) @Component
 
 --> Servlets : @Component(service = Servlet.class)
 --> OSGI Configuration Service : @Component(service = OSGiConfigService.class,immediate = true)   [OSGiConfigService.class  -> this is just my interface service I created]
@@ -145,13 +145,13 @@ Page page=pageManager.getPage("/content/aemgeeks/us/en");
 --> Workflow : @Component(service=workflowProcess.class)
 
 =============================================================================================
-6) ANNOTATIONS:
+*) ANNOTATIONS:
 
 @Activate : when we want something to load or execute at the time of that particular service initializations, there we use this. for loading init type method.
 
 @PostConstruct : A method with this annotation is called after all the injections are done. It is mainly used for initialization logic.
 
-* immediate=true When we want to activate the service immediately after the bundle gets started in that place we use this.
+- immediate=true When we want to activate the service immediately after the bundle gets started in that place we use this.
 
 @Modified : It is a lifecycle callback method annotation used in OSGi components. It marks a method that should be called
             whenever the OSGi configuration for that component is changed at runtime, without restarting the bundle.
@@ -237,7 +237,7 @@ private String title;
     - Then read property title.
 
 =============================================================================================
-7) SERVLETS - GET and POST requests explanation
+*) SERVLETS - GET and POST requests explanation
 
 Simple understanding
 * Post : A POST servlet is used when the client sends data to the server.
@@ -266,7 +266,7 @@ d) doPost reads req.getParameter() (for form), validates input, performs DB/JCR 
 f) doPost typically returns: HttpStatus codes and then Client receives response and acts accordingly.
 
 =============================================================================================
-9) req.setAttribute() AND req.getAttribute()  Explanation with Example
+*) req.setAttribute() AND req.getAttribute()  Explanation with Example
 
 Q) What is an “attribute” in a request?
 Answer: You can store temporary data in the HttpServletRequest object using setAttribute() and later read it back using getAttribute().
@@ -309,7 +309,7 @@ RequestDispatcher dispatcher = req.getRequestDispatcher("/second");
 dispatcher.forward(req, res);
 
 =============================================================================================
-10) MULTIFIELD - COMPOSITE PROPERTY (composite="{Boolean}true")
+*) MULTIFIELD - COMPOSITE PROPERTY (composite="{Boolean}true")
 - we will add this property while defining a multifield in content dialog, by default it is false
 - FALSE : In this case, if we give two set of values to the multifield in the comp dialog, then it store those two sets values in a "STRING ARRAY" inside component node.
 - TRUE : In this case if we provide two sets of values to the multifield in the comp dialog, it will create a node under our component node(with name we have give
@@ -318,14 +318,14 @@ dispatcher.forward(req, res);
 -> We can render the multifield values using two ways one is using MAP and the other way is using JAVA BEAN
 
 =============================================================================================
-11) Sling Model Content Exporter (Content as a Service)
+*) Sling Model Content Exporter (Content as a Service)
 - AEM comes up with OOTB content exporter functionality, means AEM can export content to third party systems in form of JSON or XML.
 
 =============================================================================================
-12) Utility Functions available in Sightly: in, format, join
+*) Utility Functions available in Sightly: in, format, join
 
 =============================================================================================
-13) RUN MODES
+*) RUN MODES
 - Run Modes in AEM are a way to customize the behavior and configuration of an AEM instance for different environments (like author, publish, dev,
   stage, prod, etc.) using the same codebase.
         PURPOSE of runmodes:
@@ -357,7 +357,7 @@ ans. “By placing configuration files inside run mode–specific folders like /
 AEM automatically picks the correct configuration based on its active run mode.”
 
 =============================================================================================
-14) SCHEDULERS
+*) SCHEDULERS
 a) Runnable scheduler
 - implements runnable interface
 - With this we can execute only one job.
@@ -375,17 +375,17 @@ execute at three different times, and for that writing three Runnable Schedulers
 In this scenario JOB SCHEDULERS enter, we can write three jobs for these three countries in one scheduler.
 
 =============================================================================================
-15) WORKFLOWS in AEM
+*) WORKFLOWS in AEM
 - Workflow model usually stored in two places in our jcr
     1. Design Model - Stored Under : /conf/global/settings/workflow/models
     2. Runtime Model - Stored Under : /var/workflow/models   -> when the workflow executes then this run time model will be used.
 
 - Two make the changes go from Design to Runtime we have to click the "SYNC".
-* Basically to trigger a workflow we need Two things 1.Workflow Model, 2.Payload(means the content path on which we want to run our WF, like page, asset etc)
+--> Basically to trigger a workflow we need Two things 1.Workflow Model, 2.Payload(means the content path on which we want to run our WF, like page, asset etc)
     - Incase of triggering WF using code, then in that case to get this Payload we will use "WorkflowSession"
 
 ----------------------------------------
-* Custom WF Process
+--> Custom WF Process
 - When no existing process is available based on our requirement then we can write our own custon WF process. This "CUSTOM WF PROCESS" is available in
   the dropdown Of "PROCESS STEP"(this process step is provoded by aem only in this we use it). this will won't have its own dialog.
 - To write this we have to impliment an interface called "WorkflowProcess"
@@ -404,12 +404,12 @@ Note: Custom WF Process and Custom WF step is not same, the difference is Custom
       its own step in the available steps and also have its own dialog box.
 
 ----------------------------------------
-* Custom Workflow STEP
+--> Custom Workflow STEP
 - Combination of Custom WF Process + Component(this comp wont have any rendering script and backend module) is called a Custom Workflow STEP.
 - The comp will have a cq:dialog, cq:editConfig
 - this step will be available in the available steps in the WF Model console.
 
-* COMPONENT:
+--> COMPONENT:
 - (IMP) The comp will have a cq:dialg, cq:editConfig. and  cq:editConfig has a child node called cq:formParameters and in that there is a property
         called "PROCESS", for that property we give the value of our custom wf process, so in this way using that property we link this comp to
         our custom wf process.
@@ -425,7 +425,7 @@ Note: Custom WF Process and Custom WF step is not same, the difference is Custom
     /conf/global/settings/workflow/models/bhargav-personal-workflow/jcr:content/flow/geeksworkflowstep/metaData
 
 =============================================================================================
-16) Asset API --> Asset asset = resource.adaptTo(Asset.class);
+*) Asset API --> Asset asset = resource.adaptTo(Asset.class);
 
 - By doing this "Asset asset = resource.adaptTo(Asset.class);", we are converting the generic resource into an AEM DAM Asset API object
   that provides higher-level methods.
@@ -438,7 +438,7 @@ Note: Custom WF Process and Custom WF step is not same, the difference is Custom
 * asset.getMimeType()
 
 =============================================================================================
-17) adaptTo()
+*) adaptTo()
 
 * It is simply like a variable converting thing, eg: Node node = resource.adaptTo(Node.class);  -> here we are converting our resource to node.
 
@@ -468,7 +468,105 @@ Note: Custom WF Process and Custom WF step is not same, the difference is Custom
             String mimeType = asset.getMimeType();
 
 =============================================================================================
-18) USING ResourceResolver and Session and modifying the nodes (Basic Codes) (IN-DEPTH ABOUT THIS IN NEXT BLOCK)
+*) OverLaying /libs Paths
+- The main use of this is to do the modifications in the /libs/(OOTB) components, templates, or any other /libs/(OOTB) nodes. because we should not modify
+  the /libs/(OOTB) nodes directly, so for that we can use this overlaying and here we will copy those node or folders to our
+  /apps/ path and we do the modifications there.
+
+
+--> OVERLAYING (or) OVERRIDING THE LIBS NODE (doing in crx, but we can do through code also by pkging it out and putting in our code folder and giving a push)
+STEP: 1 - Copy the node which you want to modify eg: "/libs/settings/wcm/designs/default" or /libs/msm/wcm/rolloutconfigs
+STEP: 2 - Go to "apps/settings/wcm/designs" or "/apps/msm" node and paste it there and rename the node from default to whatever you want.
+STEP: 3 - Remove all the other nodes and folder, which we don't need. and keep the needed ones.
+STEP: 4 - Do the modifications needed. and save it.
+
+--> Important point : the path in the /libs/ and the path in the /apps/ must match, means if we are copying the node from "/libs/settings/wcm/designs/default"
+    to "/apps/settings/wcm/designs/default", then the path is same, but if we are copying the node from "/libs/settings/wcm/designs/default" to
+    "/apps/settings/wcm/mydesign/designs" then in that case the overlayed node wont work.
+    Eg : "/libs/msm/wcm/rolloutconfigs" node is copied to "/apps/msm/wcm/rolloutconfigs"
+
+=============================================================================================
+*) MSM:
+
+- MSM helps you manage multiple websites that share common content or structure. It lets you reuse pages, but still localize or update them differently
+  in other sites.
+
+- Structure Map:
+/content
+ └── aem-geeks
+      ├── language-master  -> Blueprint Source Root - (Master site)
+      │    ├── en (Language Copy) (Blueprint source in English - MASTER for all English Live Copies)
+      │    │    ├── Page 1 (Blueprint)
+      │    │    └── Page 2 (Blueprint)
+      │    └── fr (Language Copy) (Blueprint source in French - MASTER for all French Live Copies)
+      │         ├── Page 3 (Blueprint)
+      │         └── Page 4 (Blueprint)
+      │
+      ├
+      │
+      │
+      │
+      └── Brazil -->(Country Site - Live Copy Root)
+           ├── en (Live copy based on Blueprint source: → aem-geeks/language-masters/en)
+           ├    ├── Page 1 ← ← synced from master
+           ├    └── Page 2 ← ← synced from master
+           ├
+           └── fr  ← (Live Copy based on Blueprint source: → aem-geeks/language-masters/fr)
+                ├── Page 3 ← ← synced from master
+                └── Page 4 ← ← synced from master
+      │
+      └── Indonasia -->(Country Site - Live Copy Root)
+           ├── en (Live Copy based on Blueprint source: → aem-geeks/language-masters/en)
+           ├    ├── Page 1 ← ← synced from master
+           ├    └── Page 2 ← ← synced from master
+           ├
+           └── fr  ← (Live Copy based on Blueprint source: → aem-geeks/language-masters/fr)
+                ├── Page 3 ← ← synced from master
+                └── Page 4 ← ← synced from master
+
+----------------------------------------
+--> MSM Important Points:
+
+- We have Blueprint source root or Language Master or Master site (language-masters), and we have Blueprint source Language Copies(language-masters/en, language-masters/fr)
+  in it and inside those we have Blueprint source Pages.
+- We have Live Copy roots of country sites, and inside those we have Live Copy Language Copies and inside those we have Live Copy Pages.
+-(IMP) So all the master site pages are in the language-masters and all the live copy pages are in the live copy country sites like Brazil, Indonasia are always linked.
+-(IMP) If we make any changes in the blueprint source page, then those changes will be reflected in the live copy pages when we do the sync using rollout configurations,
+       but if we make any changes in the live copy page, then those changes won't be reflected in the blueprint page because the flow
+       of data is only from blueprint to live copy, not the other way.
+
+- Creation of Language Copies:
+    Step : 1 - go to the language you want to create the copy and then click on create and in that select "Language Copy"
+    Step: 2 - Now select the source page from which you want to create the copy.
+    Step : 3 - Select the languages you want and also selete the required fields
+    Step : 4 - in the next step select "Create Multi-language Translation Project" option if you are creating for the first time, otherwise select
+                "Add to existing translation project" and then select the existing translation project and then click on "Create". Now you can see the Language Copies.
+
+- Creation of Language Masters (Country site)(Brazil, Indonasia) for Live copies:
+    Step:1 - First we need a Blueprint for this, so first create it.
+                a. go to tools -> sites -> Blueprints and then click on create
+                b. Then select "Create" and then select blueprint template.
+                c. Now select the source site you want to create the blueprint for. Eg : /content/aemgeeks/language-masters
+                d. Then give the name and title and then click on create.
+    Step:2 - Now we have the blueprint, now we will create the live copy root country site from our master site. go to sites and select your project
+             Eg : /content/aemgeeks and click on create and the select "site" and after select the blueprint you created for this.
+    Step:3 - Now you can look the available languages and pages in the master site you have selected. give title for the site and check the live copy option.
+             and select the "ROLLOUT CONFIGUATION" as per the requirement and then click on create.
+    --> Thats it now the live copy country site is craeted with all the language copies and pages linked to the master site.
+
+- You can see all your bluprint in this path - /apps/msm in crx
+
+- In the create option you see three different options -> 1. Language copy, 2. Live copy, 3. Site. So the difference between these three is
+    - Language Copy : This is used to create the copy of different language "but in the same site", but in.
+                      Eg : we have a pages in english and we want to create the copy of those pages in french, then we will use this option.
+    - Live Copy : This is important, this will create a live copy of our pages or sites and be in link and sync with the master Blueprint.
+    - Site : * This is used to create the copy of a complete separate site. copy of our complete blueprint site.
+             * but this won't be in sync with the master blueprint, means if we make any changes in the master blueprint it won't reflect in this site.
+             * there is a check box called "LIVE COPY" while creating this, if you check it the this separate site will become a live copy and then it
+               will be in sync with the master blueprint, but if you do not check this then it will be a complete separate site and won't be in sync with the master blueprint.
+
+=============================================================================================
+*) USING ResourceResolver and Session and modifying the nodes (Basic Codes) (IN-DEPTH ABOUT THIS IN NEXT BLOCK)
 
 - In SERVLET(where the methods give us in-built Request) (So we get a resourceResolver using that request)
 Steps:
@@ -500,7 +598,7 @@ Steps:
     -> session.save();
 
 
-** In sling model we get the "ResourceResolver" using
+--> In sling model we get the "ResourceResolver" using
    @SlingObject
     private ResourceResolver resourceResolver;
 
@@ -518,7 +616,7 @@ IMP POINTS:
    - Short memory trick ---> Created it → close it :: Framework provided it → do not close it.
 
 ---------------------------------------
-* WAYS OF GETTING HOLD OF NODE and DOING READ AND WRITE AND THEN SAVING IT
+--> WAYS OF GETTING HOLD OF NODE and DOING READ AND WRITE AND THEN SAVING IT
 
 1) Using ResourceResolver (Common way – read + write)
         - Getting the hold of resource using ResourceResolver
@@ -656,7 +754,7 @@ IMP POINTS:
 - JSONObject / Gson : To parse and handle JSON responses from APIs.
 
 ---------------------------------------
-* Getting Node My Understanding
+--> Getting Node My Understanding
 
 ResourceResolver
 │
@@ -666,7 +764,7 @@ ResourceResolver
 
 
 ---------------------------------------
-* MAPS - COMPLETE IMPORTANT map showing how Resource, ResourceResolver, Node, Session, and related APIs connect across AEM.
+--> MAPS - COMPLETE IMPORTANT map showing how Resource, ResourceResolver, Node, Session, and related APIs connect across AEM.
 
 [ ResourceResolverFactory ]
           │
@@ -695,7 +793,7 @@ ResourceResolver
                      └──► logout() ← closes session
 
 ---------------------------------------
-* Common Flows
+--> Common Flows
 
 -> READING
         ResourceResolver → getResource(path)
@@ -726,80 +824,3 @@ ResourceResolver
         Session.save()
 
 =============================================================================================
-MSM:
-* MSM helps you manage multiple websites that share common content or structure. It lets you reuse pages, but still localize or update them differently
-  in other sites.
-
-* Structure Map:
-/content
- └── aem-geeks
-      ├── language-master  -> Blueprint Source Root - (Master site)
-      │    ├── en (Language Copy) (Blueprint source in English - MASTER for all English Live Copies)
-      │    │    ├── Page 1 (Blueprint)
-      │    │    └── Page 2 (Blueprint)
-      │    └── fr (Language Copy) (Blueprint source in French - MASTER for all French Live Copies)
-      │         ├── Page 3 (Blueprint)
-      │         └── Page 4 (Blueprint)
-      │
-      ├
-      │
-      │
-      │
-      └── Brazil -->(Country Site - Live Copy Root)
-           ├── en (Live copy based on Blueprint source: → aem-geeks/language-masters/en)
-           ├    ├── Page 1 ← ← synced from master
-           ├    └── Page 2 ← ← synced from master
-           ├
-           └── fr  ← (Live Copy based on Blueprint source: → aem-geeks/language-masters/fr)
-                ├── Page 3 ← ← synced from master
-                └── Page 4 ← ← synced from master
-      │
-      └── Indonasia -->(Country Site - Live Copy Root)
-           ├── en (Live Copy based on Blueprint source: → aem-geeks/language-masters/en)
-           ├    ├── Page 1 ← ← synced from master
-           ├    └── Page 2 ← ← synced from master
-           ├
-           └── fr  ← (Live Copy based on Blueprint source: → aem-geeks/language-masters/fr)
-                ├── Page 3 ← ← synced from master
-                └── Page 4 ← ← synced from master
-
-MSM Important Points:
-* We have Blueprint source root or Language Master or Master site (language-masters), and we have Blueprint source Language Copies(language-masters/en, language-masters/fr)
-  in it and inside those we have Blueprint source Pages.
-* We have Live Copy roots of country sites, and inside those we have Live Copy Language Copies and inside those we have Live Copy Pages.
-*(IMP) So all the master site pages are in the language-masters and all the live copy pages are in the live copy country sites like Brazil, Indonasia are always linked.
-*(IMP) If we make any changes in the blueprint source page, then those changes will be reflected in the live copy pages when we do the sync using rollout configurations,
-       but if we make any changes in the live copy page, then those changes won't be reflected in the blueprint page because the flow
-       of data is only from blueprint to live copy, not the other way.
-
-* Creation of Language Copies:
-    Step : 1 - go to the language you want to create the copy and then click on create and in that select "Language Copy"
-    Step: 2 - Now select the source page from which you want to create the copy.
-    Step : 3 - Select the languages you want and also selete the required fields
-    Step : 4 - in the next step select "Create Multi-language Translation Project" option if you are creating for the first time, otherwise select
-                "Add to existing translation project" and then select the existing translation project and then click on "Create". Now you can see the Language Copies.
-
-* Creation of Language Masters (Country site)(Brazil, Indonasia) for Live copies:
-    Step:1 - First we need a Blueprint for this, so first create it.
-                a. go to tools -> sites -> Blueprints and then click on create
-                b. Then select "Create" and then select blueprint template.
-                c. Now select the source site you want to create the blueprint for. Eg : /content/aemgeeks/language-masters
-                d. Then give the name and title and then click on create.
-    Step:2 - Now we have the blueprint, now we will create the live copy root country site from our master site. go to sites and select your project
-             Eg : /content/aemgeeks and click on create and the select "site" and after select the blueprint you created for this.
-    Step:3 - Now you can look the available languages and pages in the master site you have selected. give title for the site and check the live copy option.
-             and select the "ROLLOUT CONFIGUATION" as per the requirement and then click on create.
-    --> Thats it now the live copy country site is craeted with all the language copies and pages linked to the master site.
-
-* You can see all your bluprint in this path - /apps/msm in crx
-
-* In the create option you see three different options -> 1. Language copy, 2. Live copy, 3. Site. So the difference between these three is
-    - Language Copy : This is used to create the copy of different language "but in the same site", but in.
-                      Eg : we have a pages in english and we want to create the copy of those pages in french, then we will use this option.
-    - Live Copy : This is important, this will create a live copy of our pages or sites and be in link and sync with the master Blueprint.
-    - Site : * This is used to create the copy of a complete separate site. copy of our complete blueprint site.
-             * but this won't be in sync with the master blueprint, means if we make any changes in the master blueprint it won't reflect in this site.
-             * there is a check box called "LIVE COPY" while creating this, if you check it the this separate site will become a live copy and then it
-               will be in sync with the master blueprint, but if you do not check this then it will be a complete separate site and won't be in sync with the master blueprint.
-=============================================================================================
-
