@@ -109,6 +109,9 @@ e) Schedulers : we have two types of schedulers 1) Runnable, 2)Job Scheduler
 f) Workflow :
             1) Custom WF Process : execute(WorkItem workItem, WorkflowSession workflowSession, MetaDataMap processArguments)
 
+g) Custom Live Action(for custom rollout configurations) : 1) LiveActionFactory : createsAction(), createAction(Resource resource)
+                                                           2) LiveAction : getName(), execute(Resource source, Resource target, LiveRelationship relation, boolean autoSave, boolean isResetRollout)
+
 =============================================================================================
 *) PAGE MANAGER(Aem's API) & Page
 
@@ -143,7 +146,7 @@ Page page=pageManager.getPage("/content/aemgeeks/us/en");
 
 --> Service : @Component(Service = bhargavService.class)  - bhargavService is my interface and I am linking it to my implimentation class using @Component
 --> Workflow : @Component(service=workflowProcess.class)
-
+--> Custom Live Action Factory : @Component(service = LiveActionFactory.class)
 =============================================================================================
 *) ANNOTATIONS:
 
