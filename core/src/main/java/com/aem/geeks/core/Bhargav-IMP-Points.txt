@@ -425,6 +425,48 @@ Note: Custom WF Process and Custom WF step is not same, the difference is Custom
     /conf/global/settings/workflow/models/bhargav-personal-workflow/jcr:content/flow/geeksworkflowstep/metaData
 
 =============================================================================================
+*) Important things to know about Filter.XML
+
+- Every Module/bundle have its own filter.xml file, filter.xml tells the content package which JCR paths to include when deploying to AEM and
+  What content should be installed from this package. if not included then our AEM will simply be ignored the deployment of those paths even
+  if the files exist in your project.
+- Whatever the path we have added in it will be deployed to the server at the time of deployment.,
+- If you added any new file or folder, then you must add that path in the filter.xml file, otherwise that file or folder won't be deployed to the server.
+
+--> Different Types of mode in filter.xml
+1. replace (default) : Replace CRX repository content with code package content after deployment. it will Delete missing nodes.
+                       eg:  - Crx repo have - /apps/myproject/a
+                                              /apps/myproject/b
+                            - and in our code we have or (we can also call in packaged content) - /apps/myproject/a
+                            - Then after deploymet it will delete "/apps/myproject/b" in AEM instance CRX, because it is missing in our code.
+
+2. merge : - It merges code package content with CRX repository content after deployment. it will NOT delete missing nodes.
+            eg:  - Crx repo have - /apps/myproject/a
+
+                 - and in our code we have - /apps/myproject/b
+                 - Then after deploymet it will NOT delete "/apps/myproject/a" in AEM instance CRX, it simply creates or updates /apps/myproject/b and keep both nodes.
+                    /apps/myproject/a   -> remains
+                    /apps/myproject/b   -> created
+
+3. Update : - It updates existing nodes in CRX repository with code package content after deployment. it will NOT delete missing nodes and also won't create new nodes.
+            eg:  - Crx repo have - /apps/myproject/a
+                                   /apps/myproject/b
+                 - and in our code we have - /apps/myproject/c
+                 - Then after deploymet it will NOT delete anything, it simply adds /apps/myproject/c in aem crx
+                    /apps/myproject/a
+                    /apps/myproject/b
+                    /apps/myproject/c
+
+4. replace_properties : It replaces only the properties of existing nodes in CRX repository with code package content after deployment.
+                        it will NOT delete missing nodes and also won't create new nodes.
+            eg:  - Crx repo have - /apps/myproject/a (prop1=value1)
+                                   /apps/myproject/b (prop2=value2)
+                 - and in our code we have - /apps/myproject/a (prop1=newValue)
+                 - Then after deploymet it will NOT delete anything, it simply updates the prop1 value of /apps/myproject/a in aem crx
+                    /apps/myproject/a (prop1=newValue)
+                    /apps/myproject/b (prop2=value2)
+
+=============================================================================================
 *) Asset API --> Asset asset = resource.adaptTo(Asset.class);
 
 - By doing this "Asset asset = resource.adaptTo(Asset.class);", we are converting the generic resource into an AEM DAM Asset API object

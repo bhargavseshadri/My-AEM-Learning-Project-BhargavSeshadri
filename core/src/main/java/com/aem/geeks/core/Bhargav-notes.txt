@@ -433,15 +433,33 @@ Step: 1 - Sling Model to get the CF data : com/aem/geeks/core/models/impl/Bharga
 Step: 2 - Using that sling model in HTL to render the data : apps/aemgeeks/components/content/bhargav-content-fragment-comp
 
 =============================================================================================
-14) Creating Custom Rollout Configuration
+14) Creating Custom Rollout Configuration and Live action for that rollout configuration.
+--> Use of this : whenever we run the rollout page for a blueprint then this custom rollout get executed with live action and add custom
+                  node property for both blueprint page and live action page.
 
+--> Steps for Live Action
+Step: 1 - Create a Live Action Factory Java class : com/aem/geeks/core/msm/BhargavCustomLiveActionFactory.java
+Step: 2 - Create a Live Action Java class : com/aem/geeks/core/msm/BhargavCustomLiveActionFactory.java
+Step: 3 - Give a Build and check if the component is created and active in the system/console/components.
 
+--> Creating Custom Rollout Configuration
+Step: 1 - Better approach is in CRXDE, Overlay the libs rollout configuration in /apps/ folder.
+Step: 2 - Now inside it create your custom rollout configuration and give the reqd properties in that. like cq:trigger, JCR:Title etc.
+Step: 3 - Now in that rollout configuration create a Live Action node and for that node give node name same as the "LiveActionFactory.LIVE_ACTION_NAME"
+          you have given in your Live Action Factory class and give the type as "cq:LiveSyncAction". and then inside that Live Action node give the
+          property "cq:action" with value same as the "LiveActionFactory.LIVE_ACTION_NAME" you have given in your Live Action Factory class.
+Step: 4 - Add this rollout configuration to the blueprint page and then run the rollout, after rollout gets completed you can see the custom
+          node property got added in both blueprint and live action page.
 
+--> Adding this custon rollout configuration to the code base
+Step: 5 - Package the rollout configuration from CRXDE.
+Step: 6 - unzip it and add it in the codebase under the same path just like in crxde --> ui.apps/src/main/content/jcr_root/apps/msm/wcm
+Step: 7 - Add it in filter.xml of that folder as well  --> ui.apps/src/main/content/META-INF/vault/filter.xml, Now deploy it.
 
 =============================================================================================
 New concepts to explore :
 1. InheritanceValueMap inheritanceValueMap = new HierarchyNodeInheritanceValueMap();
-2. Custom Rollout config
+2.
 3. Dialog level js validation
 4. Dispatcher setup and learn
 
