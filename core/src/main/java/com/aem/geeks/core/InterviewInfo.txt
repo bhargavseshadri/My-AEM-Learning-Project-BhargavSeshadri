@@ -392,15 +392,13 @@ Ans. a. Content Repository (JCR)
      e. Workflow Engine
 
 
-2. What's the difference between GET and POST methods in Sling?
-Ans. In Sling, both GET and POST are HTTP methods used for interacting with resources, but they serve different purposes:
+2. I want a client lib that should load for all pages, how to do that?
+Ans. Approach 1: Add to Page Component (Recommended), In your base page component's HTL template, include the clientlib directly,Since all pages
+                 inherit from the base page component, this clientlib loads everywhere automatically.
 
-* GET : GET is primarily used to retrieve a resource. It's a safe method, meaning it should not have any side
-        effects on the server. GET requests typically pass parameters in the URL.
-
-* POST : POST, on the other hand, is used to create or update a resource. POST requests typically send data in
-         the request body. Sling uses the POST method extensively for actions such as creating new nodes, updating properties, or triggering processes.
-         Therefore, Sling's resource-centric nature means POST requests are essential for modifying the repository.
+     Approach 2: Use Page Policy - In AEM Sites, you can use Page Policies to inject clientlib categories into every page that uses a that specific template.
+                                 - So in every page that uses this template, the added clientlibs will load.
+                                 - Tools → Templates → [Your Template] → Page Policy → Client Library Categories → add your clientlib category
 
 
 
