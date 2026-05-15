@@ -37,6 +37,11 @@ AEM solves several problems related to digital experience management:
 -> request.getParameter(...) only returns form/query parameters (name/value pairs in the query string or POST body). It does NOT read HTTP headers or the request URL
 
 =============================================================================================
+--> Debuging Tips
+- ClientLibs : you can check which Clientlibs are loading for a specific page, by going to page source and seraching- clientlib name,
+               <script (to see what are all clientlibs are loading),
+
+=============================================================================================
 ==> DEFINITIONS
 1) Resource :  - A resource is basically any node or file in the jcr that sling can access and maps it to a url.
                - Resource can be anything, it can be COMPONENT, NODE, PAGE.

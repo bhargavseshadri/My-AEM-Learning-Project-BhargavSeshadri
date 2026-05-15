@@ -155,6 +155,30 @@ e) Servlet : 5 - PathType Servlet - BhargavPropBtnPathServlet.java
 - Step:3 - Servlet : com/aem/geeks/core/servlets/BhargavPropBtnPathServlet.java
 - Step:4 - Last Step - Node prop adding logic : com/aem/geeks/core/services/impl/BhargavPropertyBtnServiceImpl.java
 
+-------------------------------------------------------------------------
+g) Servlet : 6 - PathType Servlet with "METADATA SCHEMA"
+
+* The use of this servlet is, in our Assets metadata we have two fields and if we give ID in one field and the second field will automatically fetch the Name
+  belongs to that ID from and API using this Servlet.
+
+--> Creating METADATA SCHEMA
+Step : 1 - Create a Metadata Schema -> tools -> assets -> metadata schema -> create
+Step : 2 - open that schema and add fields -> userId, userName.
+Step : 3 - select your metadata schema and pick "ADD TO FOLDERS" option, andadd it to the folder as you preferred, in which folder you want
+           this metadata schema to be applicable. so now the metadata schema creating is completed
+
+--> Coding part
+Step : 1 - create a clientlib and in that give categories (for timebeing I gave libs path clientlib categories, because that clientlib is
+           loading in Asset Properties console).
+           - but the best approach is overlaying that libs clientlib to out apps path and in that adding embed="[bhargav.asset.properties]". So our
+             clientlib - bhargav.asset.properties, also gets loaded with that /apps/ path clientlib.
+           - apps/aemgeeks/clientlibs/clientlib-bhargav-metadataschema/.content.xml
+
+Step : 2(main) - create JS for fetch calls, eventlisteners. : apps/aemgeeks/clientlibs/clientlib-bhargav-metadataschema/BhargavMetadataSchemaRLTD.js
+Step : 3(last step)(main) - Create a path type servlet for getting the data from the API. : com/aem/geeks/core/servlets/BhargavMetadataSchemaPathServlet.java
+
+API used here : https://dummyjson.com/users
+
 =============================================================================================
 4) SLING MODELS & SERVICES  (Service(optional) -> Sling model -> HTL)
 
