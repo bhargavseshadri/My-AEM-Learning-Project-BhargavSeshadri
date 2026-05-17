@@ -428,7 +428,7 @@ Note: Custom WF Process and Custom WF step is not same, the difference is Custom
     /conf/global/settings/workflow/models/bhargav-personal-workflow/jcr:content/flow/geeksworkflowstep/metaData
 
 =============================================================================================
-*) Important things to know about Filter.XML
+*) Filter.XML - Important things to know about Filter.XML
 
 - Every Module/bundle have its own filter.xml file, filter.xml tells the content package which JCR paths to include when deploying to AEM and
   What content should be installed from this package. if not included then our AEM will simply be ignored the deployment of those paths even
@@ -609,6 +609,84 @@ STEP: 4 - Do the modifications needed. and save it.
              * but this won't be in sync with the master blueprint, means if we make any changes in the master blueprint it won't reflect in this site.
              * there is a check box called "LIVE COPY" while creating this, if you check it the this separate site will become a live copy and then it
                will be in sync with the master blueprint, but if you do not check this then it will be a complete separate site and won't be in sync with the master blueprint.
+
+=============================================================================================
+*) DISPATCHER   -- C:\Documents out side onedrive focus\AEM RELATED\aemgeeks\dispatcher.any
+
+--> Important points
+- Dispatcher does not perform tasks, dispatcher is a module in our apache web server that tells Apache webserver what tasks need to perform.
+- Caching, load balancing, access and security all these are the feature of APACHE webserver, but the dispatcher tell the server
+  to create the cache as per the provided configurations.
+- Using rewrite rules we will redirect the pages :: Eg: if we hit www.intel.com  -> it will redirects to -> https://www.intel.com/content/www/us/en/homepage.html
+
+---> Difference between cache deletion, cache invalidation, cache purge
+- Cache Deletion : Physically removing cached files from filesystem. so the next request goes to publisher and then page served and a new cache file got created.
+
+- Cache Invalidation : Marking cache as stale or unusable without deleting file immediately.
+                        - In this dipatcher checks the ".stat timestamp > cached file timestamp", then cached file considered outdated
+                        - dispatcher fetches fresh content and overwrites cache
+                        - Old file exists physically but is logically invalid.
+
+- Cache Purge : “Cache purge” is most commonly associated with CDNs.
+                 - it usually means Explicit forced removal of cached content from caching layer like cdn.
+
+- cache flush : It basically means cache invalidation happened.
+
+-------------------------------------------------------------
+
+--> Confuguring or setting up dispatcher (There are 3 ways)
+1. Standard(or old) way : Adobe provides a dispatcher module and a config file, so we have to add all the diapacher configs in this file.
+2. Dispatcher 2.0 : Dispatcher have its standard folders and standard files.
+3. Dispatcher with Docker - for AEMaaCS
+
+-------------------------------------------------------------
+
+---> Sections in Dispatcher.any
+- /clientheaders : tells what headers are allowed through request.
+- /virtualhosts : - it define which domain is mapped or resolved to which content. using this we can have multiple domains with multiple configuration.
+                  - we can have multiple /virtualhosts.
+                   Eg : www.intel.com --> maps to AEM Sites
+                        www.intelDigitalLibrary.com ---> maps to AEM Asset.
+- /renders : using this we tell the server from where it can get and serve the response for the incomming request.
+- /filter : when we want to filter the request we use this. basically we dont want to send all the requests to our AEM server, we only send some specific
+            filtered requests. those specifications will be done here.
+- /cache : The cache section regulates what responses will be cached and where.
+- /invalidate :
+- /allowedClients : This tell to the server which are the clients(AEM Author or AEM publisher etc) are allowed to clear the cache.
+
+-------------------------------------------------------------
+---> Dispatcher Cache flush : Removing cached files from the Dispatcher cache whenever content is updated in AEM, so users
+                              get the latest version instead of old cached pages.
+
+---> Ways of doing dispatcher cache flush (clearing cache)
+1. Using AEM FLUSH agents
+2. ACS Commons
+3. Manual/code
+
+1. Using AEM FLUSH agents
+- we can setup the agent in either AEM Author or AEM Publish.
+--> Setting up diapatcher flush agent in author
+        1. Go to tools -> deployment -> replication -> Dispatcher Flush (flush) -> edit and give the required data accordingly
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 =============================================================================================
 *) USING ResourceResolver and Session and modifying the nodes (Basic Codes) (IN-DEPTH ABOUT THIS IN NEXT BLOCK)
