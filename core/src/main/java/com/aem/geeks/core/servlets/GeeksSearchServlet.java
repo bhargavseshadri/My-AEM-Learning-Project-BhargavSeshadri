@@ -24,6 +24,9 @@ import java.util.Iterator;
 import java.util.List;
 
 
+//BhargavSeshadri : Step : 2 : (last step) :Servlet
+//Step : 1 -  Creating a Service : com/aem/geeks/core/services/impl/SearchServiceImpl.java
+
 @Component(service = Servlet.class)
 @SlingServletPaths(
         value = {"/geeks/search"}
@@ -32,7 +35,7 @@ public class GeeksSearchServlet extends SlingAllMethodsServlet {
     private static final Logger LOG = LoggerFactory.getLogger(GeeksSearchServlet.class);
 
     @Reference
-    SearchService searchService;
+    SearchService searchService; // Calling the osgiService
 
     @Override
     protected void doGet(final SlingHttpServletRequest req, final SlingHttpServletResponse resp) throws ServletException, IOException {

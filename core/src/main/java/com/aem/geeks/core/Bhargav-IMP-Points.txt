@@ -947,3 +947,8 @@ ResourceResolver
         Session.save()
 
 =============================================================================================
+--> Debuging Tips
+- ClientLibs : you can check which Clientlibs are loading for a specific page, by going to page source and seraching- clientlib name,
+               <script (to see what are all clientlibs are loading),
+
+=============================================================================================

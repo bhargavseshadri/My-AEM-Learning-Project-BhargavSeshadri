@@ -23,13 +23,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
+//BhargavSeshadri : Step : 1 Creating a Service
+//Step : 2 - Servlet : com/aem/geeks/core/servlets/GeeksSearchServlet.java
 @Component(service = SearchService.class, immediate = true)
 public class SearchServiceImpl implements SearchService{
 
     private static final Logger LOG= LoggerFactory.getLogger(SearchServiceImpl.class);
 
     @Reference
-    QueryBuilder queryBuilder;
+    QueryBuilder queryBuilder; // Getting querybuilder
 
     @Reference
     ResourceResolverFactory resourceResolverFactory;
@@ -39,6 +42,14 @@ public class SearchServiceImpl implements SearchService{
         LOG.info("\n ----ACTIVATE METHOD----");
     }
 
+
+    /*Putting the query in key value pair
+    * path=/content/we-retail
+    * type=cq:Page
+    * fulltext=women
+    * p.offset=
+    * p.limit=-1
+    * */
     public Map<String,String> createTextSearchQuery(String searchText,int startResult,int resultPerPage){
         Map<String,String> queryMap=new HashMap<>();
         queryMap.put("path","/content/we-retail");
@@ -52,41 +63,47 @@ public class SearchServiceImpl implements SearchService{
     @Override
     public JSONObject searchResult(String searchText,int startResult,int resultPerPage){
         LOG.info("\n ----SEARCH RESULT--------");
-        JSONObject searchResult=new JSONObject();
+        JSONObject jsonObject=new JSONObject();
         try {
             ResourceResolver resourceResolver = ResolverUtil.newResolver(resourceResolverFactory);
             final Session session = resourceResolver.adaptTo(Session.class);
+
+            //here we are creating the query using queryBuilder, and we are giving the Predicates using PredicateGroup.
             Query query = queryBuilder.createQuery(PredicateGroup.create(createTextSearchQuery(searchText,startResult,resultPerPage)), session);
 
-
+            //Using the above line query we are getting the results.
             SearchResult result = query.getResult();
+
+            //Each SearchResult is a HIT. below we are getting all the hits
+            List<Hit> hits =result.getHits();
+            JSONArray resultArray=new JSONArray();
+            //Here we are iterating all the hits
+            for(Hit hit: hits){
+
+                //here from hit we are getting the Resource and using Resource we are adapting it to page. So we can get the complete info about the page
+                Page page=hit.getResource().adaptTo(Page.class);  
+                JSONObject resultObject=new JSONObject(); // we are crating the data into a Json object.
+                resultObject.put("title",page.getTitle());
+                resultObject.put("path",page.getPath());
+                resultArray.put(resultObject);
+                LOG.info("\n Page {} ",page.getPath());
+            }
+            jsonObject.put("results",resultArray);
+
 
             int perPageResults = result.getHits().size();
             long totalResults = result.getTotalMatches();
             long startingResult = result.getStartIndex();
             double totalPages = Math.ceil((double) totalResults / (double) resultPerPage);
 
-            searchResult.put("perpageresult",perPageResults);
-            searchResult.put("totalresults",totalResults);
-            searchResult.put("startingresult",startingResult);
-            searchResult.put("pages",totalPages);
-
-
-            List<Hit> hits =result.getHits();
-            JSONArray resultArray=new JSONArray();
-            for(Hit hit: hits){
-                Page page=hit.getResource().adaptTo(Page.class);
-                JSONObject resultObject=new JSONObject();
-                resultObject.put("title",page.getTitle());
-                resultObject.put("path",page.getPath());
-                resultArray.put(resultObject);
-                LOG.info("\n Page {} ",page.getPath());
-            }
-            searchResult.put("results",resultArray);
+            jsonObject.put("perpageresult",perPageResults);
+            jsonObject.put("totalresults",totalResults);
+            jsonObject.put("startingresult",startingResult);
+            jsonObject.put("pages",totalPages);
 
         }catch (Exception e){
             LOG.info("\n ----ERROR -----{} ",e.getMessage());
         }
-        return searchResult;
+        return jsonObject;
     }
 }
