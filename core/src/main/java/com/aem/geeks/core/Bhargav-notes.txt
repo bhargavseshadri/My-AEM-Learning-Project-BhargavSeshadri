@@ -1,3 +1,58 @@
+INDEX:
+
+1) ResourceResolverFactory related Notes
+
+2) FETCHING DATA FROM EXTERNAL API - NO ACCESS TOKEN NEEDED - (using sling model)
+    a) Directly fetching the data from the endpoint with no credentials and token
+    b) FETCHING THE DATA FROM THIRD PARTY ENDPOINT WHICH NEED A ACCESS TOKEN - ACCESS TOKEN NEEDED - (using Service)
+
+3) SERVLET
+    a) SERVLET : 1 - ResourceType Servlet: GET (here we fetch Resource Path and Page Title using GET method)
+    b) SERVLET : 2 - ResourceType Servlet: POST (Registration Form use case)
+
+    c) SERVLET : 3 - PathType Servlet
+                        * In GET method we will create a json with all the pages where KEY will be the page title amd VALUE will be the page path
+                        * In POST Registration Form use case
+    d) SERVLET : 4 - PathType Servlet - QUERY PARAMETERS FETCHING USING PATH TYPE SERVLET DEMO
+    e) SERVLET : 5 - PathType Servlet - Creating a json with all the pages where KEY will be the page title amd VALUE will be the page path.
+    f) Servlet : 6 - PathType Servlet - BhargavPropBtnPathServlet.java (Here we are adding a node property on button click using this servlet)
+    g) Servlet : 7 - PathType Servlet with "METADATA SCHEMA" (Here in this servlet we are fetching the data from API using the value given in metadata schema field)
+
+4) SLING MODELS & SERVICES
+
+5) COMPOSITE MULTIFIELD - SLING MODEL - 2 Approachs
+
+6) CONFIGURATIONS
+    a) Normal Configuration
+    b) Factory Configuration
+
+7) SCHEDULERS
+    a) Runnable scheduler
+    b) Job Scheduler
+
+8) WORKFLOWS in AEM
+    * TRIGGERING THE WORKFLOW USING LAUNCHER
+    * TRIGGERING THE WORKFLOW USING CODE/API in Backend
+    * Writing Custom Workflow Process
+    * CUSTOM WORKFLOW STEP
+    * Created a Workflow using Participant Step and Decision Step.
+
+9) Clientlibraries
+
+10) Creating a Proxy Component
+        * Proxy Component 1 - bhargavtextproxy
+        * Proxy Component 2 - bhargavtextproxy-two
+
+11) bhargav-backend-aem-apis-comp
+
+12) Creating a SYSTEM/SERVICE USER (Manual Way)
+13) Creating regular user (not a system/service user) through User Administration.
+14) Creating Content Fragment Model and Using that CF Data in the Backend.
+15) Creating Custom Rollout Configuration and Live action for that rollout configuration.
+16) Query Builder API in Backend
+17) HTL
+
+=============================================================================================
 My Components:
 
 a) Personal Component : apps/aemgeeks/components/content/slingmodelproductcomp
@@ -88,11 +143,12 @@ STEP: 4 (Last Step) : By using a HTL in component, we render the data we got fro
 =============================================================================================
 3) SERVLET
 
-a) SERVLET : 1 - ResourceType Servlet:
+a) SERVLET : 1 - ResourceType Servlet: GET
 * MY EXAMPLE
 -> GET : (only step) (MAIN LOGIC): com/aem/geeks/core/servlets/BhargavResourceTypeGETServlet.java
 
--> POST:
+-----------------------------
+b) SERVLET : 2 - ResourceType Servlet: POST:
 Servlet Usage: Here this Servlet will work for a REGISTRATION FORM component, there when a user adds his details in the
                form and submits it then this post servlet gets called and then it will create a new node(usernode) under
                the provided "page resource", and in that node it will store the user given data.
@@ -110,7 +166,7 @@ Step: 3(last step) : Go to the component and check in the form, if it has the "m
 -> GET, POST : com/aem/geeks/core/servlets/GeeksResourceTypesServlet.java
 
 -----------------------------
-b) SERVLET : 2 - PathType Servlet: com/aem/geeks/core/servlets/GeeksPathTypeServlet.java
+c) SERVLET : 3 - PathType Servlet: com/aem/geeks/core/servlets/GeeksPathTypeServlet.java
 
 Servlet Usage: here we are writing a path bound servlet, which is bound to paths ""/bin/pages","/geeks/pages" with get and post methods
                * in GET method we will create a json with all the pages where KEY will be the page title amd VALUE will be the page path
@@ -130,7 +186,7 @@ Step:3 (Only for POST METHOD) : apps/aemgeeks/components/content/formforpathtype
 * Go to the form component and there add you path (eg: /bin/pages) in the form "action" attribute and for the "method" attribute give post.
 
 -------------------------------------------------------------------------
-c) SERVLET : 3 - PathType Servlet - QUERY PARAMETERS FETCHING USING PATH TYPE SERVLET DEMO
+d) SERVLET : 4 - PathType Servlet - QUERY PARAMETERS FETCHING USING PATH TYPE SERVLET DEMO
 
 Servlet usage: this servlet will get executed when we hit the path /bin/queryparamdemo and then in response it will give the info present
                 in the query params.
@@ -139,13 +195,13 @@ Step: (only step) : com/aem/geeks/core/servlets/BhargavPathTypeServletQP.java
 To execute the servlet : http://localhost:4502/bin/queryparamdemo?name=Bhargav&age=25
 
 -------------------------------------------------------------------------
-d) SERVLET : 4 - PathType Servlet - JSON DEMOs
+e) SERVLET : 5 - PathType Servlet - JSON DEMOs
 
 a) Creating a json with all the pages where KEY will be the page title amd VALUE will be the page path.
 Demo file : com/aem/geeks/core/servlets/GeeksPathTypeServlet.java
 
 -------------------------------------------------------------------------
-e) Servlet : 5 - PathType Servlet - BhargavPropBtnPathServlet.java
+f) Servlet : 6 - PathType Servlet - BhargavPropBtnPathServlet.java
 
 * The main work of this servlet is if we add the component "bhargav-backend-aem-apis-comp" it have one button, so if we click that button. then this Path Type Servlet
   will get executed and then it will add one node property in the current resource node.
@@ -156,7 +212,7 @@ e) Servlet : 5 - PathType Servlet - BhargavPropBtnPathServlet.java
 - Step:4 - Last Step - Node prop adding logic : com/aem/geeks/core/services/impl/BhargavPropertyBtnServiceImpl.java
 
 -------------------------------------------------------------------------
-g) Servlet : 6 - PathType Servlet with "METADATA SCHEMA"
+g) Servlet : 7 - PathType Servlet with "METADATA SCHEMA"
 
 * The use of this servlet is, in our Assets metadata we have two fields and if we give ID in one field and the second field will automatically fetch the Name
   belongs to that ID from and API using this Servlet.
@@ -215,9 +271,9 @@ PROBLEM:  So for this one SERVICE there is two implimentations, so in this scena
 - Filter demo & using of these services: com/aem/geeks/core/models/impl/ProductModelImpl.java
 
 =============================================================================================
-COMPOSITE MULTIFIELD - SLING MODEL
+5) COMPOSITE MULTIFIELD - SLING MODEL
 
-* Approach - 1 (Main)
+a) Approach - 1 (Main)
 Step:1 - Create a Composite Multifield - apps/aemgeeks/components/content/bhargav-compmultifield
 Step:2 - Sling Model to for the Composite Multifield
             Parent : com/aem/geeks/core/models/impl/compositemultifieldrltd/BhargavCompositeMultifieldModelImpl.java
@@ -226,7 +282,7 @@ Step : 3 - Render the Multifield data in HTL : apps/aemgeeks/components/content/
 
 --------------------------------------------
 
-* Approach - 2
+b) Approach - 2
 Step:1 : Create a component with composite multifield -> apps/aemgeeks/components/content/slingmodelproductcomp/_cq_dialog/.content.xml
 
 -> We can render the multifield values using two ways one is using MAP and the other way is using JAVA BEAN
@@ -235,7 +291,7 @@ Step:2 : Write the logic in Sling Model to render those item nodes of that comp 
 Step:3(last step) : in htl I am printing those values -> apps/aemgeeks/components/content/slingmodelproductcomp/slingmodelproductcomp.html
 
 =============================================================================================
-5) CONFIGURATIONS  (OSGI CONFIGURATION -> Service -> Sling Model -> HTL)
+6) CONFIGURATIONS  (OSGI CONFIGURATION -> Service -> Sling Model -> HTL)
 
 a) Normal Configuration
 STEP:1 - com/aem/geeks/core/config/BhargavOSGiConfig.java -- Create an annotation class with osgi config code stating what
@@ -270,7 +326,7 @@ STEP:4 - (Last Step) - apps/aemgeeks/components/content/slingmodelproductcomp/sl
 - Now you can see the values of the multiple config instances.
 
 =============================================================================================
-6) SCHEDULERS  (Configuration(to take the values) -> Scheduler Service )
+7) SCHEDULERS  (Configuration(to take the values) -> Scheduler Service )
 a) Runnable scheduler
 STEP:1 - Create a OSGI Configuration to take the values for scheduler : com/aem/geeks/core/config/SchedulerConfiguration.java
 STEP:2 - Create a Runnable Scheduler : com/aem/geeks/core/schedulers/GeeksScheduler.java
@@ -283,7 +339,7 @@ STEP:2 - Create a JOB Scheduler : com/aem/geeks/core/schedulers/GeeksSchedulerJo
 STEP:3(LAST STEP) - Connect and Use that configuration values in the scheduler : com/aem/geeks/core/schedulers/GeeksSchedulerJobs.java
 
 =============================================================================================
-7) WORKFLOWS in AEM
+8) WORKFLOWS in AEM
 
 * TRIGGERING THE WORKFLOW USING LAUNCHER
 - USE CASE: we will create a model which will create the page versions, when the WF executes.
@@ -338,6 +394,7 @@ Step: 3 - Add you step in the WF Model.
    group is present or not.
 - If not present then we have to add our component group. but modifying /libs/ path is not at all advisable. so we have to overlay (or) the override the that libs design node.
 
+-------------------------------------------------------------
 * OVERLAYING (or) OVERRIDING THE LIBS NODE (doing in crx, but we can do through code also by pkging it out and putting in our code folder and giving a push)
 STEP: 1 - Copy the design node "/libs/settings/wcm/designs/default"
 STEP: 2 - Go to "apps/settings/wcm/designs" node and paste it there and rename the node from default to whatever you want.
@@ -349,7 +406,7 @@ STEP: 7 - Here in this use case add the component group in component property in
 STEP: 6 - Now in the WF Model console -> in properties -> in advanced tab -> give our own overridden design node "/apps/settings/wcm/designs/geeks"
 STEP: 7 - Now you can see your WF Step in the available steps. Drag and drop it.
 
-
+-------------------------------------------------------------
 *  Created a Workflow using Participant Step and Decision Step.
 
   Workflow Name : Bhargav Content Review Workflow
@@ -362,13 +419,13 @@ STEP: 7 - Now you can see your WF Step in the available steps. Drag and drop it.
              I have given the USER(we can get our user details from tools->security->users).
           - So when ever the participant step executes then the notification sends to that user.
 =============================================================================================
-8) Clientlibraries
+9) Clientlibraries
 
 Stet: 1 - Create a Clientlib folder and add your code in it : apps/aemgeeks/components/content/bhargavapicomp/clientlib
 Step: 2 - Include the clientlib in your component : apps/aemgeeks/components/content/bhargavapicomp/bhargavapicomp.html
 
 =============================================================================================
-9) Creating a Proxy Component
+10) Creating a Proxy Component
 
 * Proxy Component 1 - bhargavtextproxy
 -> Here in this component we mainly explored how to add a custom field and how to hide the existing core component field.
@@ -391,7 +448,7 @@ Step: 2 - Include the clientlib in your component : apps/aemgeeks/components/con
 ->Step: 2 - Sling Model : com/aem/geeks/core/models/BhargavTextProxyTwoModel.java
 
 =============================================================================================
-10) bhargav-backend-aem-apis-comp
+11) bhargav-backend-aem-apis-comp
 -> In this component we use all the AEM Api's - Resource, ResourceResolver, Session, Node, Pagemanager, ValueMap, ResourceResolverFactory
 
 -> Component : apps/aemgeeks/components/bhargav-backend-aem-apis-comp
@@ -405,7 +462,7 @@ Step: 2 - Include the clientlib in your component : apps/aemgeeks/components/con
    - Service to add the property : com/aem/geeks/core/services/impl/BhargavPropertyBtnServiceImpl.java
 
 =============================================================================================
-11) Creating a SYSTEM/SERVICE USER (Manual Way)
+12) Creating a SYSTEM/SERVICE USER (Manual Way)
 
 * Main Note : Service users are designed for backend/programmatic access only, not for interactive UI login. so we can't able to login using service user.
               They are used by OSGI services, Servlets, Workflows.
@@ -424,7 +481,7 @@ Step : 5 - For Service Mapping give "aemgeeks.core:bhargavmainuser=bhargav-main-
 
 
 =============================================================================================
-12) Creating regular user (not a system/service user) through User Administration.
+13) Creating regular user (not a system/service user) through User Administration.
 - This is a regular user which we can use to login to AEM, and we can give the access to this user based on groups.
 
 Step : 1 - Go to: Tools → Security → Users -> Create
@@ -433,7 +490,7 @@ Step : 3 - Now we have Assign Groups, this will decide the access for the user. 
 Step : 4 - Now select the use and click on "ENABLE" & "ACTIVATE".
 
 =============================================================================================
-13) Creating Content Fragment Model and Using that CF Data in the Backend.
+14) Creating Content Fragment Model and Using that CF Data in the Backend.
 
 Creation :
 Step :1 - Go to "Tools -> Assets -> Content Fragment Models" and create a new model with the required fields in which ever folder you want. (eg: Bhargav Personal CF Model).
@@ -457,7 +514,7 @@ Step: 1 - Sling Model to get the CF data : com/aem/geeks/core/models/impl/Bharga
 Step: 2 - Using that sling model in HTL to render the data : apps/aemgeeks/components/content/bhargav-content-fragment-comp
 
 =============================================================================================
-14) Creating Custom Rollout Configuration and Live action for that rollout configuration.
+15) Creating Custom Rollout Configuration and Live action for that rollout configuration.
 --> Use of this : whenever we run the rollout page for a blueprint then this custom rollout get executed with live action and add custom
                   node property for both blueprint page and live action page.
 
@@ -481,7 +538,7 @@ Step: 6 - unzip it and add it in the codebase under the same path just like in c
 Step: 7 - Add it in filter.xml of that folder as well  --> ui.apps/src/main/content/META-INF/vault/filter.xml, Now deploy it.
 
 =============================================================================================
-Query Builder API in Backend
+16) Query Builder API in Backend
 
 - Step : 1 Creating a Service - com/aem/geeks/core/services/impl/SearchServiceImpl.java
 - Step : 2(last step) Creating a pathtype servlet - com/aem/geeks/core/servlets/GeeksSearchServlet.java
