@@ -164,6 +164,17 @@ In short:
    2. custom run modes
 
 =============================================================================================
+Context-Aware Configuration (CaConfig)
+- Context-Aware Configuration (CaConfig) in AEM is a mechanism for storing and retrieving configuration values based on the content hierarchy rather
+  than the AEM environment.
+- Unlike OSGi configurations, which are global to an AEM instance, Context-Aware Configurations allow different sites, brands, or sections of a site to have
+  different configuration values while running on the same AEM instance.
+- For example, if Site A and Site B are hosted on the same AEM production environment, Site A can have support@sitea.com and Site B can have support@siteb.com
+  configured separately without requiring different run modes or deployments.
+- To implement it, we define a configuration interface using @Configuration, store the values under /conf/<site>/sling:configs, and access them in Sling Models
+  using ConfigurationBuilder or @ContextAwareConfiguration.
+
+=============================================================================================
 CORE COMPONENTS & PROXY COMPONENTS
 
 -> CORE COMPONENTS: Core Components are a set of ready-made, production-ready components provided by Adobe (like Text, Image, Carousel, Button, Title, etc.)

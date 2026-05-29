@@ -183,6 +183,8 @@ Page page=pageManager.getPage("/content/aemgeeks/us/en");
 
 @Designate : Links configuration class to the component (used for OSGi configs).
 
+@Configuration : Used for craeting Context-Aware Configuration, which is different from OSGi configuration.
+
 @ChildResource : @ChildResource in Adobe Experience Manager Sling Models is used to inject child resources (nodes) of the current resource directly
                  into your model—instead of you manually traversing the JCR tree.
                 Eg : @ChildResource(name = "multifieldName")
