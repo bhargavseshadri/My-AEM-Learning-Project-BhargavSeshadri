@@ -15,12 +15,9 @@ public class ArrayRelatedCode {
 
         // ---- Method 2: Declare and allocate together ----
         int[] arr2 = new int[5];
-
-        // ---- Method 3: Declare, allocate, and initialize later ----
-        int[] arr3 = new int[3];
-        arr3[0] = 10;
-        arr3[1] = 20;
-        arr3[2] = 30;
+        arr2[0] = 10;
+        arr2[1] = 20;
+        arr2[2] = 30;
 
         // ---- Method 4: Direct initialization (array literal) ----
         int[] arr4 = {1, 2, 3, 4, 5};
@@ -33,16 +30,6 @@ public class ArrayRelatedCode {
         double[] prices = {19.99, 29.99, 39.99};
         char[] letters = {'A', 'B', 'C'};
         boolean[] flags = {true, false, true};
-
-        // ---- Method 7: Multidimensional Array (2D Array) ----
-        int[][] matrix = {
-                {1, 2, 3},
-                {4, 5, 6}
-        };
-
-
-
-
 
 /*=========================================================
 3. DIFFERENT WAYS TO ACCESS ("CALL") ARRAY ELEMENTS
@@ -57,12 +44,6 @@ public class ArrayRelatedCode {
 
         // Access length
         System.out.println("Length of arr4: " + arr4.length);
-
-        // Access 2D array element
-        System.out.println("matrix[1][2]: " + matrix[1][2]);
-
-
-
 
 
 /* =========================================================
@@ -92,14 +73,5 @@ public class ArrayRelatedCode {
         // ---- Method 4: Using Java Utility (Arrays.toString) ----
         System.out.println("\nUsing Arrays.toString:");
         System.out.println(java.util.Arrays.toString(arr5));
-
-        // ---- Method 5: Looping 2D array ----
-        System.out.println("\nLooping 2D array:");
-        for (int row = 0; row < matrix.length; row++) {
-            for (int col = 0; col < matrix[row].length; col++) {
-                System.out.print(matrix[row][col] + " ");
-            }
-            System.out.println();
-        }
     }
 }

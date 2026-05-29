@@ -534,7 +534,6 @@ Example Code : com/aem/geeks/core/javarelatedcodes/StaticExamples.java
   an object. and it is helpful for memory management.
 * To access a non-static method in static method, we have to create an object.
 * Static method can only access the static variables.
-* To Access normal instance variables we have to create an object of that class and through that obj we access those class instance variables.
 * Static methods can only access static methods.
 * Non-Static can access both static and non-static methods.
 * Static does not support "this" and "super"
