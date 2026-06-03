@@ -547,10 +547,20 @@ Step: 7 - Add it in filter.xml of that folder as well  --> ui.apps/src/main/cont
 
 =============================================================================================
 New concepts to explore :
-1. InheritanceValueMap inheritanceValueMap = new HierarchyNodeInheritanceValueMap();
-2.
-3. Dialog level js validation
-4. Dispatcher setup and learn
+I* InheritanceValueMap inheritanceValueMap = new HierarchyNodeInheritanceValueMap();
+I* There is a fields in comp - A, which have CSS Styles and I want to use them in another components as well, how to do that
+I* Dialog level js validation
+* Dispatcher setup and learn
+* I want to move the bunch of pages from one place to another place, how to do that
+I* I want to add a new compn to the existing editable template, how the old and new pages got effected
+* Page Properties through code (can we do it)
+I* ResourceType Servlets
+* Internationalization in AEM
+I* Adding and modifying asset metadata through backend
+
+* JAVA - COLLECTIONS ETC
+* css, html, js basics
+* AI Connection & using MCP server things
 
 
 
