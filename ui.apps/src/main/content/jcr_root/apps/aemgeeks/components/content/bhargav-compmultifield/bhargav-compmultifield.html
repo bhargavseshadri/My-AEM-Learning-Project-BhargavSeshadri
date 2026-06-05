@@ -1,10 +1,26 @@
 <h1>Composite Multifield Component</h1>
 
-<sly data-sly-use.model="com.aem.geeks.core.models.BhargavCompositeMultifieldModel">
 
+<h2>====Printing Using Approach 1 (Using @ChildResource Annotation)====</h2>
+<sly data-sly-use.model="com.aem.geeks.core.models.BhargavCompositeMultifieldModel">
     <sly data-sly-list.item="${model.getItems}">
         <h3>${item.question}</h3>
         <p>${item.answer}</p>
     </sly>
 
+</sly>
+
+
+
+<!--Step : 3 - Render the Multifield data in HTL : apps/aemgeeks/components/content/bhargav-compmultifield/bhargav-compmultifield.html
+Step:2 - Sling Model to for the Composite Multifield - com/aem/geeks/core/models/impl/compositemultifieldrltd/BhargavCompMultifieldSecond.java-->
+
+<h2>====Printing Using Approach 2 (Using Map and ValueMap)====</h2>
+<sly data-sly-use.obj="com.aem.geeks.core.models.BhargavCompMultifieldSecond">
+
+    <div data-sly-list.item="${obj.getProductDetailsWithMap}">
+        ----------Count: ${itemList.count}-----------
+        <p>Que : <b>${item.question}</b></p>
+        <p>Answer : <b>${item.answer}</b></p>
+    </div>
 </sly>

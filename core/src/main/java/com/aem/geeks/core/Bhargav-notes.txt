@@ -275,20 +275,16 @@ PROBLEM:  So for this one SERVICE there is two implimentations, so in this scena
 
 a) Approach - 1 (Main)
 Step:1 - Create a Composite Multifield - apps/aemgeeks/components/content/bhargav-compmultifield
-Step:2 - Sling Model to for the Composite Multifield
+Step:2 - Sling Model for the Composite Multifield
             Parent : com/aem/geeks/core/models/impl/compositemultifieldrltd/BhargavCompositeMultifieldModelImpl.java
             Child : com/aem/geeks/core/models/impl/compositemultifieldrltd/BhargavCompositeMultifieldChildModel.java
-Step : 3 - Render the Multifield data in HTL : apps/aemgeeks/components/content/bhargav-compmultifield/bhargav-compmultifield.html
+Step:3 - Render the Multifield data in HTL : apps/aemgeeks/components/content/bhargav-compmultifield/bhargav-compmultifield.html
 
---------------------------------------------
 
 b) Approach - 2
-Step:1 : Create a component with composite multifield -> apps/aemgeeks/components/content/slingmodelproductcomp/_cq_dialog/.content.xml
-
--> We can render the multifield values using two ways one is using MAP and the other way is using JAVA BEAN
-a) USING MAP
-Step:2 : Write the logic in Sling Model to render those item nodes of that comp multifield  -> com/aem/geeks/core/models/impl/ProductModelImpl.java
-Step:3(last step) : in htl I am printing those values -> apps/aemgeeks/components/content/slingmodelproductcomp/slingmodelproductcomp.html
+Step:1 - Create a Composite Multifield - apps/aemgeeks/components/content/bhargav-compmultifield
+Step:2 - Sling Model to for the Composite Multifield - com/aem/geeks/core/models/impl/compositemultifieldrltd/BhargavCompMultifieldSecondImpl.java
+Step:3 - Render the Multifield data in HTL : apps/aemgeeks/components/content/bhargav-compmultifield/bhargav-compmultifield.html
 
 =============================================================================================
 6) CONFIGURATIONS  (OSGI CONFIGURATION -> Service -> Sling Model -> HTL)
@@ -552,7 +548,7 @@ I* There is a fields in comp - A, which have CSS Styles and I want to use them i
 I* Dialog level js validation
 * Dispatcher setup and learn
 * I want to move the bunch of pages from one place to another place, how to do that
-I* I want to add a new compn to the existing editable template, how the old and new pages got effected
+I* I want to add a new comp to the existing editable template, how the old and new pages got effected
 * Page Properties through code (can we do it)
 I* ResourceType Servlets
 * Internationalization in AEM

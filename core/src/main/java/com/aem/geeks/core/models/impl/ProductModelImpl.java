@@ -107,41 +107,6 @@ public class ProductModelImpl implements ProductModel{
 
 
 
-/*********************************************************MULTIFIELD RELATED CODE***************************************************************/
-
-//BhargavSeshadri - From here Composite multifield related code (Step:2 )(Step:1 apps/aemgeeks/components/content/slingmodelproductcomp/_cq_dialog/.content.xml)
-//here this multifield will take a every set of values and store them in a new node. and using the below java logic we will render those values on page
-    @SlingObject            //here we can also use @Inject - but it will retun null sometimes.
-    Resource componentResource;   //here we are injecting our component resource
-
-    @Override
-    public List<Map<String, String>> getProductDetailsWithMap() {
-        List<Map<String, String>> productDetailsMap=new ArrayList<>();  //here we are creating a list
-        try {
-            Resource productDetail=componentResource.getChild("productdetails");  //here we got the current resource using componentResource and from there we are going to the child multifield node
-            if(productDetail!=null){
-                for (Resource product : productDetail.getChildren()) {  //here we are getting all the children under productDetail node
-                    Map<String,String> productMap=new HashMap<>();      //here we are creating a map to put the values of every item node means for every iteration of multifield
-                    productMap.put("productname",product.getValueMap().get("productnamemultifield",String.class));  //here we are getting the values of every child node in multifield and putting them in a map
-                    productMap.put("buyername",product.getValueMap().get("buyerName",String.class));
-                    productMap.put("quantity",product.getValueMap().get("quantity",String.class));
-                    productDetailsMap.add(productMap);   //adding all these map sets in the main list
-                }
-            }
-        }catch (Exception e){
-            LOG.info("\n ERROR while getting Book Details {} ",e.getMessage());
-        }
-        LOG.info("\n SIZE {} ",productDetailsMap.size());
-        return productDetailsMap;
-    }
-//For Step:3 : render these values using htl -> apps/aemgeeks/components/content/slingmodelproductcomp/slingmodelproductcomp.html
-
-
-
-
-
-
-
 
 /*********************************************************NORMAL CONFIGURATION RELATED CODE***************************************************************/
 //BhargavSeshadri - Normal OSGI Configuration - STEP:4 - Using/calling the service in SLING MODEL
