@@ -545,13 +545,17 @@ Step: 7 - Add it in filter.xml of that folder as well  --> ui.apps/src/main/cont
 =============================================================================================
 17) Use Cases/Scenario Based - Implimentations
 
-a) Fetching Comp - A dialog values in Comp - B and using them
+a) Fetching Comp-A dialog values in Comp-B and using them
+Step: 1 - We should have a component A with some dialog fields. : apps/aemgeeks/components/content/bhargav-personalcomp-one
+Step: 2 - Create a component B where we want to use the component A dialog values. : apps/aemgeeks/components/content/bhargav-personalcomp-two
+Step: 3 - Now to fetch the comp A dialog values in comp B using Sling model : com/aem/geeks/core/models/impl/BhargavPersonalCompTwoModelImpl.java
+Step: 4 - Render those values in HTL : apps/aemgeeks/components/content/bhargav-personalcomp-two/bhargav-personalcomp-two.html
 
 =============================================================================================
 New concepts to explore :
 I* InheritanceValueMap inheritanceValueMap = new HierarchyNodeInheritanceValueMap();
 I* There is a fields in comp - A, which have CSS Styles and I want to use them in another components as well, how to do that
-I* Dialog level js validation
+I* Dialog level validation (dataSource, granite:data - data-validate)
 I* fetching dynamic dropdown values in comp dialog -(use DATASOURCE)
 * Dispatcher setup and learn
 * I want to move the bunch of pages from one place to another place, how to do that
