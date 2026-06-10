@@ -111,7 +111,7 @@ public class ProductModelImpl implements ProductModel{
 /*********************************************************NORMAL CONFIGURATION RELATED CODE***************************************************************/
 //BhargavSeshadri - Normal OSGI Configuration - STEP:4 - Using/calling the service in SLING MODEL
 // FOR STEP:3 got to com/aem/geeks/core/services/impl/BhargavOsgiConfigServiceImpl.java
-// for STEP:5 (last step) - go to apps/aemgeeks/components/content/slingmodelproductcomp/slingmodelproductcomp.html
+// for STEP:5 (last step) - go to apps/aemgeeks/components/content/bhargav-personalcomp-one/bhargav-personalcomp-one.html
 
     @OSGiService
     BhargavOsgiConfigService bhargavOsgiConfigService;  //getting the service linked to our configuration
@@ -151,7 +151,7 @@ public class ProductModelImpl implements ProductModel{
 /*********************************************************FACTORY CONFIGURATION RELATED CODE***************************************************************/
 /*BhargavSeshadri - Step:3 - using the osgi factory configuration service here
 * For Step:2 - com/aem/geeks/core/services/impl/OSGiFactoryConfigImpl.java
-* For Step:4 (Last Step) - apps/aemgeeks/components/content/slingmodelproductcomp/slingmodelproductcomp.html
+* For Step:4 (Last Step) - apps/aemgeeks/components/content/bhargav-personalcomp-one/bhargav-personalcomp-one.html
 * */
 
     @OSGiService

@@ -2,15 +2,16 @@
 
 
 <!--****************************** Basic Sling Model related code *********************************************************************************-->
-==========Basic Sling Model Output=============
+====================================Basic Sling Model Output==============================
 <div data-sly-use.obj="com.aem.geeks.core.models.ProductModel">  <!--BhargavSeshadri - Sling Model - Step:5(Last Step) - Rendering the Values in HTL Script; (for step:4 go to sling model- com/aem/geeks/core/models/impl/ProductModelImpl.java)-->
     <li>${obj.getProductName}</li>
     <li>${obj.getProductPrice}</li>
     <li>${obj.manufacturerName}</li>
     <li>${obj.getCurrentPageTitle}</li>
     <li>${obj.returnName}</li>
+    </br>
     <img src="${obj.productImageReference @ context='uri'}" alt="Product Image"/>
-
+    </br>
     *****NORMAL MULTIFIELD*****
     <ul>
         <sly data-sly-list.item="${obj.getMultifieldvalues}">
@@ -18,12 +19,13 @@
         </sly>
     </ul>
 
-
-
+</br>
+====================================================================================================
+</br>
+</br>
 
 <!--****************************** Normal OSGI Configuration related code *********************************************************************************-->
-
-    ============Bhargav - Normal OSGI Configuration=================
+================================Bhargav - Normal OSGI Configuration====================================
     <div><p> Name : <b>${obj.getName}</b></p></div>       <!--BhargavSeshadri - STEP:5(last step) - Printing the values of our osgi config using our sling model(for step:4 - com/aem/geeks/core/models/impl/ProductModelImpl.java)-->
     <div><p> Number : <b>${obj.getNumber}</b></p></div>
     <div><p> Fav Movie : <b>${obj.getFavMovie}</b></p></div>
@@ -32,12 +34,13 @@
     <ul data-sly-list="${obj.countries}">
         <li>${item}</li>
     </ul>
-
-
+    </br>
+=======================================================================================================
+    </br>
+    </br>
 <!--****************************** FACTORY OSGI Configuration related code *********************************************************************************-->
 <!--BhargavSeshadri - STEP:4(last step) - Printing the values of our osgi config using our sling model(for step:4 - com/aem/geeks/core/models/impl/ProductModelImpl.java)-->
-
-    ============Bhargav - Factory OSGI Configuration=================
+==================================Bhargav - Factory OSGI Configuration==============================
 
     <div data-sly-list="${obj.allOSGiConfigs}">    <!--Here we are iterating through the available list, and for every iteration ITEM will have the complete data of that instance-->
         ------Config # <b>${itemList.count}</b>-----
@@ -48,6 +51,10 @@
 
 </div>
 
+</br>
+====================================================================================================
+</br>
+</br>
 
 
 <div data-sly-list="${obj.getAllOSGiConfigs}">

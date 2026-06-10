@@ -2,5 +2,5 @@
 <jcr:root xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0"
     jcr:description="Component for Sling models, Services, Multifields ETC."
     jcr:primaryType="cq:Component"
-    jcr:title="Product Component - Sling Model Demo"
+    jcr:title="Bhargav Personal Component - 2"
     componentGroup="AEM GEEKS - Content"/>

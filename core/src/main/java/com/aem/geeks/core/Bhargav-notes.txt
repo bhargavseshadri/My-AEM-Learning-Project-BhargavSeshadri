@@ -55,14 +55,15 @@ INDEX:
 =============================================================================================
 My Components:
 
-a) Personal Component : apps/aemgeeks/components/content/slingmodelproductcomp
-b) API Component : apps/aemgeeks/components/content/bhargavapicomp
-c) Registration Form Comp (for ResourceType Post Servlet) : apps/aemgeeks/components/content/registrationformservlet
-d) Registration Form Comp (for PathType Post Servlet) : apps/aemgeeks/components/content/formforpathtypeservlet
-e) Complete "ResourceResolver, Resource, PageManager, Session" these API's specific component : apps/aemgeeks/components/bhargav-backend-aem-apis-comp
-f) Component for Content Fragment : apps/aemgeeks/components/content/bhargav-content-fragment-comp
-g) Component for Composite Multifield : apps/aemgeeks/components/content/bhargav-compmultifield
-h) Proxy Components : 1. apps/aemgeeks/components/bhargavtextproxy
+a) Personal Component-1 : apps/aemgeeks/components/content/bhargav-personalcomp-one
+b) Personal Component-2 : apps/aemgeeks/components/content/bhargav-personalcomp-two
+c) API Component : apps/aemgeeks/components/content/bhargavapicomp
+d) Registration Form Comp (for ResourceType Post Servlet) : apps/aemgeeks/components/content/registrationformservlet
+e) Registration Form Comp (for PathType Post Servlet) : apps/aemgeeks/components/content/formforpathtypeservlet
+f) Complete "ResourceResolver, Resource, PageManager, Session" these API's specific component : apps/aemgeeks/components/bhargav-backend-aem-apis-comp
+g) Component for Content Fragment : apps/aemgeeks/components/content/bhargav-content-fragment-comp
+h) Component for Composite Multifield : apps/aemgeeks/components/content/bhargav-compmultifield
+i) Proxy Components : 1. apps/aemgeeks/components/bhargavtextproxy
                       2. apps/aemgeeks/components/bhargavtextproxy-two
 
 =============================================================================================
@@ -238,7 +239,7 @@ API used here : https://dummyjson.com/users
 =============================================================================================
 4) SLING MODELS & SERVICES  (Service(optional) -> Sling model -> HTL)
 
-Step:1 - create a component : apps/aemgeeks/components/content/slingmodelproductcomp
+Step:1 - create a component : apps/aemgeeks/components/content/bhargav-personalcomp-one
 Step:2 - create a Sling Model : com/aem/geeks/core/models/ProductModel.java
 Step:3 - create a Sling Model Implimentation : com/aem/geeks/core/models/impl/ProductModelImpl.java
 
@@ -246,10 +247,10 @@ Step:3 - create a Sling Model Implimentation : com/aem/geeks/core/models/impl/Pr
 * Linking the Service to an another Service : com/aem/geeks/core/services/ProductPriceBranchService.java
 
 Step:4 - Using the Services In our Sling Model : com/aem/geeks/core/models/impl/ProductModelImpl.java
-Step:5 - Rendering the Values in HTL Script : apps/aemgeeks/components/content/slingmodelproductcomp/slingmodelproductcomp.html
+Step:5 - Rendering the Values in HTL Script : apps/aemgeeks/components/content/bhargav-personalcomp-one/bhargav-personalcomp-one.html
 
 * In this Component xml we have the conditional showing fields in the dialog box. So make that "showhide" work we need show/hide JavaScript clientlib.
-  Added this in apps/aemgeeks/components/content/slingmodelproductcomp
+  Added this in apps/aemgeeks/components/content/bhargav-personalcomp-one
 
 --------------------------------------------
 Multiple Service Implimentations Linked to one Service Interface
@@ -296,9 +297,9 @@ STEP:2 - Create a Service interface -- com/aem/geeks/core/services/BhargavOsgiCo
 STEP:3 - Create a service implimentation and link it with our osgi config, and then write the java logic based on need
          - com/aem/geeks/core/services/impl/BhargavOsgiConfigServiceImpl.java
 STEP:4 - Using/calling this service in SLING MODEL -- com/aem/geeks/core/models/impl/ProductModelImpl.java
-STEP:5(last step) - Printing the data on page using HTL -- apps/aemgeeks/components/content/slingmodelproductcomp/slingmodelproductcomp.html
+STEP:5(last step) - Printing the data on page using HTL -- apps/aemgeeks/components/content/bhargav-personalcomp-one/bhargav-personalcomp-one.html
 -> To see the output : Goto system/console/configmgr  -> search for your configuration -> give the values and save -> drag and drop
-                                                         the component in which you have printing those values for this it is "slingmodelproductcomp".
+                                                         the component in which you have printing those values for this it is "bhargav-personalcomp-one".
 
 
 **NOTE: Converting an OSGI Configuration config file to NODE in CRXDE (For this demo too we are using the above BhargavOsgiConfigServiceImp)
@@ -314,11 +315,11 @@ b) Factory Configuration
 STEP:1 - com/aem/geeks/core/config/GeeksOSGiFactoryConfig.java - Create an annotation class with osgi config code stating what are the values our configuration should take
 STEP:2 -(MAIN Logic) com/aem/geeks/core/services/impl/OSGiFactoryConfigImpl.java - Creating a Service with all the logic
 STEP:3 - com/aem/geeks/core/models/impl/ProductModelImpl.java   - using the service in a sling model
-STEP:4 - (Last Step) - apps/aemgeeks/components/content/slingmodelproductcomp/slingmodelproductcomp.html - printing the values in htl
+STEP:4 - (Last Step) - apps/aemgeeks/components/content/bhargav-personalcomp-one/bhargav-personalcomp-one.html - printing the values in htl
 
 ==> To see the output
 - Go to your configuration in system/console/configmgr and give the value and save
-- Now on the page, drag and drop the COMPONENT,  where you have called your sling model (here we used in apps/aemgeeks/components/content/slingmodelproductcomp/slingmodelproductcomp.html).
+- Now on the page, drag and drop the COMPONENT,  where you have called your sling model (here we used in apps/aemgeeks/components/content/bhargav-personalcomp-one/bhargav-personalcomp-one.html).
 - Now you can see the values of the multiple config instances.
 
 =============================================================================================
@@ -542,10 +543,16 @@ Step: 7 - Add it in filter.xml of that folder as well  --> ui.apps/src/main/cont
 - To execute the servlet : http://localhost:4502/geeks/search?searchText=women&pageNumber=5&resultPerPage=10
 
 =============================================================================================
+17) Use Cases/Scenario Based - Implimentations
+
+a) Fetching Comp - A dialog values in Comp - B and using them
+
+=============================================================================================
 New concepts to explore :
 I* InheritanceValueMap inheritanceValueMap = new HierarchyNodeInheritanceValueMap();
 I* There is a fields in comp - A, which have CSS Styles and I want to use them in another components as well, how to do that
 I* Dialog level js validation
+I* fetching dynamic dropdown values in comp dialog -(use DATASOURCE)
 * Dispatcher setup and learn
 * I want to move the bunch of pages from one place to another place, how to do that
 I* I want to add a new comp to the existing editable template, how the old and new pages got effected
