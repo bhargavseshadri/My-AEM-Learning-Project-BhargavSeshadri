@@ -44,6 +44,17 @@
                                     fieldLabel="Hero Name"
                                     name="./hero"/>
 
+                            <selectedTodo
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/select"
+                                    emptyOption="{Boolean}true"
+                                    fieldLabel="Please Select:"
+                                    name="./selectedTodo">
+                                <datasource
+                                        jcr:primaryType="nt:unstructured"
+                                        sling:resourceType="aemgeeks/components/datasources/todos"/>
+                            </selectedTodo>
+
                         </items>
 
                     </basic>

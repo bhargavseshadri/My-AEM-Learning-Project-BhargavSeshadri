@@ -7,6 +7,7 @@ import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.models.annotations.DefaultInjectionStrategy;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.SlingObject;
+import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 
 import javax.annotation.PostConstruct;
 
@@ -26,6 +27,9 @@ public class BhargavPersonalCompTwoModelImpl implements BhargavPersonalCompTwoMo
 
     @SlingObject
     private Resource resource;
+
+    @ValueMapValue
+    private String selectedTodo;
 
     @PostConstruct
     protected void init() {
@@ -48,5 +52,9 @@ public class BhargavPersonalCompTwoModelImpl implements BhargavPersonalCompTwoMo
         return resource.getValueMap().get("productPrice", String.class);
     }
 
+    @Override
+    public String getSelectedTodo() {
+        return selectedTodo;
+    }
 
 }

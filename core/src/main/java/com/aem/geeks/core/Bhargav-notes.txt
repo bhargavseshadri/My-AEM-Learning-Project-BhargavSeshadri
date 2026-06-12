@@ -554,7 +554,7 @@ Step: 4 - Render those values in HTL : apps/aemgeeks/components/content/bhargav-
 =============================================================================================
 New concepts to explore :
 I* InheritanceValueMap inheritanceValueMap = new HierarchyNodeInheritanceValueMap();
-I* There is a fields in comp - A, which have CSS Styles and I want to use them in another components as well, how to do that
+I*
 I* Dialog level validation (dataSource, granite:data - data-validate)
 I* fetching dynamic dropdown values in comp dialog -(use DATASOURCE)
 * Dispatcher setup and learn

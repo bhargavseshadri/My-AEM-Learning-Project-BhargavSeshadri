@@ -6,4 +6,6 @@ public interface BhargavPersonalCompTwoModel {
     String getProductName();
 
     String getProductPrice();
+
+    String getSelectedTodo();
 }
