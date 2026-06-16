@@ -18,9 +18,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/*BhargavSeshadri :
+* Step : 2 - Servlet executes and calls --> TodoApiClient.java
+* Helper classes flow :: TodoApiClient.java -->
+* */
 @Component(service = Servlet.class)
 @SlingServletResourceTypes(
-        resourceTypes = "aemgeeks/components/datasources/todos",
+        resourceTypes = "aemgeeks/components/datasources/todos", //This is kind of a dummy resourceType that we will use to bind this servlet to our datasource component in the dialog.
         methods = HttpConstants.METHOD_GET
 )
 public class TodoDropdownDataSourceServlet extends SlingSafeMethodsServlet {
@@ -39,13 +44,14 @@ public class TodoDropdownDataSourceServlet extends SlingSafeMethodsServlet {
             if (todosResponse != null && todosResponse.getTodos() != null) {
                 for (TodoItem todoItem : todosResponse.getTodos()) {
                     if (todoItem.getId() != null && todoItem.getTodo() != null) {
-                        options.add(optionFactory.create(request, todoItem.getTodo(), String.valueOf(todoItem.getId())));
+                        //Here exactly we are setting the dropdown options for Granite UI. We are using our helper class TodoDropdownOptionFactory.
+                        options.add(optionFactory.createDropdownOption(request, todoItem.getTodo(), todoItem.getTodo()));
                     }
                 }
             }
         } catch (IOException e) {
             LOG.error("Unable to load todo dropdown values from {}", TodoApiClient.TODOS_API_URL, e);
-            options.add(optionFactory.create(request, "Unable to load todos", ""));
+            options.add(optionFactory.createDropdownOption(request, "Unable to load todos", ""));
         }
 
         DataSource dataSource = new SimpleDataSource(options.iterator());

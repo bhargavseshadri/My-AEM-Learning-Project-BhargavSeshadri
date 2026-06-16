@@ -76,9 +76,10 @@ i) Proxy Components : 1. apps/aemgeeks/components/bhargavtextproxy
 - In Bundles my core bundle name is--> aemgeeks.core
 
 =============================================================================================
-2) FETCHING DATA FROM EXTERNAL API - NO ACCESS TOKEN NEEDED - (using sling model)
+2) API CALLS IN THIS PROJECT
 
-a) Directly fetching the data from the endpoint with no credentials and token:
+a) FETCHING DATA FROM EXTERNAL API - NO ACCESS TOKEN NEEDED - (using sling model)
+- Directly fetching the data from the endpoint with no credentials and token:
 
 STEP:1(just Interface) : com/aem/geeks/core/models/ExternalAPIDemoModel.java
 STEP:2(sling model implimentation) :(MAIN) FETCHING DATA from API logic: com/aem/geeks/core/models/impl/apirelated/ExternalAPIDemoModelImpl.java
@@ -140,6 +141,15 @@ STEP: 4 (Last Step) : By using a HTL in component, we render the data we got fro
 2 - Drag the component apps/aemgeeks/components/content/bhargavapicomp on the page, you will see the data getting fetched in a card
     with firtname, lastname, dob, etc from API.
 
+-------------------------------------------------
+C) Calling an API using a servlet to get a field value in the metadata schema field based on the value given in another field in that metadata schema.
+- No access token needed.
+- More info : 17) METADATA SCHEMA - creating and fecth a dynamic field value using path type servlet
+
+-------------------------------------------------
+d) Calling an API using a Resource type servlet to get a dynamic dropdown dialog field values.
+- No access token needed.
+- More info : 18.b) Dynamic Dropdown values in Dialog - bhargav-personalcomp-two
 
 =============================================================================================
 3) SERVLET
@@ -217,24 +227,15 @@ g) Servlet : 7 - PathType Servlet with "METADATA SCHEMA"
 
 * The use of this servlet is, in our Assets metadata we have two fields and if we give ID in one field and the second field will automatically fetch the Name
   belongs to that ID from and API using this Servlet.
+- More info : 17) METADATA SCHEMA - creating and fecth a dynamic field value using path type servlet
 
---> Creating METADATA SCHEMA
-Step : 1 - Create a Metadata Schema -> tools -> assets -> metadata schema -> create
-Step : 2 - open that schema and add fields -> userId, userName.
-Step : 3 - select your metadata schema and pick "ADD TO FOLDERS" option, andadd it to the folder as you preferred, in which folder you want
-           this metadata schema to be applicable. so now the metadata schema creating is completed
+-------------------------------------------------------------------------
+h) Servlet : 8 - ResourceType Servlet for Dynamic Dropdown values
 
---> Coding part
-Step : 1 - create a clientlib and in that give categories (for timebeing I gave libs path clientlib categories, because that clientlib is
-           loading in Asset Properties console).
-           - but the best approach is overlaying that libs clientlib to out apps path and in that adding embed="[bhargav.asset.properties]". So our
-             clientlib - bhargav.asset.properties, also gets loaded with that /apps/ path clientlib.
-           - apps/aemgeeks/clientlibs/clientlib-bhargav-metadataschema/.content.xml
-
-Step : 2(main) - create JS for fetch calls, eventlisteners. : apps/aemgeeks/clientlibs/clientlib-bhargav-metadataschema/BhargavMetadataSchemaRLTD.js
-Step : 3(last step)(main) - Create a path type servlet for getting the data from the API. : com/aem/geeks/core/servlets/BhargavMetadataSchemaPathServlet.java
-
-API used here : https://dummyjson.com/users
+- The main work of this servlet is to get execute when a author opens the dialog, and then it will fetch the dropdown options values
+  from an API and then show those values in that dropdown.
+- API used : https://dummyjson.com/todos
+- More info : 18.b) Dynamic Dropdown values in Dialog - bhargav-personalcomp-two
 
 =============================================================================================
 4) SLING MODELS & SERVICES  (Service(optional) -> Sling model -> HTL)
@@ -253,7 +254,7 @@ Step:5 - Rendering the Values in HTL Script : apps/aemgeeks/components/content/b
   Added this in apps/aemgeeks/components/content/bhargav-personalcomp-one
 
 --------------------------------------------
-Multiple Service Implimentations Linked to one Service Interface
+* Multiple Service Implimentations Linked to one Service Interface
 
 Main Service interface: com/aem/geeks/core/services/DemoProductService.java
 
@@ -543,13 +544,42 @@ Step: 7 - Add it in filter.xml of that folder as well  --> ui.apps/src/main/cont
 - To execute the servlet : http://localhost:4502/geeks/search?searchText=women&pageNumber=5&resultPerPage=10
 
 =============================================================================================
-17) Use Cases/Scenario Based - Implimentations
+17) METADATA SCHEMA - creating and fecth a dynamic field value using path type servlet
 
-a) Fetching Comp-A dialog values in Comp-B and using them
+--> Creating METADATA SCHEMA
+Step : 1 - Create a Metadata Schema -> tools -> assets -> metadata schema -> create
+Step : 2 - open that schema and add fields -> userId, userName.
+Step : 3 - select your metadata schema and pick "ADD TO FOLDERS" option, andadd it to the folder as you preferred, in which folder you want
+           this metadata schema to be applicable. so now the metadata schema creating is completed
+
+--> Coding part
+Step : 1 - create a clientlib and in that give categories (for timebeing I gave libs path clientlib categories, because that clientlib is
+           loading in Asset Properties console).
+           - but the best approach is overlaying that libs clientlib to out apps path and in that adding embed="[bhargav.asset.properties]". So our
+             clientlib - bhargav.asset.properties, also gets loaded with that /apps/ path clientlib.
+           - apps/aemgeeks/clientlibs/clientlib-bhargav-metadataschema/.content.xml
+
+Step : 2(main) - create JS for fetch calls, eventlisteners. : apps/aemgeeks/clientlibs/clientlib-bhargav-metadataschema/BhargavMetadataSchemaRLTD.js
+Step : 3(last step)(main) - Create a path type servlet for getting the data from the API. : com/aem/geeks/core/servlets/BhargavMetadataSchemaPathServlet.java
+
+API used here : https://dummyjson.com/users
+
+=============================================================================================
+18) Use Cases/Scenario Based - Implimentations
+
+COMPONENT : bhargav-personalcomp-two
+18.a) Fetching Comp-A dialog values in Comp-B and using them - bhargav-personalcomp-two
 Step: 1 - We should have a component A with some dialog fields. : apps/aemgeeks/components/content/bhargav-personalcomp-one
 Step: 2 - Create a component B where we want to use the component A dialog values. : apps/aemgeeks/components/content/bhargav-personalcomp-two
 Step: 3 - Now to fetch the comp A dialog values in comp B using Sling model : com/aem/geeks/core/models/impl/BhargavPersonalCompTwoModelImpl.java
 Step: 4 - Render those values in HTL : apps/aemgeeks/components/content/bhargav-personalcomp-two/bhargav-personalcomp-two.html
+
+-------------------------------------------------------------
+18.b) Dynamic Dropdown values in Dialog - bhargav-personalcomp-two
+
+Step-1 : Add the dropdown field in the dialog along with "datasource" in the component : apps/aemgeeks/components/content/bhargav-personalcomp-two/_cq_dialog/.content.xml
+Step-2 : Now Create a ResourceType servlet to make a call to the API and get responese : com/aem/geeks/core/servlets/tododropdown/TodoDropdownDataSourceServlet.java
+Step-3 : Render the selected value on page using sling model : com/aem/geeks/core/models/impl/BhargavPersonalCompTwoModelImpl.java
 
 =============================================================================================
 New concepts to explore :

@@ -1,9 +1,13 @@
-<h1>Personal Component-2 - Bhargav</h1>
+<h1 xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">Personal Component-2 - Bhargav</h1>
 
 <div data-sly-use.obj="com.aem.geeks.core.models.BhargavPersonalCompTwoModel">
+    <h2>Print the below values, which are authored in another page using - "Product Component - Bhargav Personal Comp-1" component </h2>
     <div><p> Manufacture Name : <b>${obj.getManufacturerName}</b></p></div>
     <div><p> Product Name : <b>${obj.getProductName}</b></p></div>
     <div><p> Product Price : <b>${obj.getProductPrice}</b></p></div>
+
+    ================================================================
+    </br>
     <div><p> Selected Todo : <b>${obj.getSelectedTodo}</b></p></div>
 
 

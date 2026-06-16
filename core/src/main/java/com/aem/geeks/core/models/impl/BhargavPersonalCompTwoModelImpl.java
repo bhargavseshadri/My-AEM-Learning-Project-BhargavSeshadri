@@ -53,7 +53,7 @@ public class BhargavPersonalCompTwoModelImpl implements BhargavPersonalCompTwoMo
     }
 
     @Override
-    public String getSelectedTodo() {
+    public String getSelectedTodo() { //Rendering the value selected in the dynamic dropdown
         return selectedTodo;
     }
 
