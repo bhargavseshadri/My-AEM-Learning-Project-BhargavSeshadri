@@ -1,4 +1,4 @@
-package com.aem.geeks.core.javarelatedcodes.hardConcepts.association.ExampleTwo;
+package com.aem.geeks.core.javarelatedcodes.hardConcepts.aggregation.exampleTwo;
 
 class Student {
 

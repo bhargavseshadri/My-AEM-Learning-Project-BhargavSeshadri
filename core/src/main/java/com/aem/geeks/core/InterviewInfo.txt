@@ -634,6 +634,11 @@ OPTIONAL OOPS (Association, Aggregation, Composition)
 
 a) Association : (here both classes are independent) Association is a relationship between two separate classes where one class uses or
                  interacts with another class, but both can exist independently. It represents a “uses-a” relationship.
+
+- Imp - if two classes use each other in methods
+    --> void teach(Student s)
+    --> Now this is usually Association.
+
 Eg:
 class Teacher {
     String name;
@@ -665,6 +670,10 @@ public class Main {
 - Aggregation is a relationship where one class owns or uses another class, but the contained object can exist independently of the container object.
   The part can exist without the whole.
 - Has-A relationship but can live without it.
+
+- Imp - if one class store a reference to another as a member variable
+        --> private Teacher teacher;
+        --> Then it is Aggregation
 
 EG:
 class Department {
@@ -700,6 +709,8 @@ public class Main {
   both have a dependent life cycle.
 - Has-A relationship and cannot live without it.
 
+- Imp - Composition Creates its own object.
+
 Eg:
 class Engine {
     void start() {
@@ -719,6 +730,8 @@ class Car {
         System.out.println("Car started");
     }
 }
+
+- For more hard example refer java related.
 
 -----------------------------------------------------------
 -----------------------------------------------------------
