@@ -2,7 +2,7 @@ package com.aem.geeks.core.servlets.tododropdown;
 
 //1
 /*BhargavSeshadri - Helper Class -- TodoItem  -> represents ONE todo
-* This class represents each object inside that main resposnse we get from API.
+* This class represents each object/item inside that main resposnse array "todos" we get from API.
 *
 * Eg:
 * {

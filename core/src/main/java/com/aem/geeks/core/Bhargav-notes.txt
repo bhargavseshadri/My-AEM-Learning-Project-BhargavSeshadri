@@ -565,6 +565,7 @@ Step : 3(last step)(main) - Create a path type servlet for getting the data from
 API used here : https://dummyjson.com/users
 
 =============================================================================================
+=============================================================================================
 18) Use Cases/Scenario Based - Implimentations
 
 COMPONENT : bhargav-personalcomp-two
@@ -575,7 +576,7 @@ Step: 3 - Now to fetch the comp A dialog values in comp B using Sling model : co
 Step: 4 - Render those values in HTL : apps/aemgeeks/components/content/bhargav-personalcomp-two/bhargav-personalcomp-two.html
 
 -------------------------------------------------------------
-18.b) Dynamic Dropdown values in Dialog - bhargav-personalcomp-two
+18.b) DATASOURCE - Dynamic Dropdown values in Dialog - bhargav-personalcomp-two
 
 Step-1 : Add the dropdown field in the dialog along with "datasource" in the component : apps/aemgeeks/components/content/bhargav-personalcomp-two/_cq_dialog/.content.xml
 Step-2 : Now Create a ResourceType servlet to make a call to the API and get responese : com/aem/geeks/core/servlets/tododropdown/TodoDropdownDataSourceServlet.java
@@ -585,8 +586,8 @@ Step-3 : Render the selected value on page using sling model : com/aem/geeks/cor
 New concepts to explore :
 I* InheritanceValueMap inheritanceValueMap = new HierarchyNodeInheritanceValueMap();
 I*
-I* Dialog level validation (dataSource, granite:data - data-validate)
-I* fetching dynamic dropdown values in comp dialog -(use DATASOURCE)
+I* Dialog level validation ( granite:data - data-validate)
+
 * Dispatcher setup and learn
 * I want to move the bunch of pages from one place to another place, how to do that
 I* I want to add a new comp to the existing editable template, how the old and new pages got effected

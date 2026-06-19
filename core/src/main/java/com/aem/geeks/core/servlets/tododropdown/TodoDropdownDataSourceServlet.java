@@ -20,9 +20,10 @@ import java.util.List;
 
 
 /*BhargavSeshadri :
-* Step : 2 - Servlet executes and calls --> TodoApiClient.java
-* Helper classes flow :: TodoApiClient.java -->
-* */
+ * Step : 2 - Servlet executes and calls --> TodoApiClient.java
+ * Helper classes flow 1 :: TodoDropdownDataSourceServlet.java --> TodoApiClient.java --> TodosResponse.java --> TodoItem.java
+ * Helper classes flow 2 :: TodoDropdownDataSourceServlet.java --> TodoDropdownOptionFactory.java
+ * */
 @Component(service = Servlet.class)
 @SlingServletResourceTypes(
         resourceTypes = "aemgeeks/components/datasources/todos", //This is kind of a dummy resourceType that we will use to bind this servlet to our datasource component in the dialog.
@@ -54,7 +55,21 @@ public class TodoDropdownDataSourceServlet extends SlingSafeMethodsServlet {
             options.add(optionFactory.createDropdownOption(request, "Unable to load todos", ""));
         }
 
+        //Very important line
+        /*At this point we have a list of dropdown options. But Granite UI only accepts a specific delivery format called:DATASOURCE
+         * So the below line is like putting those options into the packaging format Granite understands.
+         */
         DataSource dataSource = new SimpleDataSource(options.iterator());
+
+        /*Here we are putting the DataSource with data in the request - using the request because Granite UI knows to look there. This is the magic connection.
+        * Our servlet says:
+            Hey Granite,
+            here is the datasource.
+            I put it in the request.
+
+        * Then our dialog xml code does something similar to this - DataSource ds = request.getAttribute(DataSource.class.getName());, It retrieves the datasource your servlet stored.
+        * Granite internally iterates over Resources one by one "for(Resource option : dataSource)" and reads the values and put it in the dialog dropdown.
+        */
         request.setAttribute(DataSource.class.getName(), dataSource);
     }
 }

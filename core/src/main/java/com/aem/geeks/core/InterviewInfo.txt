@@ -367,6 +367,13 @@ Ans : What it actually do is it, if we give some client library name(here my.sit
       get included in this client library because of this embed property. it will simply merge all those other client lib contents in to this client lib and
       render it.
 
+=============================================================================================
+DATASOURCE
+
+* The purpose of a DataSource in Granite UI is "Provide dynamic data to dialog fields."
+* It is used for : 1. Dynamic Select Dropdown (Most Common) - eg in this comp: apps/aemgeeks/components/content/bhargav-personalcomp-two/_cq_dialog/.content.xml
+                   2. you can generate them dynamically.
+                   3. Dynamic Checkboxes etc
 
 =============================================================================================
 AEM SPECIFIC NODE TYPES

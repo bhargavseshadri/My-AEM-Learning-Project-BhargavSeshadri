@@ -533,6 +533,109 @@ STEP: 4 - Do the modifications needed. and save it.
     Eg : "/libs/msm/wcm/rolloutconfigs" node is copied to "/apps/msm/wcm/rolloutconfigs"
 
 =============================================================================================
+*) Understanding -- "GSON"
+- Gson is a Java library developed by Google that converts: "Java Object → JSON" called Serialization and "JSON → Java Object" Deserialization.
+- Why do we need Gson? : Because Java and JSON are different formats and java cant understand json response directly,
+                         and Gson helps us bridge that gap. It allows us to easily convert complex Java objects into JSON strings that
+                         can be sent over the network or stored, and also to convert JSON strings back into Java objects for processing.
+- Very Important: Field Names Must Match between JSON and Java Class.
+
+- Using GSON
+    -> Create a java class
+        public class TodoItem {
+                                    // the below three fields are the properties of the json response we are getting from the API,
+                                    so we have to create the same fields in our java class
+            private int id;
+            private String todo;
+            private boolean completed;
+
+            // getters setters
+        }
+
+    -> Then we give
+        Gson gson = new Gson();
+        TodoItem item = gson.fromJson(response, TodoItem.class);
+
+    -> How Gson Knows Where to Put Data
+        - Eg json : {
+                        "id": 1,
+                        "todo": "Buy groceries",
+                      }
+        - When Gson see's - gson.fromJson(response, TodoItem.class);, then it goes to that TodoItem class and looks for the fields,
+          and then it matches the json properties with the java class fields, and then it put the values in those fields.
+        - It compares json property "id" with java class field "private int id;" and then assigns its value, and same for other properties.
+        - This complete process is called de-serialization, means converting json response to java object.
+
+EXAMPLE : (IN DEPTH EXPLANATION)
+-> API RESPONSE : {
+                    "todos": [
+                      {
+                        "id": 1,
+                        "todo": "Learn Java"
+                      },
+                      {
+                        "id": 2,
+                        "todo": "Learn Gson"
+                      }
+                    ]
+                  }
+
+- Java Class for above json response : public class TodoResponse {
+
+                                           private List<TodoItem> todos;
+
+                                           public List<TodoItem> getTodos() {
+                                               return todos;
+                                           }
+                                       }
+
+- Java Class for TodoItem : public class TodoItem {
+                                    private int id;
+                                    private String todo;
+
+                                    // getters and setters
+                                }
+
+- Now when this line executes : TodoResponse responseObj = gson.fromJson(jsonString, TodoResponse.class);
+
+     - Gson internall does this :
+          1. Creates response object of type TodoResponse. - TodoResponse responseObj = new TodoResponse();
+          2. Then it goes to json key "todos" and then finds the matching field in our java class which is "private List<TodoItem> todos;".
+          3. then it creates a list internally - List<TodoItem> todoList = new ArrayList<>();
+          4. then reads json object {"id": 1, "todo": "Learn Java"} and then creates a TodoItem object - TodoItem item1 = new TodoItem();
+          5 then sets the values in that object - item1.setId(1); item1.setTodo("Learn Java");
+          6. then adds that item to the list - todoList.add(item1); similarly it does for all the json objects in the array.
+          7. now it assigns that list to the response object - responseObj.todos = todoList;
+          8. now our "responseObj" contains -- TodoResponse
+                                                |
+                                                --> todos
+                                                      |
+                                                      --> TodoItem(id=1,todo="Learn Java")
+                                                      --> TodoItem(id=2,todo="Learn Gson")
+    - so now when you call: responseObj.getTodos() it returns List<TodoItem> which contains : [
+                                                                                               TodoItem(id=1,todo="Learn Java"),
+                                                                                               TodoItem(id=2,todo="Learn Gson")
+                                                                                              ]
+
+
+----------------------------------------
+- Serialization : converting Java Object → JSON
+        - Suppose we have a java object of TodoItem class, and we want to convert it to json string, then we will do like this :
+            TodoItem item = new TodoItem();
+            item.setId(1);
+            item.setTodo("Buy groceries");
+            item.setCompleted(false);
+
+            Gson gson = new Gson();
+            String jsonString = gson.toJson(item);
+        - Here gson.toJson(item) will convert the java object "item" to json string like this :
+            {
+                "id": 1,
+                "todo": "Buy groceries",
+                "completed": false
+            }
+
+=============================================================================================
 *) MSM:
 
 - MSM helps you manage multiple websites that share common content or structure. It lets you reuse pages, but still localize or update them differently

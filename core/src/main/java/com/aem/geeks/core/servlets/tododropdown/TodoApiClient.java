@@ -29,10 +29,10 @@ class TodoApiClient {
 
         HttpGet httpGet = new HttpGet(TODOS_API_URL);
         httpGet.setHeader(HttpHeaders.ACCEPT, "application/json");
-        httpGet.setConfig(createRequestConfig()); // Used to set the custom our own timeout settings.
+        httpGet.setConfig(createRequestConfig()); // Used to set our own custom timeout settings.
 
         try (CloseableHttpClient httpClient = HttpClients.createDefault();
-             CloseableHttpResponse httpResponse = httpClient.execute(httpGet)) {
+             CloseableHttpResponse httpResponse = httpClient.execute(httpGet)) {  // here we are making the request
 
             validateResponse(httpResponse);
             return readTodos(httpResponse);
@@ -60,9 +60,25 @@ class TodoApiClient {
         }
     }
 
-    private TodosResponse readTodos(CloseableHttpResponse httpResponse) throws IOException {
+
+    /*InputStreamReader resReader = new InputStreamReader(httpResponse.getEntity().getContent())
+    * Use of this: Basically when API sends the response java doesn't receives it in string format, Instead, it receives raw bytes over the network.
+    * - httpResponse.getEntity() :
+    *       - API Response : HTTP/1.1 200 OK
+                            {                           //this is the response body
+                               "id":1,
+                               "todo":"Learn Java"
+                            }
+            - The body part is the Entity.
+
+       - .getContent() : This method returns an InputStream that reads the raw bytes of the response body. So we are getting the raw bytes of the response body here.
+       - new InputStreamReader(...) : This is a Java class that takes an InputStream (like the one we got from getContent()) and
+                                      converts those raw bytes into characters (text) using a specified character encoding (like UTF-8).
+                                      So we are converting the raw bytes of the response.
+    * */
+    private TodosResponse readTodos(CloseableHttpResponse httpResponse) throws IOException {   //important method
         try (InputStreamReader resReader = new InputStreamReader(httpResponse.getEntity().getContent(), StandardCharsets.UTF_8)) {
-            return new Gson().fromJson(resReader, TodosResponse.class);
+            return new Gson().fromJson(resReader, TodosResponse.class);   // This line uses Gson to parse the JSON response and convert it into a TodosResponse object.
         }
     }
 }
