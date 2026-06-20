@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jcr:root
         xmlns:sling="http://sling.apache.org/jcr/sling/1.0"
+        xmlns:granite="http://www.adobe.com/jcr/granite/1.0"
         xmlns:jcr="http://www.jcp.org/jcr/1.0"
         xmlns:nt="http://www.jcp.org/jcr/nt/1.0"
         jcr:primaryType="nt:unstructured"
         jcr:title="Bhargav - Product Component"
-        sling:resourceType="cq/gui/components/authoring/dialog">
+        sling:resourceType="cq/gui/components/authoring/dialog"
+        extraClientlibs="[bhargav.dialog.validation]">
 
     <content
             jcr:primaryType="nt:unstructured"
@@ -48,7 +50,7 @@
                                     jcr:primaryType="nt:unstructured"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/select"
                                     emptyOption="{Boolean}true"
-                                    fieldLabel="Please Select:"
+                                    fieldLabel="Please Select:(This is a Dynamic Dropdown)"
                                     name="./selectedTodo">
                                 <datasource
                                         jcr:primaryType="nt:unstructured"
@@ -58,6 +60,38 @@
                         </items>
 
                     </basic>
+                <dialogvalidation
+                        jcr:primaryType="nt:unstructured"
+                        jcr:title="Dialog Level fields Validation"
+                        sling:resourceType="granite/ui/components/coral/foundation/container">
+
+                    <items jcr:primaryType="nt:unstructured">
+                        <ctaText
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                fieldLabel="CTA Text"
+                                name="./ctaText">
+
+                            <granite:data
+                                    jcr:primaryType="nt:unstructured"
+                                    validate="cta-validator"/>
+
+                        </ctaText>
+
+                        <ctaLink
+                                jcr:primaryType="nt:unstructured"
+                                sling:resourceType="granite/ui/components/coral/foundation/form/pathfield"
+                                fieldLabel="CTA Link"
+                                name="./ctaLink">
+
+                            <granite:data
+                                    jcr:primaryType="nt:unstructured"
+                                    validate="cta-validator"/>
+
+                        </ctaLink>
+
+                    </items>
+                </dialogvalidation>
 
                 </items>
 

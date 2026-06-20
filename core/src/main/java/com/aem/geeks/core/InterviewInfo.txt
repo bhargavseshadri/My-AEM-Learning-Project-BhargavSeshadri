@@ -367,9 +367,11 @@ Ans : What it actually do is it, if we give some client library name(here my.sit
       get included in this client library because of this embed property. it will simply merge all those other client lib contents in to this client lib and
       render it.
 
+* extraClientlibs="[bhargav.dialog.validation]"
+- we give this when we want our clientlibs to load at the time when we open the "comp authoring dialog".
+- we give this in our comp dialog XML.
 =============================================================================================
 DATASOURCE
-
 * The purpose of a DataSource in Granite UI is "Provide dynamic data to dialog fields."
 * It is used for : 1. Dynamic Select Dropdown (Most Common) - eg in this comp: apps/aemgeeks/components/content/bhargav-personalcomp-two/_cq_dialog/.content.xml
                    2. you can generate them dynamically.
@@ -417,6 +419,13 @@ Ans. Approach 1: Add to Page Component (Recommended), In your base page componen
 
 4. I have done some change in author and those  changes are not reflecting in publisher, why?
 
+5. I want to move the bunch of pages from one place to another place, how to do that?
+Ans. Aem dont have a feature like that, we can acheive it by selecting the complete folder or using groovy script or using Workflow + backend code.
+
+6. I want to add a new comp to the existing editable template, and I dont want that comp showup in old pages(means before the change)?
+Ans. actually if we do any chnage in the editable template then that change will reflect in both old and new pages.
+        - We can acheive it by using "Initial content" (drawbacks here are author can edit the comp, we cant lock these comps))
+        - or we can create a template version by copying the existing template and then make a chnage and then on we can create new pages using this new template version.
 
 
 
@@ -919,3 +928,100 @@ Example: import java.util.*;
 
 ---------------------------
 *) Generics : To restrict the datatype of the elements you want to store in the list. acts like a datatype placeholders
+
+
+
+
+
+
+
+
+
+=============================================================================================
+ALL ABOUT **JAVASCRIPT** (more in core/src/main/java/com/aem/geeks/core/jsrelated)
+
+
+JAVASCRIPT - HOW TO GET HOLD OF DOM ELEMENTS
+
+-> DOM means Document Object Model. In JavaScript, we use DOM methods to select HTML elements from the page and then read/change them.
+
+-> document.getElementById("idName")
+   - Selects one element by its id.
+   - It returns a single element because id should be unique on the page.
+
+   - HTML Example: <h1 id="title">Welcome</h1>
+   - Example: document.getElementById("title")
+
+
+-> document.querySelector("cssSelector")
+   - Selects the first matching element using a CSS selector.
+   - We can select by id, class, tag, attribute, etc.
+
+   - HTML Example: <input name="./ctaText" class="cmp-title" />
+   - Example: document.querySelector(".cmp-title")
+   - Example: document.querySelector("[name='./ctaText']")
+
+
+-> document.querySelectorAll("cssSelector")
+   - Selects all matching elements using a CSS selector.
+   - It returns a NodeList, so we can loop through it using forEach.
+
+   - HTML Example: <button class="cmp-button">Save</button> <button class="cmp-button">Cancel</button>
+   - Example: document.querySelectorAll(".cmp-button")
+
+
+-> document.getElementsByClassName("className")
+   - Selects all elements having the given class name.
+   - It returns an HTMLCollection.
+
+   - HTML Example: <div class="active">Tab 1</div>
+   - Example: document.getElementsByClassName("active")
+
+
+-> document.getElementsByTagName("tagName")
+   - Selects all elements with the given HTML tag.
+
+   - HTML Example: <input type="text" value="Bhargav" />
+   - Example: document.getElementsByTagName("input")
+
+
+-> document.getElementsByName("nameValue")
+   - Selects elements by their name attribute.
+   - Mostly useful for form fields.
+
+   - HTML Example: <input name="./ctaText" value="Read More" />
+   - Example: document.getElementsByName("./ctaText")
+
+
+-> element.closest("cssSelector")
+   - Starts from the current element and searches upward through its parents.
+   - It returns the nearest parent/self that matches the selector
+   r.
+   - HTML Example: <coral-dialog><input name="./ctaText" /></coral-dialog>
+   - Example: element.closest("coral-dialog")
+
+
+-> element.parentElement
+   - Gives the direct parent element of the selected element.
+   - Useful when we need to move one level up in the DOM.
+   - HTML Example: <div class="parent"><span id="child">Text</span></div>
+
+
+-> element.children
+   - Gives only the direct child elements of the selected element.
+   - It does not include text nodes.
+   - HTML Example: <ul id="list"><li>One</li><li>Two</li></ul>
+
+
+-> element.nextElementSibling
+   - Gives the next element at the same level.
+   - Useful when we want to access the element immediately after the current element.
+   - HTML Example: <label>Title</label><input type="text" />
+
+
+-> element.previousElementSibling
+   - Gives the previous element at the same level.
+   - Useful when we want to access the element immediately before the current element.
+   - HTML Example: <label>Title</label><input type="text" />
+
+---------------------------

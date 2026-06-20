@@ -582,19 +582,67 @@ Step-1 : Add the dropdown field in the dialog along with "datasource" in the com
 Step-2 : Now Create a ResourceType servlet to make a call to the API and get responese : com/aem/geeks/core/servlets/tododropdown/TodoDropdownDataSourceServlet.java
 Step-3 : Render the selected value on page using sling model : com/aem/geeks/core/models/impl/BhargavPersonalCompTwoModelImpl.java
 
+-------------------------------------------------------------
+18.c) Dialog level validation using - granite:data & data-validate
+
+Step : 1 - Add the validation in the dialog field and then add a child node to it using granite:data
+                -> apps/aemgeeks/components/content/bhargav-personalcomp-two/_cq_dialog/.content.xml
+
+Step : 2 - Add the validation logic in the clientlib JS file : apps/aemgeeks/components/content/bhargav-personalcomp-two/clientlib/BhargavDialogValidator.js
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 =============================================================================================
 New concepts to explore :
 I* InheritanceValueMap inheritanceValueMap = new HierarchyNodeInheritanceValueMap();
-I*
-I* Dialog level validation ( granite:data - data-validate)
-
 * Dispatcher setup and learn
-* I want to move the bunch of pages from one place to another place, how to do that
-I* I want to add a new comp to the existing editable template, how the old and new pages got effected
 * Page Properties through code (can we do it)
 I* ResourceType Servlets
-* Internationalization in AEM
-I* Adding and modifying asset metadata through backend
+* Internationalization in AEM  -- THIS
+I* Adding and modifying asset metadata through backend  -- THIS
+I* Pagination in backend using query builder API
+
+
+Very Big Scenarios:
+1. in my jcr there is one file that contains a file with a payload that contains complete content along with html tags as well. so
+    in my component there is one button if we click on that button that payload will comes to this resource and gets stored in a jcr prop and
+    it gets render automatically on the page.
+
+2. every day the component should show the data  related to that day
+
+
 
 * JAVA - COLLECTIONS ETC
 * css, html, js basics
