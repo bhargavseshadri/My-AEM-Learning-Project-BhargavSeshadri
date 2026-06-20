@@ -538,6 +538,7 @@ Step: 7 - Add it in filter.xml of that folder as well  --> ui.apps/src/main/cont
 =============================================================================================
 16) Query Builder API in Backend
 
+A) With servlet
 - Step : 1 Creating a Service - com/aem/geeks/core/services/impl/SearchServiceImpl.java
 - Step : 2(last step) Creating a pathtype servlet - com/aem/geeks/core/servlets/GeeksSearchServlet.java
 
@@ -590,7 +591,7 @@ Step : 1 - Add the validation in the dialog field and then add a child node to i
 
 Step : 2 - Add the validation logic in the clientlib JS file : apps/aemgeeks/components/content/bhargav-personalcomp-two/clientlib/BhargavDialogValidator.js
 
-
+-------------------------------------------------------------
 
 
 
@@ -898,6 +899,23 @@ p.limit=-1
 p.hits=selective
 p.properties=jcr:path jcr:content/metadata/dam:MIMEtype jcr:content/metadata/dam:scene7ID jcr:content/metadata/scene7Type
 
+===================================================================================================
+13. To get pages whose indexed content/properties contain the word 'women'. means it majorly looks in jcr:content for the word "women".
+
+eg: /content/we-retail/page1/jcr:content/jcr:title = "Women Clothing",
+    /content/we-retail/page1/jcr:content/text = "Best products for women",
+    /content/we-retail/page1/jcr:content/root/container/text = "Women shoes"
+
+
+Query: path=/content/we-retail
+       type=cq:Page
+       fulltext=women
+       p.offset=10
+       p.limit=10
+
+
+
+===================================================================================================
 ===================================================================================================
 ***GROOVY SCRIPTS***
 

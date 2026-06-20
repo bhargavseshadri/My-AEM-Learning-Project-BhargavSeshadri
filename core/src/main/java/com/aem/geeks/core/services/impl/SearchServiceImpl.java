@@ -71,7 +71,7 @@ public class SearchServiceImpl implements SearchService{
             //here we are creating the query using queryBuilder, and we are giving the Predicates using PredicateGroup.
             Query query = queryBuilder.createQuery(PredicateGroup.create(createTextSearchQuery(searchText,startResult,resultPerPage)), session);
 
-            //Using the above line query we are getting the results.
+            //Using the above line, we are getting the results.
             SearchResult result = query.getResult();
 
             //Each SearchResult is a HIT. below we are getting all the hits
@@ -96,10 +96,11 @@ public class SearchServiceImpl implements SearchService{
             long startingResult = result.getStartIndex();
             double totalPages = Math.ceil((double) totalResults / (double) resultPerPage);
 
+            jsonObject.put("pages",totalPages);
             jsonObject.put("perpageresult",perPageResults);
             jsonObject.put("totalresults",totalResults);
             jsonObject.put("startingresult",startingResult);
-            jsonObject.put("pages",totalPages);
+
 
         }catch (Exception e){
             LOG.info("\n ----ERROR -----{} ",e.getMessage());
