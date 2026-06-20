@@ -2,9 +2,10 @@
 
 Codex should follow these rules before every response in this project.
 
-1. Do not run Maven commands unnecessarily.
-   - Do not run `mvn` commands unless they are required for the specific task.
-   - Do not run packaging/build commands unnecessarily.
+1. Do not run Maven commands.
+   - Do not run `mvn` or Maven wrapper commands in any case by default.
+   - If a Maven command is truly necessary and work cannot progress without it, ask the user first and explain why it is required.
+   - Do not run packaging/build commands unless the user explicitly approves.
 
 2. Make only code-level changes unless asked otherwise.
    - Implement the requested code change or bug fix and provide it to the user.

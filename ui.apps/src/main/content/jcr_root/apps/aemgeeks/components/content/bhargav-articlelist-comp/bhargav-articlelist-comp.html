@@ -1,4 +1,19 @@
-<div data-sly-use.articleListModel="com.aem.geeks.core.models.BhargavArticleListModel">
-    <h1>Bhargav Article List Component</h1>
-    <p>Article List Root Path: <b>${articleListModel.articleListRootPath}</b></p>
+<sly data-sly-use.clientlib="/libs/granite/sightly/templates/clientlib.html"/>
+<sly data-sly-call="${clientlib.all @ categories='bhargav.articlelist.styles'}"/>
+<div class="cmp-articlelist">
+    <h1 class="cmp-articlelist__heading">Bhargav Article List Component</h1>
+
+    <div data-sly-use.articleListModel="com.aem.geeks.core.models.BhargavArticleListModel" class="cmp-articlelist__cards-container">
+
+    <sly data-sly-list.articleList="${articleListModel.bhargavArticleListDataBeanList}">
+            <div class="cmp-articlelist__cards">
+                <h2 class="cmp-articlelist__card-title">${articleList.title}</h2>
+                <div class="cmp-articlelist__card-desc">${articleList.description}</div>
+                <div class="cmp-articlelist__card-btn-container">
+                    <a href="#" class="cmp-articlelist__card-btn">Explore</a>
+                </div>
+            </div>
+        </sly>
+    </div>
 </div>
+

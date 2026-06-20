@@ -1,0 +1,25 @@
+    .cmp-articlelist__cards-container{
+        display: flex;
+        justify-content: space-evenly;
+    }
+
+    .cmp-articlelist__cards{
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+        width: 350px;
+        border: 1px solid black;
+        margin: 30px;
+    }
+
+    .cmp-articlelist__card-btn{
+        padding: 15px 40px;
+        background: #5E7263;
+        color: #FFF;
+        text-align: center;
+    }
+
+    .cmp-articlelist__card-btn-container{
+        text-align: center;
+        margin:30px
+    }
