@@ -58,19 +58,19 @@ public class BhargavArticleListModelImpl implements BhargavArticleListModel {
     protected void init() {
         ResourceResolver resourceResolver = resource.getResourceResolver();
         Session session = resourceResolver.adaptTo(Session.class);
-        QueryBuilder builder = resourceResolver.adaptTo(QueryBuilder.class);  //here we are getting the queryBuilder API
+        QueryBuilder builder = resourceResolver.adaptTo(QueryBuilder.class);//Step:1 - here we are getting the queryBuilder API
         if (builder == null) {
             LOGGER.error("QueryBuilder is null");
             return;
         }
         Query query = null;
 
-        Map<String, String> predicateMap = new HashMap<>();  //just creating a map and giving it our query
+        Map<String, String> predicateMap = new HashMap<>();  //Step:2 -  creating a map and giving it our query
         predicateMap.put("path", articleListRootPath);
         predicateMap.put("type", "cq:Page");
 
         try {
-            //Now here we are creating a query by giving the Map contains our query details and session
+            //Step:3 - Now here we are creating a query by giving the Map contains our query details and session
             query = builder.createQuery(PredicateGroup.create(predicateMap), session);
 
         } catch (Exception e) {
@@ -80,13 +80,13 @@ public class BhargavArticleListModelImpl implements BhargavArticleListModel {
         if(query == null){
             return;
         }
-        //this gives the results of our query. we get all the results
+        //Step:4 - this gives the results of our query. we get all the results
         SearchResult searchResult = query.getResult();
 
         //we are creating a ArrayList to store the BhargavArticleListDataBean objects data and we will send this list to our htl to render the data.
         bhargavArticleListDataBeanList = new ArrayList<>();
 
-        //Hit represents a single search result. means each page path we get in result is a hit. so here we are getting a list of hits using getHits() and looping
+        //Step:5(last to get hold of data) - Hit represents a single search result. means each page path we get in result is a hit. so here we are getting a list of hits using getHits() and looping
         for(Hit hit : searchResult.getHits()){
 
             //Creating out bean object to set the data, we are creating this inside for loop because for every hit a object instance gets created
