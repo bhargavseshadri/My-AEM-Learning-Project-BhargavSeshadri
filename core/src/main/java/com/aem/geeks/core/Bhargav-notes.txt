@@ -494,6 +494,9 @@ Step : 4 - Now select the use and click on "ENABLE" & "ACTIVATE".
 Creation :
 Step :1 - Go to "Tools -> Assets -> Content Fragment Models" and create a new model with the required fields in which ever folder you want. (eg: Bhargav Personal CF Model).
 Step: 2 - Save the CF Model. So the model is created.
+Very Imp Note : In modern AEM versions and AEM as a Cloud Service, you must explicitly configure the path of the folder containing your Content Fragment Models
+                in the "Allowed Content Fragment Models" field under the Policies tab of the corresponding folder in /content/dam. Otherwise, the models will not shown up
+                when creating Content Fragments in that folder.
 Note : Publish the model when you want to send you model from author to publish, if you dont publish the model then you can use that model only in author,
        you cant use that model in publish.
 Step: 3 - Now we have to create a content fragment based on that model, so for that go to "Assets(content/dam) -> Files -> Create ->
@@ -512,6 +515,42 @@ Imp:
 Step: 1 - Sling Model to get the CF data : com/aem/geeks/core/models/impl/BhargavContentFragmentRltdModelImpl.java
 Step: 2 - Using that sling model in HTL to render the data : apps/aemgeeks/components/content/bhargav-content-fragment-comp
 
+-------------------------------------------------------------
+14.b) GRAPHQL with CONTENT FRAGMENTS
+
+* To use graphQl you should first create graphiql end point to write queries
+        1- Go to AEM -> tools -> general -> graphiql : open it
+        2- click on create -> and give name and select the global in the dropdown and click ok -> this will craete a endpoint
+        3- Now go to graphql editor and write the queries.
+
+* -> GRAPHIQL EDITOR : http://localhost:4502/aem/graphiql.html
+  -> To see graphql endpoints in crxde : /content/cq:graphql/global/endpoint
+  -> to create graphql endpoint : http://localhost:4502/libs/cq/graphql/sites/admin/content/console.html
+
+* In Graphql Editor you write the queries to fetch the content from your content fragments and based on our query, json is created. and the external application get this
+  json response only when it make a get request using the persisted query url.
+    eg:
+        1. you crete a end point in :  http://localhost:4502/libs/cq/graphql/sites/admin/content/console.html and in the graphql editor you select that endpoint
+        2. then we write the query based on the requirement.
+        3. and then we click save and give a name for the file
+        4. that file name becomes the url, that url is used by react to get the data
+                - eg : file name is : bhargavFirstQuery, persisted query url : http://localhost:4502/graphql/execute.json/global/bhargavFirstQuery
+        5. if we hit that url we get--> {
+                                       "data": {
+                                         "bhargavLatestCfForGraphqlList": {
+                                           "items": [
+                                             {
+                                               "name": "Indra",
+                                               "idNumber": 1
+                                             }
+                                           ]
+                                         }
+                                       }
+                                     }
+
+
+
+- Scroll to the end to find the graphql practice queries.
 =============================================================================================
 15) Creating Custom Rollout Configuration and Live action for that rollout configuration.
 --> Use of this : whenever we run the rollout page for a blueprint then this custom rollout get executed with live action and add custom
@@ -557,7 +596,7 @@ Step : 3 - select your metadata schema and pick "ADD TO FOLDERS" option, andadd 
 --> Coding part
 Step : 1 - create a clientlib and in that give categories (for timebeing I gave libs path clientlib categories, because that clientlib is
            loading in Asset Properties console).
-           - but the best approach is overlaying that libs clientlib to out apps path and in that adding embed="[bhargav.asset.properties]". So our
+           - but the best approach is overlaying that libs clientlib to  apps path and in that adding embed="[bhargav.asset.properties]". So our
              clientlib - bhargav.asset.properties, also gets loaded with that /apps/ path clientlib.
            - apps/aemgeeks/clientlibs/clientlib-bhargav-metadataschema/.content.xml
 
@@ -973,3 +1012,92 @@ paths.each { path ->
 
 println "=== Images with dam:scene7ID and dam:scene7Domain ==="
 validImagePaths.each { println it + ","}
+
+
+===================================================================================================
+===================================================================================================
+* GRAPHQL QUERIES
+
+-> Our Content Fragment Model : "ArticleCfModel"
+        - this model have fields : title, author, description, publishDate.
+
+-> Now we have created a CF using this model-- Title: Learning GraphQL
+                                               Author: Bhargav
+                                               Description: GraphQL in AEM
+                                               Publish Date: 21-06-2026
+
+QUERIES:
+1. Query a single fragment : this will only give the content fragment located at this path
+            --> {
+                articleCfModelByPath(
+                  _path: "/content/dam/myproject/articles/article1"
+                ) {
+                  title
+                  author
+                }
+              }
+
+            -Response output: {
+                                "data": {
+                                  "articleByPath": {
+                                    "title": "Learning GraphQL",
+                                    "author": "Bhargav"
+                                  }
+                                }
+                              }
+
+2. To get multiple articles: this will give all the content fragments created using our model
+           -->  {
+                articleCfModelList {
+                  items {
+                    title
+                    author
+                  }
+                }
+              }
+
+
+3. we can also add filter and get the fragment based on them, eg: Get only articles written by Bhargav.
+            --> {
+                articleCfModelList(
+                  filter: {
+                    author: {
+                      _expressions: [
+                        {
+                          value: "Bhargav",
+                          _operator: EQUALS
+                        }
+                      ]
+                    }
+                  }
+                ) {
+                  items {
+                    title
+                    author
+                  }
+                }
+              }
+        - this query will give all fragments where author = Bhargav
+
+4. Sorting : we can do the sorting as well and get the Latest fragments first or old one first
+            --> {
+                  articleCfModelList(
+                    sort: "publishDate DESC"
+                  ) {
+                    items {
+                      title
+                      publishDate
+                    }
+                  }
+                }
+
+5. Pagination : eg: Get first 5 articles.
+            --> {
+                  articleCfModelList(
+                    limit: 5
+                  ) {
+                    items {
+                      title
+                    }
+                  }
+                }

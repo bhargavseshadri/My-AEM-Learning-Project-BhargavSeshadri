@@ -19,6 +19,10 @@ IMPORTANT PATHS
     - To give the required permissions(ACL's) : /Useradmin
     - Note: Service users are under this path (crx) : /home/users/system
 
+-> GRAPHIQL EDITOR : http://localhost:4502/aem/graphiql.html
+-> To see graphql endpoints in crxde : /content/cq:graphql/global/endpoint
+-> to create graphql endpoint : http://localhost:4502/libs/cq/graphql/sites/admin/content/console.html
+
 =============================================================================================
 * Important Points
 
@@ -47,6 +51,9 @@ IMPORTANT PATHS
 -> * We can have different variations(copies) of our Content Fragment, and to use that we have to pick the variation we want in the CF dialog box on the page.
    * and we can also sync CF variation with CF master as well.
 
+-> In modern AEM versions and AEM as a Cloud Service, you must explicitly configure the path of the folder containing your Content Fragment Models
+      in the "Allowed Content Fragment Models" field under the Policies tab of the corresponding folder in /content/dam. Otherwise, the models will not shown up
+      when creating Content Fragments in that folder.
 =============================================================================================
 *) Logger Levels
         Trace
@@ -714,6 +721,53 @@ EXAMPLE : (IN DEPTH EXPLANATION)
              * but this won't be in sync with the master blueprint, means if we make any changes in the master blueprint it won't reflect in this site.
              * there is a check box called "LIVE COPY" while creating this, if you check it the this separate site will become a live copy and then it
                will be in sync with the master blueprint, but if you do not check this then it will be a complete separate site and won't be in sync with the master blueprint.
+
+=============================================================================================
+GRAPHQL
+
+- In AEM, GraphQL is mainly used when your content is stored as Content Fragments and some external application needs that content.
+- Usually GraphQL queries are written in the external application, not in AEM.
+        -> The React or other external applications sends this query to AEM using post request. and aem takes that query reads it and sends response.
+
+- The work of traditional api's and graphql is almost same, sending the content to the external application, then whats the advantage of GRAPHQL
+        -> lets say If a React app wants only the title and author, traditional APIs may still send complete data (we can write the code to filter
+           out the ones that are not reqd but that is not a advaisable standard)
+                json : {
+                         "title": "AEM Basics",
+                         "author": "Bhargav",
+                         "description": "Learning AEM GraphQL"
+                       }
+        -> But with graphql,
+            - The React app can ask:
+                Graphql: {
+                           articleByPath(
+                             _path: "/content/dam/articles/aem-basics"
+                           ) {
+                             title
+                             author
+                           }
+                         }
+
+            - AEM returns only:
+                    {
+                      "title": "AEM Basics",
+                      "author": "Bhargav"
+                    }
+            - The consumer can decide what fields it wants.
+
+- Types the external application request the data:
+        1. Persisted Query
+                - we write a query in our graphql editor and save that file and aem create a url for that file containing query,
+                  that url is called persisted query url.
+                - React or external application simply uses that url and requests the data, without writing the whole query.
+                - eg: we created : http://localhost:4502/graphql/execute.json/global/bhargavFirstQuery
+                      in react we simply call : GET /graphql/execute.json/global/bhargavFirstQuery
+                - This is advisable because it is simple and faster.
+
+        2. In react we write the entire query and sends it in POST request. this is not advisable because in every request we send the query
+           and it make the system slower.
+
+- You can find the example graphql queries in com/aem/geeks/core/Bhargav-notes.txt
 
 =============================================================================================
 *) DISPATCHER   -- C:\Documents out side onedrive focus\AEM RELATED\aemgeeks\dispatcher.any
