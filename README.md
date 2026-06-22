@@ -105,7 +105,7 @@ all/target/*.zip
 Upload it via AEM Package Manager (http://localhost:4502/crx/packmgr).
 
 
-## AEM SERVER START
+## AEM Author SERVER START
 ![img_6.png](img_6.png)
 
 `java -jar AEM_6.5_Quickstart-author-p4502.jar`
@@ -115,6 +115,15 @@ Upload it via AEM Package Manager (http://localhost:4502/crx/packmgr).
 aem-author-p4502
 (in use) `java -Xdebug -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=8080 -jar aem-author-p4502.jar`
 
+
+
+# To Build and Deploy Package in to AEM Publish
+`mvn clean install -PautoInstallPackagePublish`
+or
+`mvn clean install -PautoInstallSinglePackagePublish`
+
+# AEM Publisher Server start
+`java -jar aem-publish-p4503.jar`
 
 **___________________BHARGAV Notes Ends_________________**
 

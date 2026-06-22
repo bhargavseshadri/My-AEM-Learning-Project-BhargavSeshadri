@@ -35,7 +35,9 @@ AEM solves several problems related to digital experience management:
 -> Editable Templates : If you edit the template then that change will show in both old(existing pages) and new pages as well.
 -> Static Template : If you edit the template code and then deploy it, then that change will show in both old(existing pages) and new pages as well.
 -> request.getParameter(...) only returns form/query parameters (name/value pairs in the query string or POST body). It does NOT read HTTP headers or the request URL
-
+-> In modern AEM versions and AEM as a Cloud Service, you must explicitly configure the path of the folder containing your Content Fragment Models
+   in the "Allowed Content Fragment Models" field under the Policies tab of the corresponding folder in /content/dam. Otherwise, the models will not shown up
+   when creating Content Fragments in that folder.
 =============================================================================================
 ==> DEFINITIONS
 1) Resource :  - A resource is basically any node or file in the jcr that sling can access and maps it to a url.
