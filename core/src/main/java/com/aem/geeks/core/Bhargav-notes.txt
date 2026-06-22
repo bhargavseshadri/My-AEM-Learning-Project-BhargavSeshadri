@@ -596,7 +596,7 @@ Step : 3 - select your metadata schema and pick "ADD TO FOLDERS" option, andadd 
 --> Coding part
 Step : 1 - create a clientlib and in that give categories (for timebeing I gave libs path clientlib categories, because that clientlib is
            loading in Asset Properties console).
-           - but the best approach is overlaying that libs clientlib to out apps path and in that adding embed="[bhargav.asset.properties]". So our
+           - but the best approach is overlaying that libs clientlib to  apps path and in that adding embed="[bhargav.asset.properties]". So our
              clientlib - bhargav.asset.properties, also gets loaded with that /apps/ path clientlib.
            - apps/aemgeeks/clientlibs/clientlib-bhargav-metadataschema/.content.xml
 

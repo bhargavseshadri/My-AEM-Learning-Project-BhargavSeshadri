@@ -29,11 +29,11 @@ public @interface BhargavConfigForUserAPI {
     @AttributeDefinition(
             name = "Username",
             type = AttributeType.STRING)
-    String Username();                       //Username and password we get from the Dummy users endpoint "https://dummyjson.com/users"
+    String Username() default "emilys";                       //Username and password we get from the Dummy users endpoint "https://dummyjson.com/users"
 
     @AttributeDefinition(
             name = "Password",
             type = AttributeType.STRING)
-    String password();
+    String password() default "emilyspass";
 
 }
