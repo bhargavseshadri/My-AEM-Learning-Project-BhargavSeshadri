@@ -1,5 +1,11 @@
-INDEX:
+----------------------------------------------
+IMPORTANT NOTE : This branch usage is stopped.
+JAVA version of this branch : JAVA 8
+Last commited : Shankam marktech query builder api use case.
+MAIN : from now on the main branch will have JAVA 11 for AEM CLOUD SDK
+----------------------------------------------
 
+INDEX:
 1) ResourceResolverFactory related Notes
 
 2) FETCHING DATA FROM EXTERNAL API - NO ACCESS TOKEN NEEDED - (using sling model)
