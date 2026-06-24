@@ -802,7 +802,7 @@ GRAPHQL
 
 ---> Sections in Dispatcher.any
 - /clientheaders : tells what headers are allowed through request.
-- /virtualhosts : - it define which domain is mapped or resolved to which content. using this we can have multiple domains with multiple configuration.
+- /virtualhosts or vhose : - it define which domain is mapped or resolved to which content. using this we can have multiple domains with multiple configuration.
                   - we can have multiple /virtualhosts.
                    Eg : www.intel.com --> maps to AEM Sites
                         www.intelDigitalLibrary.com ---> maps to AEM Asset.
