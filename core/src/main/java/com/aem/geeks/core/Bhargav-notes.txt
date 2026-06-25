@@ -42,6 +42,7 @@ INDEX:
 10) Creating a Proxy Component
         * Proxy Component 1 - bhargavtextproxy
         * Proxy Component 2 - bhargavtextproxy-two
+        * Core component Enterprice Usecase - bhargav-ctabar-proxycomp
 
 11) bhargav-backend-aem-apis-comp
 
@@ -73,6 +74,7 @@ g) Component for Content Fragment : apps/aemgeeks/components/content/bhargav-con
 h) Component for Composite Multifield : apps/aemgeeks/components/content/bhargav-compmultifield
 i) Proxy Components : 1. apps/aemgeeks/components/bhargavtextproxy
                       2. apps/aemgeeks/components/bhargavtextproxy-two
+                      3. apps/aemgeeks/components/bhargav-ctabar-proxycomp
 j) Bhargav Article List Component (Querybuilder backend api used) : apps/aemgeeks/components/content/bhargav-articlelist-comp
 
 =============================================================================================
@@ -453,6 +455,13 @@ Step: 2 - Include the clientlib in your component : apps/aemgeeks/components/con
 
 ->Step: 1 - Create Component : apps/aemgeeks/components/bhargavtextproxy-two
 ->Step: 2 - Sling Model : com/aem/geeks/core/models/BhargavTextProxyTwoModel.java
+
+-------------------------------------------------------------
+* Proxy Component 3 - Core component Enterprice Usecase - bhargav-ctabar-proxycomp
+
+Step: 1 - Create Component : apps/aemgeeks/components/bhargav-ctabar-proxycomp
+Step: 2 - Sling Model : com/aem/geeks/core/models/BhargavCtaBarModel.java
+Step: 3 - Rendering with styles : apps/aemgeeks/components/bhargav-ctabar-proxycomp/bhargav-ctabar-proxycomp.html
 
 =============================================================================================
 11) bhargav-backend-aem-apis-comp
