@@ -1,0 +1,32 @@
+.support-cta {
+    padding: 32px;
+}
+
+.support-cta__wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 32px;
+    flex-wrap: wrap;
+}
+
+.support-cta__title {
+    color: inherit;
+    font-size: 36px;
+    font-weight: 300;
+}
+
+.support-cta__button {
+    display: inline-block;
+    padding: 14px 30px;
+    background: #ffffff;
+    color: #0056b3;
+    text-decoration: none;
+    font-size: 18px;
+    border-radius: 2px;
+    transition: 0.3s;
+}
+
+.support-cta__button:hover {
+    background: #f5f5f5;
+}

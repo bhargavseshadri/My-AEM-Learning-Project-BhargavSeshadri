@@ -34,7 +34,9 @@ IMPORTANT PATHS
         - ${properties.fieldName}
         - Internally it simply means "resource.getValueMap()".
 
--> sling:hideResource="{Boolean}true" : To Hide a Core component field in our proxy comp, Add this property to that in the overriden cq_dialog in proxy comp.
+-> sling:hideResource="{Boolean}true" : * To Hide a Core component dialog field in our proxy comp, Add this property to that in the overriden cq_dialog in proxy comp.
+                                        * You have to add that field and use this hideResource option with it "Matching that node component field node structure,
+                                          Then only it works", EXAMPLE for this is in "apps/aemgeeks/components/bhargav-ctabar-proxycomp/_cq_dialog/.content.xml - LINE 26 - 44"
 
 -> CSRF (Cross-Site Request Forgery) :
         - In some cases a malicious site in the other tab may tricks a logged-in user’s browser into making a request to another site (like AEM)

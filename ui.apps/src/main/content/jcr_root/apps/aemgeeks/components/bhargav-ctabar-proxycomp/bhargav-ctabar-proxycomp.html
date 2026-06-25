@@ -1,0 +1,24 @@
+<sly data-sly-use.clientlib="/libs/granite/sightly/templates/clientlib.html"
+     data-sly-call="${clientlib.css @ categories='bhargav-ctabar-proxy-comp.Styles'}"/>
+<sly data-sly-use.model="com.aem.geeks.core.models.BhargavCtaBarModel"/>
+
+<div class="support-cta"
+     style="background-color:${model.backgroundColor @ context='styleToken'};color:${model.textColor @ context='styleToken'};">
+
+    <div class="support-cta__wrapper">
+
+        <div class="support-cta__title">
+            ${model.title}
+        </div>
+
+        <div class="support-cta__actions" data-sly-list.action="${model.actions}">
+
+            <a class="support-cta__button" href="${action.URL}">
+                ${action.title}
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
