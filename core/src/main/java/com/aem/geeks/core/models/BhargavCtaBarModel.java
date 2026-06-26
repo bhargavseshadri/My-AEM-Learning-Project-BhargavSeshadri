@@ -3,7 +3,6 @@ package com.aem.geeks.core.models;
 
 import com.adobe.cq.wcm.core.components.models.ListItem;
 import com.adobe.cq.wcm.core.components.models.Teaser;
-import com.adobe.cq.wcm.core.components.models.Text;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.DefaultInjectionStrategy;
@@ -12,25 +11,35 @@ import org.apache.sling.models.annotations.Via;
 import org.apache.sling.models.annotations.injectorspecific.Self;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import org.apache.sling.models.annotations.via.ResourceSuperType;
-
 import java.util.List;
 
+
+
+
+
+/*SeshadriBhargav - bhargav-ctabar-proxycomp
+* Step : 2 - Creating a model and using delegation concept getting the fields values from core component.
+* Step : 3(last step) - HTL - apps/aemgeeks/components/bhargav-ctabar-proxycomp/bhargav-ctabar-proxycomp.html
+* Step : 1 - Create the comp - apps/aemgeeks/components/bhargav-ctabar-proxycomp/_cq_dialog/.content.xml
+* */
 @Model(
         adaptables = {Resource.class, SlingHttpServletRequest.class},
         adapters = Teaser.class,
-        resourceType = BhargavCtaBarModel.BHARGAV_RESOURCE_TYPE, //this is important for this model tto work.
+        resourceType = BhargavCtaBarModel.BHARGAV_RESOURCE_TYPE, //this is important for this model to work.
         defaultInjectionStrategy = DefaultInjectionStrategy.OPTIONAL
 )
-public class BhargavCtaBarModel implements Teaser{
+public class BhargavCtaBarModel implements Teaser {
 
     protected static final String BHARGAV_RESOURCE_TYPE = "aemgeeks/components/bhargav-ctabar-proxycomp";
 
+    //This is Sling model - DELEGATION
     @Self
+    //Here @Self work is to take the current adaptable and adapt it to whatever type this field is, here the field is Teaser.
     @Via(type = ResourceSuperType.class)
     private Teaser teaser;
 
 
-//------Our Custom Fields
+    //------Our Custom Fields
     @ValueMapValue
     private String backgroundColor;
 
@@ -45,8 +54,6 @@ public class BhargavCtaBarModel implements Teaser{
         return textColor;
     }
 //---------------------------
-
-
 
 
     /*
