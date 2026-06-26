@@ -230,7 +230,7 @@ public class BhargavBackendAemApisCompModelImpl implements BhargavBackendAemApis
         Page page = pageManager.getPage("/content/mysite/about");*/
 
         //2 - Using Resource
-        Page page = pageManager.getContainingPage(resource);
+        Page page = pageManager.getContainingPage(resource);  //this will give the resource(we have give here) as a Page to us.
         String pageTitle = page.getTitle();
 
         String pagePath = pageManager.getContainingPage(resource).getPath();

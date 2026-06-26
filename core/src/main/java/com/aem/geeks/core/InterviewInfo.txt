@@ -394,6 +394,7 @@ Ans : What it actually do is it, if we give some client library name(here my.sit
 * extraClientlibs="[bhargav.dialog.validation]"
 - we give this when we want our clientlibs to load at the time when we open the "comp authoring dialog".
 - we give this in our comp dialog XML.
+
 =============================================================================================
 DATASOURCE
 * The purpose of a DataSource in Granite UI is "Provide dynamic data to dialog fields."
@@ -471,7 +472,8 @@ Ans. actually if we do any chnage in the editable template then that change will
         - We can acheive it by using "Initial content" (drawbacks here are author can edit the comp, we cant lock these comps))
         - or we can create a template version by copying the existing template and then make a chnage and then on we can create new pages using this new template version.
 
-
+7. whenever I have drag and drop a component the page should automatically get refreashed, how to do that
+8. What is Apache Oak and Apache Jackrabbit Oak
 
 
 
@@ -593,8 +595,7 @@ Example Code : com/aem/geeks/core/javarelatedcodes/StaticExamples.java
 - The main use of static is to define common things that should be shared across all objects — and to access them without creating
   an object. and it is helpful for memory management.
 * To access a non-static method in static method, we have to create an object.
-* Static method can only access the static variables.
-* Static methods can only access static methods.
+* Static method can only access the static variables & static methods.
 * Non-Static can access both static and non-static methods.
 * Static does not support "this" and "super"
 * And we don't give the access modifier for the variables defined inside the static method.
@@ -602,7 +603,8 @@ Example Code : com/aem/geeks/core/javarelatedcodes/StaticExamples.java
 -----------------------------------------------------------
 4) Dynamic Binding (also called Late Binding or Runtime Polymorphism) : it means that the method to be called is decided at runtime, not at compile time.
 - here we create a reference for a parent class and assign to the child object.
-
+- We use this concept while create a object for a class that implements interface
+        * Vehicle myCar = new Car(); -- Here "Vehicle" is interface and "car" is a class that implemented interface
 Eg: Animal a;
 
     if (userInput.equals("dog")) {
@@ -639,7 +641,7 @@ abstract class Animal {
 
 -> Animal obj = new Animal(); //Not allowed
 
-Note: Cannot be instantiated” means that you cannot create an object of that class directly using the new keyword.
+Note: Cannot be instantiated - means that you cannot create an object of that class directly using the new keyword.
 
 -----------------------------------------------------------
 6) INTERFACES
@@ -651,6 +653,61 @@ Note: Cannot be instantiated” means that you cannot create an object of that c
 - Using this we can achieve multiple inheritance (since Java does not support multiple class inheritance).
 - we cannot create object for interfaces.
 - It can't have a constructor.
+
+
+* Example of Interface Inheritance:
+1. The Base Interface (Vehicle.java)
+
+        public interface Vehicle {
+            void startEngine();
+        }
+
+2. The Extended Interface (ElectricVehicle.java)
+- any class that implements ElectricVehicle is now forced to sign both contracts: it must know how to chargeBattery() AND how to startEngine().
+
+        public interface ElectricVehicle extends Vehicle {
+            void chargeBattery();
+        }
+
+3. The Implementing Class (Tesla.java)
+- When a class implements the child interface, it must provide the code for all methods in the child interface and all methods in the parent interface.
+
+        // Tesla only needs to say it implements ElectricVehicle,
+        // but it is legally bound to the Vehicle contract too.
+        public class Tesla implements ElectricVehicle {
+
+            // Method from the parent interface (Vehicle)
+            @Override
+            public void startEngine() {
+                System.out.println("Tesla engine started: (Complete silence).");
+            }
+
+            // Method from the child interface (ElectricVehicle)
+            @Override
+            public void chargeBattery() {
+                System.out.println("Tesla is plugging into the Supercharger.");
+            }
+        }
+
+4. The Main Class (Main.java)
+        public class Main {
+            public static void main(String[] args) {
+
+                // We can use the child interface as the type
+                ElectricVehicle myEv = new Tesla();
+                myEv.startEngine();    // Works! (Inherited from Vehicle)
+                myEv.chargeBattery();  // Works! (Defined in ElectricVehicle)
+
+                System.out.println("---");
+
+                // We can ALSO use the parent interface as the type
+                Vehicle myStandardVehicle = new Tesla();
+                myStandardVehicle.startEngine(); // Works!
+
+                myStandardVehicle.chargeBattery(); // ERROR! Even though it is a Tesla, because we stored it as a 'Vehicle',
+                // the program doesn't know it can charge a battery.
+            }
+        }
 
 -----------------------------------------------------------
 -----------------------------------------------------------
@@ -676,9 +733,9 @@ d) Multiple Inheritance (by classes) : A class inherits from more than one class
 
 ------------------------
 3) Encapsulation (here we restrict the direct access to our main class, we use private methods for that)
+- Encapsulation is the concept of hiding the internal details of a class and only allowing access through public methods. (DATA HIDING)
 - Encapsulation is the process of bundling variables and methods (functions) that operate on the data within a "single unit", known as a class.
 - It helps protect an object’s internal state by restricting direct access to its attributes and providing controlled access through public methods.
-- Encapsulation is the concept of hiding the internal details of a class and only allowing access through public methods. (DATA HIDING)
 - we use public getter and setter methods to access and update the variables.
 
 ------------------------
@@ -886,30 +943,13 @@ Eg: class Car {
 
 --------------------------------------------------------------------------
 --------------------------------------------------------------------------
-COLLECTIONS
+COLLECTION Framework
 - The Java collection framework is a set of classes and interfaces that provide a standard way of representing, manipulating
   and storing collections of objects.
 - Represents a group of objects known as elements.
 - Methods include add, remove, contains, size, etc.
 - com/aem/geeks/core/javarelatedcodes/CollectionExampleCodes.java
 - https://medium.com/@cibofdevs/collections-in-java-a-comprehensive-guide-1d63f8cd5c05
-
-List : an "ordered" collection of elements that allows duplicates and nulls.
-           ArrayList -	Resizable array that maintains order and allows duplicates
-           LinkedList -	List with fast insert and remove operations
-
-Set	: A unordered collection of elements that do not allow duplicates.
-           HashSet	-   Unordered collection of unique elements
-           TreeSet	- Sorted set of unique elements (natural order), means it put the elements in a unique and ascending order. It won't allow duplicates and null values.
-           LinkedHashSet - Maintains the order in which elements were inserted
-
-Map : a collection of key-value pairs, where each key is unique.
-           HashMap	- Stores key/value pairs with no specific order or insertion order.
-           TreeMap	- Sorted map based on the natural order of keys
-           LinkedHashMap - Maintains the order in which keys were inserted
-
-Queue: a queue is a data structure that is used to store elements in a First-In-First-Out (FIFO) manner.
-Deque: can be used both as FIFO and LIFO.
 
 
 Note: Types of defining
@@ -922,39 +962,122 @@ b. Passing an initial capacity --> ArrayList<String> list = new ArrayList<String
 c. ArrayList<String> list = new ArrayList<>();
 
 
-* When and where we use a particular collection
 
 1) List:
 - It is an ordered collection of elements, where each element has a distinct position in the list.
 - allows duplicates and nulls.
 - used When we need ordered data and duplicates allowed.
+- To add elements -> .add("bhargav")
 
-a) ArrayList
-- its a growable or resizable array.
-- It maintains order
-- Allows duplicates
+        a) ArrayList
+        - its a growable or resizable array.
+        - It maintains order
+        - Allows duplicates and Nulls
 
-b) LinkedList
-- It can impliment either List or Queue.
-- It is good for inserting and deleting at the beginning and middle
-- it is like a chain of nodes where each node can point to the previous and next node.
+        b) LinkedList
+        - It can implement either List or Queue.
+        - Maintains insertion oreder
+        - Allows nulls and duplicates
+        - It is good for inserting and deleting at the beginning and middle
+        - it is like a chain of nodes where each node can point to the previous and next node.
 
-Example: import java.util.*;
+        Example: import java.util.*;
 
-         public class Example1 {
-             public static void main(String[] args) {
-                 List<String> list = new ArrayList<>();
-                 list.add("Apple");
-                 list.add("Banana");
-                 list.add("Apple"); // duplicate allowed
+                 public class Example1 {
+                     public static void main(String[] args) {
+                         List<String> list = new ArrayList<>();
+                         list.add("Apple");
+                         list.add("Banana");
+                         list.add("Apple"); // duplicate allowed
 
-                 Iterator<String> it = list.iterator();
-                 while (it.hasNext()) {
-                     System.out.println(it.next());
+                         Iterator<String> it = list.iterator();
+                         while (it.hasNext()) {
+                             System.out.println(it.next());
+                         }
+                     }
                  }
-             }
-         }
 
+
+============
+Set	: - A unordered collection of elements that do not allow duplicates.
+      - Does not support indexing
+      - Can store one null value (except TreeSet)
+      - To add elements -> .add("bhargav")
+      - Just like in List here we cannot retrive values using .get() and index, set.get(0); this gives Compile-time error
+        because in set the values are not stored with index.
+                   Set
+         ┌──────────┼──────────┐
+         │          │          │
+      HashSet   LinkedHashSet  TreeSet
+
+
+a) HashSet : - No duplicates
+             - No insertion order
+             - Allows one null : means if we add any number of nulls it only shows one, because it removes other ones.
+             Ex:         Set<Integer> numbers = new HashSet<>();
+
+                         numbers.add(50);
+                         numbers.add(90);
+                         numbers.add(50);
+                         numbers.add(null);
+                         numbers.add(null);
+                         numbers.add(null);
+                         numbers.add(10);
+                         System.out.println(numbers);
+
+b) LinkedHashSet : - Unlike HashSet, it remembers the insertion order in which elements were added.
+                   - Removes Duplicates
+                   - Allows null values
+
+c) TreeSet : - TreeSet stores elements in sorted order.
+             - Removes Duplicates
+             - It wont take null values
+
+============
+MAP : - A Map in Java is a data structure that stores key-value pairs.
+      - Keys must be unique.
+      - Values can be duplicated.
+      - One key maps to one value.
+      - Retrieval is done using the key.
+      - To add a element : map.put(101, "Rahul");
+
+Map (Map is not a collection, Its a Separate Hierarchy)
+    |
+    |---- HashMap
+    |---- LinkedHashMap
+    |---- TreeMap
+    |---- Hashtable
+
+a) HashMap : - Keys are unique.
+             - Values can be duplicated.
+             - Does not maintain insertion order.
+             - (IMPORTANT)Allows one null key.
+             - Allows multiple null values.
+
+       Eg :  Map<Integer, String> map = new HashMap<>();
+             map.put(101, "Rahul");
+             map.put(102, "Priya");
+             map.put(103, "John");
+             System.out.println(map);
+
+b) LinkedHashMap : - Maintains insertion order.
+                   - It take one Null key and multiple null values
+                   - it allows duplicate values.
+
+c) TreeMap: - Stores entries sorted by key.
+            - This wont take Null keys at all.
+            - Can take null values and duplicate values
+
+d) Hashtable: - Does not allow null keys or values.
+              - dont maintains insertion order.
+              - Allows duplicate values but keys should be unique.
+
+Eg : Hashtable<Integer, String> table = new Hashtable<>();
+     table.put(1, "Java");
+
+========
+Queue: a queue is a data structure that is used to store elements in a First-In-First-Out (FIFO) manner.
+Deque: can be used both as FIFO and LIFO.
 
 ---------------------------
 *) Arrays Syntax
