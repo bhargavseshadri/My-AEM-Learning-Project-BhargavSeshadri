@@ -404,6 +404,26 @@ DATASOURCE
                    3. Dynamic Checkboxes etc
 
 =============================================================================================
+BUNDLE LIFECYCLE
+
+1. INSTALLED : The bundle has been successfully uploaded and installed into the OSGi container, but its dependencies have not yet been satisfied.
+2. RESOLVED : All required dependencies have been resolved. The bundle is ready to start.
+3. STARTING : The bundle is in the process of being started; its BundleActivator.start() method (if any)is being called.
+              Bundles using lazy activation sit in this state until a class is actually loaded that triggers activation.
+4. ACTIVE : The bundle has been successfully started and is running normally. This is the healthy/desired end state for most bundles.
+5. STOPPING : The bundle is in the process of stopping. Its BundleActivator.stop() method is being executed.
+6. UNINSTALLED : The bundle has been completely removed from the AEM instance. This is a terminal state. The bundle can no longer transition to any other state,
+                 and its resources have been released by the OSGi framework.
+
+* FRAGMENT : A Fragment is a special type of OSGi bundle. It's not actually a lifecycle state defined by OSGi, but in AEM's /system/console/bundles,
+             you'll often see a bundle labeled as Fragment because it is a fragment bundle rather than a regular bundle.
+             - Cannot run independently.
+             - Has no lifecycle of its own (it never becomes Active).
+             - Attaches to a host bundle at resolve time
+             - Simple interview ans : Fragment is a bundle type that AEM/Felix displays in the console to indicate the bundle is a fragment
+                                      and therefore has no independent lifecycle. It attaches to a host bundle and cannot be started or stopped on its own.
+
+=============================================================================================
 AEM SPECIFIC NODE TYPES
 
 cq:Page	             :  /content/...              : Represents a page. Has a child node jcr:content.
