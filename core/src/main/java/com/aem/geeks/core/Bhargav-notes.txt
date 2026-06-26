@@ -450,8 +450,8 @@ Step: 2 - Include the clientlib in your component : apps/aemgeeks/components/con
 
 -------------------------------------------------------------
 * Proxy Component 2 - bhargavtextproxy-two
--> Here in this component we mainly explore the dellegation concept in proxy components.
--> Dellegation : refer interviewInfo.txt
+-> Here in this component we mainly explore the delegation concept in proxy components.
+-> Delegation : refer interviewInfo.txt
 
 ->Step: 1 - Create Component : apps/aemgeeks/components/bhargavtextproxy-two
 ->Step: 2 - Sling Model : com/aem/geeks/core/models/BhargavTextProxyTwoModel.java
@@ -460,8 +460,8 @@ Step: 2 - Include the clientlib in your component : apps/aemgeeks/components/con
 * Proxy Component 3 - Core component Enterprice Usecase - bhargav-ctabar-proxycomp
 
 Step: 1 - Create Component : apps/aemgeeks/components/bhargav-ctabar-proxycomp
-Step: 2 - Sling Model : com/aem/geeks/core/models/BhargavCtaBarModel.java
-Step: 3 - Rendering with styles : apps/aemgeeks/components/bhargav-ctabar-proxycomp/bhargav-ctabar-proxycomp.html
+Step: 2 - Sling Model using delegation : com/aem/geeks/core/models/BhargavCtaBarModel.java
+Step: 3 (last step)- Rendering with styles : apps/aemgeeks/components/bhargav-ctabar-proxycomp/bhargav-ctabar-proxycomp.html
 
 =============================================================================================
 11) bhargav-backend-aem-apis-comp

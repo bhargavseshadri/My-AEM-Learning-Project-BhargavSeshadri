@@ -216,9 +216,23 @@ Note : First understand the situation
 
 
 
-@Self : Give me the same object that created the model.
+@Self : It tells Sling to create this model from the current adaptable (Request or Resource). Give me the same object that created the model.
   - adaptables: means we're saying to sling that this model is created using a request or resource. Mainly defines how model is created.
   - @Self: using this we say that store that same request or resource inside this variable. injects that adaptable into a field.
+  - IMP : This @Self says: "don't go look at a child resource, don't call an OSGi service, don't read a value map property — just take the current adaptable itself."
+          just adapt the same resource/request you're currently sitting on.
+
+
+- Work of @Self is :
+        -> @Self
+           private Resource resource;  this means -- resource = adaptable.adaptTo(Resource.class);
+
+        -> @Self
+           private SlingHttpServletRequest request;  This means -- request = adaptable.adaptTo(SlingHttpServletRequest.class);
+
+        -> @Self
+           private Teaser teaser;  This means -- teaser = adaptable.adaptTo(Teaser.class);
+
 
 Eg : @Model(adaptables = SlingHttpServletRequest.class)
      public class MyModel {
@@ -232,7 +246,7 @@ Eg : @Model(adaptables = SlingHttpServletRequest.class)
      }
  - If @Self is removed: private SlingHttpServletRequest request;   ---> then request will be null, even though the model was created using the request.
 
-
+-----------------------------------------------------
 
 @Via : Before injecting, go through this object first.
 * It is mainly used because most AEM models are adaptable from request, but properties are stored in resource.

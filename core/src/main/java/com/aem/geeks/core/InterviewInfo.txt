@@ -189,15 +189,26 @@ path : /apps/core/wcm/components/...
 -> PROXY COMPONENTS: A proxy component is a lightweight wrapper around a core component. It doesn’t add new logic — it just points to a core component using
  sling:resourceSuperType and gives it a project-specific name and path. and it allows future customization without touching core code.
 
- -> To add any custom field for our Proxy component we have to override core comp CQ_DIALOG. That CQ_DIALOG we have to get it from the extended core component.
- -> Similarly To print that custom field on the page we have to override core comp HTML. That HTML we have to get it from the extended core component and add the
-    extra code needed to print you Custom field.
- -> sling:hideResource="{Boolean}true" : If you want to hide any field that comes from core component, In that case add this to that field "In the Overriden CQ_DIALOG".
- -> Once we add a new custom field to our proxy component, to render that we have to override htl file, once we override it, then our aem only picks the custom html
-    from that time onwards
+ -> To add any custom field for our Proxy component we have couple of ways:
+            1.(recommended) We create a _cq_dialog/.content.xml and inside it we add our own tab and our own fields, so now the AEM will automatically merge and show
+               the core component Tabs & Fields along with our custom tab & Fields.
+            2.(not recommended) to override core comp CQ_DIALOG. That CQ_DIALOG we have to get it from the extended core component.
 
--> Dellegation in Sling Models: Delegation in AEM means reusing methods & functionality from another Sling Model or Core Component by forwarding method calls instead of
+ -> Similarly To print that custom field on the page we will create our own HTL file and using delegation concept we can print our own fields and also core comp fields.
+ -> sling:hideResource="{Boolean}true" : If you want to hide any field that comes from core component, In that case add this to that field "In the Overriden CQ_DIALOG".
+    but to use this you have to exactly follow the same node structure that present in core component xml.
+
+
+-> Delegation in Sling Models: Delegation in AEM means reusing methods & functionality from another Sling Model or Core Component by forwarding method calls instead of
    rewriting logic. It is commonly implemented using @Via(ResourceSuperType.class) to delegate calls to the Core Component model while customizing only required methods.
+   - Delegation is a design pattern where your custom component reuses the functionality of another component (usually an AEM Core Component)
+     instead of rewriting the logic.
+
+     Example : 1. In our component definition we give : sling:resourceSuperType = core/wcm/components/teaser/v2/teaser -- this is called component definition.
+               2. Sling model DELEGATION  -   @Self
+                                              @Via(type = ResourceSuperType.class)
+                                              private Teaser teaser;
+
    Uses: reuse Adobe Core Component logic
          override only required methods
          avoid code duplication
@@ -269,7 +280,20 @@ Ans. It is used to specify from which objects the model can be adapted.
 
                                  Step: 4 - Finally, the model is ready to be used in HTL or backend code.
 
+-> adaptables = {Resource.class, SlingHttpServletRequest.class}
+        > The model gets creates from the "Resource.class", when somewhere in our java code if we write
+                - Resource resource = resolver.getResource("/content/site/page/jcr:content");
+                  BhargavCtaBarModel model = resource.adaptTo(BhargavCtaBarModel.class);    //So if we dont give Resource.class in the model, in that case this line becomes null.
 
+        > The model gets creates from the "SlingHttpServletRequest.class", when our comp HTL uses data-sly-use
+                - <div data-sly-use.model="com.aem.geeks.core.models.BhargavCtaBarModel">
+                - Internally what the above line does is : request.adaptTo(BhargavCtaBarModel.class);
+
+        > To know from which our model is created we use @Self in our model code.
+                @Self
+                private Resource resource;  or   private SlingHttpServletRequest request;
+
+---------------------------------------------------------
 Services Defination : - A Service in AEM (or OSGi Service) is a Java class that contains reusable business logic and can be shared across components,
                         servlets, or models. It is not dependent on any component.
                       - It’s registered in the OSGi container, and AEM automatically manages its lifecycle (create, start, stop).

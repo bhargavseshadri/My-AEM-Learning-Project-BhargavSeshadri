@@ -33,7 +33,7 @@ public class BhargavTextProxyTwoModel implements Text{
         String originalText = textDelegate.getText();
 
         if (originalText != null) {
-            return originalText + " - This is added by using dellegation, Bhargav";
+            return originalText + " - This is added by using delegation, Bhargav";
         }
 
         return null;
