@@ -115,6 +115,19 @@ g) Custom Live Action(for custom rollout configurations) : 1) LiveActionFactory 
                                                            2) LiveAction : getName(), execute(Resource source, Resource target, LiveRelationship relation, boolean autoSave, boolean isResetRollout)
 
 =============================================================================================
+*) @Component
+
+--> Servlets : @Component(service = Servlet.class)
+--> OSGI Configuration Service : @Component(service = OSGiConfigService.class,immediate = true)   [OSGiConfigService.class  -> this is just my interface service I created]
+--> Schedulers :
+                - Runnable : @Component(immediate = true, service = Runnable.class)
+                - Job :  @Component(immediate = true, service = Job.class)
+
+--> Service : @Component(Service = bhargavService.class)  - bhargavService is my interface and I am linking it to my implimentation class using @Component
+--> Workflow : @Component(service=workflowProcess.class)
+--> Custom Live Action Factory : @Component(service = LiveActionFactory.class)
+
+=============================================================================================
 *) PAGE MANAGER(Aem's API) & Page
 
 Page → where you are
@@ -137,18 +150,6 @@ PageManager pageManager;
 Page page=pageManager.getPage("/content/aemgeeks/us/en");
 - Using Page getting the page info : String title = page.getTitle();
 
-=============================================================================================
-*) @Component
-
---> Servlets : @Component(service = Servlet.class)
---> OSGI Configuration Service : @Component(service = OSGiConfigService.class,immediate = true)   [OSGiConfigService.class  -> this is just my interface service I created]
---> Schedulers :
-                - Runnable : @Component(immediate = true, service = Runnable.class)
-                - Job :  @Component(immediate = true, service = Job.class)
-
---> Service : @Component(Service = bhargavService.class)  - bhargavService is my interface and I am linking it to my implimentation class using @Component
---> Workflow : @Component(service=workflowProcess.class)
---> Custom Live Action Factory : @Component(service = LiveActionFactory.class)
 =============================================================================================
 *) ANNOTATIONS:
 
