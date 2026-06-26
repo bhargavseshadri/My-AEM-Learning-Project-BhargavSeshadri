@@ -189,15 +189,26 @@ path : /apps/core/wcm/components/...
 -> PROXY COMPONENTS: A proxy component is a lightweight wrapper around a core component. It doesn’t add new logic — it just points to a core component using
  sling:resourceSuperType and gives it a project-specific name and path. and it allows future customization without touching core code.
 
- -> To add any custom field for our Proxy component we have to override core comp CQ_DIALOG. That CQ_DIALOG we have to get it from the extended core component.
- -> Similarly To print that custom field on the page we have to override core comp HTML. That HTML we have to get it from the extended core component and add the
-    extra code needed to print you Custom field.
- -> sling:hideResource="{Boolean}true" : If you want to hide any field that comes from core component, In that case add this to that field "In the Overriden CQ_DIALOG".
- -> Once we add a new custom field to our proxy component, to render that we have to override htl file, once we override it, then our aem only picks the custom html
-    from that time onwards
+ -> To add any custom field for our Proxy component we have couple of ways:
+            1.(recommended) We create a _cq_dialog/.content.xml and inside it we add our own tab and our own fields, so now the AEM will automatically merge and show
+               the core component Tabs & Fields along with our custom tab & Fields.
+            2.(not recommended) to override core comp CQ_DIALOG. That CQ_DIALOG we have to get it from the extended core component.
 
--> Dellegation in Sling Models: Delegation in AEM means reusing methods & functionality from another Sling Model or Core Component by forwarding method calls instead of
+ -> Similarly To print that custom field on the page we will create our own HTL file and using delegation concept we can print our own fields and also core comp fields.
+ -> sling:hideResource="{Boolean}true" : If you want to hide any field that comes from core component, In that case add this to that field "In the Overriden CQ_DIALOG".
+    but to use this you have to exactly follow the same node structure that present in core component xml.
+
+
+-> Delegation in Sling Models: Delegation in AEM means reusing methods & functionality from another Sling Model or Core Component by forwarding method calls instead of
    rewriting logic. It is commonly implemented using @Via(ResourceSuperType.class) to delegate calls to the Core Component model while customizing only required methods.
+   - Delegation is a design pattern where your custom component reuses the functionality of another component (usually an AEM Core Component)
+     instead of rewriting the logic.
+
+     Example : 1. In our component definition we give : sling:resourceSuperType = core/wcm/components/teaser/v2/teaser -- this is called component definition.
+               2. Sling model DELEGATION  -   @Self
+                                              @Via(type = ResourceSuperType.class)
+                                              private Teaser teaser;
+
    Uses: reuse Adobe Core Component logic
          override only required methods
          avoid code duplication
@@ -269,7 +280,20 @@ Ans. It is used to specify from which objects the model can be adapted.
 
                                  Step: 4 - Finally, the model is ready to be used in HTL or backend code.
 
+-> adaptables = {Resource.class, SlingHttpServletRequest.class}
+        > The model gets creates from the "Resource.class", when somewhere in our java code if we write
+                - Resource resource = resolver.getResource("/content/site/page/jcr:content");
+                  BhargavCtaBarModel model = resource.adaptTo(BhargavCtaBarModel.class);    //So if we dont give Resource.class in the model, in that case this line becomes null.
 
+        > The model gets creates from the "SlingHttpServletRequest.class", when our comp HTL uses data-sly-use
+                - <div data-sly-use.model="com.aem.geeks.core.models.BhargavCtaBarModel">
+                - Internally what the above line does is : request.adaptTo(BhargavCtaBarModel.class);
+
+        > To know from which our model is created we use @Self in our model code.
+                @Self
+                private Resource resource;  or   private SlingHttpServletRequest request;
+
+---------------------------------------------------------
 Services Defination : - A Service in AEM (or OSGi Service) is a Java class that contains reusable business logic and can be shared across components,
                         servlets, or models. It is not dependent on any component.
                       - It’s registered in the OSGi container, and AEM automatically manages its lifecycle (create, start, stop).
@@ -372,12 +396,33 @@ Ans : What it actually do is it, if we give some client library name(here my.sit
 * extraClientlibs="[bhargav.dialog.validation]"
 - we give this when we want our clientlibs to load at the time when we open the "comp authoring dialog".
 - we give this in our comp dialog XML.
+
 =============================================================================================
 DATASOURCE
 * The purpose of a DataSource in Granite UI is "Provide dynamic data to dialog fields."
 * It is used for : 1. Dynamic Select Dropdown (Most Common) - eg in this comp: apps/aemgeeks/components/content/bhargav-personalcomp-two/_cq_dialog/.content.xml
                    2. you can generate them dynamically.
                    3. Dynamic Checkboxes etc
+
+=============================================================================================
+BUNDLE LIFECYCLE
+
+1. INSTALLED : The bundle has been successfully uploaded and installed into the OSGi container, but its dependencies have not yet been satisfied.
+2. RESOLVED : All required dependencies have been resolved. The bundle is ready to start.
+3. STARTING : The bundle is in the process of being started; its BundleActivator.start() method (if any)is being called.
+              Bundles using lazy activation sit in this state until a class is actually loaded that triggers activation.
+4. ACTIVE : The bundle has been successfully started and is running normally. This is the healthy/desired end state for most bundles.
+5. STOPPING : The bundle is in the process of stopping. Its BundleActivator.stop() method is being executed.
+6. UNINSTALLED : The bundle has been completely removed from the AEM instance. This is a terminal state. The bundle can no longer transition to any other state,
+                 and its resources have been released by the OSGi framework.
+
+* FRAGMENT : A Fragment is a special type of OSGi bundle. It's not actually a lifecycle state defined by OSGi, but in AEM's /system/console/bundles,
+             you'll often see a bundle labeled as Fragment because it is a fragment bundle rather than a regular bundle.
+             - Cannot run independently.
+             - Has no lifecycle of its own (it never becomes Active).
+             - Attaches to a host bundle at resolve time
+             - Simple interview ans : Fragment is a bundle type that AEM/Felix displays in the console to indicate the bundle is a fragment
+                                      and therefore has no independent lifecycle. It attaches to a host bundle and cannot be started or stopped on its own.
 
 =============================================================================================
 AEM SPECIFIC NODE TYPES
@@ -429,7 +474,8 @@ Ans. actually if we do any chnage in the editable template then that change will
         - We can acheive it by using "Initial content" (drawbacks here are author can edit the comp, we cant lock these comps))
         - or we can create a template version by copying the existing template and then make a chnage and then on we can create new pages using this new template version.
 
-
+7. whenever I have drag and drop a component the page should automatically get refreashed, how to do that
+8. What is Apache Oak and Apache Jackrabbit Oak
 
 
 
@@ -551,8 +597,7 @@ Example Code : com/aem/geeks/core/javarelatedcodes/StaticExamples.java
 - The main use of static is to define common things that should be shared across all objects — and to access them without creating
   an object. and it is helpful for memory management.
 * To access a non-static method in static method, we have to create an object.
-* Static method can only access the static variables.
-* Static methods can only access static methods.
+* Static method can only access the static variables & static methods.
 * Non-Static can access both static and non-static methods.
 * Static does not support "this" and "super"
 * And we don't give the access modifier for the variables defined inside the static method.
@@ -560,7 +605,8 @@ Example Code : com/aem/geeks/core/javarelatedcodes/StaticExamples.java
 -----------------------------------------------------------
 4) Dynamic Binding (also called Late Binding or Runtime Polymorphism) : it means that the method to be called is decided at runtime, not at compile time.
 - here we create a reference for a parent class and assign to the child object.
-
+- We use this concept while create a object for a class that implements interface
+        * Vehicle myCar = new Car(); -- Here "Vehicle" is interface and "car" is a class that implemented interface
 Eg: Animal a;
 
     if (userInput.equals("dog")) {
@@ -597,7 +643,7 @@ abstract class Animal {
 
 -> Animal obj = new Animal(); //Not allowed
 
-Note: Cannot be instantiated” means that you cannot create an object of that class directly using the new keyword.
+Note: Cannot be instantiated - means that you cannot create an object of that class directly using the new keyword.
 
 -----------------------------------------------------------
 6) INTERFACES
@@ -609,6 +655,61 @@ Note: Cannot be instantiated” means that you cannot create an object of that c
 - Using this we can achieve multiple inheritance (since Java does not support multiple class inheritance).
 - we cannot create object for interfaces.
 - It can't have a constructor.
+
+
+* Example of Interface Inheritance:
+1. The Base Interface (Vehicle.java)
+
+        public interface Vehicle {
+            void startEngine();
+        }
+
+2. The Extended Interface (ElectricVehicle.java)
+- any class that implements ElectricVehicle is now forced to sign both contracts: it must know how to chargeBattery() AND how to startEngine().
+
+        public interface ElectricVehicle extends Vehicle {
+            void chargeBattery();
+        }
+
+3. The Implementing Class (Tesla.java)
+- When a class implements the child interface, it must provide the code for all methods in the child interface and all methods in the parent interface.
+
+        // Tesla only needs to say it implements ElectricVehicle,
+        // but it is legally bound to the Vehicle contract too.
+        public class Tesla implements ElectricVehicle {
+
+            // Method from the parent interface (Vehicle)
+            @Override
+            public void startEngine() {
+                System.out.println("Tesla engine started: (Complete silence).");
+            }
+
+            // Method from the child interface (ElectricVehicle)
+            @Override
+            public void chargeBattery() {
+                System.out.println("Tesla is plugging into the Supercharger.");
+            }
+        }
+
+4. The Main Class (Main.java)
+        public class Main {
+            public static void main(String[] args) {
+
+                // We can use the child interface as the type
+                ElectricVehicle myEv = new Tesla();
+                myEv.startEngine();    // Works! (Inherited from Vehicle)
+                myEv.chargeBattery();  // Works! (Defined in ElectricVehicle)
+
+                System.out.println("---");
+
+                // We can ALSO use the parent interface as the type
+                Vehicle myStandardVehicle = new Tesla();
+                myStandardVehicle.startEngine(); // Works!
+
+                myStandardVehicle.chargeBattery(); // ERROR! Even though it is a Tesla, because we stored it as a 'Vehicle',
+                // the program doesn't know it can charge a battery.
+            }
+        }
 
 -----------------------------------------------------------
 -----------------------------------------------------------
@@ -634,9 +735,9 @@ d) Multiple Inheritance (by classes) : A class inherits from more than one class
 
 ------------------------
 3) Encapsulation (here we restrict the direct access to our main class, we use private methods for that)
+- Encapsulation is the concept of hiding the internal details of a class and only allowing access through public methods. (DATA HIDING)
 - Encapsulation is the process of bundling variables and methods (functions) that operate on the data within a "single unit", known as a class.
 - It helps protect an object’s internal state by restricting direct access to its attributes and providing controlled access through public methods.
-- Encapsulation is the concept of hiding the internal details of a class and only allowing access through public methods. (DATA HIDING)
 - we use public getter and setter methods to access and update the variables.
 
 ------------------------
@@ -844,30 +945,13 @@ Eg: class Car {
 
 --------------------------------------------------------------------------
 --------------------------------------------------------------------------
-COLLECTIONS
+COLLECTION Framework
 - The Java collection framework is a set of classes and interfaces that provide a standard way of representing, manipulating
   and storing collections of objects.
 - Represents a group of objects known as elements.
 - Methods include add, remove, contains, size, etc.
 - com/aem/geeks/core/javarelatedcodes/CollectionExampleCodes.java
 - https://medium.com/@cibofdevs/collections-in-java-a-comprehensive-guide-1d63f8cd5c05
-
-List : an "ordered" collection of elements that allows duplicates and nulls.
-           ArrayList -	Resizable array that maintains order and allows duplicates
-           LinkedList -	List with fast insert and remove operations
-
-Set	: A unordered collection of elements that do not allow duplicates.
-           HashSet	-   Unordered collection of unique elements
-           TreeSet	- Sorted set of unique elements (natural order), means it put the elements in a unique and ascending order. It won't allow duplicates and null values.
-           LinkedHashSet - Maintains the order in which elements were inserted
-
-Map : a collection of key-value pairs, where each key is unique.
-           HashMap	- Stores key/value pairs with no specific order or insertion order.
-           TreeMap	- Sorted map based on the natural order of keys
-           LinkedHashMap - Maintains the order in which keys were inserted
-
-Queue: a queue is a data structure that is used to store elements in a First-In-First-Out (FIFO) manner.
-Deque: can be used both as FIFO and LIFO.
 
 
 Note: Types of defining
@@ -880,39 +964,122 @@ b. Passing an initial capacity --> ArrayList<String> list = new ArrayList<String
 c. ArrayList<String> list = new ArrayList<>();
 
 
-* When and where we use a particular collection
 
 1) List:
 - It is an ordered collection of elements, where each element has a distinct position in the list.
 - allows duplicates and nulls.
 - used When we need ordered data and duplicates allowed.
+- To add elements -> .add("bhargav")
 
-a) ArrayList
-- its a growable or resizable array.
-- It maintains order
-- Allows duplicates
+        a) ArrayList
+        - its a growable or resizable array.
+        - It maintains order
+        - Allows duplicates and Nulls
 
-b) LinkedList
-- It can impliment either List or Queue.
-- It is good for inserting and deleting at the beginning and middle
-- it is like a chain of nodes where each node can point to the previous and next node.
+        b) LinkedList
+        - It can implement either List or Queue.
+        - Maintains insertion oreder
+        - Allows nulls and duplicates
+        - It is good for inserting and deleting at the beginning and middle
+        - it is like a chain of nodes where each node can point to the previous and next node.
 
-Example: import java.util.*;
+        Example: import java.util.*;
 
-         public class Example1 {
-             public static void main(String[] args) {
-                 List<String> list = new ArrayList<>();
-                 list.add("Apple");
-                 list.add("Banana");
-                 list.add("Apple"); // duplicate allowed
+                 public class Example1 {
+                     public static void main(String[] args) {
+                         List<String> list = new ArrayList<>();
+                         list.add("Apple");
+                         list.add("Banana");
+                         list.add("Apple"); // duplicate allowed
 
-                 Iterator<String> it = list.iterator();
-                 while (it.hasNext()) {
-                     System.out.println(it.next());
+                         Iterator<String> it = list.iterator();
+                         while (it.hasNext()) {
+                             System.out.println(it.next());
+                         }
+                     }
                  }
-             }
-         }
 
+
+============
+Set	: - A unordered collection of elements that do not allow duplicates.
+      - Does not support indexing
+      - Can store one null value (except TreeSet)
+      - To add elements -> .add("bhargav")
+      - Just like in List here we cannot retrive values using .get() and index, set.get(0); this gives Compile-time error
+        because in set the values are not stored with index.
+                   Set
+         ┌──────────┼──────────┐
+         │          │          │
+      HashSet   LinkedHashSet  TreeSet
+
+
+a) HashSet : - No duplicates
+             - No insertion order
+             - Allows one null : means if we add any number of nulls it only shows one, because it removes other ones.
+             Ex:         Set<Integer> numbers = new HashSet<>();
+
+                         numbers.add(50);
+                         numbers.add(90);
+                         numbers.add(50);
+                         numbers.add(null);
+                         numbers.add(null);
+                         numbers.add(null);
+                         numbers.add(10);
+                         System.out.println(numbers);
+
+b) LinkedHashSet : - Unlike HashSet, it remembers the insertion order in which elements were added.
+                   - Removes Duplicates
+                   - Allows null values
+
+c) TreeSet : - TreeSet stores elements in sorted order.
+             - Removes Duplicates
+             - It wont take null values
+
+============
+MAP : - A Map in Java is a data structure that stores key-value pairs.
+      - Keys must be unique.
+      - Values can be duplicated.
+      - One key maps to one value.
+      - Retrieval is done using the key.
+      - To add a element : map.put(101, "Rahul");
+
+Map (Map is not a collection, Its a Separate Hierarchy)
+    |
+    |---- HashMap
+    |---- LinkedHashMap
+    |---- TreeMap
+    |---- Hashtable
+
+a) HashMap : - Keys are unique.
+             - Values can be duplicated.
+             - Does not maintain insertion order.
+             - (IMPORTANT)Allows one null key.
+             - Allows multiple null values.
+
+       Eg :  Map<Integer, String> map = new HashMap<>();
+             map.put(101, "Rahul");
+             map.put(102, "Priya");
+             map.put(103, "John");
+             System.out.println(map);
+
+b) LinkedHashMap : - Maintains insertion order.
+                   - It take one Null key and multiple null values
+                   - it allows duplicate values.
+
+c) TreeMap: - Stores entries sorted by key.
+            - This wont take Null keys at all.
+            - Can take null values and duplicate values
+
+d) Hashtable: - Does not allow null keys or values.
+              - dont maintains insertion order.
+              - Allows duplicate values but keys should be unique.
+
+Eg : Hashtable<Integer, String> table = new Hashtable<>();
+     table.put(1, "Java");
+
+========
+Queue: a queue is a data structure that is used to store elements in a First-In-First-Out (FIFO) manner.
+Deque: can be used both as FIFO and LIFO.
 
 ---------------------------
 *) Arrays Syntax

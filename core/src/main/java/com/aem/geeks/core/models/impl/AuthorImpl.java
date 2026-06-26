@@ -46,7 +46,8 @@ public class AuthorImpl implements Author{
     @RequestAttribute(name = "rAttribute")
     private String reqAttribute;
 
-    @ResourcePath(path="/content/aemgeeks/us/en/home")@Via("resource")
+    @ResourcePath(path="/content/aemgeeks/us/en/home")
+    @Via("resource")
     Resource resourcePage;
 
     @ScriptVariable

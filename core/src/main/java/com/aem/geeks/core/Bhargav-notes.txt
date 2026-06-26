@@ -1,5 +1,11 @@
-INDEX:
+----------------------------------------------
+IMPORTANT NOTE : This branch usage is stopped.
+JAVA version of this branch : JAVA 8
+Last commited : Shankam marktech query builder api use case.
+MAIN : from now on the main branch will have JAVA 11 for AEM CLOUD SDK
+----------------------------------------------
 
+INDEX:
 1) ResourceResolverFactory related Notes
 
 2) FETCHING DATA FROM EXTERNAL API - NO ACCESS TOKEN NEEDED - (using sling model)
@@ -42,6 +48,7 @@ INDEX:
 10) Creating a Proxy Component
         * Proxy Component 1 - bhargavtextproxy
         * Proxy Component 2 - bhargavtextproxy-two
+        * Core component Enterprice Usecase - bhargav-ctabar-proxycomp
 
 11) bhargav-backend-aem-apis-comp
 
@@ -73,6 +80,7 @@ g) Component for Content Fragment : apps/aemgeeks/components/content/bhargav-con
 h) Component for Composite Multifield : apps/aemgeeks/components/content/bhargav-compmultifield
 i) Proxy Components : 1. apps/aemgeeks/components/bhargavtextproxy
                       2. apps/aemgeeks/components/bhargavtextproxy-two
+                      3. apps/aemgeeks/components/bhargav-ctabar-proxycomp
 j) Bhargav Article List Component (Querybuilder backend api used) : apps/aemgeeks/components/content/bhargav-articlelist-comp
 
 =============================================================================================
@@ -448,11 +456,18 @@ Step: 2 - Include the clientlib in your component : apps/aemgeeks/components/con
 
 -------------------------------------------------------------
 * Proxy Component 2 - bhargavtextproxy-two
--> Here in this component we mainly explore the dellegation concept in proxy components.
--> Dellegation : refer interviewInfo.txt
+-> Here in this component we mainly explore the delegation concept in proxy components.
+-> Delegation : refer interviewInfo.txt
 
 ->Step: 1 - Create Component : apps/aemgeeks/components/bhargavtextproxy-two
 ->Step: 2 - Sling Model : com/aem/geeks/core/models/BhargavTextProxyTwoModel.java
+
+-------------------------------------------------------------
+* Proxy Component 3 - Core component Enterprice Usecase - bhargav-ctabar-proxycomp
+
+Step: 1 - Create Component : apps/aemgeeks/components/bhargav-ctabar-proxycomp
+Step: 2 - Sling Model using delegation : com/aem/geeks/core/models/BhargavCtaBarModel.java
+Step: 3 (last step)- Rendering with styles : apps/aemgeeks/components/bhargav-ctabar-proxycomp/bhargav-ctabar-proxycomp.html
 
 =============================================================================================
 11) bhargav-backend-aem-apis-comp

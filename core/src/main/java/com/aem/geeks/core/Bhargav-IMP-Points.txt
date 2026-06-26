@@ -38,7 +38,9 @@ IMPORTANT PATHS
         - ${properties.fieldName}
         - Internally it simply means "resource.getValueMap()".
 
--> sling:hideResource="{Boolean}true" : To Hide a Core component field in our proxy comp, Add this property to that in the overriden cq_dialog in proxy comp.
+-> sling:hideResource="{Boolean}true" : * To Hide a Core component dialog field in our proxy comp, Add this property to that in the overriden cq_dialog in proxy comp.
+                                        * You have to add that field and use this hideResource option with it by "Matching that core component field node structure,
+                                          Then only it works", EXAMPLE for this is in "apps/aemgeeks/components/bhargav-ctabar-proxycomp/_cq_dialog/.content.xml - LINE 26 - 44"
 
 -> CSRF (Cross-Site Request Forgery) :
         - In some cases a malicious site in the other tab may tricks a logged-in user’s browser into making a request to another site (like AEM)
@@ -120,6 +122,19 @@ g) Custom Live Action(for custom rollout configurations) : 1) LiveActionFactory 
                                                            2) LiveAction : getName(), execute(Resource source, Resource target, LiveRelationship relation, boolean autoSave, boolean isResetRollout)
 
 =============================================================================================
+*) @Component
+
+--> Servlets : @Component(service = Servlet.class)
+--> OSGI Configuration Service : @Component(service = OSGiConfigService.class,immediate = true)   [OSGiConfigService.class  -> this is just my interface service I created]
+--> Schedulers :
+                - Runnable : @Component(immediate = true, service = Runnable.class)
+                - Job :  @Component(immediate = true, service = Job.class)
+
+--> Service : @Component(Service = bhargavService.class)  - bhargavService is my interface and I am linking it to my implimentation class using @Component
+--> Workflow : @Component(service=workflowProcess.class)
+--> Custom Live Action Factory : @Component(service = LiveActionFactory.class)
+
+=============================================================================================
 *) PAGE MANAGER(Aem's API) & Page
 
 Page → where you are
@@ -142,18 +157,6 @@ PageManager pageManager;
 Page page=pageManager.getPage("/content/aemgeeks/us/en");
 - Using Page getting the page info : String title = page.getTitle();
 
-=============================================================================================
-*) @Component
-
---> Servlets : @Component(service = Servlet.class)
---> OSGI Configuration Service : @Component(service = OSGiConfigService.class,immediate = true)   [OSGiConfigService.class  -> this is just my interface service I created]
---> Schedulers :
-                - Runnable : @Component(immediate = true, service = Runnable.class)
-                - Job :  @Component(immediate = true, service = Job.class)
-
---> Service : @Component(Service = bhargavService.class)  - bhargavService is my interface and I am linking it to my implimentation class using @Component
---> Workflow : @Component(service=workflowProcess.class)
---> Custom Live Action Factory : @Component(service = LiveActionFactory.class)
 =============================================================================================
 *) ANNOTATIONS:
 
@@ -178,8 +181,6 @@ Page page=pageManager.getPage("/content/aemgeeks/us/en");
 
 @OSGiService : Injects an OSGi service into the Sling Model.
 
-@RequestAttribute : it is used to get a value that is passed only for that specific request.
-
 @ScriptVariable : Used in aem to get built-in objects from the htl script, like currentPage, resource, PageManager
 
 @Component : Marks a class as an OSGi service component. used for registering our service in osgi.
@@ -197,13 +198,20 @@ Page page=pageManager.getPage("/content/aemgeeks/us/en");
                 Eg : @ChildResource(name = "multifieldName")
                      private List<ChildModel> items;
 
+@ResourcePath(path="/content/aemgeeks/us/en/home") : - Instead of injecting the current resource, Sling fetches the resource located at the given path
+                                                     - This simply means : Resource resource = resourceResolver.getResource("/content/we-retail/us/en");
+
+@RequestAttribute(name = "rAttribute") : - It injects an attribute stored in the HTTP request.
+                                         - It simply means request.getAttribute("rAttribute")
+                                         - it is used to get a value that is passed only for that specific request.
+
 -------------------------
 @Self & @Via
 
 Note : First understand the situation
 * A Sling Model is created using something called an adaptable.
 * @Model(adaptables = SlingHttpServletRequest.class)
-        - Here the adaptable is request. But component properties usually exist in resource, not request. So Sling must sometimes be told where to take data from.
+        - Sling must sometimes be told where to take data from.
 
 * When Sling creates the model:
   - It uses the adaptable (request or resource) to construct the model
@@ -214,9 +222,24 @@ Note : First understand the situation
 
 
 
-@Self : Give me the same object that created the model.
+@Self : It tells Sling to create this model from the current adaptable (Request or Resource). Give me the same object that created the model.
   - adaptables: means we're saying to sling that this model is created using a request or resource. Mainly defines how model is created.
+
   - @Self: using this we say that store that same request or resource inside this variable. injects that adaptable into a field.
+  - IMP : This @Self says: "don't go look at a child resource, don't call an OSGi service, don't read a value map property — just take the current adaptable itself."
+          just adapt the same resource/request you're currently sitting on.
+
+
+- Work of @Self is :
+        -> @Self
+           private Resource resource;  this means -- resource = adaptable.adaptTo(Resource.class);
+
+        -> @Self
+           private SlingHttpServletRequest request;  This means -- request = adaptable.adaptTo(SlingHttpServletRequest.class);
+
+        -> @Self
+           private Teaser teaser;  This means -- teaser = adaptable.adaptTo(Teaser.class);
+
 
 Eg : @Model(adaptables = SlingHttpServletRequest.class)
      public class MyModel {
@@ -230,7 +253,7 @@ Eg : @Model(adaptables = SlingHttpServletRequest.class)
      }
  - If @Self is removed: private SlingHttpServletRequest request;   ---> then request will be null, even though the model was created using the request.
 
-
+-----------------------------------------------------
 
 @Via : Before injecting, go through this object first.
 * It is mainly used because most AEM models are adaptable from request, but properties are stored in resource.
@@ -890,7 +913,7 @@ Steps:
 IMP POINTS:
 > Session always comes from ResourceResolver, and ResourceResolver comes from 1) request, 2) resource, 3) resolverFactory depending on context.
 > In Servlets or Sling Models, AEM automatically provides a ResourceResolver because they are request-based (A Sling request gives you a resolver).
-> But in Services, Schedulers, or Workflows, there is no request and no automatic context — so AEM doesn’t know who is trying to access the repository.
+> But in Services, Schedulers, there is no request and no automatic context — so AEM doesn’t know who is trying to access the repository.
   in that cases we need "ResourceResolverFactory" to get the ResourceResolver.
 > In WF Process --> Using "WorkflowSession" we get the "ResourceResolver", "Session".
 > We have to close the "ResourceResolver" after using. ->  resourceResolver.close();,

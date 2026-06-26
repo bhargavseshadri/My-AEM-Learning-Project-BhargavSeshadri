@@ -36,6 +36,15 @@ public class CollectionExampleCodes {
         hashMapExample.put(2, "Banana");
         hashMapExample.put(3, "Cherry");
 
+        //Retriving using get()
+        String fruit = hashMapExample.get(1);
+        System.out.println("Fruit is: " + fruit);
+
+        //Retriving using For Each
+        hashMapExample.forEach((number, fruits) -> {
+            System.out.println(number + " is " + fruits + " years old.");
+        });
+
         // Iterating using enhanced for loop
         // What is this .Entry?
         /*Ans. maps are not directly iterable the way lists or sets are. Java solves this by exposing: map.entrySet()
