@@ -665,7 +665,20 @@ Step : 1 - Add the validation in the dialog field and then add a child node to i
 Step : 2 - Add the validation logic in the clientlib JS file : apps/aemgeeks/components/content/bhargav-personalcomp-two/clientlib/BhargavDialogValidator.js
 
 -------------------------------------------------------------
+18.d) Big One - Printing all the article pages as a Cards using ResourceResolver and QUERYBUILDER
 
+Step: 1 - Create the pages accordingly in aem
+            en --> Articles --> Rice plantation
+                            --> Banana Plantation
+                            --> Mango Plantation
+         - An in those pages properties add the title and description. so that in our component we fetch those titles and des from page props and print them.
+Step: 2 - Create a Component and Sling model to take the root article path through dialog box - /content/aemgeeks/us/en/articles, and all our article pages are under this path
+        - apps/aemgeeks/components/content/bhargav-articlelist-comp
+Step: 3 - Writing querybulder related code and getting data - com/aem/geeks/core/models/impl/BhargavArticleListModelImpl.java
+Step: 4 - putting the data in to java bean - com/aem/geeks/core/beans/BhargavArticleListDataBean.java
+Step: 5 - using this bean set all the data to that bean fields in "BhargavArticleListModelImpl.java"
+Step: 6 - Render the data using htl - apps/aemgeeks/components/content/bhargav-articlelist-comp/bhargav-articlelist-comp.html
+Step: 7 (last step)- Now write all the required css styles - apps/aemgeeks/components/content/bhargav-articlelist-comp/clientlib/ArticleListCss.css
 
 
 
