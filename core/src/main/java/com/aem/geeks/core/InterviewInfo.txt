@@ -356,7 +356,7 @@ WORKFLOWS in AEM
 
 - workflows allow us to automate a task or a series of tasks. these tasks are most performed on content like pages or assets.
 - A workflow needs a workflow model, and the WF model contains a series of steps.
-- Workflow Steps are of Four Types:
+- Workflow Steps :
         1. Container Step : When we want to trigger an another model or another WF, in those case we use this step
         2. Participant step : When we want a human interraction in our WF, like assigning a task to a human, in those case we use this step.
         3. Decision Step : Performing a task based on a condition, mainly when we need a branching in our WF, in those case we use this step.
@@ -369,6 +369,15 @@ WORKFLOWS in AEM
                                   1. Manual Trigger
                                   2. Using Launcher : automating the trigger
                                   3. Using API/Code : we can trigger the WF using any of the backend module like servlet, scheduler, Models etc
+
+* DAM UPDATE ASSET WF STEPS explanation
+        1. Continue updating? step -- Decision step : This process checks if the complete update process has to be executed. The workflow should terminate
+        2. Metadata Processor step -- Extract metadata from the asset and store those values in asset metadata node
+        3. FFmpeg Thumbnails step -- Generate thumbnails for videos.
+        4. EPS Thumbnails step -- Create previews for EPS files. eps files cannot be displayed directly so this step creates a png files for thumbnails.
+        5. FFmpeg Transcoding -- Create video renditions.
+        6. Media Extraction -- Extract embedded content.
+        7. Process Thumbnails -- Generate standard DAM thumbnails.
 
 =============================================================================================
 CLIENTLIBRARIES
@@ -465,6 +474,11 @@ Ans. Approach 1: Add to Page Component (Recommended), In your base page componen
 3. I have one servlet and that is working in author and not working in publisher, why?
 
 4. I have done some change in author and those  changes are not reflecting in publisher, why?
+Ans. - The first thing I'd check is whether the page was actually published
+     - Check Replication Queue, Check the Publish Agent and test connection.
+     - Then check logs
+     - is the code is in publisher env
+
 
 5. I want to move the bunch of pages from one place to another place, how to do that?
 Ans. Aem dont have a feature like that, we can acheive it by selecting the complete folder or using groovy script or using Workflow + backend code.
@@ -475,15 +489,51 @@ Ans. actually if we do any chnage in the editable template then that change will
         - or we can create a template version by copying the existing template and then make a chnage and then on we can create new pages using this new template version.
 
 7. whenever I have drag and drop a component the page should automatically get refreashed, how to do that
-8. What is Apache Oak and Apache Jackrabbit Oak
+Ans. To achieve this, you need to configure the cq:listeners property within your component's cq:editConfig node. This tells the AEM authoring interface
+     how to behave after specific authoring actions (like inserting, editing, or deleting a component).
+     - <cq:listeners
+               jcr:primaryType="cq:EditListenersConfig"
+               afterinsert="REFRESH_PAGE"/>
+
+     - <cq:listeners
+               jcr:primaryType="cq:EditListenersConfig"
+               afterinsert="REFRESH_PAGE"
+               afteredit="REFRESH_PAGE"
+               afterdelete="REFRESH_PAGE"/>
 
 
 
+8. What is Apache Oak and Apache Jackrabbit Oak in aem whats the use of them?
+Ans . - Apache Oak and Apache Jackrabbit Oak both are samething
+      - Apache Jackrabbit Oak is the content repository engine at the heart of AEM.
+      - Every page, asset metadata, user, configuration, and permission is stored as nodes in Oak
 
 
+9. What is component policy and page poicy in aem?
+Ans. Component Policy : A Component Policy defines what authors are allowed to do with a particular component.
+     For example, imagine a Title component:
+         The policy can specify:
+             Allowed heading levels (H1–H6)
+             Default heading level
+             Available styles
+             Whether links are allowed
+             Default CSS classes
 
+Page Policy: A Page Policy is actually a policy applied to the Layout Container (sometimes called the Responsive Grid) that represents the page.
+        - It controls things like:
+                Which components authors can add
+                Responsive behavior
+                Allowed components
+                Grid configuration
 
+10.  in client libs categories, dependencies and embed - in what sequence these will load in publishes
+ANS. 1. Dependencies, 2. Embed, 3. Categories(means our own clientlibs)
 
+11. In AEM, In templates, policy option is not  appearing. Whats the issue
+
+12. * You have deleted the template. Will the existing pages with that template load?
+Ans. - Static Templates (old-style, under /apps) Pages will still load fine. because The page's sling:resourceType = "yourproject/components/page" point to the component.
+     - Editable Templates : the pages will break.
 
 
 

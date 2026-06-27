@@ -745,6 +745,21 @@ EXAMPLE : (IN DEPTH EXPLANATION)
              * there is a check box called "LIVE COPY" while creating this, if you check it the this separate site will become a live copy and then it
                will be in sync with the master blueprint, but if you do not check this then it will be a complete separate site and won't be in sync with the master blueprint.
 
+----------------------------------------
+* ROLLOUT CONFIGURATIONS
+- Standard rollout configuration
+- Push on modify
+- Activate on Blueprint activation
+- Deactivate on Blueprint deactivation
+
+- Live Actions in Standard Rollout Configuration
+        * contentUpdate  - Updates the existing content in the live copies
+        * contentCopy - Copies newly created content from the Blueprint.
+        * contentDelete
+        * referencesUpdate - Updates the references
+        * productUpdate - Updates Commerce product references. useful only when linked with adobe commer
+        * orderChildren - Synchronizes the order of child nodes.
+
 =============================================================================================
 GRAPHQL
 

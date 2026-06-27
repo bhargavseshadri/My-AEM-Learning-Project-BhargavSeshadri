@@ -33,8 +33,8 @@ public class BhargavCtaBarModel implements Teaser {
     protected static final String BHARGAV_RESOURCE_TYPE = "aemgeeks/components/bhargav-ctabar-proxycomp";
 
     //This is Sling model - DELEGATION
-    @Self
     //Here @Self work is to take the current adaptable and adapt it to whatever type this field is, here the field is Teaser.
+    @Self
     @Via(type = ResourceSuperType.class)
     private Teaser teaser;
 
