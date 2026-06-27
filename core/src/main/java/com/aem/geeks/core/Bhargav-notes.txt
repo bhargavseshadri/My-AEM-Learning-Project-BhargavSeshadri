@@ -667,7 +667,7 @@ Step : 1 - Add the validation in the dialog field and then add a child node to i
 Step : 2 - Add the validation logic in the clientlib JS file : apps/aemgeeks/components/content/bhargav-personalcomp-two/clientlib/BhargavDialogValidator.js
 
 -------------------------------------------------------------
-18.d) Big One - Printing all the article pages as a Cards using ResourceResolver and QUERYBUILDER
+18.d) Big One - Printing all the article pages as a Cards using ResourceResolver and QUERY BUILDER
 
 Step: 1 - Create the pages accordingly in aem
             en --> Articles --> Rice plantation
