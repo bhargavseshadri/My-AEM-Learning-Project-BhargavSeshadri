@@ -33,10 +33,10 @@
                                     <column
                                             jcr:primaryType="nt:unstructured"
                                             sling:resourceType="granite/ui/components/coral/foundation/container">
-                                    <items jcr:primaryType="nt:unstructured">
-                                        <id jcr:primaryType="nt:unstructured"
-                                            sling:hideResource="{Boolean}true"/>
-                                    </items>
+                                        <items jcr:primaryType="nt:unstructured">
+                                            <id jcr:primaryType="nt:unstructured"
+                                                sling:hideResource="{Boolean}true"/>
+                                        </items>
                                     </column>
                                 </items>
                             </columns>

@@ -3,19 +3,12 @@ package com.aem.geeks.core.servlets;
 import com.adobe.granite.workflow.WorkflowSession;
 import com.adobe.granite.workflow.exec.WorkflowData;
 import com.adobe.granite.workflow.model.WorkflowModel;
-import com.day.cq.wcm.api.Page;
-import com.day.cq.wcm.api.PageManager;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.SlingHttpServletResponse;
-import org.apache.sling.api.request.RequestParameter;
 import org.apache.sling.api.resource.ResourceResolver;
-import org.apache.sling.api.servlets.SlingAllMethodsServlet;
 import org.apache.sling.api.servlets.SlingSafeMethodsServlet;
 import org.apache.sling.servlets.annotations.SlingServletPaths;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.osgi.service.component.annotations.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,10 +16,6 @@ import org.slf4j.LoggerFactory;
 import javax.servlet.Servlet;
 import javax.servlet.ServletException;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
 
 
@@ -43,22 +32,22 @@ import java.util.Map;
 * */
 
 
-
 @Component(service = Servlet.class)
 @SlingServletPaths(
-        value = {"/bin/executeworkflow","/geeks/executeworkflow"}
+        value = {"/bin/executeworkflow", "/geeks/executeworkflow"}
 )
 public class ExecuteWorkflow extends SlingSafeMethodsServlet {
     private static final Logger LOG = LoggerFactory.getLogger(ExecuteWorkflow.class);
+
     @Override
     protected void doGet(final SlingHttpServletRequest req, final SlingHttpServletResponse resp) throws ServletException, IOException {
-        String status="Workflow Executing";
+        String status = "Workflow Executing";
 
         final ResourceResolver resourceResolver = req.getResourceResolver(); //From request we are getting the ResourceResolver
 
-        String payload=req.getRequestParameter("page").getString(); //here we are getting the QUERY PARAM(we give the page path as a query param)
+        String payload = req.getRequestParameter("page").getString(); //here we are getting the QUERY PARAM(we give the page path as a query param)
         try {
-            if(StringUtils.isNotBlank(payload)) {
+            if (StringUtils.isNotBlank(payload)) {
 
                 //MAIN - Here we are getting the "WorkflowSession" using ResourceResolver
                 WorkflowSession workflowSession = resourceResolver.adaptTo(WorkflowSession.class);
@@ -70,7 +59,7 @@ public class ExecuteWorkflow extends SlingSafeMethodsServlet {
                 WorkflowData workflowData = workflowSession.newWorkflowData("JCR_PATH", payload);
 
                 // Now after we got the workflowModel, workflowData then we can start the WF using "startWorkflow method" from WorkflowSession.
-                status=workflowSession.startWorkflow(workflowModel, workflowData).getState();
+                status = workflowSession.startWorkflow(workflowModel, workflowData).getState();
                 //getState() : using this we are just getting the status of our workflow, and then we will print it as a response. not a manditory.
 
                 /*NOTE:
