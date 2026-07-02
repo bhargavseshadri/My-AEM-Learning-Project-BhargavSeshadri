@@ -16,7 +16,6 @@ AEM solves several problems related to digital experience management:
 =============================================================================================
 ==> Basic Important Points
 
--> Implimentation used for creating AEM is - APACHE JACKRABBIT OAK
 -> Implimentation used by JCR is - APACHE JACKRABBIT OAK, Apache oak
 -> To connect AEM to crxde we use Apache sling
 -> -> Apache Sling : Apache Sling is a web framework used by AEM that maps HTTP requests to content resources stored in the JCR
@@ -535,14 +534,41 @@ ANS. 1. Dependencies, 2. Embed, 3. Categories(means our own clientlibs)
 Ans. - Static Templates (old-style, under /apps) Pages will still load fine. because The page's sling:resourceType = "yourproject/components/page" point to the component.
      - Editable Templates : the pages will break.
 
+13. What is the use of "context" in htl?
+Ans. context tells HTL what kind of data you're outputting (HTML, URL, JavaScript, CSS, etc.)
+     so it can apply the correct escaping rules and protect your page from Cross-Site Scripting (XSS) while still rendering trusted content correctly.
+     Eg: <a href="${model.link @ context='uri'}">
 
 
+14. How do we handles exceptions in aem and what are the common exceptions in aem?
+Ans. 1. RepositoryException : Thrown when JCR repository operations fail like session.save();
+            Causes: Repository unavailable
+                    Invalid node
+                    Permission issues
+      2. LoginException : Occurs when obtaining a service resource resolver fails.
+                Eg: ResourceResolver resolver = resolverFactory.getServiceResourceResolver(params);
+             Reasons:
+                 Service user mapping missing
+                 Incorrect subservice
+                 Permission issues
 
+       3. PersistenceException : Occurs during resource CRUD operations.
+                Eg: resourceResolver.commit();
 
+              Reasons:
+                      Commit failure
+                      Validation failure
+                      Permission denied
+        4. PathNotFoundException: Thrown when a JCR path doesn't exist.
+                Eg: session.getNode("/content/demo");
 
+15. what is sling binding in aem?
+Ans. Sling Bindings are a collection of predefined objects that Apache Sling automatically makes available during htl script execution.
+     They provide access to objects like the current resource, request, response, current page, page manager, and component, allowing
+     HTL and JSP scripts to access rendering context without manually creating these objects.
 
-
-
+     Eg: <h1>${currentPage.title}</h1>
+         <p>${properties.description}</p>
 
 
 
