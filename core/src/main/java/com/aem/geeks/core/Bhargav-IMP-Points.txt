@@ -17,7 +17,11 @@ IMPORTANT PATHS
 -> In Manual System User creation,
     - to create new user : crx/explorer/index.jsp
     - To give the required permissions(ACL's) : /Useradmin
-    - Note: Service users are under this path (crx) : /home/users/system
+    - Note: Service users are under this path (crx) : /home/users/system, and we cant login in to aem using service user
+
+-> GRAPHIQL EDITOR : http://localhost:4502/aem/graphiql.html
+-> To see graphql endpoints in crxde : /content/cq:graphql/global/endpoint
+-> to create graphql endpoint : http://localhost:4502/libs/cq/graphql/sites/admin/content/console.html
 
 =============================================================================================
 * Important Points
