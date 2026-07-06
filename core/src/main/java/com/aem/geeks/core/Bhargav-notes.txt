@@ -587,6 +587,8 @@ Step: 3 - Now in that rollout configuration create a Live Action node and for th
 Step: 4 - Add this rollout configuration to the blueprint page and then run the rollout, after rollout gets completed you can see the custom
           node property got added in both blueprint and live action page.
 
+* CUSTOM ROLLOUT CONFIGURATION : apps/msm/wcm/rolloutconfigs/bhargav-custom-rollout
+
 --> Adding this custon rollout configuration to the code base
 Step: 5 - Package the rollout configuration from CRXDE.
 Step: 6 - unzip it and add it in the codebase under the same path just like in crxde --> ui.apps/src/main/content/jcr_root/apps/msm/wcm
@@ -629,7 +631,7 @@ Step : 3 - select your metadata schema and pick "ADD TO FOLDERS" option, andadd 
 --> Coding part
 Step : 1 - create a clientlib and in that give categories (for timebeing I gave libs path clientlib categories, because that clientlib is
            loading in Asset Properties console).
-           - but the best approach is overlaying that libs clientlib to  apps path and in that adding embed="[bhargav.asset.properties]". So our
+           - but the best approach is overlaying that libs clientlib to our /apps path and in that adding embed="[bhargav.asset.properties]". So our
              clientlib - bhargav.asset.properties, also gets loaded with that /apps/ path clientlib.
            - apps/aemgeeks/clientlibs/clientlib-bhargav-metadataschema/.content.xml
 
@@ -673,7 +675,7 @@ Step: 1 - Create the pages accordingly in aem
                             --> Mango Plantation
          - An in those pages properties add the title and description. so that in our component we fetch those titles and des from page props and print them.
 Step: 2 - Create a Component and Sling model to take the root article path through dialog box - /content/aemgeeks/us/en/articles, and all our article pages are under this path
-        - apps/aemgeeks/components/content/bhargav-articlelist-comp
+        - COMPONENT : apps/aemgeeks/components/content/bhargav-articlelist-comp
 Step: 3 - Writing querybulder related code and getting data - com/aem/geeks/core/models/impl/BhargavArticleListModelImpl.java
 Step: 4 - putting the data in to java bean - com/aem/geeks/core/beans/BhargavArticleListDataBean.java
 Step: 5 - using this bean set all the data to that bean fields in "BhargavArticleListModelImpl.java"
@@ -822,7 +824,7 @@ h)data-sly-resource : used to include resources.
 i)data-sly-set : setting a variable in HTL, If you want a variable that should be available through out the HTL file then we use this
 
 <sly data-sly-set.imageData="${articleIntro.ImageRenditionsBean}"/>
---- So here, the imageData value is  in ArticleIntro class ----> there should be "getImageRenditionsBean", it will becomes it value.
+--- So here, the imageData value is -->  in ArticleIntro class ----> there should be "getImageRenditionsBean", it will becomes the imageData value.
 
 
 =================================
