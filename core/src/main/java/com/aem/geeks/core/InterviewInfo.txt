@@ -37,6 +37,7 @@ AEM solves several problems related to digital experience management:
 -> In modern AEM versions and AEM as a Cloud Service, you must explicitly configure the path of the folder containing your Content Fragment Models
    in the "Allowed Content Fragment Models" field under the Policies tab of the corresponding folder in /content/dam. Otherwise, the models will not shown up
    when creating Content Fragments in that folder.
+
 =============================================================================================
 ==> DEFINITIONS
 1) Resource :  - A resource is basically any node or file in the jcr that sling can access and maps it to a url.
@@ -155,6 +156,10 @@ Normal config to Factory Config : @Designate(ocd = BhargavFactoryOSGiConfig.clas
                   b) DYNAMIC : It will automatically considers the unbind method with bind method. Automatically updates the reference at runtime
                                 when services appear/disappear.
 
+- PID : Every configuration have pid -> "Persistent Identity (PID): com.aem.geeks.core.services.impl.BhargavOsgiConfigServiceImpl" :
+                                     - It is nothing but the "Service" that this configuration is linked to.
+
+
 =============================================================================================
 RUN MODES: in AEM they are like "environment identifiers" that tell AEM how it should behave in different environments —
            for example: author, publish, development, staging, production, etc.
@@ -165,7 +170,7 @@ In short:
    2. custom run modes
 
 =============================================================================================
-Context-Aware Configuration (CaConfig)
+Context-Aware Configuration (CaConfig) (Have to learn in depth)
 - Context-Aware Configuration (CaConfig) in AEM is a mechanism for storing and retrieving configuration values based on the content hierarchy rather
   than the AEM environment.
 - Unlike OSGi configurations, which are global to an AEM instance, Context-Aware Configurations allow different sites, brands, or sections of a site to have
@@ -217,7 +222,7 @@ path : /apps/core/wcm/components/...
 CRXDE FOLDER STRUCTURE
 
 -> apps: proxy comps, core comps, and static templates
--> conf: configuration files related to the project are stored here, and also editable templates
+-> conf: configuration files, editable templates
 -> content: all the webpages, (static pages, dynamic pages, js, css) and digital assets are present here
 -> ETC: contains all the resources related to the tools are stored here
 -> Users: contains all the info of users and groups
@@ -307,7 +312,7 @@ PROBLEM: for one SERVICE interface class ,there is two implimentation classes, s
                                                         Note: for this we have to give a name to the service in @Component.
 
 =============================================================================================
-BASEPAGE COMPONENT
+BASEPAGE COMPONENT (have to go in depth)
 - The Base Page Component in AEM is a common parent component that defines the shared structure and behavior for all pages. Other page components like
   homepage or content page extend it using sling:resourceSuperType, so they automatically inherit its HTML structure and scripts. It helps maintain
   consistency, reuse, and easy maintenance across all pages.
@@ -404,6 +409,26 @@ Ans : What it actually do is it, if we give some client library name(here my.sit
 * extraClientlibs="[bhargav.dialog.validation]"
 - we give this when we want our clientlibs to load at the time when we open the "comp authoring dialog".
 - we give this in our comp dialog XML.
+
+--------------------------------------------------
+STYLE SYSTEM Usage and Implementation
+- Style system allow you to define style classes in the content policy for a component and in page policy for a template, so that content author
+  is able to select them when editing the page or editing the component on a page. These styles can be used to apply different visual appearances to the same
+  component without changing its underlying functionality.
+
+- Using this a page author can select a style from the dropdown in the page editor, and that style will be applied to the component,
+  if he wants to change the style he simply select the another style in the dropdown, allowing for easy customization of the look and feel of the page.
+
+- Using this we can make which styles should available and applicable for a component and also we can also control which styles should be available and applicable for the
+  whole page as well. we can simply select the styles we want from the dropdown in the page editor.
+
+- In depth : com/aem/geeks/core/Bhargav-notes.txt
+
+=============================================================================================
+CQ_DESIGN_DIALOG - purpose and uses
+- _cq_design_dialog is used to defines template-level/policy configuration for a component.
+- _cq_design_dialog is a used to configure template/policy settings for a component. using this we can give what styles are available and applicable for a component.
+- for better understanding : com/aem/geeks/core/Bhargav-notes.txt - STYLE SYSTEMS
 
 =============================================================================================
 DATASOURCE
@@ -570,8 +595,16 @@ Ans. Sling Bindings are a collection of predefined objects that Apache Sling aut
      Eg: <h1>${currentPage.title}</h1>
          <p>${properties.description}</p>
 
+16. How can we use service in a servlet?
+Ans. Using @Reference, because servlet is a service
 
+17. How can we add a new tab in Page Properties?
+Ans. a. We can overlay the /libs path in our /apps and add a new tab.
+     b.
 
+18. I have a two templates and for temp-a one clientlib should load and for temp-b that clientlib shouldnt load, how to do that?
+ans. We can acheive it by using "PAGE POLICY", so we can add that clientlib categories in "temp-a page policy" and not in temp-b page policy.
+        - By doing this, that clientlib will load only for temp-a pages and not for temp-b pages.
 
 
 

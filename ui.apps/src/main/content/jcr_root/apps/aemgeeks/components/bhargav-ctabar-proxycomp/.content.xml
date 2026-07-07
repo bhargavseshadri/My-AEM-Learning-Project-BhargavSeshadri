@@ -3,5 +3,5 @@
     jcr:primaryType="cq:Component"
     jcr:title="Bhargav - Ctabar - Proxy Teaser Comp"
     jcr:description="Proxy Text Component - Three : CTA BAR Enterprise level usecase using Teaser Core Component"
-    sling:resourceSuperType="core/wcm/components/teaser/v1/teaser"
+    sling:resourceSuperType="core/wcm/components/teaser/v2/teaser"
     componentGroup="AEM GEEKS - Content"/>

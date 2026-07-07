@@ -30,7 +30,7 @@ IMPORTANT PATHS
    once go and check the "cq:allowedTemplates" property under "/content/aemgeeks/jcr:content".
 
 -> If your Component won't need any dialog box, (it might fetch the content from API and prints it on page), the in that case we
-   won't use CQ;DIALOG, we use CQ:EditConfig.
+   won't use CQ:DIALOG, we use CQ:EditConfig.
    - This Cq:EditConig is also just to show our component to drag and drop on page.
    - apps/aemgeeks/components/content/bhargavapicomp/_cq_editConfig.
 
@@ -56,6 +56,7 @@ IMPORTANT PATHS
 -> In modern AEM versions and AEM as a Cloud Service, you must explicitly configure the path of the folder containing your Content Fragment Models
       in the "Allowed Content Fragment Models" field under the Policies tab of the corresponding folder in /content/dam. Otherwise, the models will not shown up
       when creating Content Fragments in that folder.
+
 =============================================================================================
 *) Logger Levels
         Trace
@@ -134,28 +135,17 @@ g) Custom Live Action(for custom rollout configurations) : 1) LiveActionFactory 
 --> Workflow : @Component(service=workflowProcess.class)
 --> Custom Live Action Factory : @Component(service = LiveActionFactory.class)
 
-=============================================================================================
-*) PAGE MANAGER(Aem's API) & Page
-
-Page → where you are
-pageManager → go anywhere
-
-==> PageManager
-- PageManager is a service API in AEM used to: find pages, create pages, move/delete pages, resolve paths → pages.
-- Its like a tool. Fetch/manage pages
-- Used in this file : com/aem/geeks/core/models/impl/BhargavBackendAemApisCompModelImpl.java
-
-
-==> Page (just a object) : Page is a Page object, It represents one specific page. And gives its properties, title, path, etc.
-- It just Read info of the current page.
-- Used in this file : com/aem/geeks/core/models/impl/BhargavBackendAemApisCompModelImpl.java
-
-Eg :
-- Using Page Maneger getting the Page.
-
-PageManager pageManager;
-Page page=pageManager.getPage("/content/aemgeeks/us/en");
-- Using Page getting the page info : String title = page.getTitle();
+---------------------------------------
+** @Component - Properties we can have in @Component annotation
+1. service =
+2. immediate = true
+3. configurationPolicy = ConfigurationPolicy.OPTIONAL
+                                            .REQUIRE
+                                            .IGNORE
+4. property = {"service.vendor=AEM GEEKS",
+   		       "service.description=AEM GEEKS Training" }
+5. name = "com.aem.geeks.core.services.ComponentsInfo"
+4. configurationPid = "com.aem.geeks.core.services.impl.ComponentsInfoImpl"
 
 =============================================================================================
 *) ANNOTATIONS:
@@ -357,9 +347,6 @@ dispatcher.forward(req, res);
 - AEM comes up with OOTB content exporter functionality, means AEM can export content to third party systems in form of JSON or XML.
 
 =============================================================================================
-*) Utility Functions available in Sightly: in, format, join
-
-=============================================================================================
 *) RUN MODES
 - Run Modes in AEM are a way to customize the behavior and configuration of an AEM instance for different environments (like author, publish, dev,
   stage, prod, etc.) using the same codebase.
@@ -513,6 +500,29 @@ Note: Custom WF Process and Custom WF step is not same, the difference is Custom
 * asset.getRenditions()
 * asset.addRendition(...)
 * asset.getMimeType()
+
+=============================================================================================
+*) PAGE MANAGER(Aem's API) & Page
+
+Page → where you are
+pageManager → go anywhere
+
+==> PageManager
+- PageManager is a service API in AEM used to: find pages, create pages, move/delete pages, resolve paths → pages.
+- Its like a tool. Fetch/manage pages
+- Used in this file : com/aem/geeks/core/models/impl/BhargavBackendAemApisCompModelImpl.java
+
+
+==> Page (just a object) : Page is a Page object, It represents one specific page. And gives its properties, title, path, etc.
+- It just Read info of the current page.
+- Used in this file : com/aem/geeks/core/models/impl/BhargavBackendAemApisCompModelImpl.java
+
+Eg :
+- Using Page Maneger getting the Page.
+
+PageManager pageManager;
+Page page=pageManager.getPage("/content/aemgeeks/us/en");
+- Using Page getting the page info : String title = page.getTitle();
 
 =============================================================================================
 *) adaptTo()
@@ -792,6 +802,10 @@ GRAPHQL
                       "author": "Bhargav"
                     }
             - The consumer can decide what fields it wants.
+
+- -> GRAPHIQL EDITOR : http://localhost:4502/aem/graphiql.html
+  -> To see graphql endpoints in crxde : /content/cq:graphql/global/endpoint
+  -> to create graphql endpoint : http://localhost:4502/libs/cq/graphql/sites/admin/content/console.html
 
 - Types the external application request the data:
         1. Persisted Query

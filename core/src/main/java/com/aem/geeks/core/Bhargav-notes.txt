@@ -49,17 +49,22 @@ INDEX:
 12) Creating a SYSTEM/SERVICE USER (Manual Way)
 13) Creating regular user (not a system/service user) through User Administration.
 14) Creating Content Fragment Model and Using that CF Data in the Backend.
+        * 14.b) GRAPHQL with CONTENT FRAGMENTS
+
 15) Creating Custom Rollout Configuration and Live action for that rollout configuration.
 16) Query Builder API in Backend
-        16.a) USECASE - Printing all the article pages as a Cards using ResourceResolver and QUERYBUILDER
+        16.a) Using querybuilder with servlet
+        16.b) USECASE - Printing all the article pages as a Cards using ResourceResolver and QUERYBUILDER
 
 17) METADATA SCHEMA - creating and fecth a dynamic field value using path type servlet
 18) Use Cases/Scenario Based - Implimentations
         18.a) Fetching Comp-A dialog values in Comp-B and using them
         18.b) DATASOURCE - Dynamic Dropdown values in Dialog
-        18.c) Dialog level validation using - granite:data & data-validate
+        18.c) Comp Dialog level validation using - granite:data & data-validate
 
-19) HTL
+19. STYLE SYSTEM USAGE AND IMPLIMENTATION
+
+last) HTL
 
 =============================================================================================
 My Components:
@@ -597,14 +602,14 @@ Step: 7 - Add it in filter.xml of that folder as well  --> ui.apps/src/main/cont
 =============================================================================================
 16) Query Builder API in Backend
 
-A) With servlet
+16.a) With servlet
 - Step : 1 Creating a Service - com/aem/geeks/core/services/impl/SearchServiceImpl.java
 - Step : 2(last step) Creating a pathtype servlet - com/aem/geeks/core/servlets/GeeksSearchServlet.java
 
 - To execute the servlet : http://localhost:4502/geeks/search?searchText=women&pageNumber=5&resultPerPage=10
 
 -------------------------------------------------------------
-16.a) Big One - USECASE - Printing all the article pages as a Cards using ResourceResolver and QUERYBUILDER
+16.b) Big One - USECASE - Printing all the article pages as a Cards using ResourceResolver and QUERYBUILDER
 
 Step: 1 - Create the pages accordingly in aem
             en --> Articles --> Rice plantation
@@ -682,14 +687,58 @@ Step: 5 - using this bean set all the data to that bean fields in "BhargavArticl
 Step: 6 - Render the data using htl - apps/aemgeeks/components/content/bhargav-articlelist-comp/bhargav-articlelist-comp.html
 Step: 7 (last step)- Now write all the required css styles - apps/aemgeeks/components/content/bhargav-articlelist-comp/clientlib/ArticleListCss.css
 
+-------------------------------------------------------------
+18.e) Adding a new tab and fields in page properties
+Approach-1 : By overlaying the libs page properties dialog to our /apps path and adding our custom fields in it.
+Approach-2 :
 
 
 
+=============================================================================================
+19. STYLE SYSTEM USAGE AND IMPLIMENTATION
 
+Steps to implement Style System:
 
+(ignore this for now)
+* APPROACH 1: (Using cq:styleIds property in the component node)
+1. Create a component and add the cq:styleIds property in the component's node,
+    - cq:styleIds = ["style1", "style2", "style3"]
+2. In the component's dialog, add a dropdown field to allow authors to select a style.
+    - The dropdown options should correspond to the style IDs defined in cq:styleIds.
+3. In the component's HTL or JSP, retrieve the selected style from the component's properties and apply it to the component's HTML output.
+    - Example: <div class="${properties.style}">...</div>
+4. In the page policy, define the allowed styles for the component
+    - This can be done by adding a cq:styleIds property in the page policy node
+5. In the page editor, authors can select a style for the component from the dropdown, and the selected style will be applied to the component's HTML output.
 
+----------------------------
+(important)
+* APPROACH 2: (Using PAGE POLICY for Pages AND COMPONENT POLICY for Comps) - THIS IS THE ONE I IMPLIMENTED
+1. Create a clientlib with the styles you want. - apps/aemgeeks/clientlibs/clientlib-bhargav-stylesystem
+*. Now to apply the styles for the "Whole PAGE"
+    a. Go to the page policy of the template you are using for your page, and in that add the clientlib category of the styles you want to apply for the page.
+    b. And in the styles tab of the page policy, add the styles you want to apply for the page. give the name of the style and then the
+      "CLASS NAME" you have used in the css file.
+            -> apps/aemgeeks/clientlibs/clientlib-bhargav-stylesystem/bhargavStylesystem.css
+    c. Save it and refreash the page, now you can see a brush symbol in the page editor, click that and select the style you want to apply for the page.
 
+*. Now to apply the styles for the "LAYOUT CONTAINER"
+    a. go to the template, Go to the component policy of the component you are using in your page, or select the whole layout container and open component policies.
+    b. And in the styles tab of the component policy, add the styles you want to apply for the component. give the name as u want of the style and then
+      the "CLASS NAME" you have used in your clientlib css file.
+            -> apps/aemgeeks/clientlibs/clientlib-bhargav-stylesystem/bhargavStylesystem.css
+    c. Save it and refreash the page, now you can see a brush symbol at the layout container component, click that and select the style you want to apply for
+      that component.
 
+*. Now we have used this style systems option for templates and layout container, we will see how we use it for a COMPONENT.
+    - if we add a Proxy Component or a core component, you will get a Policies icon to configure the styles. But if you add a custom component
+      you wont get the policies icon,
+    - The Policy gear icon in Template Editor only shows for a component if a design dialog (_cq_design_dialog) exists somewhere in its resource type
+      chain — either directly on the component, or inherited via sling:resourceSuperType.
+    - So add a design dialog (_cq_design_dialog) to our custom comp : apps/aemgeeks/components/content/bhargav-personalcomp-two/_cq_design_dialog
+    - Now you can see the policies icon and in that policies icon you will have the tabs you have defined in the "design dialog", now you can add styles.
+
+=============================================================================================
 
 
 
