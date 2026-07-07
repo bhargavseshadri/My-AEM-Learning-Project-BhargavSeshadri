@@ -599,11 +599,13 @@ Ans. Sling Bindings are a collection of predefined objects that Apache Sling aut
 Ans. Using @Reference, because servlet is a service
 
 17. How can we add a new tab in Page Properties?
-Ans. a. We can overlay the /libs path in our /apps and add a new tab.
-     b.
+Ans. approach-1: We can overlay the /libs path in our /apps and add a new tab.
+     approach-2: We can go to our base page component under /apps and there that base page comp will inherit the /lib comp, then add a cq:dialog and add your tab with fields in that
+                 AEM will automatically merge your TAB with other ootb tabs. this is exactly like we do in our proxy component dialog.
+                    - apps/aemgeeks/components/page/_cq_dialog/.content.xml
 
 18. I have a two templates and for temp-a one clientlib should load and for temp-b that clientlib shouldnt load, how to do that?
-ans. We can acheive it by using "PAGE POLICY", so we can add that clientlib categories in "temp-a page policy" and not in temp-b page policy.
+ans. We can acheive it by using "PAGE POLICY", we can add that clientlib categories in "temp-a page policy" and not in temp-b page policy.
         - By doing this, that clientlib will load only for temp-a pages and not for temp-b pages.
 
 
