@@ -123,6 +123,16 @@ Ans. no we cannot use it directly, we need a sling model.
           * data-sly-call="${bhargavHtlTemplate.compMultifieldTemplate @ itemNeeded = item, bhargavCount = itemList}",
                 - here we are calling the above defined template and passing the parameters to it and using it.
 
+------------------------------------
+Difference between data-sly-template and data-sly-call?
+
+* Data-sly-template
+    - Reusable HTML block inside an HTL file
+    - Can accept parameters
+
+* Data-sly-include
+    - Includes another HTL file
+    - Similar to copying another file into the current one
 
 =============================================================================================
 *) (HTL) Global Objects available in HTL (most common ones)
