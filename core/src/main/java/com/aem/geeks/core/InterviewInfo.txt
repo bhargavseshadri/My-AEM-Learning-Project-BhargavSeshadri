@@ -95,7 +95,6 @@ a) ResourceType Servlets
 -> ResourceType, Methods, extensions and Selectors will only work for resourceType servlets. (ResourceType is manditory in these and others are optional)
 -> so we give a Resource in the servlet, and whenever that resource is accessed, our servlet will be "CALLED".
 -> ResourceType Servlets : @SlingServletResourceTypes()
--> Here we can use extensions, Selectors, and methods
 - these servlets can be accessed controlled using a jcr repo ACL
 - if we do not provide any method then the default method is GET
 -> Cases when we prefer ResourceType
@@ -114,6 +113,36 @@ b) PathType Servlets
 - Handling AJAX calls from frontend
 - Exposing data externally
 
+-------------------------------------------------------
+*) SERVLETS - GET and POST requests explanation
+
+Simple understanding
+* Post : A POST servlet is used when the client sends data to the server.
+            - Save data into JCR
+            - Update existing content
+            - Trigger some backend processing
+            - Submit forms
+            - Or in some places it simple send the data to the server and that data we use in our code.
+
+* Get : A GET servlet is used when the client requests data from the server. used for mainly Reading data from JCR.
+
+--> GET FLOW
+a) Browser issues GET /path?query=abc HTTP/1.1 (headers, cookies).
+b) Server/router receives request, Sling/Servlet container resolves resource/servlet.
+c) Container calls doGet(req, res)
+d) doGet reads req.getParameter(...), session, headers, etc., prepares content and sets response headers (Content-Type, caching),
+writes body via res.getWriter() or stream.
+e) Server sends HTTP status (200 OK) + body back.
+f) Browser renders or caches per response headers.
+
+--> POST FLOW
+a) Browser issues POST /path HTTP/1.1 with body (form-encoded, JSON, multipart) + headers.
+b) Transports to the server.
+c) Container resolves servlet and calls doPost(req, res).
+d) doPost reads req.getParameter() (for form), validates input, performs DB/JCR writes.
+f) doPost typically returns: HttpStatus codes and then Client receives response and acts accordingly.
+
+-------------------------------------------------------
 Q) Why in aem servlet code they use protedted void for get and post methods, what's the reason?
 Ans. 1) Servlets extend a base class (SlingAllMethodsServlet or HttpServlet), In those parent classes, the doGet() and doPost() methods are already
 declared as protected. So when you override them, you must keep the same access modifier (protected), otherwise Java will throw an error (you can’t reduce visibility of an overridden method).
@@ -125,8 +154,23 @@ SCHEDULERS
 Defination: - A Scheduler in AEM is a background job (a Java class) that runs automatically at a fixed time or interval, without any user interaction.
             - It’s used to perform repeated or time-based tasks — like clearing cache, syncing data, sending emails, at scheduled times.
 
--> Runnable : imp method that starts the execution is -- run()
+* Schedulers are of two types
+1. Runnable : imp method that starts the execution is -- run()
+              - implements runnable interface
+              - With this we can execute only one job.
+
 -> Job : imp method that starts the execution is -- execute(JobContext jobContext)
+              - Implements JOB interface
+              - With this, one scheduler can execute the job in different time frames.
+              ---> USE OF THIS JOB SCHEDULER
+              - Lets say we have a component and a scheduler, the component displays the data and the scheduler fetches the data from some
+              service and update the data in the component. lets say we have three countries INDIA(12:00AM), GERMANY(12:00 AM), USA(12:00 AM),
+              and from these three countries we are getting the data. our scheduler executes at midnight 12:00 AM and fetches the data of
+              covid 19 patients from some service. Our servers are in india so for india it is fine but for the usa and germany 12AM IST
+              is not a 12AM for them (INDIA 12AM -- USA 1:30PM -- GERMANY 4:30PM), so based on this to meet the requirement our scheduler should
+              execute at three different times, and for that writing three Runnable Schedulers(different corns) is not a feasable way.
+              In this scenario JOB SCHEDULERS enter, we can write three jobs for these three countries in one scheduler.
+
 
 -> ScheduleOptions scheduleOptions = scheduler.EXPR(config.cronExpression());
 
@@ -161,13 +205,40 @@ Normal config to Factory Config : @Designate(ocd = BhargavFactoryOSGiConfig.clas
 
 
 =============================================================================================
-RUN MODES: in AEM they are like "environment identifiers" that tell AEM how it should behave in different environments —
-           for example: author, publish, development, staging, production, etc.
-In short:
-   Run modes allow you to configure AEM differently for different environments without changing the code.
-   Two types:
-   1. installation run modes
-   2. custom run modes
+*) RUN MODES
+
+- Run Modes in AEM are a way to customize the behavior and configuration of an AEM instance for different environments (like author, publish, dev,
+  stage, prod, etc.) using the same codebase.
+- They are like "environment identifiers", In short Run modes allow you to configure AEM differently for different environments without changing the code.
+
+- PURPOSE of runmodes:
+        *Separate configurations for Author and Publish.
+        *Maintain different settings for Dev / QA / Prod.
+
+- When we want to identify our AEM instance uniquely in code --> (slingSettingService.getRunModes()).
+
+- Run modes are two types.
+a) Installation Run modes (permanant run modes) : these we will set while installing aem instance. and we cannot change these runmodes,  these are four types
+                                                1. Author
+                                                2. Publisher
+                                                3. SampleContent  - Means aem will give you the basic sample pages like WE-RETAIL
+                                                4. NoSampleContent - no sample or demo sites (means no we retail or wknd)
+   - Author & Publisher, sampleContent & NoSampleContent are mutually exclusive means we cannot use them together.
+   - By default if we do not set anything, aem will automaytically create Author with SampleContent.
+
+b) custom run modes : Runmodes we create like Prod, Stg, Qa, Ciqa
+
+=> Creation of Run Modes, we have 5 ways
+1) Sling.Properties : we wont prefer this because we won't have permissions. and it is OOTB file so we should not change.
+2) system properties (-D) -Dsling.run.modes=publish,prod,us : this we can create while starting our aem instance
+3) Filename Detection - aem-publsh-p4503 (most commonly used): we remane a file, and then while installing the aem will understand what run mode it is.
+4) -r option -  java-jar file-r publish,prod,us: here while starting the aem we update the start script so then it will create a run mode,
+    (2nd and 4th options are almost same)
+Note : we can check the available run modes at /system/console/status-slingsettings
+
+Q) How do you configure OSGi differently for Author and Publish?
+ans. “By placing configuration files inside run mode–specific folders like /apps/project/config.author and /apps/project/config.publish.
+      AEM automatically picks the correct configuration based on its active run mode.”
 
 =============================================================================================
 Context-Aware Configuration (CaConfig) (Have to learn in depth)
@@ -312,7 +383,7 @@ PROBLEM: for one SERVICE interface class ,there is two implimentation classes, s
                                                         Note: for this we have to give a name to the service in @Component.
 
 =============================================================================================
-BASEPAGE COMPONENT (have to go in depth)
+BASEPAGE COMPONENT
 - The Base Page Component in AEM is a common parent component that defines the shared structure and behavior for all pages. Other page components like
   homepage or content page extend it using sling:resourceSuperType, so they automatically inherit its HTML structure and scripts. It helps maintain
   consistency, reuse, and easy maintenance across all pages.
@@ -362,6 +433,16 @@ WORKFLOWS in AEM
 
 - workflows allow us to automate a task or a series of tasks. these tasks are most performed on content like pages or assets.
 - A workflow needs a workflow model, and the WF model contains a series of steps.
+- Workflow model usually stored in two places in our jcr
+        1. Design Model - Stored Under : /conf/global/settings/workflow/models
+        2. Runtime Model - Stored Under : /var/workflow/models   -> when the workflow executes then this run time model will be used.
+- Two make the changes go from Design to Runtime we have to click the "SYNC".
+
+--> Basically to trigger a workflow we need Two things 1.Workflow Model, 2.Payload(means the content path on which we want to run our WF, like page, asset etc)
+        - Incase of triggering WF using code, then in that case to get this Payload we will use "WorkflowSession"
+
+
+
 - Workflow Steps :
         1. Container Step : When we want to trigger an another model or another WF, in those case we use this step
         2. Participant step : When we want a human interraction in our WF, like assigning a task to a human, in those case we use this step.
@@ -384,6 +465,48 @@ WORKFLOWS in AEM
         5. FFmpeg Transcoding -- Create video renditions.
         6. Media Extraction -- Extract embedded content.
         7. Process Thumbnails -- Generate standard DAM thumbnails.
+
+-------------------------------------------------------
+--> Indepth
+
+* Custom WF Process
+- When no existing process is available based on our requirement then we can write our own custon WF process. This "CUSTOM WF PROCESS" is available in
+  the dropdown Of "PROCESS STEP"(this process step is provoded by aem only in this we use it). this will won't have its own dialog.
+- To write this we have to impliment an interface called "WorkflowProcess"
+
+NOTE: execute(WorkItem workItem, WorkflowSession workflowSession, MetaDataMap processArguments) uses of these parameters in this "manditory method"
+        * WorkflowSession: Using this we can get the backend objects, using this only we get the ResourceResolver, Session using this WorkflowSession.
+        * MetaDataMap : If we pass any data to the dialog, that data we can get using this.(in case of custom WF process we get the data we have
+                        given in "ARGUMENTS" process step dialog box)(in case of normal process step we can get the data we have given in dialog box of that step).
+        * WorkItem : we might have the steps before and after our process step, and there will be an information and payload flowing from starting of our WF model till end
+                    .that payload and the other information should be available in our Custom WF Process and that all information is available in "WorkItem".
+                    apart from the available information we can also pass the other information as we want.
+
+-------------------------------------------------------
+Note: Custom WF Process and Custom WF step is not same, the difference is Custom WF Process is a backend module and it won't have it own step
+      we use the already available "PROCESS STEP" to use this Custom WF Process, But in "Custom WF step" we have a Custom WF Process and also
+      its own step in the available steps and also have its own dialog box.
+
+-------------------------------------------------------
+--> Custom Workflow STEP
+- Combination of Custom WF Process + Component(this comp wont have any rendering script and backend module) is called a Custom Workflow STEP.
+- The comp will have a cq:dialog, cq:editConfig
+- this step will be available in the available steps in the WF Model console.
+
+--> COMPONENT:
+- (IMP) The comp will have a cq:dialg, cq:editConfig. and  cq:editConfig has a child node called cq:formParameters and in that there is a property
+        called "PROCESS", for that property we give the value of our custom wf process, so in this way using that property we link this comp to
+        our custom wf process.
+- And in our component "sling:resourceSuperType="cq/workflow/components/model/process", means our comp is just inheriting the existing "PROCESS STEP" by pointing to it.
+- In cq:formParameters node for "PROCESS" property we give the custom wf process as a value.
+    eg: PROCESS="com.aem.geeks.core.workflows.GeeksWorkflowStep"
+
+- (IMP) In the component the dialog fields name property value should be given with metadata.
+            - Eg: for brand field name:./metaData/BRAND
+            - So this is because when the model is saved this will save the data in a node called metadata.
+
+- All the values given in the WF STEP dialog box are stored inside this metadata node:
+    /conf/global/settings/workflow/models/bhargav-personal-workflow/jcr:content/flow/geeksworkflowstep/metaData
 
 =============================================================================================
 CLIENTLIBRARIES
@@ -468,6 +591,152 @@ Definition : BundleContext is the interface that connects an OSGi bundle to the 
 
 * Bundle: An OSGi-enabled JAR file deployed into AEM.
 * Every Installed bundle have its own bundle context. It represents "This bundle's connection to the OSGi Framework."
+
+=============================================================================================
+*) MSM:
+
+- MSM helps you manage multiple websites that share common content or structure. It lets you reuse pages, but still localize or update them differently
+  in other sites.
+
+- Structure Map:
+/content
+ └── aem-geeks
+      ├── language-master  -> Blueprint Source Root - (Master site)
+      │    ├── en (Language Copy) (Blueprint source in English - MASTER for all English Live Copies)
+      │    │    ├── Page 1 (Blueprint)
+      │    │    └── Page 2 (Blueprint)
+      │    └── fr (Language Copy) (Blueprint source in French - MASTER for all French Live Copies)
+      │         ├── Page 3 (Blueprint)
+      │         └── Page 4 (Blueprint)
+      │
+      ├
+      │
+      │
+      │
+      └── Brazil -->(Country Site - Live Copy Root)
+           ├── en (Live copy based on Blueprint source: → aem-geeks/language-masters/en)
+           ├    ├── Page 1 ← ← synced from master
+           ├    └── Page 2 ← ← synced from master
+           ├
+           └── fr  ← (Live Copy based on Blueprint source: → aem-geeks/language-masters/fr)
+                ├── Page 3 ← ← synced from master
+                └── Page 4 ← ← synced from master
+      │
+      └── Indonasia -->(Country Site - Live Copy Root)
+           ├── en (Live Copy based on Blueprint source: → aem-geeks/language-masters/en)
+           ├    ├── Page 1 ← ← synced from master
+           ├    └── Page 2 ← ← synced from master
+           ├
+           └── fr  ← (Live Copy based on Blueprint source: → aem-geeks/language-masters/fr)
+                ├── Page 3 ← ← synced from master
+                └── Page 4 ← ← synced from master
+
+----------------------------------------
+--> MSM Important Points:
+
+- We have Blueprint source root or Language Master or Master site (language-masters), and we have Blueprint source Language Copies(language-masters/en, language-masters/fr)
+  in it and inside those we have Blueprint source Pages.
+- We have Live Copy roots of country sites, and inside those we have Live Copy Language Copies and inside those we have Live Copy Pages.
+-(IMP) So all the master site pages are in the language-masters and all the live copy pages are in the live copy country sites like Brazil, Indonasia are always linked.
+-(IMP) If we make any changes in the blueprint source page, then those changes will be reflected in the live copy pages when we do the sync using rollout configurations,
+       but if we make any changes in the live copy page, then those changes won't be reflected in the blueprint page because the flow
+       of data is only from blueprint to live copy, not the other way.
+
+- Creation of Language Copies:
+    Step : 1 - go to the language you want to create the copy and then click on create and in that select "Language Copy"
+    Step: 2 - Now select the source page from which you want to create the copy.
+    Step : 3 - Select the languages you want and also selete the required fields
+    Step : 4 - in the next step select "Create Multi-language Translation Project" option if you are creating for the first time, otherwise select
+                "Add to existing translation project" and then select the existing translation project and then click on "Create". Now you can see the Language Copies.
+
+- Creation of Language Masters (Country site)(Brazil, Indonasia) for Live copies:
+    Step:1 - First we need a Blueprint for this, so first create it.
+                a. go to tools -> sites -> Blueprints and then click on create
+                b. Then select "Create" and then select blueprint template.
+                c. Now select the source site you want to create the blueprint for. Eg : /content/aemgeeks/language-masters
+                d. Then give the name and title and then click on create.
+    Step:2 - Now we have the blueprint, now we will create the live copy root country site from our master site. go to sites and select your project
+             Eg : /content/aemgeeks and click on create and the select "site" and after select the blueprint you created for this.
+    Step:3 - Now you can look the available languages and pages in the master site you have selected. give title for the site and check the live copy option.
+             and select the "ROLLOUT CONFIGUATION" as per the requirement and then click on create.
+    --> Thats it now the live copy country site is craeted with all the language copies and pages linked to the master site.
+
+- You can see all your bluprint in this path - /apps/msm in crx
+
+- In the create option you see three different options -> 1. Language copy, 2. Live copy, 3. Site. So the difference between these three is
+    - Language Copy : This is used to create the copy of different language "but in the same site", but in.
+                      Eg : we have a pages in english and we want to create the copy of those pages in french, then we will use this option.
+    - Live Copy : This is important, this will create a live copy of our pages or sites and be in link and sync with the master Blueprint.
+    - Site : * This is used to create the copy of a complete separate site. copy of our complete blueprint site.
+             * but this won't be in sync with the master blueprint, means if we make any changes in the master blueprint it won't reflect in this site.
+             * there is a check box called "LIVE COPY" while creating this, if you check it the this separate site will become a live copy and then it
+               will be in sync with the master blueprint, but if you do not check this then it will be a complete separate site and won't be in sync with the master blueprint.
+
+----------------------------------------
+* ROLLOUT CONFIGURATIONS
+- Standard rollout configuration
+- Push on modify
+- Activate on Blueprint activation
+- Deactivate on Blueprint deactivation
+
+- Live Actions in Standard Rollout Configuration
+        * contentUpdate  - Updates the existing content in the live copies
+        * contentCopy - Copies newly created content from the Blueprint.
+        * contentDelete
+        * referencesUpdate - Updates the references
+        * productUpdate - Updates Commerce product references. useful only when linked with adobe commer
+        * orderChildren - Synchronizes the order of child nodes.
+
+=============================================================================================
+*) GRAPHQL
+
+- In AEM, GraphQL is mainly used when your content is stored as Content Fragments and some external application needs that content.
+- Usually GraphQL queries are written in the external application, not in AEM.
+        -> The React or other external applications sends this query to AEM using post request. and aem takes that query reads it and sends response.
+
+- The work of traditional api's and graphql is almost same, sending the content to the external application, then whats the advantage of GRAPHQL
+        -> lets say If a React app wants only the title and author, traditional APIs may still send complete data (we can write the code to filter
+           out the ones that are not reqd but that is not a advaisable standard)
+                json : {
+                         "title": "AEM Basics",
+                         "author": "Bhargav",
+                         "description": "Learning AEM GraphQL"
+                       }
+        -> But with graphql,
+            - The React app can ask:
+                Graphql: {
+                           articleByPath(
+                             _path: "/content/dam/articles/aem-basics"
+                           ) {
+                             title
+                             author
+                           }
+                         }
+
+            - AEM returns only:
+                    {
+                      "title": "AEM Basics",
+                      "author": "Bhargav"
+                    }
+            - The consumer can decide what fields it wants.
+
+- -> GRAPHIQL EDITOR : http://localhost:4502/aem/graphiql.html
+  -> To see graphql endpoints in crxde : /content/cq:graphql/global/endpoint
+  -> to create graphql endpoint : http://localhost:4502/libs/cq/graphql/sites/admin/content/console.html
+
+- Types the external application request the data:
+        1. Persisted Query
+                - we write a query in our graphql editor and save that file and aem create a url for that file containing query,
+                  that url is called persisted query url.
+                - React or external application simply uses that url and requests the data, without writing the whole query.
+                - eg: we created : http://localhost:4502/graphql/execute.json/global/bhargavFirstQuery
+                      in react we simply call : GET /graphql/execute.json/global/bhargavFirstQuery
+                - This is advisable because it is simple and faster.
+
+        2. In react we write the entire query and sends it in POST request. this is not advisable because in every request we send the query
+           and it make the system slower.
+
+- You can find the example graphql queries in com/aem/geeks/core/Bhargav-notes.txt
 
 =============================================================================================
 AEM SPECIFIC NODE TYPES
@@ -619,6 +888,18 @@ Ans. approach-1: We can overlay the /libs path in our /apps and add a new tab.
 18. I have a two templates and for temp-a one clientlib should load and for temp-b that clientlib shouldnt load, how to do that?
 ans. We can acheive it by using "PAGE POLICY", we can add that clientlib categories in "temp-a page policy" and not in temp-b page policy.
         - By doing this, that clientlib will load only for temp-a pages and not for temp-b pages.
+
+=============================================================================================
+
+
+
+
+
+
+
+
+
+
 
 
 
