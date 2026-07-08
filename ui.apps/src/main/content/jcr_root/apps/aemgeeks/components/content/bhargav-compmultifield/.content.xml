@@ -3,4 +3,13 @@
     jcr:description="Component specifically for seeing the composite multifield reading approaches."
     jcr:primaryType="cq:Component"
     jcr:title="bhargav-compmultifield"
-    componentGroup="AEM GEEKS - Content"/>
+    componentGroup="AEM GEEKS - Content">
+
+    <!--This is added just to test cq:editConfig-->
+    <cq:editConfig
+            jcr:primaryType="cq:EditConfig">
+        <cq:listeners
+                jcr:primaryType="cq:EditListenersConfig"
+                afterinsert="REFRESH_PAGE"/>
+    </cq:editConfig>
+</jcr:root>

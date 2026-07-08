@@ -768,12 +768,12 @@ Steps to implement Style System:
 
 =============================================================================================
 New concepts to explore
-I* Explore : cq:EditConfig
-I* Explore coponent policy, page policy and design dialog
+
+
 
 I* InheritanceValueMap inheritanceValueMap = new HierarchyNodeInheritanceValueMap();
 * Dispatcher setup and learn
-* Page Properties through code (can we do it)
+
 I* ResourceType Servlets
 * Internationalization in AEM  -- THIS
 I* Adding and modifying asset metadata through backend  -- THIS

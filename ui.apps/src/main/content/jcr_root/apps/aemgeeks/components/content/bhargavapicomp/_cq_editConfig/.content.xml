@@ -4,4 +4,8 @@
         xmlns:jcr="http://www.jcp.org/jcr/1.0"
         jcr:primaryType="cq:EditConfig"
         emptyText="Bhargav API Component - Sorry No content Fetched from API"
-        emptyTextAppend="{Boolean}true"/>
+        emptyTextAppend="{Boolean}true">
+    <cq:listeners
+            jcr:primaryType="cq:EditListenersConfig"
+            afterinsert="REFRESH_PAGE"/>
+</jcr:root>

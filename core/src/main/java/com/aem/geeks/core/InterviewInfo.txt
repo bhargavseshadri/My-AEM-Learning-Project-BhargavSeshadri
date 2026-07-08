@@ -789,13 +789,14 @@ Ans. - The first thing I'd check is whether the page was actually published
 Ans. Aem dont have a feature like that, we can acheive it by selecting the complete folder or using groovy script or using Workflow + backend code.
 
 6. I want to add a new comp to the existing editable template, and I dont want that comp showup in old pages(means before the change)?
-Ans. actually if we do any chnage in the editable template then that change will reflect in both old and new pages.
+Ans. actually if we do any change in the editable template then that change will reflect in both old and new pages.
         - We can acheive it by using "Initial content" (drawbacks here are author can edit the comp, we cant lock these comps))
         - or we can create a template version by copying the existing template and then make a chnage and then on we can create new pages using this new template version.
 
 7. whenever I have drag and drop a component the page should automatically get refreashed, how to do that
 Ans. To achieve this, you need to configure the cq:listeners property within your component's cq:editConfig node. This tells the AEM authoring interface
      how to behave after specific authoring actions (like inserting, editing, or deleting a component).
+     - cq:editConfig is used to define how a component behavior in authoring mode
      - <cq:listeners
                jcr:primaryType="cq:EditListenersConfig"
                afterinsert="REFRESH_PAGE"/>
@@ -805,6 +806,7 @@ Ans. To achieve this, you need to configure the cq:listeners property within you
                afterinsert="REFRESH_PAGE"
                afteredit="REFRESH_PAGE"
                afterdelete="REFRESH_PAGE"/>
+    * Reference Code : apps/aemgeeks/components/content/bhargavapicomp/_cq_editConfig/.content.xml
 
 
 
