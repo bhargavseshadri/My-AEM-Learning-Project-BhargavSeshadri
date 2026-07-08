@@ -460,6 +460,16 @@ BUNDLE LIFECYCLE
                                       and therefore has no independent lifecycle. It attaches to a host bundle and cannot be started or stopped on its own.
 
 =============================================================================================
+BUNDLE CONTEXT in AEM
+
+Definition : BundleContext is the interface that connects an OSGi bundle to the OSGi framework, enabling it to access framework resources, manage
+             services, and participate in the bundle lifecycle.
+             EG : go to -> BhargavServiceInJava.java
+
+* Bundle: An OSGi-enabled JAR file deployed into AEM.
+* Every Installed bundle have its own bundle context. It represents "This bundle's connection to the OSGi Framework."
+
+=============================================================================================
 AEM SPECIFIC NODE TYPES
 
 cq:Page	             :  /content/...              : Represents a page. Has a child node jcr:content.
