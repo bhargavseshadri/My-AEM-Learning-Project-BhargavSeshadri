@@ -81,6 +81,7 @@ i) Proxy Components : 1. apps/aemgeeks/components/bhargavtextproxy
                       2. apps/aemgeeks/components/bhargavtextproxy-two
                       3. apps/aemgeeks/components/bhargav-ctabar-proxycomp
 j) Bhargav Article List Component (Querybuilder backend api used) : apps/aemgeeks/components/content/bhargav-articlelist-comp
+k) Using Service in Java class - Component : apps/aemgeeks/components/content/bhargav-model-service-class-testing
 
 =============================================================================================
 1) ResourceResolverFactory related Notes is in

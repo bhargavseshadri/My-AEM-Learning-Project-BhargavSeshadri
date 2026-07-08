@@ -316,6 +316,8 @@ BASEPAGE COMPONENT (have to go in depth)
 - The Base Page Component in AEM is a common parent component that defines the shared structure and behavior for all pages. Other page components like
   homepage or content page extend it using sling:resourceSuperType, so they automatically inherit its HTML structure and scripts. It helps maintain
   consistency, reuse, and easy maintenance across all pages.
+
+- Whatever the common resources we are using throughout our site like Page properties dialog, design dialog, clientlibs etc, we create those in base page component
   Example: -> create your own base page component and point it to core page component using sling:resourceSupertype.
            -> And based on our need we can create a Templates and pages and give the sling:ResourceType points to our base page component (in these
             comps we can use/inherit the files which are either present in our page component or base core base page comp)
