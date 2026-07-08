@@ -1,0 +1,13 @@
+<!--BhargavSeshadri - In this we write a reusable code block using "data-sly-template"-->
+
+
+<!-- Step:1 -  Defining the reusable code block using "data-sly-template" in HTL.
+     Step: 2 - importing the file and calling the file : apps/aemgeeks/components/content/bhargav-compmultifield/bhargav-compmultifield.html
+So to use this template, they have two manditorily give the values for two parameters-->
+<template data-sly-template.compMultifieldTemplate="${@ itemNeeded, bhargavCount}">
+    <div>
+        <b>Set : ${bhargavCount.count}</b>
+        <h3>Question = ${itemNeeded.question}</h3>
+        <p>Answer = ${itemNeeded.answer}</p>
+    </div>
+</template>

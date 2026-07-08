@@ -856,9 +856,9 @@ step:2 -> apps/aemgeeks/components/content/servicedemo/servicedemo.html
 
 --------------------
 -> We use the below three combined
-c)data-sly-template(STEP: 1): for creating template (to reuse the code) :FILE: apps/aemgeeks/components/structure/home/head.html
-d)data-sly-use (STEP: 2): here we use this to get that file where the template is defined. :File: apps/aemgeeks/components/structure/home/home.html
-e)data-sly-call(STEP: 3) : use to call the specific template written in that file  :File: apps/aemgeeks/components/structure/home/home.html
+c)data-sly-template(STEP: 1): for creating template (to reuse the code) :FILE: apps/aemgeeks/components/content/bhargav-compmultifield/bhargav-reusable-code.html
+d)data-sly-use (STEP: 2): here we use this to get that file where the template is defined. :File: apps/aemgeeks/components/content/bhargav-compmultifield/bhargav-compmultifield.html
+e)data-sly-call(STEP: 3) : use to call the specific template written in that file  :File: apps/aemgeeks/components/content/bhargav-compmultifield/bhargav-compmultifield.html
 
 --------------------
 f)data-sly-attribute : used to give attributes like class,id in html structure

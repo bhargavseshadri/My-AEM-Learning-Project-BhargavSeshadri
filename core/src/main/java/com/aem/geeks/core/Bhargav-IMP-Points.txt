@@ -104,6 +104,27 @@ Ans. no we cannot use it directly, we need a sling model.
 * For Eg: If you give log level as "Info" for the log file, so in that file "Trace & Debug" logs wont print, "Info, Warn, Error" logs will print in that file.
 
 =============================================================================================
+*) DATA-SLY-TEMPLATE & DATA-SLY-CALL
+
+- A data-sly-template is simply a reusable block of HTL code that can accept parameters.
+- We must use these three combined to create a reusable template and call it with different parameters.
+            data-sly-template = Define reusable HTML
+            data-sly-use = this is used to import that defined template file
+            data-sly-call = Call that reusable HTML
+
+- Reference Code
+-> data-sly-template : apps/aemgeeks/components/content/bhargav-compmultifield/bhargav-reusable-code.html
+          * data-sly-template.compMultifieldTemplate="${@ itemNeeded, bhargavCount}", here we have created "compMultifieldTemplate" template which takes two parameters.
+
+-> data-sly-use : apps/aemgeeks/components/content/bhargav-compmultifield/bhargav-compmultifield.html
+          * data-sly-use.bhargavHtlTemplate="bhargav-reusable-code.html", here we are importing the above defined template file.
+
+-> data-sly-call : apps/aemgeeks/components/content/bhargav-compmultifield/bhargav-compmultifield.html
+          * data-sly-call="${bhargavHtlTemplate.compMultifieldTemplate @ itemNeeded = item, bhargavCount = itemList}",
+                - here we are calling the above defined template and passing the parameters to it and using it.
+
+
+=============================================================================================
 *) (HTL) Global Objects available in HTL (most common ones)
 
 -> Enumerable Objects : These objects provides a "VALUEMAP" which contains the information, we can access that info.
