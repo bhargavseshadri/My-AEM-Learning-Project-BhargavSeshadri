@@ -12,6 +12,8 @@ import org.apache.sling.api.SlingHttpServletResponse;
 import org.apache.sling.api.servlets.SlingSafeMethodsServlet;
 import org.apache.sling.servlets.annotations.SlingServletPaths;
 import org.osgi.service.component.annotations.Component;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletException;
@@ -30,12 +32,16 @@ import java.io.IOException;
 @SlingServletPaths("/bhargav/userdetails")
 public class BhargavMetadataSchemaPathServlet extends SlingSafeMethodsServlet {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(BhargavMetadataSchemaPathServlet.class);
+
+
     private static final String API_URL = "https://dummyjson.com/users/";
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
     protected void doGet(SlingHttpServletRequest request, SlingHttpServletResponse response) throws ServletException, IOException {
+        LOGGER.debug(" BhargavMetadataSchemaPathServlet : Execution started Entered in to get block");
 
         String userId = request.getParameter("id");
         response.setContentType("application/json");
@@ -65,7 +71,11 @@ public class BhargavMetadataSchemaPathServlet extends SlingSafeMethodsServlet {
                 String fullName = firstName + " " + lastName;
                 JsonNode responseNode = objectMapper.createObjectNode().put("name", fullName);
                 response.getWriter().write(responseNode.toString());
+            }catch (Exception e) {
+                LOGGER.debug("Exception occured at BhargavMetadataSchemaPathServlet : in catch block-1 {}", e);
             }
+        } catch (Exception e) {
+            LOGGER.debug("Exception occured at BhargavMetadataSchemaPathServlet : in catch block-2 {}", e);
         }
     }
 

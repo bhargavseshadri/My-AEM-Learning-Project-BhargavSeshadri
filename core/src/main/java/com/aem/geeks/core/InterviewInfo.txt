@@ -593,6 +593,22 @@ Definition : BundleContext is the interface that connects an OSGi bundle to the 
 * Every Installed bundle have its own bundle context. It represents "This bundle's connection to the OSGi Framework."
 
 =============================================================================================
+CSRF (Cross-Site Request Forgery) :
+        - In some cases a malicious site in the other tab may trick a logged-in user’s browser into making a request to another site (like AEM)
+          without the user realizing it
+        - When you make a POST request to an AEM servlet, you need to include a special token called the CSRF token to ensure that the request is
+          legitimate and not coming from a malicious source. otherwise the request wont reach AEM.
+        - So the rule AEM follows is "I will only accept POST(or PUT, DELETE) requests that include a secret token I generated".
+        - Without this csrf token, AEM will reject the POST request with a 403 Forbidden error, even if the user is authenticated.
+
+* Sometimes we include CSRF clientlib in our code, so that The client library automatically:
+                         - obtains the CSRF token from AEM, inserts it into forms or AJAX requests, ensures POST requests include the expected token.
+                         - Eg: including csrf clientlib - apps/aemgeeks/components/content/registrationformservlet/registrationformservlet.html
+                               - We can also include that in JS as wll as a request header.
+
+
+
+=============================================================================================
 *) MSM:
 
 - MSM helps you manage multiple websites that share common content or structure. It lets you reuse pages, but still localize or update them differently

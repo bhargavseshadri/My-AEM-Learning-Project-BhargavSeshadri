@@ -35,13 +35,14 @@ Step : 3 - com/aem/geeks/core/servlets/BhargavMetadataSchemaPathServlet.java
                       //here the response is the API headers type of things :
                      //Eg : Response{type: 'basic', url: 'http://localhost:4502/bhargav/userdetails?id=3', redirected: false, status: 200, ok: true,…}
                     if (!response.ok) {
+                        console.log("Bhargav - API response : ", response);
                         throw new Error("API failed");
                     }
                     //Converts JSON response body into JS object
                     return response.json();
                 })
                 .then(function (data) {
-                    console.log("Bhargav - API response : ", data);
+                    console.log("Bhargav - API response data : ", data);
                     //Data : it will give what response we are sending from out servlet -> here fullname -: name : "Sophia Brown"
 
                     if (data && data.name) {
