@@ -1600,3 +1600,30 @@ JAVASCRIPT - HOW TO GET HOLD OF DOM ELEMENTS
    - HTML Example: <label>Title</label><input type="text" />
 
 ---------------------------
+
+
+1. Sling models, services, composite multifields
+2. Configurations
+3. schedulers
+4. servlets
+5. workflows
+6. Api uses
+7. Runmodes
+8. msm & rollout configurations, custom rollout and live sync
+9. Client librarys
+10. proxy components
+11. query builder
+12. graphQL
+13. Content fragment
+14. style system
+15. bhargav-backend-aem-apis-comp
+16. dynamic dropdown values
+17. dialog validations
+18. Overlays
+19. htl
+
+*. Usecase
+    - button with servlet adding node prop
+    - metadata schema with servlet
+    - core comp enterprise usecase - teaser comp in cta bar
+    - using services in java class
