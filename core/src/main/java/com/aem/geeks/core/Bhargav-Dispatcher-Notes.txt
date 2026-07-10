@@ -2,17 +2,27 @@
 DISPATCHER NOTES & UNDERSTANDINGS
 =============================================================================================
 
-
-
 *) DISPATCHER   -- C:\Documents out side onedrive focus\AEM RELATED\aemgeeks\dispatcher.any
 
---> Important points
+*) DISPATCHER:
+    - The AEM Dispatcher is a caching and load-balancing tool that sits between your web server (Apache/IIS) and AEM publish instances.
+
+- Caching — Stores rendered HTML pages to reduce load on AEM
+- Load Balancing — Distributes requests across multiple publish instances
+- Security — Filters malicious requests and protects AEM
+- URL Rewriting — Transforms URLs
+
+=============================================================================================
+*) Important points
+
 - Dispatcher does not perform tasks, dispatcher is a module in our apache web server that tells Apache webserver what tasks need to perform.
-- Caching, load balancing, access and security all these are the feature of APACHE webserver, but the dispatcher tell the server
+- Caching, load balancing, access and security all these are the features of APACHE webserver, but the dispatcher tell the server
   to create the cache as per the provided configurations.
 - Using rewrite rules we will redirect the pages :: Eg: if we hit www.intel.com  -> it will redirects to -> https://www.intel.com/content/www/us/en/homepage.html
 
----> Difference between cache deletion, cache invalidation, cache purge
+=============================================================================================
+*) Difference between cache deletion, cache invalidation, cache purge
+
 - Cache Deletion : Physically removing cached files from filesystem. so the next request goes to publisher and then page served and a new cache file got created.
 
 - Cache Invalidation : Marking cache as stale or unusable without deleting file immediately.
@@ -25,30 +35,394 @@ DISPATCHER NOTES & UNDERSTANDINGS
 
 - cache flush : It basically means cache invalidation happened.
 
--------------------------------------------------------------
-
+=============================================================================================
 --> Confuguring or setting up dispatcher (There are 3 ways)
 1. Standard(or old) way : Adobe provides a dispatcher module and a config file, so we have to add all the diapacher configs in this file.
 2. Dispatcher 2.0 : Dispatcher have its standard folders and standard files.
 3. Dispatcher with Docker - for AEMaaCS
 
--------------------------------------------------------------
 
----> Sections in Dispatcher.any
-- /clientheaders : tells what headers are allowed through request.
-- /virtualhosts or vhose : - it define which domain is mapped or resolved to which content. using this we can have multiple domains with multiple configuration.
-                  - we can have multiple /virtualhosts.
-                   Eg : www.intel.com --> maps to AEM Sites
-                        www.intelDigitalLibrary.com ---> maps to AEM Asset.
-- /renders : using this we tell the server from where it can get and serve the response for the incomming request.
-- /filter : when we want to filter the request we use this. basically we dont want to send all the requests to our AEM server, we only send some specific
+=============================================================================================
+*) Sections in Dispatcher.any
+=============================================================================================
+
+1. /farms — The Starting Point, The /farms section defines one or more sites (farms) managed by Dispatcher.
+- Each farm represents one site or environment, with its own behavior and caching rules.
+
+Eg: Multisite : /farms {
+                  /site1 {
+                    /virtualhosts { "*.site1.com" }
+                    /renders { ... }
+                    /filter { ... }
+                    /cache { ... }
+                  }
+
+                  /site2 {
+                    /virtualhosts { "*.site2.com" }
+                    /renders { ... }
+                    /filter { ... }
+                    /cache { ... }
+                  }
+                }
+
+=============================================================================================
+2. /clientheaders :
+- use of this is Forwarding HTTP Headers. it tells what headers are allowed through request.
+- Controls which HTTP headers are passed from client to AEM. Dispatcher strips unnecessary headers by default for security and performance.
+- when a User make a page request, that request have page URL and lot of headers, and AEM don't need all those headers, so our dispatcher only allows those headers
+  we are specified under /clientheaders.
+
+Eg:1. * Allowing every header
+        /clientheaders
+          {
+          "*"  # Forward all headers
+          }
+
+      * Allowing only specific headers
+        /clientheaders
+          {
+          "Host"
+          "User-Agent"
+          "Accept"
+          "Accept-Language"
+          "Authorization"
+          "Referer"
+          }
+
+- For example Suppose users log in using a JWT token. If the clientheader allows "Authorization" the the dispatcher allow the JWT token and AEM checks it and allows
+  users to login.
+  If at all we don't allowed the "Authorization", then in that case dispatcher restricts the JWT TOKEN and AEM dont gets that token to check, in return
+  AEM give 401-unauthorised.
+
+
+=============================================================================================
+3) /virtualhosts  — Domain Mapping, When a request reaches Dispatcher, it compares the request's Host header (and optionally the URL path)
+                    with the configured /virtualhosts entries. The first matching farm is selected, and that farm's cache, filters, renders,
+                    and other settings are used to process the request.
+- it define which domain is mapped or resolved to which content. using this we can have multiple domains with multiple configuration.
+- we can have multiple /virtualhosts.
+
+- Eg: /farms {
+          /mainfarm {
+              /virtualhosts {
+                  "www.company.com"
+              }
+          }
+          /shopfarm {
+              /virtualhosts {
+                  "shop.company.com"
+              }
+          }
+          /careerfarm {
+              /virtualhosts {
+                  "careers.company.com"
+              }
+          }
+      }
+
+=============================================================================================
+4) /renders
+- using this we tell the server from where it can get and serve the response for the incoming request.
+- This section tells Dispatcher where to forward uncached requests, usually to your AEM Publish instances.
+- Dispatcher can distribute traffic among multiple instances, acting as a load balancer.
+
+Eg: /renders {
+      /publish1 {
+        /hostname "aem-publish1"
+        /port "4503"
+      }
+      /publish2 {
+        /hostname "aem-publish2"
+        /port "4503"
+      }
+    }
+
+
+=============================================================================================
+5) /filter : when we want to filter the request we use this. basically we don't want to send all the requests to our AEM server, we only send some specific
             filtered requests. those specifications will be done here.
-- /cache : The cache section regulates what responses will be cached and where.
-- /invalidate :
-- /allowedClients : This tell to the server which are the clients(AEM Author or AEM publisher etc) are allowed to clear the cache.
+- The /filter section is your security gate.
+- It blocks access to sensitive paths like:
+              /system/console
+              /crx/de
+              /bin/querybuilder.json
+              /etc/packages/*.zip
 
--------------------------------------------------------------
----> Dispatcher Cache flush : Removing cached files from the Dispatcher cache whenever content is updated in AEM, so users
+- Dispatcher filter rules are evaluated in order and the last matching rule wins, not the first. meaning if a request matches a deny rule
+  but then also matches an allow rule further down the list, the request will be allowed despite having matched a deny rule.
+- Dispatcher uses a default-deny model only explicitly allowed paths are permitted. If a URL does not explicitly match an allow
+  rule, it is effectively denied. This default-deny model is intentional. You explicitly allow only what is safe.
+
+- Basic example : /filter {
+                    /0001 { /type "deny"  /url "/crx/*" }
+                    /0002 { /type "deny"  /url "/system/console/*" }
+                    /0003 { /type "allow" /url "/content/*" }
+                    /0004 { /type "allow" /url "/etc.clientlibs/*" }
+                    /0005 { /type "allow" /url "/content/dam/*" }
+                    /0006 { /type "allow" /url "/dispatcher/invalidate.cache" }
+                    /0007 { /type "allow" /url "/libs/granite/core/content/login.html" }
+                  }
+
+
+
+-Rule format: /XXXX { /type "allow|deny" /glob "PATTERN" }
+
+- Default deny all: /0001 { /type "deny" /glob "*" }
+- Allow specific paths
+              /0010 { /type "allow" /glob "GET /content/*" }
+              /0011 { /type "allow" /glob "GET /etc.clientlibs/*" }
+
+- Block dangerous selectors
+              /0050 { /type "deny" /glob "* *.infinity.json*" }
+              /0051 { /type "deny" /glob "* *.tidy.json*" }
+              /0052 { /type "deny" /glob "* *.sysview.xml*" }
+              /0053 { /type "deny" /glob "* *.docview.*" }
+              /0054 { /type "deny" /glob "* *.*[0-9].json*" }
+
+- Method restriction:  We can also restrict by method also, in the below example we are restricting "GET" method and allowing only "POST" method.
+                        /filter {
+                          /0050 { /type "allow" /url "/bin/my-servlet" /method "POST" }
+                        }
+
+- Allowing a JSON Endpoint Safely : Suppose you have a component that fetches JSON data from "/content/mysite/en/home.model.json". If you get
+                                    403, then we have to explicitly allow .model.json requests.
+                                    /filter {
+                                      /0060 { /type "allow" /url "*.model.json" }
+                                    }
+
+
+=============================================================================================
+6) /cache : we use this for Caching configuration, The cache section regulates what responses will be cached and where.
+
+- This section defines what to cache, where to store it, and how to invalidate it
+
+Eg : /cache {
+       /docroot "/opt/dispatcher/cache"
+       /statfileslevel "2"
+       /allowAuthorized "0"
+       /serveStaleOnError "0"
+       /rules {
+         /0000 { /glob "*.html" /type "allow" }
+         /0001 { /glob "*.user.json" /type "deny" }
+       }
+
+       /invalidate {
+         /0000 { /glob "*" /type "allow" }
+       }
+     }
+
+- Key elements
+    -> /docroot – location for cached files
+    -> /statfileslevel "2" – /statfileslevel controls how deep Dispatcher creates .stat files in the cache directory structure. These .stat
+                             files are used for cache invalidation. When content is activated, Dispatcher updates the appropriate .stat file,
+                             and cached pages whose timestamps are older than that .stat file are treated as stale and refreshed from AEM on
+                             the next request.
+                           - A .stat file is a small timestamp file. It does not store page content. It only stores the last modification time.
+                             EG: /cache
+                                 └── content
+                                     └── site
+                                         └── en
+                                             ├── home.html
+                                             ├── products.html
+                                             └── about.html
+                                 - /statfileslevel "2"
+                                 - Result is : /cache
+                                               ├── .stat          (Level 0)
+                                               └── content
+                                                   ├── .stat      (Level 1)
+                                                   └── site
+                                                       ├── .stat  (Level 2)
+                                                       └── en
+                                                           ├── home.html
+                                                           ├── products.html
+                                                           └── about.html
+                                - Imagine you publish a change to: /content/site/en/home, Dispatcher updates the nearest .stat file (based on the configured level).
+                                - So /content/site/.stat gets a newer timestamp, all cached pages under that part of the cache are considered potentially stale
+
+    -> /allowAuthorized "0" : - (FLAG) this flag indicating whether to cache responses to requests that contain authorization information.
+                              - here "0 means No" and "1 means Yes".
+
+    -> /serveStaleOnError "0" : - (FLAG) Flag indicating whether the dispatcher should serve stale content if no remote server is available.
+    -> /rules – which files to cache or skip
+              - The rules section defines what responses should be cached based on the requested URL. Please note that only the following requests can
+                lead to cacheable responses.
+                         - HTTP method is GET
+                         - URL has an extension
+                         - Request has no query string
+                         - Request has no "Authorization" header (unless allowAuthorized is 1)
+
+
+=============================================================================================
+7) /invalidate
+- The invalidate section defines the pages that are "invalidated" after any activation.
+- Please note that the activated page itself and all related documents are flushed on an modification.
+  For example: if the page /foo/bar is activated, all /foo/bar.* files are removed from the cache.
+
+EG: /invalidate
+            {
+            /0000
+              {
+              # Deny all files for invalidation
+              /glob "*"
+              /type "deny"
+              }
+            /0001
+              {
+              # Consider all HTML files stale after an activation.
+              /glob "*.html"
+              /type "allow"
+              }
+            /0002
+              {
+              /glob "/etc/segmentation.segment.js"
+              /type "allow"
+              }
+            /0003
+              {
+              /glob "*/analytics.sitecatalyst.js"
+              /type "allow"
+              }
+            }
+
+=============================================================================================
+8) /allowedClients
+- This tell to the server which are the clients(AEM Author or AEM publisher etc) are allowed to clear the cache.
+- to put it precisely, The allowedClients section restricts the client IP addresses that are allowed to issue activation requests.
+
+Eg:      /allowedClients
+            {
+              /0000
+               {
+                /glob "*"
+                /type "deny"
+                }
+              /0001
+                {
+                /glob "127.0.0.1"
+                /type "allow"
+                }
+             }
+
+=============================================================================================
+9) /ignoreUrlParams
+- The ignoreUrlParams section contains query parameter names that should be ignored when determining whether some request's output can be cached
+  or not.
+- EG : In this example configuration, the "q" parameter will be ignored.
+              /ignoreUrlParams
+                {
+                /0001 { /glob "*" /type "deny" }
+                /0002 { /glob "q" /type "allow" }
+                }
+
+
+=============================================================================================
+10) /headers
+
+
+=============================================================================================
+11) /gracePeriod "2"
+
+
+=============================================================================================
+12) /enableTTL "1"
+=============================================================================================
+13) /statistics The statistics sections dictates how the load should be balanced among the renders according to the media-type.
+
+    EG:  /statistics
+          {
+          /categories
+            {
+            /html
+              {
+              /glob "*.html"
+              }
+            /others
+              {
+              /glob "*"
+              }
+            }
+          }
+
+=============================================================================================
+14) /auth_checker : Authorization checker
+- before a page in the cache is delivered, a HEAD request is sent to the URL specified in /url with the query string
+  '?uri='. If the response status is 200 (OK), the page is returned from the cache. Otherwise, the request is forwarded to the render and
+  its response returned.
+- Only pages matching the /filter section below are checked, all other pages get delivered unchecked.
+-  All header lines returned from the auth_checker's HEAD request that match the /headers section will be returned as well.
+
+EG:  /auth_checker
+           {
+           /url "/bin/permissioncheck.html"
+           /filter
+             {
+             /0000
+               {
+               /glob "*"
+               /type "deny"
+               }
+             /0001
+               {
+               /glob "*.html"
+               /type "allow"
+               }
+             }
+           /headers
+             {
+             /0000
+               {
+               /glob "*"
+               /type "deny"
+               }
+             /0001
+               {
+               /glob "Set-Cookie:*"
+               /type "allow"
+               }
+             }
+           }
+
+=============================================================================================
+=============================================================================================
+*) In Depth on Caching and Invalidation
+
+- To maintain fresh content, outdated cache entries must be cleared. AEM handles this through two mechanisms: a Flush Agent
+  or a direct HTTP invalidation request. Both methods trigger an update to the Dispatcher’s statfiles, which is the core of AEM’s cache freshness logic.
+- A statfile is essentially a timestamp. When content is published or explicitly invalidated, Dispatcher updates this timestamp.
+- On every incoming request, Dispatcher performs a quick comparison:
+           - If the cached file’s timestamp is older than the statfile’s timestamp, the file is treated as stale.
+           - The request is then forwarded to AEM Publish, which returns fresh content that Dispatcher writes back into cache.
+
+- Does Invalidation Clear Everything on Every Request?
+Ans: No. That’s where statfileslevel matters. statfileslevel defines how deep the statfile hierarchy goes within your
+     content structure. This controls the scope of invalidation.
+          - A low level (e.g., 0) invalidates the entire site for every update—causing unnecessary load and cache stampedes.
+          - A reasonable level (usually 2 or 3) limits invalidation to only the relevant content subtree.
+
+---------------------------------------------------
+*) Dispatcher Configuration for DYNAMIC CONTENT
+
+1. Pages and Selectors
+        - Standard HTML pages should always be cacheable.
+        - When you introduce selectors, you’re effectively creating unique variations of the same resource.
+        - For example, /content/site/en.light.json and /content/site/en.dark.json are two distinct representations of the
+          same path. Dispatcher treats each as a completely separate cache entry.
+2. Query Parameters (The Cache Killer):  The next major problem is query parameters. By nature, query parameters destroy caching because they imply
+                                         that the response can change for every different parameter. Dispatcher will not cache them unless you explicitly
+                                         configure rules that define which parameters matter and which should be ignored.
+3. Assets and ClientLibs (Cache Forever): Assets and ClientLibs follow a different rule: anything versioned should be cached as long as possible.
+                                          Versioned URLs (for example, /etc.clientlibs/site/clientlib.css?12345) inherently guarantee that the content
+                                          changes only when the URL changes.
+
+=============================================================================================
+*) CDN
+- Definition : CDN is a globally distributed network of edge servers that store cached versions of your site’s content like HTML, images, PDFs, JS, CSS,
+               closer to users around the world. Instead of every request traveling all the way to your cloud region, the CDN responds from the nearest
+               physical location.
+- Dispatcher lives in one region. A CDN has hundreds of servers across continents. Users get content from the closest server, not from datacenter.
+
+=============================================================================================
+*) Dispatcher Cache flush : Removing cached files from the Dispatcher cache whenever content is updated in AEM, so users
                               get the latest version instead of old cached pages.
 
 ---> Ways of doing dispatcher cache flush (clearing cache)

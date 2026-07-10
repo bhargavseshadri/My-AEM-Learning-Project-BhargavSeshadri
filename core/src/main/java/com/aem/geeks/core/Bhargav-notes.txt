@@ -767,9 +767,9 @@ Steps to implement Style System:
 
 
 =============================================================================================
-New concepts to explore
+New concepts/usecases to explore
 
-
+***CREATE A SIGNUP AND LOGIN PAGE USING JWT token.
 
 I* InheritanceValueMap inheritanceValueMap = new HierarchyNodeInheritanceValueMap();
 * Dispatcher setup and learn
