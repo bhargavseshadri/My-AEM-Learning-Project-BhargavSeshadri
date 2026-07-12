@@ -6,6 +6,7 @@ import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.models.annotations.DefaultInjectionStrategy;
 import org.apache.sling.models.annotations.Model;
+import org.apache.sling.models.annotations.injectorspecific.ResourcePath;
 import org.apache.sling.models.annotations.injectorspecific.SlingObject;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 
@@ -25,11 +26,38 @@ public class BhargavPersonalCompTwoModelImpl implements BhargavPersonalCompTwoMo
     @SlingObject
     private ResourceResolver resourceResolver;
 
-    @SlingObject
-    private Resource resource;
+
 
     @ValueMapValue
     private String selectedTodo;
+
+    //Approach - 1 of getting hold of RESOURCE
+    //We have authored the comp-a : apps/aemgeeks/components/content/bhargav-personalcomp-one in this page/resource
+    @ResourcePath(path="/content/aemgeeks/us/en/imp-page---bhargav/jcr:content/root/responsivegrid/bhargav_personalcomp")
+    private Resource resource;
+
+    @Override
+    public String getManufacturerName() {
+        return resource.getValueMap().get("manufacturerName", String.class);
+    }
+
+    @Override
+    public String getProductName() {
+        return resource.getValueMap().get("productName", String.class);
+    }
+
+    @Override
+    public String getProductPrice() {
+        return resource.getValueMap().get("productPrice", String.class);
+    }
+
+
+
+
+//Approach - 2 of getting hold of RESOURCE
+/*
+    @SlingObject
+    private Resource resource;
 
     @PostConstruct
     protected void init() {
@@ -50,10 +78,15 @@ public class BhargavPersonalCompTwoModelImpl implements BhargavPersonalCompTwoMo
     @Override
     public String getProductPrice() {
         return resource.getValueMap().get("productPrice", String.class);
-    }
+    }*/
 
+
+
+
+
+    //Rendering the value selected in the dynamic dropdown
     @Override
-    public String getSelectedTodo() { //Rendering the value selected in the dynamic dropdown
+    public String getSelectedTodo() {
         return selectedTodo;
     }
 
