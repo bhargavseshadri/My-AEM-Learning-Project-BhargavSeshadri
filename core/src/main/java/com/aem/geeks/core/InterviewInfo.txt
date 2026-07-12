@@ -86,6 +86,7 @@ OSGI ARCHITECTURE:
 =============================================================================================
 ==> SERVLETS
 - A Servlet is a Java class that  handles HTTP requests (like GET, POST) and generates HTTP responses (like HTML, JSON, XML).
+- Servlets are of two types Resource Type Servlets and Path Type Servlets. Both types of servlets must extend either SlingAllMethodsServlet or SlingSafeMethodsServlet.
 
 -> When a servlet runs, Sling (and the underlying web server Jetty) automatically gives it two key objects:
    SlingHttpServletRequest → the HTTP request (what the browser sent)
@@ -176,9 +177,8 @@ Defination: - A Scheduler in AEM is a background job (a Java class) that runs au
 
 =============================================================================================
 OSGI CONFIGURATIONS:
-Definition: - Initial set of inputs given to a bundle. like giving the input to our java file or component in that case we use osgi configurations.
-            - A Configuration in AEM is a way to store settings that control how a feature, component, or service should work —
-              without changing or redeploying the code.
+Definition: - OSGi Configuration is used to store application settings separately from the code. It allows us to change the behavior
+              of an OSGi service without modifying or redeploying the application.
             - It lets developers and administrators adjust values like URLs, API keys, paths, or feature toggles directly from AEM, instead of
               hardcoding them in Java classes.
 -> Type of inputs: Text Field, Multifield, Checkbox, Dropdown
@@ -207,9 +207,10 @@ Normal config to Factory Config : @Designate(ocd = BhargavFactoryOSGiConfig.clas
 =============================================================================================
 *) RUN MODES
 
-- Run Modes in AEM are a way to customize the behavior and configuration of an AEM instance for different environments (like author, publish, dev,
-  stage, prod, etc.) using the same codebase.
-- They are like "environment identifiers", In short Run modes allow you to configure AEM differently for different environments without changing the code.
+- Run Modes are used to load different configurations for different AEM environments, allowing the same application code to behave
+  differently based on where it is deployed.
+- Run Modes in AEM are used to identify the environment in which an AEM instance is running, such as Author, Publish, Development, or Production.
+- Instead of maintaining separate codebases for author, publish, development, staging, and production, you use run modes to with different configurations.
 
 - PURPOSE of runmodes:
         *Separate configurations for Author and Publish.
@@ -218,16 +219,34 @@ Normal config to Factory Config : @Designate(ocd = BhargavFactoryOSGiConfig.clas
 - When we want to identify our AEM instance uniquely in code --> (slingSettingService.getRunModes()).
 
 - Run modes are two types.
-a) Installation Run modes (permanant run modes) : these we will set while installing aem instance. and we cannot change these runmodes,  these are four types
+a) Installation Run modes (Fixed Run Modes) : these we will set while installing aem instance. and we cannot change these runmodes,  these are four types
                                                 1. Author
-                                                2. Publisher
+                                                2. Publish
                                                 3. SampleContent  - Means aem will give you the basic sample pages like WE-RETAIL
                                                 4. NoSampleContent - no sample or demo sites (means no we retail or wknd)
    - Author & Publisher, sampleContent & NoSampleContent are mutually exclusive means we cannot use them together.
-   - By default if we do not set anything, aem will automaytically create Author with SampleContent.
+   - By default if we do not set anything, aem will automatically create Author with SampleContent.
 
 b) custom run modes : Runmodes we create like Prod, Stg, Qa, Ciqa
 
+-------------------------------------------------
+*) Imagine we have runmode folders : ui.config
+
+                                     └── config
+                                     └── config.author
+                                     └── config.publish
+                                     └── config.dev
+                                     └── config.prod
+                                     └── config.author.dev
+                                     └── config.publish.prod
+
+    - Aem chooses the most specific folder like if run modes are "author, dev"
+    - AEM checks in this order: config.author.dev   ← highest priority
+                                config.author
+                                config.dev
+                                config
+
+-------------------------------------------------
 => Creation of Run Modes, we have 5 ways
 1) Sling.Properties : we wont prefer this because we won't have permissions. and it is OOTB file so we should not change.
 2) system properties (-D) -Dsling.run.modes=publish,prod,us : this we can create while starting our aem instance
@@ -255,7 +274,7 @@ Context-Aware Configuration (CaConfig) (Have to learn in depth)
 CORE COMPONENTS & PROXY COMPONENTS
 
 -> CORE COMPONENTS: Core Components are a set of ready-made, production-ready components provided by Adobe (like Text, Image, Carousel, Button, Title, etc.)
-                    as part of AEM.'
+                    as part of AEM.
 path : /apps/core/wcm/components/...
 
 
@@ -302,10 +321,12 @@ CRXDE FOLDER STRUCTURE
 =============================================================================================
 SLING MODELS & SERVICES
 
-Sling Model Defination :  - A Sling Model in AEM is a Java class used to fetch and use content from the JCR in an easy and clean way.
-                          - It connects the AEM component (HTML + dialog data) with the Java backend, so you can access component properties
-                            directly as Java variables instead of manually reading from the repository.
-                          - It contains component specific logic and it always a dependent on component.
+Sling Model Defination :  - Sling Models are annotation-based Java classes that act as a bridge between the JCR and the
+                            presentation layer in AEM. They adapt Sling resources or requests into Java objects, inject required dependencies
+                            such as JCR properties, child resources, and OSGi services, apply business logic, and expose the final data to HTL.
+                            This approach keeps business logic separate from the UI.
+                          - A Sling Model in AEM is a Java class used to fetch and use content from the JCR in an easy and clean way.
+
 
 * A single Sling Model can be used by multiple components. It is not tied to one component unless you explicitly restrict it.
 --> Scenario 1 — Reusable across many components
@@ -369,13 +390,12 @@ Ans. It is used to specify from which objects the model can be adapted.
                 private Resource resource;  or   private SlingHttpServletRequest request;
 
 ---------------------------------------------------------
-Services Defination : - A Service in AEM (or OSGi Service) is a Java class that contains reusable business logic and can be shared across components,
-                        servlets, or models. It is not dependent on any component.
+OSGI Services Defination : - A Service in AEM (or OSGi Service) is a Java class that contains reusable business logic and can be shared across other services,
+                        servlets, and sling models. It is not dependent on any component.
                       - It’s registered in the OSGi container, and AEM automatically manages its lifecycle (create, start, stop).
                       - @Component — registers our normal java class as an OSGi service.
 
 PROBLEM: for one SERVICE interface class ,there is two implimentation classes, so in this scenario, which service have to executed?
-
 -> In this case we have two options
 1) @ServiceRanking(1000) : class level annotation so according to this, which service have the higher service rank; then that service gets executed.
 2) @OSGiService(filter="(component.name=__________)") : the other option is using "filter" in sling model, so based on which
