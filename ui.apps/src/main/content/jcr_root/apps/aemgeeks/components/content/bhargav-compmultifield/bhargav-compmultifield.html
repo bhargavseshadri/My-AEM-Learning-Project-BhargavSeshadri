@@ -28,5 +28,9 @@ Step:2 - Sling Model to for the Composite Multifield - com/aem/geeks/core/models
         ----------Count: ${itemList.count}-----------
         <p>Que : <b>${item.question}</b></p>
         <p>Answer : <b>${item.answer}</b></p>
+
+        <!--data-sly-test usage-->
+        <p data-sly-test.hasModel="${obj}">There</p>
+        <p data-sly-test="${!hasModel}">Not There</p>
     </div>
 </sly>

@@ -329,7 +329,7 @@ Sling Model Defination :  - Sling Models are annotation-based Java classes that 
 
 
 * A single Sling Model can be used by multiple components. It is not tied to one component unless you explicitly restrict it.
---> Scenario 1 — Reusable across many components
+--> Reusable across many components
                     Eg: @Model(adaptables = Resource.class)
                         public class CommonModel {
                             @Inject
@@ -338,15 +338,6 @@ Sling Model Defination :  - Sling Models are annotation-based Java classes that 
 
                         HTL : data-sly-use.model="com.project.core.models.CommonModel"
 
---> Scenario 2 — Restricted to specific components
-                    Eg: @Model(
-                            adaptables = Resource.class,
-                            resourceType = {     //so this sling model can only be used for these listed components.
-                                "project/components/componentA",
-                                "project/components/componentB"
-                            }
-                        )
-                        * then the same model is usable only for those listed components.
 
 * Why we give "@Model(adaptables = {Resource.class, SlingHttpServletRequest.class}" in sling model?
 Ans. It is used to specify from which objects the model can be adapted.

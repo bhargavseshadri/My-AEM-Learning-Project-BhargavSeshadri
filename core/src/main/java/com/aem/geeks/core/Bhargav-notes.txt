@@ -881,6 +881,7 @@ i)data-sly-set : setting a variable in HTL, If you want a variable that should b
 <sly data-sly-set.imageData="${articleIntro.ImageRenditionsBean}"/>
 --- So here, the imageData value is -->  in ArticleIntro class ----> there should be "getImageRenditionsBean", it will becomes the imageData value.
 
+j) data-sly-test : using this we write, if else type conditional logic - apps/aemgeeks/components/content/bhargav-compmultifield/bhargav-compmultifield.html
 
 =================================
 => USING GLOBAL OBJECTS
