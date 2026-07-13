@@ -288,6 +288,31 @@ PROBLEM:  So for this one SERVICE there is two implimentations, so in this scena
                                                         Note: for this we have to give a name to the service in @Component.
 
 - Filter demo & using of these services: com/aem/geeks/core/models/impl/ProductModelImpl.java
+--------------------------------------------
+* Some General use cases of sending data from Model to Services, Servces to Java Classes, Java Classes to Models
+
+1) Services to Java Classes and using in Sling Models
+       Step: a - Create a Service : com/aem/geeks/core/services/impl/BhargavModelServiceClassTestingServiceImpl.java
+       Step: b - Now to get the data from service we have two appraoches
+                 1. Using Constructor
+                        - com/aem/geeks/core/utils/BhargavServiceInJava.java
+                        - Here we get the service obj through our constructor, and sling model (BhargavModelServiceClassTestingModelImpl.java) passes that obj to our constructor.
+                 2. Using Bundle Context - com/aem/geeks/core/utils/BhargavServiceInJava.java
+       Step: c - Send the service data to our model, for rendering - BhargavModelServiceClassTestingModelImpl.java
+
+2) Using Sling Model in the Service
+       - We have two approaches 1. sending the resource as a parameter from sling model and using it we get the model in service
+       --> APPROACH: 1
+            Step: a - sending the resource as a parameter - BhargavModelServiceClassTestingModelImpl.java
+            Step: b - using it in service - BhargavModelServiceClassTestingServiceImpl.java
+            Step: c - render it in sling model - BhargavModelServiceClassTestingModelImpl.java
+
+       --> Approach: 2 (Preferred) Using ModelFactory
+       - This is preferred because sometimes resource approach gives null with no exceptions
+           Step: a : BhargavModelServiceClassTestingServiceImpl.java
+           Step: b : BhargavModelServiceClassTestingServiceImpl.java
+           Step: c - render it in sling model - BhargavModelServiceClassTestingModelImpl.java
+
 
 =============================================================================================
 5) COMPOSITE MULTIFIELD - SLING MODEL

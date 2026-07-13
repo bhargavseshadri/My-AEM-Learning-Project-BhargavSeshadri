@@ -6,4 +6,9 @@ public interface BhargavModelServiceClassTestingModel {
     String getDataFromJavaClass();
 
     String getDataFromJavaClassBundleContextApproach();
+
+    String printingModelDataFromService();
+
+    //Approach - 2
+    String printingModelDataFromServiceModelFactoryApproach();
 }

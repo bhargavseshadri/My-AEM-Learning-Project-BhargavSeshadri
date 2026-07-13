@@ -9,6 +9,8 @@ public class BhargavServiceInJava {
 
     private BhargavModelServiceClassTestingService bhargavModelServiceClassTestingService;
 
+
+    //Here for this constructor the service object is passed by Sling Model : com/aem/geeks/core/models/impl/BhargavModelServiceClassTestingModelImpl.java
     public BhargavServiceInJava(BhargavModelServiceClassTestingService bhargavModelServiceClassTestingService){
         this.bhargavModelServiceClassTestingService = bhargavModelServiceClassTestingService;
     }
@@ -22,6 +24,7 @@ public class BhargavServiceInJava {
     }
 
 
+    /*******************************************************************************************************************/
     /*Step: 1 - Bundle Context Approach
     * Here using the bundle context we are getting hold of the service class*/
     public String getServiceDataUsingBundleContext() {

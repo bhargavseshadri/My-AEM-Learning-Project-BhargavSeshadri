@@ -1647,7 +1647,8 @@ JAVASCRIPT - HOW TO GET HOLD OF DOM ELEMENTS
 16. dynamic dropdown values
 17. dialog validations
 18. Overlays
-19. htl
+19. Sending date to model or service or java class
+last. htl
 
 *. Usecase
     - button with servlet adding node prop

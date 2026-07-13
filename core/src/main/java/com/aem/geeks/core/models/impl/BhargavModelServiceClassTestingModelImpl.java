@@ -8,6 +8,7 @@ import org.apache.sling.api.resource.Resource;
 import org.apache.sling.models.annotations.DefaultInjectionStrategy;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.OSGiService;
+import org.apache.sling.models.annotations.injectorspecific.SlingObject;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +20,9 @@ import javax.annotation.PostConstruct;
 public class BhargavModelServiceClassTestingModelImpl implements BhargavModelServiceClassTestingModel {
 
     private static final Logger LOG = LoggerFactory.getLogger(BhargavModelServiceClassTestingModelImpl.class);
+
+    @SlingObject
+    private Resource resource;
 
     @ValueMapValue
     private String checkingField;
@@ -40,7 +44,11 @@ public class BhargavModelServiceClassTestingModelImpl implements BhargavModelSer
     }
 
 
-    /*Step-1 - Constructor APPROACH - Sending the service to java class and then using the java class method here.
+    /***************************************SERVICE -> JAVA CLASS -> MODEL -> HTL***************************************************************************/
+
+
+    /* Step: a - Create a Service - BhargavModelServiceClassTestingServiceImpl.java
+    Step-b - Constructor APPROACH - Sending the service to java class and then using the java class method here.
 
     We get the DATA here in this flow  -- this model sends the service obj in constructor ---> and the java class uses the service obj in the class --> and here
     we are using the java obj and rendering the data*/
@@ -52,6 +60,7 @@ public class BhargavModelServiceClassTestingModelImpl implements BhargavModelSer
         return bhargavServiceInJava.getServiceData() + " Received in Model and Sending to rendering";
     }
 
+    //Step: b - Bundle Context Approach.
     @Override
     public String getDataFromJavaClassBundleContextApproach() {
         LOG.info("Got the Data From Service -> Java -> Model {}", bhargavServiceInJava.getServiceDataUsingBundleContext());
@@ -60,4 +69,28 @@ public class BhargavModelServiceClassTestingModelImpl implements BhargavModelSer
     }
 
 
+
+/********************************************  Using SlingModel in the OSGI SERVICE  **********************************************************************/
+    //Here we get hold of this method in the service and print the string there
+    public String sendingDataToService() {
+        return "From Model(sending data to service)";
+    }
+
+
+    //Approach - 1 (Using Resource) -  Step: a - sending the resource as a parameter - BhargavModelServiceClassTestingModelImpl.java
+    // Approach - 1(Using Resource) Step: b - BhargavModelServiceClassTestingServiceImpl.java
+
+    //Approach - 1(Using Resource) - Step: c (last step)- render it in sling model - BhargavModelServiceClassTestingModelImpl.java
+    @Override
+    public String printingModelDataFromService() {
+        return bhargavModelServiceClassTestingService.ServiceGotTheModelData(resource);
+    }
+
+
+    //Approach - 2 - Step: c - rendering
+    //Step: b : BhargavModelServiceClassTestingServiceImpl.java
+    @Override
+    public String printingModelDataFromServiceModelFactoryApproach() {
+        return bhargavModelServiceClassTestingService.ServiceGotTheModelDataModelFactoryApproach(resource);
+    }
 }

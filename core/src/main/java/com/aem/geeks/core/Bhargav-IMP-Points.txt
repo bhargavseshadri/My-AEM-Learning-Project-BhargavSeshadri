@@ -759,6 +759,19 @@ IMP POINTS:
             node.setProperty("jcr:description", "Updated via OSGi Service");
             node.getSession().save();
 
+-----
+* In SERVICE we cannot get the Resource directly
+- We get it like this
+    - From Sling Model : myService.process(resource);  --> passing the resource through a method parameter.
+    - From a Servlet: myService.process(request.getResource());
+    - From a wfProcess : Session session = workflowSession.adaptTo(Session.class);
+                         ResourceResolver resolver = workflowSession.adaptTo(ResourceResolver.class);
+                         Resource resource = resolver.getResource(path);
+                         myService.process(resource);
+
+- Using ResourceResolverFactory we can get the resource, But for that we have to hardcode the Current resource path or send the path from model. Service
+  cannot fetch the current resource path.
+
 ---------------------------------------
 6) In Workflow
 * Using "WorkflowSession" we get the "ResourceResolver", "Session".
@@ -776,6 +789,11 @@ IMP POINTS:
     - Writing and saving
             node.setProperty("jcr:description", "I am in Workflow");
             session.save();
+
+-------
+- Getting Resource in Workflow Process : Session session = workflowSession.adaptTo(Session.class);
+                                         ResourceResolver resolver = workflowSession.adaptTo(ResourceResolver.class);
+                                         Resource resource = resolver.getResource(payloadPath);
 
 ---------------------------------------
 7) Special mention - Using Page API
