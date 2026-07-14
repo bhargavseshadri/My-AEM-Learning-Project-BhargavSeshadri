@@ -75,7 +75,7 @@ Ans. - we cant use it directly using @Reference
 3. Can we use a sling model in java clas ?
 Ans. Directly we cant use, Indirectly we can use but it is discouraged.
         - Similar to the above example, here also we send the sling model to java class using Constructor.
-            EG :  ProductUtil util = new ProductUtil(this);  //This represents to the current clas object.
+            EG :  ProductUtil util = new ProductUtil(this);  //"this" represents to the current clas object.
 
 --------------------------------------------------
 4. Can we use a Service directly in HTL?

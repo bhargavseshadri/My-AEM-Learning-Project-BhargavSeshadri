@@ -246,11 +246,18 @@ b) custom run modes : Runmodes we create like Prod, Stg, Qa, Ciqa
                                 config.dev
                                 config
 
+* While picking the runmodes it will always looks from left to right and installation runmode have high preference.
+        eg: when the env have "author, local" runmodes
+            - then in these config files "1. config.local.author, 2.config.author.local" it will pick config.author.local. if config.author.local this is not there in the list of
+              folders then it will pick config.local.author
+
 -------------------------------------------------
 => Creation of Run Modes, we have 5 ways
+
 1) Sling.Properties : we wont prefer this because we won't have permissions. and it is OOTB file so we should not change.
-2) system properties (-D) -Dsling.run.modes=publish,prod,us : this we can create while starting our aem instance
+2) system properties (-D) -Dsling.run.modes=publish,prod,us : this we can create while starting our aem instance.
 3) Filename Detection - aem-publsh-p4503 (most commonly used): we remane a file, and then while installing the aem will understand what run mode it is.
+
 4) -r option -  java-jar file-r publish,prod,us: here while starting the aem we update the start script so then it will create a run mode,
     (2nd and 4th options are almost same)
 Note : we can check the available run modes at /system/console/status-slingsettings
@@ -341,9 +348,16 @@ Sling Model Defination :  - Sling Models are annotation-based Java classes that 
 
 * Why we give "@Model(adaptables = {Resource.class, SlingHttpServletRequest.class}" in sling model?
 Ans. It is used to specify from which objects the model can be adapted.
-        - When the model is used in HTL, it is usually adapted from the SlingHttpServletRequest
-        - When the model is used in backend code (services, utilities), it may be adapted directly from the Resource
-                - MyModel model = resource.adaptTo(MyModel.class); ==>  For this, the model must support Resource.class.
+        - When "Resource.class" is used : Use this when your model only needs resource-level data — properties, child resources, resource type —
+          and doesn't care about the HTTP request at all.
+
+        - Use this when the model needs request-specific context that a bare Resource doesn't carry:
+                          Selectors, extension, suffix
+                          Request parameters / query string
+                          Request headers, cookies
+                          @RequestAttribute injections
+
+
 
 **Very Very Important :: Life Cycle Of Sling Model
  -> Sometimes in sling model lines like below will through error by taking null values. and they got fixed when we move those lines in side a @PostConstruct Method
@@ -918,6 +932,11 @@ Ans. approach-1: We can overlay the /libs path in our /apps and add a new tab.
 ans. We can acheive it by using "PAGE POLICY", we can add that clientlib categories in "temp-a page policy" and not in temp-b page policy.
         - By doing this, that clientlib will load only for temp-a pages and not for temp-b pages.
 
+17. two components using the same service which call the external api? how do you design it so that the response can be stored and cached.
+18. in api how do you handle the timeouts and how do you add the retry logic?
+19. How do you handle API failures?
+20. I have published a page and immediately a wf should run and the assign a task to one user
+21. A page contains Static + Dynamic + Personalized Page, how do you cache this page?
 =============================================================================================
 
 
