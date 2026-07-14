@@ -23,17 +23,23 @@ DISPATCHER NOTES & UNDERSTANDINGS
 =============================================================================================
 *) Difference between cache deletion, cache invalidation, cache purge
 
-- Cache Deletion : Physically removing cached files from filesystem. so the next request goes to publisher and then page served and a new cache file got created.
-
-- Cache Invalidation : Marking cache as stale or unusable without deleting file immediately.
-                        - In this dipatcher checks the ".stat timestamp > cached file timestamp", then cached file considered outdated
+- Cache Invalidation : marking cached content as stale or unusable without deleting file immediately.
+                        - It works via .stat files — when content is activated, Dispatcher updates the timestamp on the relevant .stat file(s) up to the configured
+                          /statfileslevel. Any cached file whose own timestamp is older than its nearest .stat file is considered stale.
                         - dispatcher fetches fresh content and overwrites cache
                         - Old file exists physically but is logically invalid.
+                        - The stale file physically still sits on disk — it just gets ignored and re-fetched from AEM the next time someone requests that content.
+
+- Cache Deletion : The literal, physical removal of files from the filesystem under the Dispatcher's /docroot.
+                   so the next request goes to publisher and then page served and a new cache file got created.
 
 - Cache Purge : “Cache purge” is most commonly associated with CDNs.
                  - it usually means Explicit forced removal of cached content from caching layer like cdn.
 
-- cache flush : It basically means cache invalidation happened.
+- cache flush : This is the umbrella term for the whole event/request that triggers invalidation (or deletion) — the mechanism that fires when a page
+                is activated. On author, a replication agent sends the activated content to Publish; Publish then has its own agent (the "Dispatcher
+                Flush Agent") that fires a request to Dispatcher telling it something changed. Adobe's docs use "flush" and "invalidate" almost interchangeably
+                in this context — a "flush request" is what causes invalidation to happen.
 
 =============================================================================================
 --> Confuguring or setting up dispatcher (There are 3 ways)
@@ -286,8 +292,8 @@ EG: /invalidate
 
 =============================================================================================
 8) /allowedClients
-- This tell to the server which are the clients(AEM Author or AEM publisher etc) are allowed to clear the cache.
-- to put it precisely, The allowedClients section restricts the client IP addresses that are allowed to issue activation requests.
+- This tell to the server which clients(IP addresses or hostnames) are allowed to invalidate (flush) the Dispatcher cache.
+- to put it precisely, The allowedClients section restricts the client IP addresses that are not allowed to issue activation requests.
 
 Eg:      /allowedClients
             {
@@ -303,6 +309,14 @@ Eg:      /allowedClients
                 }
              }
 
+- What it does :- When AEM publishes content, it can send cache invalidation (flush) requests to the Dispatcher.
+
+   * Now The /allowedClients section determines: Which IPs are allowed to send cache invalidation requests.
+                                                 Which IPs are denied from clearing the Dispatcher cache.
+
+   * If a request comes from an IP that isn't allowed, the Dispatcher ignores the invalidation request.
+   * Usually only the AEM Publish instance(s) or the AEM Flush Agent IPs are allowed.
+
 =============================================================================================
 9) /ignoreUrlParams
 - The ignoreUrlParams section contains query parameter names that should be ignored when determining whether some request's output can be cached
@@ -314,17 +328,60 @@ Eg:      /allowedClients
                 /0002 { /glob "q" /type "allow" }
                 }
 
+* Here - /type "allow" → Ignore the matching query parameters when caching.
+       - /type "deny" → Do not ignore the matching query parameters; they influence cache behavior.
 
 =============================================================================================
 10) /headers
+- This section is used to specify which HTTP response headers should be cached along with the content and returned to clients.
+- By default, Dispatcher caches the response body (HTML, JSON, images, etc.), but it does not automatically cache all response
+  headers. You explicitly list the headers you want it to store.
+Eg : /cache
+     {
+         /headers
+         {
+             "Cache-Control"
+             "Content-Type"
+             "Last-Modified"
+             "Expires"
+             "ETag"
+         }
+     }
 
+-------
+* Difference between /clientheaders and /headers
+- /headers : > Caches response headers from AEM and sends them to clients
+             > This comes when AEM sends response to the browser.
 
+- /clientheaders : > Forwards request headers from the client to AEM
+                   > This comes when browser Requesting AEM.
 =============================================================================================
 11) /gracePeriod "2"
+- The /gracePeriod setting in the AEM Dispatcher dispatcher.any file specifies how long Dispatcher waits before performing another cache
+  invalidation for the same content.
+- Its main purpose is to reduce the impact of many cache flush requests arriving in a short period, which can happen during bulk content activation.
+- The value is in seconds.
+- It only affects cache invalidation (flush) behavior.
+- It is especially useful when authors publish many pages or assets in a short time.
+
+- The /gracePeriod property defines the number of seconds a stale, auto-invalidated resource may still be served from the cache after the last occurring activation.
+
+Eg: /cache
+    {
+        /gracePeriod "2"
+    }
+    - After processing an invalidation, Dispatcher waits 2 seconds before processing another invalidation for the same cached content.
 
 
 =============================================================================================
 12) /enableTTL "1"
+- The /enableTTL setting enables time-based cache expiration in AEM Dispatcher by listening the HTTP expiration headers returned by AEM.
+- When enabled, Dispatcher uses headers such as: "Cache-Control: max-age=..., Expires: ..." to determine when a cached file should expire.
+
+- How it works: * Suppose AEM responds with: HTTP/1.1 200 OK
+                                           Cache-Control: max-age=300
+                * This means: The page is valid for 300 seconds (5 minutes).
+
 =============================================================================================
 13) /statistics The statistics sections dictates how the load should be balanced among the renders according to the media-type.
 
@@ -384,6 +441,12 @@ EG:  /auth_checker
 
 =============================================================================================
 =============================================================================================
+*)Cache Invalidation Approaches
+  1. Auto Invalidate: When a page is activated, the cache entry is auto-expired. invalidation is generally the recommended approach.
+  2. Flush Agents: Explicitly trigger cache clear.
+  3. Time-based Expiry: Set TTL for cache entries.
+
+=============================================================================================
 *) In Depth on Caching and Invalidation
 
 - To maintain fresh content, outdated cache entries must be cleared. AEM handles this through two mechanisms: a Flush Agent
@@ -422,16 +485,5 @@ Ans: No. That’s where statfileslevel matters. statfileslevel defines how deep 
 - Dispatcher lives in one region. A CDN has hundreds of servers across continents. Users get content from the closest server, not from datacenter.
 
 =============================================================================================
-*) Dispatcher Cache flush : Removing cached files from the Dispatcher cache whenever content is updated in AEM, so users
-                              get the latest version instead of old cached pages.
 
----> Ways of doing dispatcher cache flush (clearing cache)
-1. Using AEM FLUSH agents
-2. ACS Commons
-3. Manual/code
-
-1. Using AEM FLUSH agents
-- we can setup the agent in either AEM Author or AEM Publish.
---> Setting up diapatcher flush agent in author
-        1. Go to tools -> deployment -> replication -> Dispatcher Flush (flush) -> edit and give the required data accordingly
 

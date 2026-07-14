@@ -798,7 +798,6 @@ New concepts/usecases to explore
 
 I* InheritanceValueMap inheritanceValueMap = new HierarchyNodeInheritanceValueMap();
 * Dispatcher setup and learn
-
 I* ResourceType Servlets
 * Internationalization in AEM  -- THIS
 I* Adding and modifying asset metadata through backend  -- THIS
@@ -811,7 +810,8 @@ Very Big Scenarios:
     it gets render automatically on the page.
 
 2. every day the component should show the data  related to that day
-
+3. API data with placeholder page
+4. How to reduce api calls when a same comp who feches data added two three times on same page
 
 
 * JAVA - COLLECTIONS ETC
