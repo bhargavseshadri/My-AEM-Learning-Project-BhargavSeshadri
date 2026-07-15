@@ -428,6 +428,138 @@ dispatcher.forward(req, res);
                     /apps/myproject/b (prop2=value2)
 
 =============================================================================================
+*) Important Points while integrating with external API's
+- Api will not return the data smoothly everytime, some times it fails.
+
+* What if the API fails to return data?
+      - The API is another application. That application may have: server crash, database crash, deployment issue, internet issue, authentication issue.
+      - Some time the API may give 500 Internal Server Error.
+      - So it is always better to check the status code : if(status == 200) and then read the response of the api.
+      - Write the code based on the status codes
+            Eg: int status = response.getStatusLine().getStatusCode();
+                switch(status){
+
+                case 200:                   // all fine
+                    //Process
+
+                case 404:                   // Requested resource doesn't exist. may be the requested data is not there
+                    //Return empty
+
+                case 401:                   // Authentication faile, maybe token is expired. and 403 is forbidden error means the login is successful but we are not allowed
+                    //Refresh token
+
+                case 500:                   // Server crashed or unavailable
+                    //Retry
+
+                }
+
+---------------------------------------------
+* Retrying the requests
+
+- For example one time the API returns 500 Internal Server Error, that means Maybe Server restarted, Database temporarily unavailable, Thread pool exhausted
+   ,Temporary infrastructure issue, These problems are often temporary. so in these cases sending a request after 2 seconds may give successful response.
+
+- In case of 400, 401, 403,404 Retry is useless.
+- we do a retry in this times -> 500,502,503,504,429,SocketTimeoutException,ConnectTimeoutException.
+- And we shouldn't retry immediately also. we have to wait for some time before a retry.
+
+* Recommended Retry concepts for aem :
+        1. Apache HttpClient Retry Strategy : Suppose your AEM service is calling an external API. But before the request reaches the server, the network breaks.
+                                              and there is no HTTP response is received. There is no status code like 500 or 404.
+                                              - Now "client.execute(request);" throws an exception like
+                                                    1. java.net.SocketException
+                                                    2. java.net.NoRouteToHostException
+                                                    3. java.net.SocketTimeoutException
+                                              - Now Apache HttpClient comes in and it will automatically retry these I/O exceptions.
+
+                                              - We receive these exception in case of DNS failure, Connection reset, Socket closed, Temporary network issue.
+                                              - It wont retry 500 Internal Server Error
+
+          Coding Example : HttpRequestRetryStrategy retryStrategy = new DefaultHttpRequestRetryStrategy( 3, TimeValue.ofSeconds(2) );
+                           CloseableHttpClient client = HttpClients.custom()
+                                                                   .setRetryStrategy(retryStrategy)
+                                                                   .build();
+                            Maximum retries : 3
+                            Wait between retries : 2 second
+
+        2. Resilience4j Retry (Recommended)
+                - This is what you'll commonly see in enterprise Java applications.
+                - Instead of retrying only exceptions, it can retry exceptions, HTTP status codes, custom business conditions.
+
+---------------------------------------------
+* Understanding Timeouts:
+        - API tries to make a request, it will wait for some time and after that it stops requesting, this is called timeout.
+        - There are 3 different timeouts.
+               1. Connect Timeout : when AEM trying to establish the connection with api this timeout comes in and it tells AEM how much time AEM have to try to
+                                    establish connection.
+                                    - This timeout is before the connection is established.
+                                    - For example if we give 5 seconds, and after 5 seconds connection isn't established, then an exception will be thrown. and upto that
+                                      5 seconds "client.execute()" tries to establish the c
+                                    - We specify this using : .setConnectTimeout(5000)
+                                    Eg:     private RequestConfig createRequestConfig() {
+                                                return RequestConfig.custom()
+                                                        .setConnectTimeout(CONNECTION_TIMEOUT_MS)
+                                                        .setSocketTimeout(READ_TIMEOUT_MS)
+                                                        .build();
+                                            }
+
+                2. Socket Timeout : After Connection succeeded. Now API starts processing. and this timeout tell how long our aem have to wait for the data. for
+                                    example if we give 5 seconds. then after 5 sec timeout happens.
+                                    - This timeout is after the connection is established. request reaches server. Server starts processing. AEM now waits for data.
+                                      that waiting time is specifid in this socket timeout.
+                                    - After that timeout also still the response is delayed then SocketTimeoutException
+
+                3. Connection Request Timeout : This exists only if you're using a connection pool.
+                   - connection pool : A connection pool is a set of already-open network connections that your application reuses instead of creating a new
+                                       connection for every API request. When you're calling external APIs (REST, GraphQL, etc.), opening a new TCP connection
+                                       is relatively expensive. A connection pool keeps connections alive so they can be reused.
+                                       - Without a connection pool, Imagine your application needs to make 100 API requests. You're paying the connection setup cost 100 times.
+                                       - With a connection pool Instead we create 10 connections, The connections stay open and are reused.
+
+                                       Eg : Create 10 connections
+                                            Pool:
+                                            Connection 1
+                                            Connection 2
+                                            ...
+                                            Connection 10
+
+                                            Request 1 -> Connection 1
+                                            Request 2 -> Connection 2
+                                            Request 3 -> Connection 1 (reused)
+                                            Request 4 -> Connection 5
+                                            ...
+
+                                            Code example : protected void activate() {
+                                                                   PoolingHttpClientConnectionManager manager = new PoolingHttpClientConnectionManager();
+                                                                   manager.setMaxTotal(20);
+                                                                   manager.setDefaultMaxPerRoute(10);
+
+                                                                   httpClient = HttpClients.custom()
+                                                                           .setConnectionManager(manager)
+                                                                           .build();
+                                                               }
+
+                                                               public String getProduct(String id) throws IOException {
+                                                                    HttpGet get = new HttpGet("https://api.company.com/products/" + id);
+
+                                                                       try (CloseableHttpResponse response = httpClient.execute(get)) {
+                                                                           return EntityUtils.toString(response.getEntity());
+                                                                       }
+                                                               }
+                                                           }
+
+- Now comeback to our concept connection request timeout : so according to above code we have 10 connections, and when a new request comes in it have to wait till one
+                                                           connection becomes free, that waiting time will be defined by this connection request timeout.
+                                                           eg: RequestConfig config = RequestConfig.custom()
+                                                                                               .setConnectionRequestTimeout(3000)
+                                                                                               .build();
+
+
+---------------------------------------------
+* Headers: Headers are simply extra information that travels along with the HTTP request.
+           - request.addHeader("Authorization", "Bearer " + token);
+
+=============================================================================================
 *) Asset API --> Asset asset = resource.adaptTo(Asset.class);
 
 - By doing this "Asset asset = resource.adaptTo(Asset.class);", we are converting the generic resource into an AEM DAM Asset API object

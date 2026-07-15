@@ -717,7 +717,10 @@ Step: 7 (last step)- Now write all the required css styles - apps/aemgeeks/compo
 -------------------------------------------------------------
 18.e) Adding a new tab and fields in page properties
 Approach-1 : By overlaying the libs page properties dialog to our /apps path and adding our custom fields in it.
-Approach-2 :
+
+Approach-2: We can go to our base page component under /apps and there that base page comp will inherit the /lib page comp, then add a cq:dialog and add your
+            tab with fields in that, Now AEM will automatically merge your TAB with other ootb tabs. this is exactly like we do in our proxy component dialog.
+            - apps/aemgeeks/components/page/_cq_dialog/.content.xml
 
 
 
