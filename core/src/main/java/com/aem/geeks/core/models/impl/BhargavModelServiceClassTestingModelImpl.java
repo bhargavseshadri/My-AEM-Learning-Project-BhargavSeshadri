@@ -87,7 +87,7 @@ public class BhargavModelServiceClassTestingModelImpl implements BhargavModelSer
     }
 
 
-    //Approach - 2 - Step: c - rendering
+    //Approach - 2 - Step: c -Model Factor Approach - rendering
     //Step: b : BhargavModelServiceClassTestingServiceImpl.java
     @Override
     public String printingModelDataFromServiceModelFactoryApproach() {

@@ -40,7 +40,7 @@ IMPORTANT PATHS
 
 -> sling:hideResource="{Boolean}true" : * To Hide a Core component dialog field in our proxy comp, Add this property to that in the overriden cq_dialog in proxy comp.
                                         * You have to add that field and use this hideResource option with it by "Matching that core component field node structure,
-                                          Then only it works", EXAMPLE for this is in "apps/aemgeeks/components/bhargav-ctabar-proxycomp/_cq_dialog/.content.xml - LINE 26 - 44"
+                                          Then only it works", EXAMPLE for this is in "apps/aemgeeks/components/bhargavtextproxy/_cq_dialog/.content.xml"
 
 -> * We can have different variations(copies) of our Content Fragment, and to use that we have to pick the variation we want in the CF dialog box on the page.
    * and we can also sync CF variation with CF master as well.
@@ -63,7 +63,7 @@ Ans. - we cant use it directly using @Reference
               -- Java Service --> Sling model - send the service in obj constructor --> Use the service in JAVA class
               EG : Model : com/aem/geeks/core/models/impl/BhargavModelServiceClassTestingModelImpl.java
                    Service : BhargavModelServiceClassTestingServiceImpl.java
-                   Java Class : BhargavServiceInJavaToModel.java
+                   Java Class : BhargavModelServiceClassTestingModelImpl.java
 
     approach-2: Using Bundle Context : The BundleContext queries the OSGi service registry and returns the registered service.
                 -- Service class have the logic --> Java class gets hold of service using Bundle context --> sling model uses the java class using obj
@@ -93,7 +93,8 @@ Ans. no we cannot use it directly, we need a sling model.
         |
         Error
 
-* For Eg: If you give log level as "Info" for the log file, so in that file "Trace & Debug" logs wont print, "Info, Warn, Error" logs will print in that file.
+* For Eg: If you give log level as "Info" for the log file, so in that file "Trace & Debug" logs wont print, "Info, Warn, Error"
+          logs will print in that file.
 
 =============================================================================================
 *) DATA-SLY-TEMPLATE & DATA-SLY-CALL
@@ -106,7 +107,8 @@ Ans. no we cannot use it directly, we need a sling model.
 
 - Reference Code
 -> data-sly-template : apps/aemgeeks/components/content/bhargav-compmultifield/bhargav-reusable-code.html
-          * data-sly-template.compMultifieldTemplate="${@ itemNeeded, bhargavCount}", here we have created "compMultifieldTemplate" template which takes two parameters.
+          * data-sly-template.compMultifieldTemplate="${@ itemNeeded, bhargavCount}", here we have created "compMultifieldTemplate" template
+            which takes two parameters.
 
 -> data-sly-use : apps/aemgeeks/components/content/bhargav-compmultifield/bhargav-compmultifield.html
           * data-sly-use.bhargavHtlTemplate="bhargav-reusable-code.html", here we are importing the above defined template file.
@@ -175,13 +177,14 @@ f) Workflow :
             1) Custom WF Process : execute(WorkItem workItem, WorkflowSession workflowSession, MetaDataMap processArguments)
 
 g) Custom Live Action(for custom rollout configurations) : 1) LiveActionFactory : createsAction(), createAction(Resource resource)
-                                                           2) LiveAction : getName(), execute(Resource source, Resource target, LiveRelationship relation, boolean autoSave, boolean isResetRollout)
+                                                           2) LiveAction : getName(), execute(Resource source, Resource target, LiveRelationship relation,
+                                                                                              boolean autoSave, boolean isResetRollout)
 
 =============================================================================================
 *) @Component
 
 --> Servlets : @Component(service = Servlet.class)
---> OSGI Configuration Service : @Component(service = OSGiConfigService.class,immediate = true)   [OSGiConfigService.class  -> this is just my interface service I created]
+--> OSGI Configuration Service : @Component(service = bhargavOSGiConfigService.class,immediate = true)
 --> Schedulers :
                 - Runnable : @Component(immediate = true, service = Runnable.class)
                 - Job :  @Component(immediate = true, service = Job.class)
@@ -231,13 +234,16 @@ g) Custom Live Action(for custom rollout configurations) : 1) LiveActionFactory 
 
 @ValueMapValue : Specifically used to get the node properties of the resource. for access node props, this is safer and cleaner than @inject.
 
-@Inject : Inject values from AEM resource in to model fields. it is more flexible and injects almost anything like requestAttributes, Resource Props etc.
+@Inject : Inject values from AEM resource in to model fields. it is more flexible and injects almost anything like
+          requestAttributes, Resource Props, Resource, ResourceResolver, Request etc.
 
-@Default : provides a default value if the actual property value is missing.
+@Default : provides a default value if the actual comp dialog field value is not given.
 
 @SlingObject : Injects Sling objects such as ResourceResolver, Resource, SlingHttpServletRequest.
 
 @OSGiService : Injects an OSGi service into the Sling Model.
+
+@Reference : Injects an osgi service in to another osgi service.
 
 @ScriptVariable : Used in aem to get built-in objects from the htl script, like currentPage, resource, PageManager
 
@@ -247,7 +253,7 @@ g) Custom Live Action(for custom rollout configurations) : 1) LiveActionFactory 
 
 @AttributeDefinition : used for defining fields in the configuration.
 
-@Designate : Links configuration class to the component (used for OSGi configs).
+@Designate (ocd = BhargavOSGiFactoryConfig.class, factory = true) : Links configuration class to the component (used for OSGi configs).
 
 @Configuration : Used for craeting Context-Aware Configuration, which is different from OSGi configuration.
 

@@ -347,15 +347,21 @@ Sling Model Defination :  - Sling Models are annotation-based Java classes that 
 
 
 * Why we give "@Model(adaptables = {Resource.class, SlingHttpServletRequest.class}" in sling model?
-Ans. It is used to specify from which objects the model can be adapted.
-        - When "Resource.class" is used : Use this when your model only needs resource-level data — properties, child resources, resource type —
-          and doesn't care about the HTTP request at all.
+Ans. It is used to specify from which object the model can be adapted or the model is getting created.
+        - Resource.class :- this is used when your model only needs resource-level data — properties, child resources, resource type —
+                             and doesn't care about the HTTP request at all.
+                             - (IMP)What happens if we dont give Resource.class - Somewhere in the code like in services, servlets, workflow,
+                               if you try to get hold of this sling model using resource, it wont work.
+                               Eg: BhModelImpl bhModelImpl = resource.adaptTo(BhModelImpl.class); -- THIS WON'T WORK.
 
-        - Use this when the model needs request-specific context that a bare Resource doesn't carry:
-                          Selectors, extension, suffix
-                          Request parameters / query string
-                          Request headers, cookies
-                          @RequestAttribute injections
+
+        -SlingHttpServletRequest.class :- this is Uses when the model needs request-specific context that a bare Resource doesn't carry:
+                                              Selectors, extension, suffix
+                                              Request parameters / query string
+                                              Request headers, cookies
+                                              @RequestAttribute injections
+                                        - (IMP)What happens if we dont give SlingHttpServletRequest.class - You can no longer easily use @ScriptVariable.
+                                               You cannot read URL query parameters, HTTP headers, or cookies.
 
 
 
