@@ -3,7 +3,8 @@ ONLY INTERVIEW RELATED MATERIAL
 =============================================================================================
 Q. What is AEM and what problems does it solve?
 Ans. AEM (Adobe Experience Manager) is a content management system (CMS) built on Java. It provides a platform for creating, managing, and
-     delivering digital experiences across various channels, including websites, mobile apps, and marketing campaigns. It is part of the Adobe Experience Cloud.
+     delivering digital experiences across various channels, including websites, mobile apps, and marketing campaigns. It is part of the
+     Adobe Experience Cloud.
 
 AEM solves several problems related to digital experience management:
 
@@ -25,7 +26,7 @@ AEM solves several problems related to digital experience management:
 -> to make it required through dialog box -> required = "{Boolean}true"
 -> For textfield or text areas : maxLength = "{Long}10"
 -> For setting range : min = "{double}1000" , max = "{double}1000"
--> cq:design_dialog only used for static templates
+-> cq:design_dialog only mostly used for static templates and also it is used to get the policy option for Custom Components.
 -> immediate=true Whenever we want to activate the service immediately after the bundle gets started in that place we use this.
 -> OSGI : OSGi (Open Services Gateway initiative) is a Java-based modular framework that allows AEM to run applications as independent,
           reusable, and dynamically updatable components called bundles.
@@ -38,12 +39,20 @@ AEM solves several problems related to digital experience management:
    in the "Allowed Content Fragment Models" field under the Policies tab of the corresponding folder in /content/dam. Otherwise, the models will not shown up
    when creating Content Fragments in that folder.
 
+-> At the time of deployment the CORE module produces a JAR file and this JAR file becomes a bundle in system/console/bundle
+  , and all the others modules like UI.APPS, UI.CONTENT, UI.CONFIG etc produces a zip file this zip files give content to repository.
+        - These specifications of create a JAR or ZIP from this module is given in that modules POM.XML
+            > For a JAR FILE - we give "org.osgi.annotation.bundle"
+            > For a ZIP file - we give "<packaging>content-package</packaging>"
+
 =============================================================================================
 ==> DEFINITIONS
 1) Resource :  - A resource is basically any node or file in the jcr that sling can access and maps it to a url.
+               - a piece of content in the repository
                - Resource can be anything, it can be COMPONENT, NODE, PAGE.
 
 2) Immediate = true -> Whenever we want to activate the service immediately after the bundle gets started in that place we use this.
+   Immediate = False -> if we give this then the service will be in satisfied state until some
 
 3) req.setAttribute() AND req.getAttribute() :  storing temporary data in the HttpServletRequest object using setAttribute() and
                                                 later read it back using getAttribute().
@@ -54,10 +63,7 @@ AEM solves several problems related to digital experience management:
 5) ValueMap : In AEM, valueMap is a special map like object that helps us to retrive properties of a JCR node in a convenient way,
               its a wrapper around our node and helps us in accessing the properties of that node.
 
-6) Services: AEM Services are OSGi components (Java classes) that contain business logic or reusable functionality, and can be shared across different
-             parts of the AEM application.
-
-7) OSGi : It  is a framework for modular development. In AEM, OSGi allows you to deploy components as individual modules or bundles. Each bundle can be
+6) OSGi : It  is a framework for modular development. In AEM, OSGi allows you to deploy components as individual modules or bundles. Each bundle can be
           started, stopped, or updated independently without affecting the entire application.
 
 =============================================================================================
@@ -79,14 +85,15 @@ OSGI ARCHITECTURE:
 =============================================================================================
 ==> Lifecycle annotations in OSGi
 - A typical OSGi component has 3 important lifecycle annotations:
-1) @Activate - When the component is first started (activated), it Initializes resources, read configuration
+1) @Activate - When the component is first started (activated), the method with this annotation gets executed, it Initializes resources, read configuration
 2) @Modified - When configuration is changed dynamically, it Re-read and apply new config
 3) @Deactivate - When the component is stopped
 
 =============================================================================================
 ==> SERVLETS
 - A Servlet is a Java class that  handles HTTP requests (like GET, POST) and generates HTTP responses (like HTML, JSON, XML).
-- Servlets are of two types Resource Type Servlets and Path Type Servlets. Both types of servlets must extend either SlingAllMethodsServlet or SlingSafeMethodsServlet.
+- Servlets are of two types Resource Type Servlets and Path Type Servlets. Both types of servlets must extend either
+  SlingAllMethodsServlet or SlingSafeMethodsServlet.
 
 -> When a servlet runs, Sling (and the underlying web server Jetty) automatically gives it two key objects:
    SlingHttpServletRequest → the HTTP request (what the browser sent)
