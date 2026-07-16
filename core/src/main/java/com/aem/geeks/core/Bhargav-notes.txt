@@ -20,7 +20,8 @@ INDEX:
 
 4) SLING MODELS & SERVICES
 
-5) COMPOSITE MULTIFIELD - SLING MODEL - 2 Approachs
+5) COMPOSITE MULTIFIELD - SLING MODEL - 2 Approaches
+    5.b : Nested Composite Multifield - 1 Approach
 
 6) CONFIGURATIONS
     a) Normal Configuration
@@ -77,11 +78,12 @@ e) Registration Form Comp (for PathType Post Servlet) : apps/aemgeeks/components
 f) Complete "ResourceResolver, Resource, PageManager, Session" these API's specific component : apps/aemgeeks/components/bhargav-backend-aem-apis-comp
 g) Component for Content Fragment : apps/aemgeeks/components/content/bhargav-content-fragment-comp
 h) Component for Composite Multifield : apps/aemgeeks/components/content/bhargav-compmultifield
-i) Proxy Components : 1. apps/aemgeeks/components/bhargavtextproxy
+i) Nested Composite Multifield : apps/aemgeeks/components/content/bhargav-nested-compmultifield
+j) Proxy Components : 1. apps/aemgeeks/components/bhargavtextproxy
                       2. apps/aemgeeks/components/bhargavtextproxy-two
                       3. apps/aemgeeks/components/bhargav-ctabar-proxycomp
-j) Bhargav Article List Component (Querybuilder backend api used) : apps/aemgeeks/components/content/bhargav-articlelist-comp
-k) Using Service in Java class - Component : apps/aemgeeks/components/content/bhargav-model-service-class-testing
+k) Bhargav Article List Component (Querybuilder backend api used) : apps/aemgeeks/components/content/bhargav-articlelist-comp
+l) Using Service in Java class - Component : apps/aemgeeks/components/content/bhargav-model-service-class-testing
 
 =============================================================================================
 1) ResourceResolverFactory related Notes is in
@@ -329,6 +331,15 @@ b) Approach - 2
 Step:1 - Create a Composite Multifield - apps/aemgeeks/components/content/bhargav-compmultifield
 Step:2 - Sling Model to for the Composite Multifield - com/aem/geeks/core/models/impl/compositemultifieldrltd/BhargavCompMultifieldSecondImpl.java
 Step:3 - Render the Multifield data in HTL : apps/aemgeeks/components/content/bhargav-compmultifield/bhargav-compmultifield.html
+
+--------------------------------------------
+5.b) Nested Composite Multifield
+
+Step: 1 : Create a comp with necessary dialog fields - apps/aemgeeks/components/content/bhargav-nested-compmultifield/_cq_dialog/.content.xml
+Step: 2 : Sling model - com/aem/geeks/core/models/impl/compositemultifieldrltd/nestedcompmultifield/BhargavNestedMultifieldModelImpl.java
+Step: 3 : Sling model helper for Normal composite multifield - com/aem/geeks/core/models/impl/compositemultifieldrltd/nestedcompmultifield/Author.java
+Step: 4 : Sling model helper for nested composite multifield - com/aem/geeks/core/models/impl/compositemultifieldrltd/nestedcompmultifield/Book.java
+Step: 5 : Resndering : apps/aemgeeks/components/content/bhargav-nested-compmultifield/bhargav-nested-compmultifield.html
 
 =============================================================================================
 6) CONFIGURATIONS  (OSGI CONFIGURATION -> Service -> Sling Model -> HTL)
@@ -799,6 +810,7 @@ New concepts/usecases to explore
 
 ***CREATE A SIGNUP AND LOGIN PAGE USING JWT token.
 
+* Nested Multifield
 I* InheritanceValueMap inheritanceValueMap = new HierarchyNodeInheritanceValueMap();
 * Dispatcher setup and learn
 I* ResourceType Servlets
