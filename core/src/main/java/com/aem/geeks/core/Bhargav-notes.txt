@@ -16,7 +16,8 @@ INDEX:
     d) SERVLET : 4 - PathType Servlet - QUERY PARAMETERS FETCHING USING PATH TYPE SERVLET DEMO
     e) SERVLET : 5 - PathType Servlet - Creating a json with all the pages where KEY will be the page title amd VALUE will be the page path.
     f) Servlet : 6 - PathType Servlet - BhargavPropBtnPathServlet.java (Here we are adding a node property on button click using this servlet)
-    g) Servlet : 7 - PathType Servlet with "METADATA SCHEMA" (Here in this servlet we are fetching the data from API using the value given in metadata schema field)
+    g) Servlet : 7 - PathType Servlet with "METADATA SCHEMA" (Here in this servlet we are fetching the data from API using the value given
+                     in metadata schema field)
 
 4) SLING MODELS & SERVICES
 
@@ -375,7 +376,8 @@ STEP:4 - (Last Step) - apps/aemgeeks/components/content/bhargav-personalcomp-one
 
 ==> To see the output
 - Go to your configuration in system/console/configmgr and give the value and save
-- Now on the page, drag and drop the COMPONENT,  where you have called your sling model (here we used in apps/aemgeeks/components/content/bhargav-personalcomp-one/bhargav-personalcomp-one.html).
+- Now on the page, drag and drop the COMPONENT,  where you have called your sling model
+  (here we used in apps/aemgeeks/components/content/bhargav-personalcomp-one/bhargav-personalcomp-one.html).
 - Now you can see the values of the multiple config instances.
 
 =============================================================================================
