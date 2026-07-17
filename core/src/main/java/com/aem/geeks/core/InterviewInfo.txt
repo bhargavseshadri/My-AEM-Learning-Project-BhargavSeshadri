@@ -8,7 +8,8 @@ Ans. AEM (Adobe Experience Manager) is a content management system (CMS) built o
 
 AEM solves several problems related to digital experience management:
 
--> Proper Content managing: It centralizes content creation and management, preventing content duplication and inconsistencies across different channels.
+-> Proper Content managing: It centralizes content creation and management, preventing content duplication and inconsistencies across
+  different channels.
 -> Scalability: It provides a scalable architecture to handle increasing content volumes and user traffic.
 -> Personalization: It enables businesses to deliver personalized experiences to customers based on their behavior, and preferences.
 -> Workflow Management: It streamlines content approval processes and publishing workflows.
@@ -33,11 +34,13 @@ AEM solves several problems related to digital experience management:
 -> Sling:OsgiConfig : by giving this we can convert our osgi configuration file to node.
 
 -> Editable Templates : If you edit the template then that change will show in both old(existing pages) and new pages as well.
--> Static Template : If you edit the template code and then deploy it, then that change will show in both old(existing pages) and new pages as well.
--> request.getParameter(...) only returns form/query parameters (name/value pairs in the query string or POST body). It does NOT read HTTP headers or the request URL
+-> Static Template : If you edit the template code and then deploy it, then that change will show in both old(existing pages) and new pages
+   as well.
+-> request.getParameter(...) only returns form/query parameters (name/value pairs in the query string or POST body). It does NOT read HTTP headers
+   or the request URL
 -> In modern AEM versions and AEM as a Cloud Service, you must explicitly configure the path of the folder containing your Content Fragment Models
-   in the "Allowed Content Fragment Models" field under the Policies tab of the corresponding folder in /content/dam. Otherwise, the models will not shown up
-   when creating Content Fragments in that folder.
+   in the "Allowed Content Fragment Models" field under the Policies tab of the corresponding folder in /content/dam. Otherwise, the models will
+   not shown up when creating Content Fragments in that folder.
 
 -> At the time of deployment the CORE module produces a JAR file and this JAR file becomes a bundle in system/console/bundle
   , and all the others modules like UI.APPS, UI.CONTENT, UI.CONFIG etc produces a zip file this zip files give content to repository.
@@ -63,8 +66,8 @@ AEM solves several problems related to digital experience management:
 5) ValueMap : In AEM, valueMap is a special map like object that helps us to retrive properties of a JCR node in a convenient way,
               its a wrapper around our node and helps us in accessing the properties of that node.
 
-6) OSGi : It  is a framework for modular development. In AEM, OSGi allows you to deploy components as individual modules or bundles. Each bundle can be
-          started, stopped, or updated independently without affecting the entire application.
+6) OSGi : It  is a framework for modular development. In AEM, OSGi allows you to deploy components as individual modules or bundles.
+          Each bundle can be started, stopped, or updated independently without affecting the entire application.
 
 =============================================================================================
 ==> AEM & OSGI ARCHITECTURE
@@ -85,7 +88,8 @@ OSGI ARCHITECTURE:
 =============================================================================================
 ==> Lifecycle annotations in OSGi
 - A typical OSGi component has 3 important lifecycle annotations:
-1) @Activate - When the component is first started (activated), the method with this annotation gets executed, it Initializes resources, read configuration
+1) @Activate - When the component is first started (activated), the method with this annotation gets executed, it Initializes resources,
+               read configuration
 2) @Modified - When configuration is changed dynamically, it Re-read and apply new config
 3) @Deactivate - When the component is stopped
 
@@ -100,7 +104,8 @@ OSGI ARCHITECTURE:
    SlingHttpServletResponse → the HTTP response (what you send back)
 
 a) ResourceType Servlets
--> ResourceType, Methods, extensions and Selectors will only work for resourceType servlets. (ResourceType is manditory in these and others are optional)
+-> ResourceType, Methods, extensions and Selectors will only work for resourceType servlets. (ResourceType is manditory in these
+   and others are optional)
 -> so we give a Resource in the servlet, and whenever that resource is accessed, our servlet will be "CALLED".
 -> ResourceType Servlets : @SlingServletResourceTypes()
 - these servlets can be accessed controlled using a jcr repo ACL
@@ -152,14 +157,16 @@ f) doPost typically returns: HttpStatus codes and then Client receives response 
 
 -------------------------------------------------------
 Q) Why in aem servlet code they use protedted void for get and post methods, what's the reason?
-Ans. 1) Servlets extend a base class (SlingAllMethodsServlet or HttpServlet), In those parent classes, the doGet() and doPost() methods are already
-declared as protected. So when you override them, you must keep the same access modifier (protected), otherwise Java will throw an error (you can’t reduce visibility of an overridden method).
+Ans. 1) Servlets extend a base class (SlingAllMethodsServlet or HttpServlet), In those parent classes, the doGet() and doPost()
+        methods are already declared as protected. So when you override them, you must keep the same access modifier (protected),
+        otherwise Java will throw an error (you can’t reduce visibility of an overridden method).
 2) they are marked as protected to limit access (i.e., only subclasses or the framework should call them).
 
 =============================================================================================
 SCHEDULERS
 
-Defination: - A Scheduler in AEM is a background job (a Java class) that runs automatically at a fixed time or interval, without any user interaction.
+Defination: - A Scheduler in AEM is a background job (a Java class) that runs automatically at a fixed time or interval, without
+              any user interaction.
             - It’s used to perform repeated or time-based tasks — like clearing cache, syncing data, sending emails, at scheduled times.
 
 * Schedulers are of two types
@@ -194,7 +201,8 @@ Definition: - OSGi Configuration is used to store application settings separatel
 Normal config to Factory Config : @Designate(ocd = BhargavFactoryOSGiConfig.class, factory=true)
 
 ==> cardinality = ReferenceCardinality.MULTIPLE, policy = ReferencePolicy.DYNAMIC
-- sometimes, we may have: Multiple implementations of the same interface (or) Services that appear or disappear dynamically (e.g., bundles starting/stopping).
+- sometimes, we may have: Multiple implementations of the same interface (or) Services that appear or disappear dynamically (e.g., bundles
+  starting/stopping).
 , we may want to handle such changes gracefully. then in that case ReferenceCardinality and ReferencePolicy come into play.
 - ReferenceCardinality → How many services can be injected
                     a) MANDATORY : Must have exactly one service available. If not present, this component won’t activate.
@@ -216,8 +224,10 @@ Normal config to Factory Config : @Designate(ocd = BhargavFactoryOSGiConfig.clas
 
 - Run Modes are used to load different configurations for different AEM environments, allowing the same application code to behave
   differently based on where it is deployed.
-- Run Modes in AEM are used to identify the environment in which an AEM instance is running, such as Author, Publish, Development, or Production.
-- Instead of maintaining separate codebases for author, publish, development, staging, and production, you use run modes to with different configurations.
+- Run Modes in AEM are used to identify the environment in which an AEM instance is running, such as Author, Publish, Development,
+  or Production.
+- Instead of maintaining separate codebases for author, publish, development, staging, and production, you use run modes to with
+  different configurations.
 
 - PURPOSE of runmodes:
         *Separate configurations for Author and Publish.
@@ -226,7 +236,7 @@ Normal config to Factory Config : @Designate(ocd = BhargavFactoryOSGiConfig.clas
 - When we want to identify our AEM instance uniquely in code --> (slingSettingService.getRunModes()).
 
 - Run modes are two types.
-a) Installation Run modes (Fixed Run Modes) : these we will set while installing aem instance. and we cannot change these runmodes,  these are four types
+a) Installation Run modes (Fixed Run Modes) : these we will set while installing aem instance. and we cannot change these runmodes, these are four types
                                                 1. Author
                                                 2. Publish
                                                 3. SampleContent  - Means aem will give you the basic sample pages like WE-RETAIL
@@ -255,15 +265,16 @@ b) custom run modes : Runmodes we create like Prod, Stg, Qa, Ciqa
 
 * While picking the runmodes it will always looks from left to right and installation runmode have high preference.
         eg: when the env have "author, local" runmodes
-            - then in these config files "1. config.local.author, 2.config.author.local" it will pick config.author.local. if config.author.local this is not there in the list of
-              folders then it will pick config.local.author
+            - then in these config files "1. config.local.author, 2.config.author.local" it will pick config.author.local. if config.author.local
+              this is not there in the list of folders then it will pick config.local.author
 
 -------------------------------------------------
 => Creation of Run Modes, we have 5 ways
 
 1) Sling.Properties : we wont prefer this because we won't have permissions. and it is OOTB file so we should not change.
 2) system properties (-D) -Dsling.run.modes=publish,prod,us : this we can create while starting our aem instance.
-3) Filename Detection - aem-publsh-p4503 (most commonly used): we remane a file, and then while installing the aem will understand what run mode it is.
+3) Filename Detection - aem-publsh-p4503 (most commonly used): we remane a file, and then while installing the aem will understand
+   what run mode it is.
 
 4) -r option -  java-jar file-r publish,prod,us: here while starting the aem we update the start script so then it will create a run mode,
     (2nd and 4th options are almost same)
@@ -275,44 +286,50 @@ ans. “By placing configuration files inside run mode–specific folders like /
 
 =============================================================================================
 Context-Aware Configuration (CaConfig) (Have to learn in depth)
-- Context-Aware Configuration (CaConfig) in AEM is a mechanism for storing and retrieving configuration values based on the content hierarchy rather
-  than the AEM environment.
-- Unlike OSGi configurations, which are global to an AEM instance, Context-Aware Configurations allow different sites, brands, or sections of a site to have
-  different configuration values while running on the same AEM instance.
-- For example, if Site A and Site B are hosted on the same AEM production environment, Site A can have support@sitea.com and Site B can have support@siteb.com
-  configured separately without requiring different run modes or deployments.
-- To implement it, we define a configuration interface using @Configuration, store the values under /conf/<site>/sling:configs, and access them in Sling Models
-  using ConfigurationBuilder or @ContextAwareConfiguration.
+- Context-Aware Configuration (CaConfig) in AEM is a mechanism for storing and retrieving configuration values based on the content
+  hierarchy rather than the AEM environment.
+- Unlike OSGi configurations, which are global to an AEM instance, Context-Aware Configurations allow different sites, brands, or sections of a
+  site to have different configuration values while running on the same AEM instance.
+- For example, if Site A and Site B are hosted on the same AEM production environment, Site A can have support@sitea.com and Site B can have
+  support@siteb.com configured separately without requiring different run modes or deployments.
+- To implement it, we define a configuration interface using @Configuration, store the values under /conf/<site>/sling:configs, and access them
+  in Sling Models using ConfigurationBuilder or @ContextAwareConfiguration.
 
 =============================================================================================
 CORE COMPONENTS & PROXY COMPONENTS
 
--> CORE COMPONENTS: Core Components are a set of ready-made, production-ready components provided by Adobe (like Text, Image, Carousel, Button, Title, etc.)
-                    as part of AEM.
+-> CORE COMPONENTS: Core Components are a set of ready-made, production-ready components provided by Adobe (like Text, Image, Carousel,
+                    Button, Title, etc.) as part of AEM.
 path : /apps/core/wcm/components/...
 
 
 ===== PROXY COMPONENTS =====
 
--> PROXY COMPONENTS: A proxy component is a lightweight wrapper around a core component. It doesn’t add new logic — it just points to a core component using
- sling:resourceSuperType and gives it a project-specific name and path. and it allows future customization without touching core code.
+-> PROXY COMPONENTS: A proxy component is a lightweight wrapper around a core component. It doesn’t add new logic — it just points to
+                     a core component using sling:resourceSuperType and gives it a project-specific name and path. and it allows future
+                     customization without touching core code.
 
  -> To add any custom field for our Proxy component we have couple of ways:
-            1.(recommended) We create a _cq_dialog/.content.xml and inside it we add our own tab and our own fields, so now the AEM will automatically merge and show
-               the core component Tabs & Fields along with our custom tab & Fields.
-            2.(not recommended) to override core comp CQ_DIALOG. That CQ_DIALOG we have to get it from the extended core component.
+            1.(recommended) We create a _cq_dialog/.content.xml and inside it we add our own tab and our own fields, so now the AEM
+               will automatically merge and show the core component Tabs & Fields along with our custom tab & Fields. remember for this
+               we have to strictly follow the core component dialog xml code STRUCTURE.
+            2.(not recommended) to override entire core comp CQ_DIALOG. That CQ_DIALOG we have to get it from the extended core component.
 
- -> Similarly To print that custom field on the page we will create our own HTL file and using delegation concept we can print our own fields and also core comp fields.
- -> sling:hideResource="{Boolean}true" : If you want to hide any field that comes from core component, In that case add this to that field "In the Overriden CQ_DIALOG".
-    but to use this you have to exactly follow the same node structure that present in core component xml.
+ -> Similarly To print that custom field on the page we will create our own HTL file and using delegation concept we can print our own
+    fields and also core comp fields.
+ -> sling:hideResource="{Boolean}true" : If you want to hide any field that comes from core component, In that case add this to that
+    field "In the Overriden CQ_DIALOG". but to use this you have to exactly follow the same node structure(or dialog xml code structure)
+    that present in core component xml.
 
 
--> Delegation in Sling Models: Delegation in AEM means reusing methods & functionality from another Sling Model or Core Component by forwarding method calls instead of
-   rewriting logic. It is commonly implemented using @Via(ResourceSuperType.class) to delegate calls to the Core Component model while customizing only required methods.
+-> Delegation in Sling Models: Delegation in AEM means reusing methods & functionality from another Sling Model or Core Component by
+                               forwarding method calls instead of rewriting logic. It is commonly implemented using @Via(ResourceSuperType.class)
+                               to delegate calls to the Core Component model while customizing only required methods.
    - Delegation is a design pattern where your custom component reuses the functionality of another component (usually an AEM Core Component)
      instead of rewriting the logic.
 
-     Example : 1. In our component definition we give : sling:resourceSuperType = core/wcm/components/teaser/v2/teaser -- this is called component definition.
+     Example : 1. In our component definition we give : sling:resourceSuperType = core/wcm/components/teaser/v2/teaser -- this is called
+                  component definition.
                2. Sling model DELEGATION  -   @Self
                                               @Via(type = ResourceSuperType.class)
                                               private Teaser teaser;
@@ -342,7 +359,7 @@ Sling Model Defination :  - Sling Models are annotation-based Java classes that 
                           - A Sling Model in AEM is a Java class used to fetch and use content from the JCR in an easy and clean way.
 
 
-* A single Sling Model can be used by multiple components. It is not tied to one component unless you explicitly restrict it.
+* A single Sling Model can be used by multiple components. It is not tied to one component unless you explicitly restrict it by writing if condition.
 --> Reusable across many components
                     Eg: @Model(adaptables = Resource.class)
                         public class CommonModel {
@@ -367,26 +384,38 @@ Ans. It is used to specify from which object the model can be adapted or the mod
                                               Request parameters / query string
                                               Request headers, cookies
                                               @RequestAttribute injections
-                                        - (IMP)What happens if we dont give SlingHttpServletRequest.class - You can no longer easily use @ScriptVariable.
-                                               You cannot read URL query parameters, HTTP headers, or cookies.
+                                        - (IMP)What happens if we dont give SlingHttpServletRequest.class - You can no longer
+                                           easily use @ScriptVariable. You cannot read URL query parameters, HTTP headers, or cookies.
+
+-> adaptables = {Resource.class, SlingHttpServletRequest.class}
+        > The model gets creates from the "Resource.class", when somewhere in our java code if we write
+                - Resource resource = resolver.getResource("/content/site/page/jcr:content");
+                  BhargavCtaBarModel model = resource.adaptTo(BhargavCtaBarModel.class);    //So if we dont give Resource.class in the model
+                                                                                              ,in that case this line becomes null.
+
+        > To know from which our model is created we use @Self in our model code.
+                @Self
+                private Resource resource;  or   private SlingHttpServletRequest request;
 
 
 
 **Very Very Important :: Life Cycle Of Sling Model
- -> Sometimes in sling model lines like below will through error by taking null values. and they got fixed when we move those lines in side a @PostConstruct Method
-    or and other method. Why Because.
+ -> Sometimes in sling model lines like below (variable initializations) will through error by taking null values. and they got fixed
+    when we move those lines in side a @PostConstruct Method or and other method. Why Because.
         * Eg Line : Page page = pageManager.getContainingPage(resource);
 
- -> Classic Tip : Do all the field initializations(assigning values to the variables) in sling model inside the @PostConstruct method or inside any other method.
+ -> Classic Tip : Do all the field initializations(assigning values to the variables) in sling model inside the @PostConstruct method
+    or inside any other method.
 
 -> Sling Model Life Cycle Steps: Step: 1 - Object is created (constructor runs)
                                             -> Now at this moment all the @Inject fields or @ScriptVariable fields are not yet being set or injected.
                                             -> But at this very moment if there is any fields then our sling model will run initialization for those
                                                too so in this time those fields like above get Null values.
 
-                                 Step: 2 - - After sometime the object is created, then the @Inject and @ScriptVariable fields are injected by sling (values are set).
-                                           - But by this time if we wrote those line outside the method, then sling won't go back and look for those and set the values,
-                                             so those lines will keep taking null values.
+                                 Step: 2 - - After sometime the object is created, then the @Inject and @ScriptVariable fields are injected
+                                             by sling (values are set).
+                                           - But by this time if we wrote those line outside the method, then sling won't go back and look
+                                             for those and set the values, so those lines will keep taking null values.
 
                                  Step: 3 - After all the fields are injected, then @PostConstruct method runs, so if we want to use those fields
                                            then we have to use them inside this method or any other method which is called after this method.
@@ -394,22 +423,9 @@ Ans. It is used to specify from which object the model can be adapted or the mod
 
                                  Step: 4 - Finally, the model is ready to be used in HTL or backend code.
 
--> adaptables = {Resource.class, SlingHttpServletRequest.class}
-        > The model gets creates from the "Resource.class", when somewhere in our java code if we write
-                - Resource resource = resolver.getResource("/content/site/page/jcr:content");
-                  BhargavCtaBarModel model = resource.adaptTo(BhargavCtaBarModel.class);    //So if we dont give Resource.class in the model, in that case this line becomes null.
-
-        > The model gets creates from the "SlingHttpServletRequest.class", when our comp HTL uses data-sly-use
-                - <div data-sly-use.model="com.aem.geeks.core.models.BhargavCtaBarModel">
-                - Internally what the above line does is : request.adaptTo(BhargavCtaBarModel.class);
-
-        > To know from which our model is created we use @Self in our model code.
-                @Self
-                private Resource resource;  or   private SlingHttpServletRequest request;
-
 ---------------------------------------------------------
-OSGI Services Defination : - A Service in AEM (or OSGi Service) is a Java class that contains reusable business logic and can be shared across other services,
-                        servlets, and sling models. It is not dependent on any component.
+OSGI Services Defination : - A Service in AEM (or OSGi Service) is a Java class that contains reusable business logic and can be shared
+                             across other services, servlets, and sling models. It is not dependent on any component.
                       - It’s registered in the OSGi container, and AEM automatically manages its lifecycle (create, start, stop).
                       - @Component — registers our normal java class as an OSGi service.
 
@@ -426,7 +442,8 @@ BASEPAGE COMPONENT
   homepage or content page extend it using sling:resourceSuperType, so they automatically inherit its HTML structure and scripts. It helps maintain
   consistency, reuse, and easy maintenance across all pages.
 
-- Whatever the common resources we are using throughout our site like Page properties dialog, design dialog, clientlibs etc, we create those in base page component
+- Whatever the common resources we are using throughout our site like Page properties dialog, design dialog, clientlibs etc, we create those
+  in base page component
   Example: -> create your own base page component and point it to core page component using sling:resourceSupertype.
            -> And based on our need we can create a Templates and pages and give the sling:ResourceType points to our base page component (in these
             comps we can use/inherit the files which are either present in our page component or base core base page comp)
@@ -476,7 +493,8 @@ WORKFLOWS in AEM
         2. Runtime Model - Stored Under : /var/workflow/models   -> when the workflow executes then this run time model will be used.
 - Two make the changes go from Design to Runtime we have to click the "SYNC".
 
---> Basically to trigger a workflow we need Two things 1.Workflow Model, 2.Payload(means the content path on which we want to run our WF, like page, asset etc)
+--> Basically to trigger a workflow we need Two things 1.Workflow Model, 2.Payload(means the content path on which we want to run our
+    WF, like page, asset etc)
         - Incase of triggering WF using code, then in that case to get this Payload we will use "WorkflowSession"
 
 
@@ -496,7 +514,8 @@ WORKFLOWS in AEM
                                   3. Using API/Code : we can trigger the WF using any of the backend module like servlet, scheduler, Models etc
 
 * DAM UPDATE ASSET WF STEPS explanation
-        1. Continue updating? step -- Decision step : This process checks if the complete update process has to be executed. The workflow should terminate
+        1. Continue updating? step -- Decision step : This process checks if the complete update process has to be executed.
+                                      The workflow should terminate
         2. Metadata Processor step -- Extract metadata from the asset and store those values in asset metadata node
         3. FFmpeg Thumbnails step -- Generate thumbnails for videos.
         4. EPS Thumbnails step -- Create previews for EPS files. eps files cannot be displayed directly so this step creates a png files for thumbnails.
@@ -515,10 +534,12 @@ WORKFLOWS in AEM
 NOTE: execute(WorkItem workItem, WorkflowSession workflowSession, MetaDataMap processArguments) uses of these parameters in this "manditory method"
         * WorkflowSession: Using this we can get the backend objects, using this only we get the ResourceResolver, Session using this WorkflowSession.
         * MetaDataMap : If we pass any data to the dialog, that data we can get using this.(in case of custom WF process we get the data we have
-                        given in "ARGUMENTS" process step dialog box)(in case of normal process step we can get the data we have given in dialog box of that step).
-        * WorkItem : we might have the steps before and after our process step, and there will be an information and payload flowing from starting of our WF model till end
-                    .that payload and the other information should be available in our Custom WF Process and that all information is available in "WorkItem".
-                    apart from the available information we can also pass the other information as we want.
+                        given in "ARGUMENTS" process step dialog box)(in case of normal process step we can get the data we have given in dialog
+                        box of that step).
+        * WorkItem : we might have the steps before and after our process step, and there will be an information and payload flowing from
+                     starting of our WF model till end. that payload and the other information should be available in our Custom WF Process
+                     and that all information is available in "WorkItem". apart from the available information we can also pass the other
+                     information as we want.
 
 -------------------------------------------------------
 Note: Custom WF Process and Custom WF step is not same, the difference is Custom WF Process is a backend module and it won't have it own step
@@ -535,7 +556,8 @@ Note: Custom WF Process and Custom WF step is not same, the difference is Custom
 - (IMP) The comp will have a cq:dialg, cq:editConfig. and  cq:editConfig has a child node called cq:formParameters and in that there is a property
         called "PROCESS", for that property we give the value of our custom wf process, so in this way using that property we link this comp to
         our custom wf process.
-- And in our component "sling:resourceSuperType="cq/workflow/components/model/process", means our comp is just inheriting the existing "PROCESS STEP" by pointing to it.
+- And in our component "sling:resourceSuperType="cq/workflow/components/model/process", means our comp is just inheriting the existing "PROCESS STEP"
+  by pointing to it.
 - In cq:formParameters node for "PROCESS" property we give the custom wf process as a value.
     eg: PROCESS="com.aem.geeks.core.workflows.GeeksWorkflowStep"
 
@@ -558,16 +580,17 @@ Client libraries help optimize the delivery of front-end assets and improve webs
           <sly data-sly-call="${clientlib.css @ categories='bhargav.apiStyles'}"/>
 
 * Why we give "allowProxy = true" in AEM clientlibrary properties?
-Ans. - When you create a Client Library (clientlib) under /apps/..., by default it cannot be accessed publicly to anonymous users — because the /apps path is not exposed on
-       the publish instance (for security reasons). To make it accessible in a safe and public way, we set this property.
+Ans. - When you create a Client Library (clientlib) under /apps/..., by default it cannot be accessed publicly to anonymous users —
+       because the /apps path is not exposed on the publish instance (for security reasons). To make it accessible in a safe and
+       public way, we set this property.
      - If you forget it On publish, clientlibs won’t load → 404 errors in browser console.
      - When allowProxy=true, AEM allows the clientlib to be accessed through a proxy path: /etc.clientlibs/<your-project>/clientlibs/<clientlib-name>
 
 * What is the use of "Embed"(like embed="[my.site.A], ) property in client library?
-Ans : What it actually do is it, if we give some client library name(here my.site.A) in the embed property, then it will automatically include that client library
-      inside the current client library, so we don't have to include that client library separately in our component or page, it will automatically
-      get included in this client library because of this embed property. it will simply merge all those other client lib contents in to this client lib and
-      render it.
+Ans : What it actually do is it, if we give some client library name(here my.site.A) in the embed property, then it will automatically include
+      that client library inside the current client library, so we don't have to include that client library separately in our component or page
+      , it will automatically get included in this client library because of this embed property. it will simply merge all those other client
+      lib contents in to this client lib and render it.
 
 * extraClientlibs="[bhargav.dialog.validation]"
 - we give this when we want our clientlibs to load at the time when we open the "comp authoring dialog".
@@ -576,27 +599,30 @@ Ans : What it actually do is it, if we give some client library name(here my.sit
 --------------------------------------------------
 STYLE SYSTEM Usage and Implementation
 - Style system allow you to define style classes in the content policy for a component and in page policy for a template, so that content author
-  is able to select them when editing the page or editing the component on a page. These styles can be used to apply different visual appearances to the same
-  component without changing its underlying functionality.
+  is able to select them when editing the page or editing the component on a page. These styles can be used to apply different visual
+  appearances to the same component without changing its underlying functionality.
 
 - Using this a page author can select a style from the dropdown in the page editor, and that style will be applied to the component,
-  if he wants to change the style he simply select the another style in the dropdown, allowing for easy customization of the look and feel of the page.
+  if he wants to change the style he simply select the another style in the dropdown, allowing for easy customization of the look
+  and feel of the page.
 
-- Using this we can make which styles should available and applicable for a component and also we can also control which styles should be available and applicable for the
-  whole page as well. we can simply select the styles we want from the dropdown in the page editor.
+- Using this we can make which styles should available and applicable for a component and also we can also control which styles should
+  be available and applicable for the whole page as well. we can simply select the styles we want from the dropdown in the page editor.
 
 - In depth : com/aem/geeks/core/Bhargav-notes.txt
 
 =============================================================================================
 CQ_DESIGN_DIALOG - purpose and uses
 - _cq_design_dialog is used to defines template-level/policy configuration for a component.
-- _cq_design_dialog is a used to configure template/policy settings for a component. using this we can give what styles are available and applicable for a component.
+- _cq_design_dialog is a used to configure template/policy settings for a component. using this we can give what styles are available
+   and applicable for a component.
 - for better understanding : com/aem/geeks/core/Bhargav-notes.txt - STYLE SYSTEMS
 
 =============================================================================================
 DATASOURCE
 * The purpose of a DataSource in Granite UI is "Provide dynamic data to dialog fields."
-* It is used for : 1. Dynamic Select Dropdown (Most Common) - eg in this comp: apps/aemgeeks/components/content/bhargav-personalcomp-two/_cq_dialog/.content.xml
+* It is used for : 1. Dynamic Select Dropdown (Most Common) -
+                      eg in this comp: apps/aemgeeks/components/content/bhargav-personalcomp-two/_cq_dialog/.content.xml
                    2. you can generate them dynamically.
                    3. Dynamic Checkboxes etc
 
@@ -609,8 +635,8 @@ BUNDLE LIFECYCLE
               Bundles using lazy activation sit in this state until a class is actually loaded that triggers activation.
 4. ACTIVE : The bundle has been successfully started and is running normally. This is the healthy/desired end state for most bundles.
 5. STOPPING : The bundle is in the process of stopping. Its BundleActivator.stop() method is being executed.
-6. UNINSTALLED : The bundle has been completely removed from the AEM instance. This is a terminal state. The bundle can no longer transition to any other state,
-                 and its resources have been released by the OSGi framework.
+6. UNINSTALLED : The bundle has been completely removed from the AEM instance. This is a terminal state. The bundle can no longer
+                 transition to any other state, and its resources have been released by the OSGi framework.
 
 * FRAGMENT : A Fragment is a special type of OSGi bundle. It's not actually a lifecycle state defined by OSGi, but in AEM's /system/console/bundles,
              you'll often see a bundle labeled as Fragment because it is a fragment bundle rather than a regular bundle.
@@ -688,11 +714,13 @@ CSRF (Cross-Site Request Forgery) :
 ----------------------------------------
 --> MSM Important Points:
 
-- We have Blueprint source root or Language Master or Master site (language-masters), and we have Blueprint source Language Copies(language-masters/en, language-masters/fr)
-  in it and inside those we have Blueprint source Pages.
+- We have Blueprint source root or Language Master or Master site (language-masters), and we have Blueprint source Language
+  Copies(language-masters/en, language-masters/fr) in it and inside those we have Blueprint source Pages.
 - We have Live Copy roots of country sites, and inside those we have Live Copy Language Copies and inside those we have Live Copy Pages.
--(IMP) So all the master site pages are in the language-masters and all the live copy pages are in the live copy country sites like Brazil, Indonasia are always linked.
--(IMP) If we make any changes in the blueprint source page, then those changes will be reflected in the live copy pages when we do the sync using rollout configurations,
+-(IMP) So all the master site pages are in the language-masters and all the live copy pages are in the live copy country sites like Brazil,
+ Indonasia are always linked.
+-(IMP) If we make any changes in the blueprint source page, then those changes will be reflected in the live copy pages when we do the sync
+  using rollout configurations,
        but if we make any changes in the live copy page, then those changes won't be reflected in the blueprint page because the flow
        of data is only from blueprint to live copy, not the other way.
 
@@ -701,7 +729,8 @@ CSRF (Cross-Site Request Forgery) :
     Step: 2 - Now select the source page from which you want to create the copy.
     Step : 3 - Select the languages you want and also selete the required fields
     Step : 4 - in the next step select "Create Multi-language Translation Project" option if you are creating for the first time, otherwise select
-                "Add to existing translation project" and then select the existing translation project and then click on "Create". Now you can see the Language Copies.
+                "Add to existing translation project" and then select the existing translation project and then click on "Create". Now you
+                can see the Language Copies.
 
 - Creation of Language Masters (Country site)(Brazil, Indonasia) for Live copies:
     Step:1 - First we need a Blueprint for this, so first create it.
@@ -709,10 +738,11 @@ CSRF (Cross-Site Request Forgery) :
                 b. Then select "Create" and then select blueprint template.
                 c. Now select the source site you want to create the blueprint for. Eg : /content/aemgeeks/language-masters
                 d. Then give the name and title and then click on create.
-    Step:2 - Now we have the blueprint, now we will create the live copy root country site from our master site. go to sites and select your project
+    Step:2 - Now we have the blueprint, now we will create the live copy root country site from our master site. go to sites and
+             select your project
              Eg : /content/aemgeeks and click on create and the select "site" and after select the blueprint you created for this.
-    Step:3 - Now you can look the available languages and pages in the master site you have selected. give title for the site and check the live copy option.
-             and select the "ROLLOUT CONFIGUATION" as per the requirement and then click on create.
+    Step:3 - Now you can look the available languages and pages in the master site you have selected. give title for the site and check the
+             live copy option. and select the "ROLLOUT CONFIGUATION" as per the requirement and then click on create.
     --> Thats it now the live copy country site is craeted with all the language copies and pages linked to the master site.
 
 - You can see all your bluprint in this path - /apps/msm in crx
@@ -722,9 +752,11 @@ CSRF (Cross-Site Request Forgery) :
                       Eg : we have a pages in english and we want to create the copy of those pages in french, then we will use this option.
     - Live Copy : This is important, this will create a live copy of our pages or sites and be in link and sync with the master Blueprint.
     - Site : * This is used to create the copy of a complete separate site. copy of our complete blueprint site.
-             * but this won't be in sync with the master blueprint, means if we make any changes in the master blueprint it won't reflect in this site.
-             * there is a check box called "LIVE COPY" while creating this, if you check it the this separate site will become a live copy and then it
-               will be in sync with the master blueprint, but if you do not check this then it will be a complete separate site and won't be in sync with the master blueprint.
+             * but this won't be in sync with the master blueprint, means if we make any changes in the master blueprint it won't reflect
+               in this site.
+             * there is a check box called "LIVE COPY" while creating this, if you check it the this separate site will become a live copy
+               and then it will be in sync with the master blueprint, but if you do not check this then it will be a complete separate site
+               and won't be in sync with the master blueprint.
 
 ----------------------------------------
 * ROLLOUT CONFIGURATIONS
@@ -823,10 +855,11 @@ Ans. a. Content Repository (JCR)
 
 
 2. I want a client lib that should load for all pages, how to do that?
-Ans. Approach 1: Add to Page Component (Recommended), In your base page component's HTL template, include the clientlib directly,Since all pages
-                 inherit from the base page component, this clientlib loads everywhere automatically.
+Ans. Approach 1: Add to Page Component (Recommended), In your base page component's HTL template, include the clientlib
+     directly,Since all pages inherit from the base page component, this clientlib loads everywhere automatically.
 
-     Approach 2: Use Page Policy - In AEM Sites, you can use Page Policies to inject clientlib categories into every page that uses a that specific template.
+     Approach 2: Use Page Policy - In AEM Sites, you can use Page Policies to inject clientlib categories into every page
+                 that uses a that specific template.
                                  - So in every page that uses this template, the added clientlibs will load.
                                  - Tools → Templates → [Your Template] → Page Policy → Client Library Categories → add your clientlib category
 
@@ -845,10 +878,12 @@ Ans. Aem dont have a feature like that, we can acheive it by selecting the compl
 6. I want to add a new comp to the existing editable template, and I dont want that comp showup in old pages(means before the change)?
 Ans. actually if we do any change in the editable template then that change will reflect in both old and new pages.
         - We can acheive it by using "Initial content" (drawbacks here are author can edit the comp, we cant lock these comps))
-        - or we can create a template version by copying the existing template and then make a chnage and then on we can create new pages using this new template version.
+        - or we can create a template version by copying the existing template and then make a chnage and then on we can create new
+          pages using this new template version.
 
 7. whenever I have drag and drop a component the page should automatically get refreashed, how to do that
-Ans. To achieve this, you need to configure the cq:listeners property within your component's cq:editConfig node. This tells the AEM authoring interface
+Ans. To achieve this, you need to configure the cq:listeners property within your component's cq:editConfig node. This tells the
+     AEM authoring interface
      how to behave after specific authoring actions (like inserting, editing, or deleting a component).
      - cq:editConfig is used to define how a component behavior in authoring mode
      - <cq:listeners
@@ -893,12 +928,14 @@ ANS. 1. Dependencies, 2. Embed, 3. Categories(means our own clientlibs)
 11. In AEM, In templates, policy option is not  appearing. Whats the issue
 
 12. * You have deleted the template. Will the existing pages with that template load?
-Ans. - Static Templates (old-style, under /apps) Pages will still load fine. because The page's sling:resourceType = "yourproject/components/page" point to the component.
+Ans. - Static Templates (old-style, under /apps) Pages will still load fine. because The page's
+       sling:resourceType = "yourproject/components/page" point to the component.
      - Editable Templates : the pages will break.
 
 13. What is the use of "context" in htl?
 Ans. context tells HTL what kind of data you're outputting (HTML, URL, JavaScript, CSS, etc.)
-     so it can apply the correct escaping rules and protect your page from Cross-Site Scripting (XSS) while still rendering trusted content correctly.
+     so it can apply the correct escaping rules and protect your page from Cross-Site Scripting (XSS) while still rendering
+     trusted content correctly.
      Eg: <a href="${model.link @ context='uri'}">
 
 
@@ -937,7 +974,8 @@ Ans. Using @Reference, because servlet is a service
 
 17. How can we add a new tab in Page Properties?
 Ans. approach-1: We can overlay the /libs path in our /apps and add a new tab.
-     approach-2: We can go to our base page component under /apps and there that base page comp will inherit the /lib comp, then add a cq:dialog and add your tab with fields in that
+     approach-2: We can go to our base page component under /apps and there that base page comp will inherit the /lib comp, then add a
+                 cq:dialog and add your tab with fields in that
                  AEM will automatically merge your TAB with other ootb tabs. this is exactly like we do in our proxy component dialog.
                     - apps/aemgeeks/components/page/_cq_dialog/.content.xml
 
@@ -971,7 +1009,8 @@ ans. We can acheive it by using "PAGE POLICY", we can add that clientlib categor
 
 =============================================================================================
 ALL ABOUT **JAVA**
-- Java is a high-level, object-oriented programming language. that runs on the JVM and is widely used for building web, desktop, and mobile applications.
+- Java is a high-level, object-oriented programming language. that runs on the JVM and is widely used for building web, desktop,
+  and mobile applications.
 - Java → Statically typed (type is checked at compile time).
 
 =============================================================================================
@@ -1009,7 +1048,8 @@ Quick Important Points
         - Helps with caching and security (e.g., for passwords, URLs).
         - Prevents data corruption when shared among multiple threads.
 * What’s String Pool?
-        - A special memory area in heap where String literals are stored. If two strings have same literal, both refer to the same object to save memory.
+        - A special memory area in heap where String literals are stored. If two strings have same literal, both refer to the same
+          object to save memory.
           String s1 = "Java";
           String s2 = "Java"; // refers to same object
 
@@ -1030,15 +1070,16 @@ ans. length : Used with arrays
 
 =============================================================================================
 
-1) Call by value : In Java, call by value means that when you pass a variable to a method, a copy of the variable’s value is passed — not the actual
+1) Call by value : In Java, call by value means that when you pass a variable to a method, a copy of the variable’s value is
+                   passed — not the actual
 variable itself. So, any changes made to the parameter inside the method do not affect the original variable outside the method.
 
 -----------------------------------------------------------
 2) Garbage Collection : Garbage Collection in Java is a process by which Java automatically removes unused or unreferenced objects
                         from memory (the heap) to free up space.
 
-- When you create objects in Java using new, they take up memory. If no part of your program is using that object anymore (no references to it), Java will
-   automatically detect it and delete it from memory — this process is called Garbage Collection.
+- When you create objects in Java using new, they take up memory. If no part of your program is using that object anymore (no references to it),
+  Java will automatically detect it and delete it from memory — this process is called Garbage Collection.
    Eg:- Person p1 = new Person(); // object created
         p1.name = "Alice";
         p1 = null; // no reference to the object anymore, The Person object is unreachable, Garbage Collector can remove it from memory
@@ -1068,7 +1109,8 @@ Example Code : com/aem/geeks/core/javarelatedcodes/StaticExamples.java
 * And we don't give the access modifier for the variables defined inside the static method.
 
 -----------------------------------------------------------
-4) Dynamic Binding (also called Late Binding or Runtime Polymorphism) : it means that the method to be called is decided at runtime, not at compile time.
+4) Dynamic Binding (also called Late Binding or Runtime Polymorphism) : it means that the method to be called is decided at runtime,
+   not at compile time.
 - here we create a reference for a parent class and assign to the child object.
 - We use this concept while create a object for a class that implements interface
         * Vehicle myCar = new Car(); -- Here "Vehicle" is interface and "car" is a class that implemented interface
@@ -1137,7 +1179,8 @@ Note: Cannot be instantiated - means that you cannot create an object of that cl
         }
 
 3. The Implementing Class (Tesla.java)
-- When a class implements the child interface, it must provide the code for all methods in the child interface and all methods in the parent interface.
+- When a class implements the child interface, it must provide the code for all methods in the child interface and all methods in
+  the parent interface.
 
         // Tesla only needs to say it implements ElectricVehicle,
         // but it is legally bound to the Vehicle contract too.
