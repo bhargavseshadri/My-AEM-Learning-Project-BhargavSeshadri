@@ -846,7 +846,7 @@ New concepts/usecases to explore
 
 ***CREATE A SIGNUP AND LOGIN PAGE USING JWT token.
 
-* Nested Multifield
+* can we execute the servlet from a sling model or service code
 I* InheritanceValueMap inheritanceValueMap = new HierarchyNodeInheritanceValueMap();
 * Dispatcher setup and learn
 I* ResourceType Servlets

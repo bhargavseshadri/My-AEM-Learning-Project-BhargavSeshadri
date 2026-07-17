@@ -28,9 +28,6 @@ AEM solves several problems related to digital experience management:
 -> For textfield or text areas : maxLength = "{Long}10"
 -> For setting range : min = "{double}1000" , max = "{double}1000"
 -> cq:design_dialog only mostly used for static templates and also it is used to get the policy option for Custom Components.
--> immediate=true Whenever we want to activate the service immediately after the bundle gets started in that place we use this.
--> OSGI : OSGi (Open Services Gateway initiative) is a Java-based modular framework that allows AEM to run applications as independent,
-          reusable, and dynamically updatable components called bundles.
 -> Sling:OsgiConfig : by giving this we can convert our osgi configuration file to node.
 
 -> Editable Templates : If you edit the template then that change will show in both old(existing pages) and new pages as well.
@@ -55,7 +52,7 @@ AEM solves several problems related to digital experience management:
                - Resource can be anything, it can be COMPONENT, NODE, PAGE.
 
 2) Immediate = true -> Whenever we want to activate the service immediately after the bundle gets started in that place we use this.
-   Immediate = False -> if we give this then the service will be in satisfied state until some
+   Immediate = False -> if we give this then the service will be in satisfied state until some code tries to access and executes it.
 
 3) req.setAttribute() AND req.getAttribute() :  storing temporary data in the HttpServletRequest object using setAttribute() and
                                                 later read it back using getAttribute().
@@ -66,8 +63,9 @@ AEM solves several problems related to digital experience management:
 5) ValueMap : In AEM, valueMap is a special map like object that helps us to retrive properties of a JCR node in a convenient way,
               its a wrapper around our node and helps us in accessing the properties of that node.
 
-6) OSGi : It  is a framework for modular development. In AEM, OSGi allows you to deploy components as individual modules or bundles.
-          Each bundle can be started, stopped, or updated independently without affecting the entire application.
+6) OSGi : (Open Services Gateway initiative) is a Java-based modular framework that allows AEM to run applications as independent,
+           reusable, and dynamically updatable components called bundles.
+          - Each bundle can be started, stopped, or updated independently without affecting the entire application.
 
 =============================================================================================
 ==> AEM & OSGI ARCHITECTURE
@@ -322,14 +320,12 @@ path : /apps/core/wcm/components/...
     that present in core component xml.
 
 
--> Delegation in Sling Models: Delegation in AEM means reusing methods & functionality from another Sling Model or Core Component by
-                               forwarding method calls instead of rewriting logic. It is commonly implemented using @Via(ResourceSuperType.class)
-                               to delegate calls to the Core Component model while customizing only required methods.
-   - Delegation is a design pattern where your custom component reuses the functionality of another component (usually an AEM Core Component)
-     instead of rewriting the logic.
+-> Delegation in Sling Models: It is a backend development technique used to customize or extend the business logic of AEM's  Core Components
+                               without altering their original source code.
+                               - It is commonly implemented using @Via(ResourceSuperType.class) to delegate calls to the Core Component
+                                 model while customizing only required methods.
 
-     Example : 1. In our component definition we give : sling:resourceSuperType = core/wcm/components/teaser/v2/teaser -- this is called
-                  component definition.
+     Example : 1. In our component definition we give : sling:resourceSuperType = core/wcm/components/teaser/v2/teaser
                2. Sling model DELEGATION  -   @Self
                                               @Via(type = ResourceSuperType.class)
                                               private Teaser teaser;
@@ -353,10 +349,11 @@ CRXDE FOLDER STRUCTURE
 SLING MODELS & SERVICES
 
 Sling Model Defination :  - Sling Models are annotation-based Java classes that act as a bridge between the JCR and the
-                            presentation layer in AEM. They adapt Sling resources or requests into Java objects, inject required dependencies
-                            such as JCR properties, child resources, and OSGi services, apply business logic, and expose the final data to HTL.
-                            This approach keeps business logic separate from the UI.
-                          - A Sling Model in AEM is a Java class used to fetch and use content from the JCR in an easy and clean way.
+                            presentation layer in AEM.
+                          - They adapt Sling resources or requests into Java objects, inject required dependencies such as JCR properties
+                            , child resources, and OSGi services, apply business logic, and expose the final data to HTL. This approach
+                            keeps business logic separate from the UI.
+                          - it is used to fetch and use content from the JCR in an easy and clean way.
 
 
 * A single Sling Model can be used by multiple components. It is not tied to one component unless you explicitly restrict it by writing if condition.
@@ -573,28 +570,28 @@ CLIENTLIBRARIES
 
 * In Adobe Experience Manager (AEM), a client library (or clientlib) is a container for client-side resources such as CSS, JavaScript, images, and fonts.
 It allows you to organize and manage these resources in a modular way, making it easier to include them in your AEM components and pages.
-Client libraries help optimize the delivery of front-end assets and improve website performance.
+
 * Including it in component or editable templates/page components -->
   - Jsp : <cq:includeClientLib categories="myproject.dialog"/>
   - HTL : <sly data-sly-use.clientlib="/libs/granite/sightly/templates/clientlib.html"/>
           <sly data-sly-call="${clientlib.css @ categories='bhargav.apiStyles'}"/>
 
 * Why we give "allowProxy = true" in AEM clientlibrary properties?
-Ans. - When you create a Client Library (clientlib) under /apps/..., by default it cannot be accessed publicly to anonymous users —
+Ans. - When you create a Client Library (clientlib) under /apps/..., by default it cannot be accessed publicly to users —
        because the /apps path is not exposed on the publish instance (for security reasons). To make it accessible in a safe and
        public way, we set this property.
      - If you forget it On publish, clientlibs won’t load → 404 errors in browser console.
      - When allowProxy=true, AEM allows the clientlib to be accessed through a proxy path: /etc.clientlibs/<your-project>/clientlibs/<clientlib-name>
 
 * What is the use of "Embed"(like embed="[my.site.A], ) property in client library?
-Ans : What it actually do is it, if we give some client library name(here my.site.A) in the embed property, then it will automatically include
+Ans : What it actually do is, if we give some client library name(here my.site.A) in the embed property, then it will automatically include
       that client library inside the current client library, so we don't have to include that client library separately in our component or page
       , it will automatically get included in this client library because of this embed property. it will simply merge all those other client
       lib contents in to this client lib and render it.
 
 * extraClientlibs="[bhargav.dialog.validation]"
 - we give this when we want our clientlibs to load at the time when we open the "comp authoring dialog".
-- we give this in our comp dialog XML.
+- we give this in our "comp dialog XML".
 
 --------------------------------------------------
 STYLE SYSTEM Usage and Implementation
@@ -617,6 +614,10 @@ CQ_DESIGN_DIALOG - purpose and uses
 - _cq_design_dialog is a used to configure template/policy settings for a component. using this we can give what styles are available
    and applicable for a component.
 - for better understanding : com/aem/geeks/core/Bhargav-notes.txt - STYLE SYSTEMS
+
+Interview Que) I have added a component in the editable template, but that comp is not showing policy option, why?
+Ans) because, It is most like a "CUSTOM COMP" and that component didnt have a "Design Dialog", that's why the policy option is not showing.
+     - If its a proxy component then the policy option will definately present, because core component have its design dialog in /libs path
 
 =============================================================================================
 DATASOURCE
@@ -721,8 +722,9 @@ CSRF (Cross-Site Request Forgery) :
  Indonasia are always linked.
 -(IMP) If we make any changes in the blueprint source page, then those changes will be reflected in the live copy pages when we do the sync
   using rollout configurations,
-       but if we make any changes in the live copy page, then those changes won't be reflected in the blueprint page because the flow
-       of data is only from blueprint to live copy, not the other way.
+       * but if we make any changes in the live copy page, then those changes won't be reflected in the blueprint page because the flow
+         of data is only from blueprint to live copy, not the other way.
+       * And editing live copy page is not recommendable, because it de links the sync between live cody and blueprint.
 
 - Creation of Language Copies:
     Step : 1 - go to the language you want to create the copy and then click on create and in that select "Language Copy"
@@ -754,7 +756,7 @@ CSRF (Cross-Site Request Forgery) :
     - Site : * This is used to create the copy of a complete separate site. copy of our complete blueprint site.
              * but this won't be in sync with the master blueprint, means if we make any changes in the master blueprint it won't reflect
                in this site.
-             * there is a check box called "LIVE COPY" while creating this, if you check it the this separate site will become a live copy
+             * there is a check box called "LIVE COPY" while creating this, if you check it then this separate site will become a live copy
                and then it will be in sync with the master blueprint, but if you do not check this then it will be a complete separate site
                and won't be in sync with the master blueprint.
 
@@ -858,7 +860,7 @@ Ans. a. Content Repository (JCR)
 Ans. Approach 1: Add to Page Component (Recommended), In your base page component's HTL template, include the clientlib
      directly,Since all pages inherit from the base page component, this clientlib loads everywhere automatically.
 
-     Approach 2: Use Page Policy - In AEM Sites, you can use Page Policies to inject clientlib categories into every page
+     Approach 2: Use Page Policy - In Editable Templates, you can use Page Policies to inject clientlib categories into every page
                  that uses a that specific template.
                                  - So in every page that uses this template, the added clientlibs will load.
                                  - Tools → Templates → [Your Template] → Page Policy → Client Library Categories → add your clientlib category
@@ -926,6 +928,9 @@ Page Policy: A Page Policy is actually a policy applied to the Layout Container 
 ANS. 1. Dependencies, 2. Embed, 3. Categories(means our own clientlibs)
 
 11. In AEM, In templates, policy option is not  appearing. Whats the issue
+Ans. - This only happens for a Custom Component, and the reson for this issue is that custom component didn't have "DESIGN_DIALOG".
+     - If we add the design dialog the policy option will appear.
+     - for proxy component this issue wont occur because the core component will have design_dialog.
 
 12. * You have deleted the template. Will the existing pages with that template load?
 Ans. - Static Templates (old-style, under /apps) Pages will still load fine. because The page's
