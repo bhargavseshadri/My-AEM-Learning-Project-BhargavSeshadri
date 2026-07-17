@@ -359,14 +359,16 @@ STEP:5(last step) - Printing the data on page using HTL -- apps/aemgeeks/compone
 **NOTE: Converting an OSGI Configuration config file to NODE in CRXDE (For this demo too we are using the above BhargavOsgiConfigServiceImp)
 Prerequisite - Delete your config file which is either under /apps/system/config or /apps/your-project/config.author
 Step:1 - Go to crxde path /apps/your-project/config.author and right click - CREATE
-Step:2 - and give type : sling:OsgiConfig and name : com.aem.geeks.core.services.impl.BhargavOsgiConfigServiceImp (you can get this name from your configuration box)
+Step:2 - and give type : sling:OsgiConfig and name : com.aem.geeks.core.services.impl.BhargavOsgiConfigServiceImp
+         (you can get this name from your configuration box)
 Step:3 - Click OK
 Step:4 - Now for the node add the properties of your config fields (these also you can get from your config box) and save
 
 --------------------------------------------
 b) Factory Configuration
 
-STEP:1 - com/aem/geeks/core/config/GeeksOSGiFactoryConfig.java - Create an annotation class with osgi config code stating what are the values our configuration should take
+STEP:1 - com/aem/geeks/core/config/GeeksOSGiFactoryConfig.java - Create an annotation class with osgi config code stating what are the
+         values our configuration should take
 STEP:2 -(MAIN Logic) com/aem/geeks/core/services/impl/OSGiFactoryConfigImpl.java - Creating a Service with all the logic
 STEP:3 - com/aem/geeks/core/models/impl/ProductModelImpl.java   - using the service in a sling model
 STEP:4 - (Last Step) - apps/aemgeeks/components/content/bhargav-personalcomp-one/bhargav-personalcomp-one.html - printing the values in htl
@@ -396,21 +398,26 @@ STEP:3(LAST STEP) - Connect and Use that configuration values in the scheduler :
 * TRIGGERING THE WORKFLOW USING LAUNCHER
 - USE CASE: we will create a model which will create the page versions, when the WF executes.
 a) Creating a WF Model (No Code) IN AEM - /conf/global/settings/workflow/models/bhargav-personal-workflow.html
-1) Go to WF models console -> Create -> Give Title -> Done = Dummy Model is created in two places a) Design(/conf/global/settings/workflow/models), b)Runtime(/var/workflow/models)
-2) Adding the Steps : Go to your Model and delete any steps avaliable -> Now add the create version step from OOTB available steps -> and give that step a name and description. -> SYNC - That's it
+1) Go to WF models console -> Create -> Give Title -> Done = Dummy Model is created in two places
+    a) Design(/conf/global/settings/workflow/models), b)Runtime(/var/workflow/models)
+2) Adding the Steps : Go to your Model and delete any steps avaliable -> Now add the create version step from OOTB available
+   steps -> and give that step a name and description. -> SYNC - That's it
 
-b) Creating a Launcher(No Code) : We create the laucher on the basis, as soon as my page is modified then that launcher should trigger the WF and then it should create a page version.
-1) go to tools -> Workflows -> Launchers -> Create -> Give the required fields like when it  should trigger(Node Created or Node Modified or Node Removed), and link it to the WF you want
-   (here we give NODE MODIFY, Our page path, type: CQ:PAGE, and Bhargav-Personal-Workflow)-> Then Activate the toggle button and then click Create. - Thats IT.
+b) Creating a Launcher(No Code) : We create the laucher on the basis, as soon as my page is modified then that launcher should trigger
+   the WF and then it should create a page version.
+1) go to tools -> Workflows -> Launchers -> Create -> Give the required fields like when it  should trigger(Node Created or Node Modified
+   or Node Removed), and link it to the WF you want (here we give NODE MODIFY, Our page path, type: CQ:PAGE, and Bhargav-Personal-Workflow)
+   -> Then Activate the toggle button and then click Create. - Thats IT.
 -> Now go and modify your page.
 
 -------------------------------------------------------------
 * TRIGGERING THE WORKFLOW USING CODE/API in Backend
-NOTE: Incase of triggering WF using code, then in that case to give which "WF MODEL" to execute  and on which "PAYLOAD", we will use "WorkflowSession".
+NOTE: Incase of triggering WF using code, then in that case to give which "WF MODEL" to execute  and on which "PAYLOAD", we will
+      use "WorkflowSession".
 
 -> Here we are triggering the WF using code in Servlet
-* SERVLET WORK: here whenever we hit the servlet path by providing the qurey parameter(here we give our pagepath as a query param) then the servlet executes and then
-                trigger the Workflow we have given.
+* SERVLET WORK: here whenever we hit the servlet path by providing the qurey parameter(here we give our pagepath as a query param)
+                then the servlet executes and then trigger the Workflow we have given.
 
 STEP: 1 (Only Step)- com/aem/geeks/core/servlets/ExecuteWorkflow.java
 * TO TRIGGER THE SERVLET -> http://localhost:4502/bin/executeworkflow?page=/content/aemgeeks/us/en/bhargavseshadritestpage
@@ -421,10 +428,11 @@ STEP: 1 (Only Step)- com/aem/geeks/core/servlets/ExecuteWorkflow.java
 - When no existing process is available based on our requirement then we can write our own custon WF process.
 - This "CUSTOM WF PROCESS" is available in the dropdown Of PROCESS STEP.
 
-- WORK OF THIS "CUSTOM WF PROCESS" : We will provide some DATA in the "arguments" in the process step dialog box, and then we add that data we have given,
-                                     in the jcr:properties of that payload or page.
+- WORK OF THIS "CUSTOM WF PROCESS" : We will provide some DATA in the "arguments" in the process step dialog box, and then we
+                                     add that data we have given, in the jcr:properties of that payload or page.
 STEP: 1 - com/aem/geeks/core/workflows/GeeksWorkflowProcess.java
-STEP: 2 - in our WF model drag and drop the "Process Step" -> and in that dialog box dropdown, you can see our new CUSTOM WF Process with labe we given. select that.
+STEP: 2 - in our WF model drag and drop the "Process Step" -> and in that dialog box dropdown, you can see our new CUSTOM WF
+          Process with labe we given. select that.
 STEP: 3 -(specific to here use case) : give some info in arguments in process step dialog box. eg: approver:bhargav.
 STEP: 4 - Now trigger the WF by providing the page path, after wf gets completed you can see the process step arguments data we given
           got added in the page jcr:content node as a properties.
@@ -432,8 +440,9 @@ STEP: 4 - Now trigger the WF by providing the page path, after wf gets completed
 -------------------------------------------------------------
 * CUSTOM WORKFLOW STEP
 - Combination of Custom WF Process + Component(this comp wont have any rendering script and backend module) is called a Custom Workflow STEP.
--IMP- The comp will have a cq:dialg, cq:editConfig. and  cq:editConfig has a child node called cq:formParameters and in that there is a property called "PROCESS"
-      , for that property we give the value of our custom wf process, so in this way using that property we link this comp to our custom wf process.
+-IMP- The comp will have a cq:dialg, cq:editConfig. and  cq:editConfig has a child node called cq:formParameters and in that there is a property
+      called "PROCESS", for that property we give the value of our custom wf process, so in this way using that property we link this comp to our
+      custom wf process.
 
 STEP: 1 - Creating a custom WF Process for Custom Workflow STEP - com/aem/geeks/core/workflows/GeeksWorkflowStep.java
 STEP: 2 - Creating a Component - apps/aemgeeks/components/workflow/geeksworkflowstep
@@ -442,12 +451,15 @@ Step: 3 - Add you step in the WF Model.
 
 * NOTE:  If you didn't find your step in the available steps, this means our Comp group is not allowed. so add your comp group in design node.
 - So open the properties in that WF Model console. and go to advanced tab and copy the default design node.
-- In crx go to our design node "/libs/settings/wcm/designs/default" and then inside go to /jcr:content/model/flow and in the "components" check of your component
+- In crx go to our design node "/libs/settings/wcm/designs/default" and then inside go to /jcr:content/model/flow and in the "components"
+  check of your component
    group is present or not.
-- If not present then we have to add our component group. but modifying /libs/ path is not at all advisable. so we have to overlay (or) the override the that libs design node.
+- If not present then we have to add our component group. but modifying /libs/ path is not at all advisable. so we have to overlay (or)
+  the override the that libs design node.
 
 -------------------------------------------------------------
-* OVERLAYING (or) OVERRIDING THE LIBS NODE (doing in crx, but we can do through code also by pkging it out and putting in our code folder and giving a push)
+* OVERLAYING (or) OVERRIDING THE LIBS NODE (doing in crx, but we can do through code also by pkging it out and putting in our code folder
+  and giving a push)
 STEP: 1 - Copy the design node "/libs/settings/wcm/designs/default"
 STEP: 2 - Go to "apps/settings/wcm/designs" node and paste it there and rename the node from default to whatever you want.
 STEP: 3 - Remove all the other nodes and folder, which we dont use. and keep /jcr:content/model
@@ -465,7 +477,8 @@ STEP: 7 - Now you can see your WF Step in the available steps. Drag and drop it.
 
   Step :1 Created a Workflow Model, and after the start step added a OR STEP (DECISION STEP).
   Step: 2 - Configured that OR step by giving one ecma script in branch-1 and a default in the branch-2.
-          - So its like if/else, I have given one condition IF the payload path contains "/content/www/us/en" then go to branch-1 otherwise go to branch-2.
+          - So its like if/else, I have given one condition IF the payload path contains "/content/www/us/en" then go to branch-1
+            otherwise go to branch-2.
           - we can add more than 2 branches as well.
   Step: 3 - So after the condition satisfies it goes to the branch 1 and there I have added a participant step and in that participant step
              I have given the USER(we can get our user details from tools->security->users).
@@ -523,8 +536,8 @@ Step: 3 (last step)- Rendering with styles : apps/aemgeeks/components/bhargav-ct
 =============================================================================================
 12) Creating a SYSTEM/SERVICE USER (Manual Way)
 
-* Main Note : Service users are designed for backend/programmatic access only, not for interactive UI login. so we can't able to login using service user.
-              They are used by OSGI services, Servlets, Workflows.
+* Main Note : Service users are designed for backend/programmatic access only, not for interactive UI login. so we can't able to
+  login using service user. They are used by OSGI services, Servlets, Workflows.
 
 Step : 1 - Go to crx/explorer/index.jsp and click on User Administration
 Step : 2 - Click on "Create System User" and give the user name and path as "system".
@@ -534,9 +547,11 @@ Step : 3 - Now we have to give the permissions to this user, so for that go to "
 Note : Now your user is created and got the permissions, you can check the user in crx - /home/users/system
 
 -> Now we have to map the user to a bundle.
-Step : 4 - Go to system/console/configmgr and search for "Apache Sling Service User Mapper Service Amendment". Its a factory config so create a new instance.
-Step : 5 - For Service Mapping give "aemgeeks.core:bhargavmainuser=bhargav-main-user" - here "aemgeeks.core" is our bundle name, "bhargav-main-user" is the
-           service name we give to our service user and "bhargav-main-user" is the user we created in step 1 and "bhargavmainuser" it is just a variable.
+Step : 4 - Go to system/console/configmgr and search for "Apache Sling Service User Mapper Service Amendment". Its a factory config
+           so create a new instance.
+Step : 5 - For Service Mapping give "aemgeeks.core:bhargavmainuser=bhargav-main-user" - here "aemgeeks.core" is our bundle name,
+           "bhargav-main-user" is the service name we give to our service user and "bhargav-main-user" is the user we created in
+           step 1 and "bhargavmainuser" it is just a variable.
 
 
 =============================================================================================
@@ -552,25 +567,28 @@ Step : 4 - Now select the use and click on "ENABLE" & "ACTIVATE".
 14) Creating Content Fragment Model and Using that CF Data in the Backend.
 
 Creation :
-Step :1 - Go to "Tools -> Assets -> Content Fragment Models" and create a new model with the required fields in which ever folder you want. (eg: Bhargav Personal CF Model).
+Step :1 - Go to "Tools -> Assets -> Content Fragment Models" and create a new model with the required fields in which ever folder
+          you want. (eg: Bhargav Personal CF Model).
 Step: 2 - Save the CF Model. So the model is created.
-Very Imp Note : In modern AEM versions and AEM as a Cloud Service, you must explicitly configure the path of the folder containing your Content Fragment Models
-                in the "Allowed Content Fragment Models" field under the Policies tab of the corresponding folder in /content/dam. Otherwise, the models will not shown up
-                when creating Content Fragments in that folder.
-Note : Publish the model when you want to send you model from author to publish, if you dont publish the model then you can use that model only in author,
+Very Imp Note : In modern AEM versions and AEM as a Cloud Service, you must explicitly configure the path of the folder containing
+                your Content Fragment Models in the "Allowed Content Fragment Models" field under the Policies tab of the corresponding
+                folder in /content/dam. Otherwise, the models will not shown up when creating Content Fragments in that folder.
+Note : Publish the model when you want to send you model from author to publish, if you dont publish the model then you can use that model
+       only in author,
        you cant use that model in publish.
 Step: 3 - Now we have to create a content fragment based on that model, so for that go to "Assets(content/dam) -> Files -> Create ->
           Content Fragment" and there select the model you have created in step 1 and then give the name and create it.
-Step: 4 - Now open the content fragment you have created and there you can see the fields which we have created in the model, so fill those fields and save it.
-Step: 5 - Now we can use this content fragment on the page - so go to your page and add the "Content Fragment" component and in that select the content fragment
-          you have created in step 3.
+Step: 4 - Now open the content fragment you have created and there you can see the fields which we have created in the model, so fill those
+          fields and save it.
+Step: 5 - Now we can use this content fragment on the page - so go to your page and add the "Content Fragment" component and in that select
+          the content fragment you have created in step 3.
 
 * We can have different variations(copies) of our CF, and to use that we have to pick the variation we want in the dialog box on the page.
 * and we can also sync CF variation with master as well.
 
 Imp:
-* We can also use the content fragment data in the backend code like in sling model or servlet, for that we have to use "ContentFragment" API. and we use that data and
-  render it on the page using sling model and htl.
+* We can also use the content fragment data in the backend code like in sling model or servlet, for that we have to use "ContentFragment"
+  API. and we use that data and render it on the page using sling model and htl.
 
 Step: 1 - Sling Model to get the CF data : com/aem/geeks/core/models/impl/BhargavContentFragmentRltdModelImpl.java
 Step: 2 - Using that sling model in HTL to render the data : apps/aemgeeks/components/content/bhargav-content-fragment-comp
@@ -587,10 +605,11 @@ Step: 2 - Using that sling model in HTL to render the data : apps/aemgeeks/compo
   -> To see graphql endpoints in crxde : /content/cq:graphql/global/endpoint
   -> to create graphql endpoint : http://localhost:4502/libs/cq/graphql/sites/admin/content/console.html
 
-* In Graphql Editor you write the queries to fetch the content from your content fragments and based on our query, json is created. and the external application get this
-  json response only when it make a get request using the persisted query url.
+* In Graphql Editor you write the queries to fetch the content from your content fragments and based on our query, json is created.
+  and the external application get this json response only when it make a get request using the persisted query url.
     eg:
-        1. you crete a end point in :  http://localhost:4502/libs/cq/graphql/sites/admin/content/console.html and in the graphql editor you select that endpoint
+        1. you crete a end point in :  http://localhost:4502/libs/cq/graphql/sites/admin/content/console.html and in the graphql editor
+           you select that endpoint
         2. then we write the query based on the requirement.
         3. and then we click save and give a name for the file
         4. that file name becomes the url, that url is used by react to get the data
@@ -624,8 +643,9 @@ Step: 3 - Give a Build and check if the component is created and active in the s
 --> Creating Custom Rollout Configuration
 Step: 1 - Better approach is in CRXDE, Overlay the libs rollout configuration in /apps/ folder.
 Step: 2 - Now inside it create your custom rollout configuration and give the reqd properties in that. like cq:trigger, JCR:Title etc.
-Step: 3 - Now in that rollout configuration create a Live Action node and for that node give node name same as the "LiveActionFactory.LIVE_ACTION_NAME"
-          you have given in your Live Action Factory class and give the type as "cq:LiveSyncAction". and then inside that Live Action node give the
+Step: 3 - Now in that rollout configuration create a Live Action node and for that node give node name same as the
+          "LiveActionFactory.LIVE_ACTION_NAME" you have given in your Live Action Factory class and give the type as "cq:LiveSyncAction".
+           and then inside that Live Action node give the
           property "cq:action" with value same as the "LiveActionFactory.LIVE_ACTION_NAME" you have given in your Live Action Factory class.
 Step: 4 - Add this rollout configuration to the blueprint page and then run the rollout, after rollout gets completed you can see the custom
           node property got added in both blueprint and live action page.
@@ -653,8 +673,10 @@ Step: 1 - Create the pages accordingly in aem
             en --> Articles --> Rice plantation
                             --> Banana Plantation
                             --> Mango Plantation
-         - An in those pages properties add the title and description. so that in our component we fetch those titles and des from page props and print them.
-Step: 2 - Create a Component and Sling model to take the root article path through dialog box - /content/aemgeeks/us/en/articles, and all our article pages are under this path
+         - An in those pages properties add the title and description. so that in our component we fetch those titles and des from page
+           props and print them.
+Step: 2 - Create a Component and Sling model to take the root article path through dialog box - /content/aemgeeks/us/en/articles, and
+          all our article pages are under this path
         - apps/aemgeeks/components/content/bhargav-articlelist-comp
 Step: 3 - Writing querybulder related code and getting data - com/aem/geeks/core/models/impl/BhargavArticleListModelImpl.java
 Step: 4 - putting the data in to java bean - com/aem/geeks/core/beans/BhargavArticleListDataBean.java
@@ -679,7 +701,8 @@ Step : 1 - create a clientlib and in that give categories (for timebeing I gave 
            - apps/aemgeeks/clientlibs/clientlib-bhargav-metadataschema/.content.xml
 
 Step : 2(main) - create JS for fetch calls, eventlisteners. : apps/aemgeeks/clientlibs/clientlib-bhargav-metadataschema/BhargavMetadataSchemaRLTD.js
-Step : 3(last step)(main) - Create a path type servlet for getting the data from the API. : com/aem/geeks/core/servlets/BhargavMetadataSchemaPathServlet.java
+Step : 3(last step)(main) - Create a path type servlet for getting the data from the API.
+                            : com/aem/geeks/core/servlets/BhargavMetadataSchemaPathServlet.java
 
 API used here : https://dummyjson.com/users
 
@@ -697,8 +720,10 @@ Step: 4 - Render those values in HTL : apps/aemgeeks/components/content/bhargav-
 -------------------------------------------------------------
 18.b) DATASOURCE - Dynamic Dropdown values in Dialog - bhargav-personalcomp-two
 
-Step-1 : Add the dropdown field in the dialog along with "datasource" in the component : apps/aemgeeks/components/content/bhargav-personalcomp-two/_cq_dialog/.content.xml
-Step-2 : Now Create a ResourceType servlet to make a call to the API and get responese : com/aem/geeks/core/servlets/tododropdown/TodoDropdownDataSourceServlet.java
+Step-1 : Add the dropdown field in the dialog along with "datasource" in the component
+            : apps/aemgeeks/components/content/bhargav-personalcomp-two/_cq_dialog/.content.xml
+Step-2 : Now Create a ResourceType servlet to make a call to the API and get responese
+            : com/aem/geeks/core/servlets/tododropdown/TodoDropdownDataSourceServlet.java
 Step-3 : Render the selected value on page using sling model : com/aem/geeks/core/models/impl/BhargavPersonalCompTwoModelImpl.java
 
 -------------------------------------------------------------
@@ -707,7 +732,8 @@ Step-3 : Render the selected value on page using sling model : com/aem/geeks/cor
 Step : 1 - Add the validation in the dialog field and then add a child node to it using granite:data
                 -> apps/aemgeeks/components/content/bhargav-personalcomp-two/_cq_dialog/.content.xml
 
-Step : 2 - Add the validation logic in the clientlib JS file : apps/aemgeeks/components/content/bhargav-personalcomp-two/clientlib/BhargavDialogValidator.js
+Step : 2 - Add the validation logic in the clientlib JS file
+             : apps/aemgeeks/components/content/bhargav-personalcomp-two/clientlib/BhargavDialogValidator.js
 
 -------------------------------------------------------------
 18.d) Big One - Printing all the article pages as a Cards using ResourceResolver and QUERY BUILDER
@@ -716,8 +742,10 @@ Step: 1 - Create the pages accordingly in aem
             en --> Articles --> Rice plantation
                             --> Banana Plantation
                             --> Mango Plantation
-         - An in those pages properties add the title and description. so that in our component we fetch those titles and des from page props and print them.
-Step: 2 - Create a Component and Sling model to take the root article path through dialog box - /content/aemgeeks/us/en/articles, and all our article pages are under this path
+         - An in those pages properties add the title and description. so that in our component we fetch those titles and des from
+           page props and print them.
+Step: 2 - Create a Component and Sling model to take the root article path through dialog box - /content/aemgeeks/us/en/articles,
+          and all our article pages are under this path
         - COMPONENT : apps/aemgeeks/components/content/bhargav-articlelist-comp
 Step: 3 - Writing querybulder related code and getting data - com/aem/geeks/core/models/impl/BhargavArticleListModelImpl.java
 Step: 4 - putting the data in to java bean - com/aem/geeks/core/beans/BhargavArticleListDataBean.java
@@ -729,8 +757,9 @@ Step: 7 (last step)- Now write all the required css styles - apps/aemgeeks/compo
 18.e) Adding a new tab and fields in page properties
 Approach-1 : By overlaying the libs page properties dialog to our /apps path and adding our custom fields in it.
 
-Approach-2: We can go to our base page component under /apps and there that base page comp will inherit the /lib page comp, then add a cq:dialog and add your
-            tab with fields in that, Now AEM will automatically merge your TAB with other ootb tabs. this is exactly like we do in our proxy component dialog.
+Approach-2: We can go to our base page component under /apps and there that base page comp will inherit the /lib page comp,
+            then add a cq:dialog and add your tab with fields in that, Now AEM will automatically merge your TAB with other
+            ootb tabs. this is exactly like we do in our proxy component dialog.
             - apps/aemgeeks/components/page/_cq_dialog/.content.xml
 
 
@@ -754,34 +783,39 @@ Steps to implement Style System:
     - Example: <div class="${properties.style}">...</div>
 4. In the page policy, define the allowed styles for the component
     - This can be done by adding a cq:styleIds property in the page policy node
-5. In the page editor, authors can select a style for the component from the dropdown, and the selected style will be applied to the component's HTML output.
+5. In the page editor, authors can select a style for the component from the dropdown, and the selected style will be applied to the
+   component's HTML output.
 
 ----------------------------
 (important)
 * APPROACH 2: (Using PAGE POLICY for Pages AND COMPONENT POLICY for Comps) - THIS IS THE ONE I IMPLIMENTED
 1. Create a clientlib with the styles you want. - apps/aemgeeks/clientlibs/clientlib-bhargav-stylesystem
 *. Now to apply the styles for the "Whole PAGE"
-    a. Go to the page policy of the template you are using for your page, and in that add the clientlib category of the styles you want to apply for the page.
+    a. Go to the page policy of the template you are using for your page, and in that add the clientlib category of the styles you
+       want to apply for the page.
     b. And in the styles tab of the page policy, add the styles you want to apply for the page. give the name of the style and then the
       "CLASS NAME" you have used in the css file.
             -> apps/aemgeeks/clientlibs/clientlib-bhargav-stylesystem/bhargavStylesystem.css
-    c. Save it and refreash the page, now you can see a brush symbol in the page editor, click that and select the style you want to apply for the page.
+    c. Save it and refreash the page, now you can see a brush symbol in the page editor, click that and select the style you want to
+       apply for the page.
 
 *. Now to apply the styles for the "LAYOUT CONTAINER"
-    a. go to the template, Go to the component policy of the component you are using in your page, or select the whole layout container and open component policies.
-    b. And in the styles tab of the component policy, add the styles you want to apply for the component. give the name as u want of the style and then
-      the "CLASS NAME" you have used in your clientlib css file.
+    a. go to the template, Go to the component policy of the component you are using in your page, or select the whole layout container
+       and open component policies.
+    b. And in the styles tab of the component policy, add the styles you want to apply for the component. give the name as u want of
+       the style and then the "CLASS NAME" you have used in your clientlib css file.
             -> apps/aemgeeks/clientlibs/clientlib-bhargav-stylesystem/bhargavStylesystem.css
-    c. Save it and refreash the page, now you can see a brush symbol at the layout container component, click that and select the style you want to apply for
-      that component.
+    c. Save it and refreash the page, now you can see a brush symbol at the layout container component, click that and select the
+       style you want to apply for that component.
 
 *. Now we have used this style systems option for templates and layout container, we will see how we use it for a COMPONENT.
-    - if we add a Proxy Component or a core component, you will get a Policies icon to configure the styles. But if you add a custom component
-      you wont get the policies icon,
-    - The Policy gear icon in Template Editor only shows for a component if a design dialog (_cq_design_dialog) exists somewhere in its resource type
-      chain — either directly on the component, or inherited via sling:resourceSuperType.
+    - if we add a Proxy Component or a core component, you will get a Policies icon to configure the styles. But if you
+      add a custom component you wont get the policies icon.
+    - The Policy gear icon in Template Editor only shows for a component if a design dialog (_cq_design_dialog) exists
+      somewhere in its resource type chain — either directly on the component, or inherited via sling:resourceSuperType.
     - So add a design dialog (_cq_design_dialog) to our custom comp : apps/aemgeeks/components/content/bhargav-personalcomp-two/_cq_design_dialog
-    - Now you can see the policies icon and in that policies icon you will have the tabs you have defined in the "design dialog", now you can add styles.
+    - Now you can see the policies icon and in that policies icon you will have the tabs you have defined in the "design dialog",
+      now you can add styles.
 
 =============================================================================================
 
@@ -896,9 +930,12 @@ step:2 -> apps/aemgeeks/components/content/servicedemo/servicedemo.html
 
 --------------------
 -> We use the below three combined
-c)data-sly-template(STEP: 1): for creating template (to reuse the code) :FILE: apps/aemgeeks/components/content/bhargav-compmultifield/bhargav-reusable-code.html
-d)data-sly-use (STEP: 2): here we use this to get that file where the template is defined. :File: apps/aemgeeks/components/content/bhargav-compmultifield/bhargav-compmultifield.html
-e)data-sly-call(STEP: 3) : use to call the specific template written in that file  :File: apps/aemgeeks/components/content/bhargav-compmultifield/bhargav-compmultifield.html
+c)data-sly-template(STEP: 1): for creating template (to reuse the code) :
+  FILE: apps/aemgeeks/components/content/bhargav-compmultifield/bhargav-reusable-code.html
+d)data-sly-use (STEP: 2): here we use this to get that file where the template is defined. :
+  File: apps/aemgeeks/components/content/bhargav-compmultifield/bhargav-compmultifield.html
+e)data-sly-call(STEP: 3) : use to call the specific template written in that file  :
+  File: apps/aemgeeks/components/content/bhargav-compmultifield/bhargav-compmultifield.html
 
 --------------------
 f)data-sly-attribute : used to give attributes like class,id in html structure
@@ -921,7 +958,8 @@ i)data-sly-set : setting a variable in HTL, If you want a variable that should b
 <sly data-sly-set.imageData="${articleIntro.ImageRenditionsBean}"/>
 --- So here, the imageData value is -->  in ArticleIntro class ----> there should be "getImageRenditionsBean", it will becomes the imageData value.
 
-j) data-sly-test : using this we write, if else type conditional logic - apps/aemgeeks/components/content/bhargav-compmultifield/bhargav-compmultifield.html
+j) data-sly-test : using this we write, if else type conditional logic
+                    - apps/aemgeeks/components/content/bhargav-compmultifield/bhargav-compmultifield.html
 
 =================================
 => USING GLOBAL OBJECTS
