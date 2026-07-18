@@ -60,6 +60,7 @@ IMPORTANT PATHS
                 PathType Servlets : Here the situation is different, if we tried the above code for it, like if we try to get the
                                     resource using request it will give the path we have given in the code, eg: "/bin/bhargav".
                                     because the request is not associated with a content resource.
+                                    - Here to get the Current Resource path we have to either send it through Query Params or some other way.
 
 =============================================================================================
 USING a Model, Service, HTL in NORMAL JAVA CLASS
