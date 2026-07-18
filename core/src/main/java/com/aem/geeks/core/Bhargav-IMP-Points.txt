@@ -38,9 +38,11 @@ IMPORTANT PATHS
         - ${properties.fieldName}
         - Internally it simply means "resource.getValueMap()".
 
--> sling:hideResource="{Boolean}true" : * To Hide a Core component dialog field in our proxy comp, Add this property to that in the overriden cq_dialog in proxy comp.
-                                        * You have to add that field and use this hideResource option with it by "Matching that core component field node structure,
-                                          Then only it works", EXAMPLE for this is in "apps/aemgeeks/components/bhargavtextproxy/_cq_dialog/.content.xml"
+-> sling:hideResource="{Boolean}true" : * To Hide a Core component dialog field in our proxy comp, Add this property to that in the
+                                          overriden cq_dialog in proxy comp.
+                                        * You have to add that field and use this hideResource option with it by "Matching that core
+                                          component field node structure, Then only it works",
+                                          EXAMPLE for this is in "apps/aemgeeks/components/bhargavtextproxy/_cq_dialog/.content.xml"
 
 -> * We can have different variations(copies) of our Content Fragment, and to use that we have to pick the variation we want in the CF dialog box on the page.
    * and we can also sync CF variation with CF master as well.
@@ -48,6 +50,16 @@ IMPORTANT PATHS
 -> In modern AEM versions and AEM as a Cloud Service, you must explicitly configure the path of the folder containing your Content Fragment Models
       in the "Allowed Content Fragment Models" field under the Policies tab of the corresponding folder in /content/dam. Otherwise, the models will not shown up
       when creating Content Fragments in that folder.
+
+-> Very.Imp - In "Servlets" getting a Current Resource.
+                * ResourceType Servlet : here we can get the Current Resource path directly, REQUEST will give to us the current resource.
+                                         Eg : Resource resource = req.getResource();
+                                              String resourcePath = resource.getPath();
+                                              Output : /content/aemgeeks/us/en/delete-later-2/jcr:content/root/responsivegrid/registrationformserv
+
+                PathType Servlets : Here the situation is different, if we tried the above code for it, like if we try to get the
+                                    resource using request it will give the path we have given in the code, eg: "/bin/bhargav".
+                                    because the request is not associated with a content resource.
 
 =============================================================================================
 USING a Model, Service, HTL in NORMAL JAVA CLASS
@@ -798,6 +810,10 @@ Steps:
 
 5 - getting hold of the page resource using ResourceResolver
     ->Resource parentResource = resourceResolver.getResource(parentPath);
+
+    * Imp (Applicable only for ResourceType Servlets): Getting Hold Resource Path using "Request".
+        Resource resource = request.getResource();
+        String resourcePath = resource.getPath();
 
 6 - Converting or Resource to Node, so that we can do the modifications
     -> Node parentNode = parentResource.adaptTo(Node.class);

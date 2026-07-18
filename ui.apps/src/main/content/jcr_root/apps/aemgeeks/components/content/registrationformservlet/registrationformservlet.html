@@ -15,10 +15,11 @@ For Step:2 - com/aem/geeks/core/servlets/BhargavResourceTypePostServlet.java
 </head>
 <body style="font-family: Arial, sans-serif; background:#f5f5f5; padding:40px;">
 
-<!--BhargavSeshadri - Step:3(Last step) - ResourceType Post Servlet  - method="post" action="current page jcr:content path with selectors"-->
+<!--BhargavSeshadri - Step:3(Last step) - ResourceType Post Servlet  - method="post" action="here we have to give the resource path
+    (the path of the resource which Sling:resourceType matches to the resourceType we have give in the Servlet )with selectors"-->
 
 <form style="max-width:400px; margin:auto; background:#fff; padding:20px; border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,0.1);"
-       method="post" action="/content/aemgeeks/us/en/registration-form-post-servlet/jcr:content.bha.txt">
+       method="post" action="${resource.path}.bha.txt">
     <h2 style="text-align:center; margin-bottom:20px;">Registration Form</h2>
 
     <!-- Name -->

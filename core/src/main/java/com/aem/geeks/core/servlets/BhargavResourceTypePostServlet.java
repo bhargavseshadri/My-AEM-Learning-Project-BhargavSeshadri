@@ -8,6 +8,8 @@ import org.apache.sling.api.servlets.HttpConstants;
 import org.apache.sling.api.servlets.SlingAllMethodsServlet;
 import org.apache.sling.servlets.annotations.SlingServletResourceTypes;
 import org.osgi.service.component.annotations.Component;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.jcr.*;
 import javax.servlet.Servlet;
@@ -30,32 +32,46 @@ import java.io.IOException;
  * Page used for the demo: http://localhost:4502/content/aemgeeks/us/en/registration-form-post-servlet.html*/
 
 @Component(service = Servlet.class)
-@SlingServletResourceTypes(
-        methods = {HttpConstants.METHOD_POST},  //here only using post method, if want we can use GET also
-        resourceTypes = "aemgeeks/components/structure/page",
+@SlingServletResourceTypes(methods = {HttpConstants.METHOD_POST},  //here only using post method, if want we can use GET also
+        resourceTypes = "aemgeeks/components/content/registrationformservlet", //here we are giving our Component Path
         extensions = "txt",
         selectors = "bha"
 )
 public class BhargavResourceTypePostServlet extends SlingAllMethodsServlet {
 
+    private static final Logger LOG = LoggerFactory.getLogger(BhargavResourceTypePostServlet.class);
+
     //Get Method; for now this is not in use
     @Override
     protected void doGet(final SlingHttpServletRequest req, final SlingHttpServletResponse res) throws IOException {
+
         final Resource resource = req.getResource();
         res.setContentType("text/plain");
         res.getWriter().write("Form Submitted Successfully");
+
     }
+
+
+
+
 
     @Override
     protected void doPost(final SlingHttpServletRequest req, final SlingHttpServletResponse res) throws IOException {
 
-        ResourceResolver resourceResolver =  req.getResourceResolver(); //getting the resourceResolver using Request
+        LOG.debug("Inside BhargavResourceTypePostServlet Post Method");
+
+        ResourceResolver resourceResolver = req.getResourceResolver(); //getting the resourceResolver using Request
         Session session = resourceResolver.adaptTo(Session.class);   //Here I am getting the Session using resourceResolver
+
+        Resource resource = req.getResource();
+        String resourcePath = resource.getPath();
+
+        LOG.info("BhargavResourceTypePostServlet -- Resource Path {} ", resourcePath);
 
         //Going down we are getting the node, modifying, adding the node and setting the properties using session
         try {
             if (session != null) {
-                Node postToResourceNode = session.getNode("/content/aemgeeks/us/en/registration-form-post-servlet/jcr:content");  // this is the path of my page where i have used this form component
+                Node postToResourceNode = session.getNode(resourcePath);  // this is the path of my page where i have used this form component
                 Node newUserNode = postToResourceNode.addNode("newUser" + System.currentTimeMillis(), "nt:unstructured");
                 newUserNode.setProperty("name", req.getParameter("name"));       //here the name, password, email etc these should match the values given in the form "name" attribute
                 newUserNode.setProperty("phonenumber", req.getParameter("phone"));
