@@ -9,6 +9,8 @@ import org.apache.sling.api.servlets.SlingAllMethodsServlet;
 import org.apache.sling.servlets.annotations.SlingServletPaths;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.jcr.RepositoryException;
 import javax.servlet.Servlet;
@@ -30,6 +32,8 @@ import java.io.IOException;
 @Component(service = Servlet.class)
 @SlingServletPaths("/bhargav/addProperty")
 public class BhargavPropBtnPathServlet extends SlingAllMethodsServlet {
+
+    private static final Logger LOG = LoggerFactory.getLogger(BhargavPropBtnPathServlet.class);
 
     @Reference
     private BhargavPropertyBtnService bhargavPropertyBtnService;

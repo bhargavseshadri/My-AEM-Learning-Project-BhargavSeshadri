@@ -21,7 +21,9 @@ public final class ResolverUtil {
 
     }
 
-	public static final String GEEKS_SERVICE_USER = "bhargavserviceuser";   //Variable name we have given in the configuration while linking it to a bundle mapping
+    //Variable name we have given in the configuration while linking it to a bundle mapping
+//	public static final String GEEKS_SERVICE_USER = "bhargavserviceuser";   //This user is not working properly, so created new one
+	public static final String GEEKS_SERVICE_USER = "seshadribhargavlatestserviceuser";
     /**
      * @param  resourceResolverFactory factory
      * @return new resource resolver for bhargavseshadri-user service user
@@ -32,8 +34,8 @@ public final class ResolverUtil {
         paramMap.put( ResourceResolverFactory.SUBSERVICE, GEEKS_SERVICE_USER ); //"ResourceResolverFactory.SUBSERVICE" its just a constant you have to give
 
         // fetches the admin service resolver using service user.
-        ResourceResolver resolver = resourceResolverFactory.getServiceResourceResolver(paramMap);   // we can write this everywhere we needed or we can write it in a function and use the function everywhere
-        return resolver;
+        ResourceResolver resourceResolver = resourceResolverFactory.getServiceResourceResolver(paramMap);   // we can write this everywhere we needed or we can write it in a function and use the function everywhere
+        return resourceResolver;
     }
 
     //we can use this resolver to do multiple operations based on the permissions we have given to it

@@ -543,6 +543,9 @@ Step: 3 (last step)- Rendering with styles : apps/aemgeeks/components/bhargav-ct
 
 Step : 1 - Go to crx/explorer/index.jsp and click on User Administration
 Step : 2 - Click on "Create System User" and give the user name and path as "system".
+Note : Sometimes it gives some permission error, at that time go to crx/explorer/index.jsp and click "login" and login as admin or
+       user with reqd permission.
+
 Step : 3 - Now we have to give the permissions to this user, so for that go to "User Permissions : /useradmin" and
            there search for the user you have created and then give the required permissions.
 

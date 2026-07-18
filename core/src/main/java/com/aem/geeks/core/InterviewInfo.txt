@@ -125,6 +125,89 @@ b) PathType Servlets
 - Exposing data externally
 
 -------------------------------------------------------
+*)  (VERY VERY IMPORTANT) ACL permissions role in Servlets
+- Lets say a user have only Jcr:Read Permissions
+
+Understanding the FLOW of Servlets
+- For ResourceType servlet
+    - Using that user we can able to read the content in the jcr and we cannot do Write operations in JCR.
+    - When a POST request comes from ResourceType servlet - POST /content/my-site/page, What Sling does
+        Request
+           │
+           ▼
+        Find resource (/content/my-site/page)
+           │
+           ▼
+        Read resourceType property
+           │
+           ▼
+        Find matching servlet
+           │
+           ▼
+        Execute servlet
+
+     - Notice the first step Sling has to read /content/my-site/page. If the user doesn't even have jcr:read,
+       Sling cannot resolve the resource properly also.
+
+
+- Path Type Servlets
+        - Using the same user we can able to read the content in the jcr and we cannot do Write operations in JCR.
+        - When a POST request comes from PathType servlet - POST /content/my-site/page, What sling does is
+            Request
+               │
+               ▼
+            Path matches /bhargav/addProperty
+               │
+               ▼
+            Execute servlet
+
+        - There is no resource lookup. Path servlets don't require read permission on a resource for servlet resolution.
+
+- THIS MEANS PATHTYPE SERVLET CAN EXECUTE THE SERVLET WITH OUT ANY READ PERMISSIONS AS WELL. BUT RESOURCE TYEP SERVLETS NEED READ PERMISSIONS
+  EVEN TO EXECUTE THE SERVLET.
+
+-----------
+* Now lets understand how they behave at the time of JCR OPERATIONS (When the user only have read access)
+- THIS IS SAME FOR BOTH PATHTYPE AND RESOURCETYPE SERVLETS
+
+- Inside your servlet we do : ResourceResolver rr = request.getResourceResolver();
+                              Session session = rr.adaptTo(Session.class);
+                              Node node = session.getNode("/content/test");
+                              node.setProperty("name", "Bhargav");
+                              session.save();
+
+- While doing the operation it checks, Whose session is this?
+                                       request.getResourceResolver()
+                                                 │
+                                                 ▼
+                                       Logged-in user's ResourceResolver
+                                                 │
+                                                 ▼
+                                       Logged-in user's Session
+
+- then it knows it is bhargavUser's session --> and while doing save() OAK comes in and checks "Does BhargavUser have permission to modify this node?"
+  if the user wont have a write permission it throws "AccessDeniedException".
+
+- The only difference between these is ResourceType servlet throws this error before the servlet execution and path type servlet throws after the
+  servlet execution while doing session.save().
+
+
+* Important NOTE
+- These servlets will again behave differently when a Service user (using ResourceResolverFactory way) with full permissions enters
+    * Path Type Servlet : If a "NOARMAL USER (with no permissions)(or with read permission)" tries to execute a servlet
+                          > Because it is a pathtype servlet the servlet executes no matter what the permission is.
+                          > and in the code if we use a "SERVICE USER(with all permissions)" for the write operations.
+                            then in that case the write operation will "HAPPEN". No one stops it. even if the normal user dont have write
+                            permission the write operation will happens.
+
+    * Resource Type Servlet : If a "NOARMAL USER (with read permission)" tries to execute a servlet
+                              > Because it is a ResourceType servlet the servlet executes if that normal user have read permission.
+                              > If that normal user not ever have read permission, the the servlet it self wont execute.
+                              > and Now in the code if we use a "SERVICE USER(with all permissions)" for the write operations.
+                                then in that case the write operation will "HAPPEN". No one stops it. even if the normal user dont have write
+                                permission the write operation will happens.
+
+-------------------------------------------------------
 *) SERVLETS - GET and POST requests explanation
 
 Simple understanding
