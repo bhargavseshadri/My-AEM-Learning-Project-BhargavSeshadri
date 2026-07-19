@@ -180,16 +180,19 @@ Difference between data-sly-template and data-sly-call?
 
 ---------------------------------------
 -> (HTL) Java-Backed-Object
-- Component : Provides the information of that component.
+- Component : Provides the information of current component.
 - componentContext : It is open for each conmponent, Independent of wcmmode.
-- resource : object of current resource(when we drag and drop a comp on page, then the created node of that comp in that page is called as current Resource).
+- resource : it give info of current resource(when we drag and drop a comp on page, then the created node of that comp in that page is
+             called as current Resource).
 - resourcePage : On the page where we drag and drop the component, It provides the information of that page means the current page
 - currentDesign : there is a design node available to store the template level properties, that info we can get through this. if nothing is set
                   then it gives the default libs design node path
 - currentNode : when we drag and drop a component on a page, then that comp node is treated as a current node.
-- currentPage
+- currentPage  : This give the details of current page
 - resourceDesign : it is the same as the current design
 - wcmmode : It provide you the information, that in which mode you are, returns "boolean", for EDIT: isEdit method, for Preview: isPreview method.
+- Request : This give the request info
+            Eg : ${request.requestURI}  this give the current request url - /content/aemgeeks/us/en/bhargavAemBackendApiPage.html
 
 -> Demo code available here: apps/aemgeeks/components/content/author-books/author-books.html
 

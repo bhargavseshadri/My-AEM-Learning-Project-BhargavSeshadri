@@ -1819,7 +1819,7 @@ JAVASCRIPT - HOW TO GET HOLD OF DOM ELEMENTS
 10. proxy components
 11. query builder
 12. graphQL
-13. Content fragment
+13. Content fragment & Experient fragments
 14. style system
 15. bhargav-backend-aem-apis-comp
 16. dynamic dropdown values

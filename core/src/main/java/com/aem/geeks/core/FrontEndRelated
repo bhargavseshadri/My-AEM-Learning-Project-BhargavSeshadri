@@ -1,0 +1,46 @@
+HTML
+
+*) Data attributes in html
+
+- Any attribute whose name starts with data- is valid HTML. These attributes are ignored by the browser for rendering,
+  but they allow you to store custom information on an HTML element.
+  Eg : <div
+           data-name="John"
+           data-age="25"
+           data-id="123">
+           data-resource-path="${resource.path}"
+           data-page-path="${currentPage.path}"
+           data-title="${properties.title}">
+       </div>
+       - You can create any name you want - data-user-id
+                                            data-component
+                                            data-product-id
+                                            data-price
+                                            data-author
+
+- They are commonly used to pass information from the server-rendered HTML to JavaScript.
+  Eg: <div data-resource-path="${resource.path}"></div>
+
+- Accessing Data Attributes in JavaScript
+    - Exactly. A data-* attribute belongs to an HTML element, so you need a reference to that element before you can access its dataset.
+    - Approach 1: <div
+                      id="card"
+                      data-name="John"
+                      data-age="25"
+                      data-city="Hyderabad">
+                  </div>
+
+               - JS : const card = document.getElementById("card");
+                      console.log(card.dataset.name);
+                      console.log(card.dataset.age);
+                      console.log(card.dataset.city);
+
+   - Approach 2: Using "this" inside an event handler, When an event handler is attached, this (or event.currentTarget) refers
+                 to the element that the handler is bound to.
+                   eg: <button data-id="123">Click Me</button>
+
+                       const button = document.querySelector("button");
+                       button.addEventListener("click", function () {
+                           console.log(this.dataset.id);
+                       });
+
