@@ -1077,6 +1077,21 @@ ans. We can acheive it by using "PAGE POLICY", we can add that clientlib categor
 20. I have published a page and immediately a wf should run and the assign a task to one user
 21. A page contains Static + Dynamic + Personalized Page, how do you cache this page?
 =============================================================================================
+*) AEM as a Cloud Understanding  (material is in process)
+
+1. Differences between AEM and AEM Cloud
+    - In AEM 6.5, you can log into CRX/DE on a production server and tweak a script in /apps or modify an OSGi configuration
+      on the fly to fix a bug. In AEMaaC, /apps and /libs are strictly immutable at runtime.
+        - This happens because AEMaaC runs on Kubernetes, Every time Adobe pushes an update or you deploy code, the system spins
+          up brand new containers with your code, shifts the traffic over, and kills the old containers. SO this container lifecycle
+          is exactly why /apps and /libs must be immutable — if you manually changed a file on a running server, that change would
+          instantly vanish the next time the container was recycled.
+
+    - You cannot change code, overlay components, or modify OSGi configs directly on any Cloud environment.
+    - The only way to change anything in these paths is to commit the code to Git and run it through the deployment pipeline.
+    - In AEM 6.5, you can build a .zip package locally and upload it directly to your staging or production server via the Package Manager.
+      In AEMaaC, direct package deployment to higher environments is blocked.
+=============================================================================================
 
 
 

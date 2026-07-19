@@ -9,7 +9,6 @@ import org.apache.sling.models.annotations.injectorspecific.SlingObject;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
-
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -31,7 +30,7 @@ public class ExternalAPIDemoModelImpl implements ExternalAPIDemoModel {
     private String email;                       //we just create a variables to store the API DATA
     private String name;
     private String userName;
-    private String number;
+    private String phone;
     private String website;
     private String street;
     private String suite;
@@ -64,19 +63,20 @@ public class ExternalAPIDemoModelImpl implements ExternalAPIDemoModel {
 
             Gson gson = new Gson();
             //with the next line : up to now we have all the data in "conn", so now we are converting that data in to STREAM using "conn.getInputStream()"
-            // in simple word we get all the individual data and the we convert in to our class ExternalData.class
-            ExternalData data = gson.fromJson(new InputStreamReader(conn.getInputStream()), ExternalData.class);
-            /*ExternalData - It is just a helper pojo class to store the data, (and here we are just using the another class here without extending
-            or creating any object because gson will automatically creates a object for our ExternalData class
-            GSON - Create the object for you (new ExternalData() under the hood)
-                 - Read the JSON and Map matching keys to Java fields*/
+            InputStreamReader inputStreamReader = new InputStreamReader(conn.getInputStream());
+
+            // now using json we put that data in to ExternalData.java using gson
+            ExternalData data = gson.fromJson(inputStreamReader, ExternalData.class);
+
+            //ExternalData - It is just a helper pojo class to store the data
 
 
-            this.id = data.getId();             //after ExtrenalData gets the data here we gets that data to store in this class variables and use accordingly
+            //after ExtrenalData.Java gets the data here we fetches that data to store in this class variables and use accordingly
+            this.id = data.getId();
             this.name = data.getName();
             this.userName = data.getUserName();
             this.email = data.getEmail();
-            this.number = data.getNumber();
+            this.phone = data.getPhone();
             this.website = data.getWebsite();
             if (data.getAddress() != null) {
                 this.street = data.getAddress().getStreet();
@@ -114,8 +114,8 @@ public class ExternalAPIDemoModelImpl implements ExternalAPIDemoModel {
     }
 
     @Override
-    public String getNumber() {
-        return number;
+    public String getPhone() {
+        return phone;
     }
 
     @Override

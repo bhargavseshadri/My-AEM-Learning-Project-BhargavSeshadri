@@ -6,7 +6,7 @@ public class ExternalData {
     private String email;                       //we just create a variables to store the API DATA
     private String name;
     private String userName;
-    private String number;
+    private String phone;
     private String website;
     private Address address;
 
@@ -31,8 +31,8 @@ public class ExternalData {
         return userName;
     }
 
-    public String getNumber() {
-        return number;
+    public String getPhone() {
+        return phone;
     }
 
     public String getWebsite() {

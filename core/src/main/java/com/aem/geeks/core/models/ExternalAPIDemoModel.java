@@ -18,7 +18,7 @@ public interface ExternalAPIDemoModel {
 
     String getUserName();
 
-    String getNumber();
+    String getPhone();
 
     String getWebsite();
 

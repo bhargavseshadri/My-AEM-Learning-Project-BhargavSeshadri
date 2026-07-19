@@ -11,15 +11,32 @@ STEP:3(LAST STEP) FETCHING DATA FROM THIRD PART API (step:1 com/aem/geeks/core/m
         data-sly-use.obj="com.aem.geeks.core.models.ExternalAPIDemoModel"
 ></div>
 
+
 <h1>API RELATED COMPONENT - BHARGAV</h1>
+</br>
+
+======================FETCHING EXTERNAL API DATA no ACCESS TOKEN is required=============================
 
 <p>ID: ${obj.id}</p>
 <p>Name: ${obj.name}</p>
-<p>Number: ${obj.number}</p>
+<p>Phone: ${obj.phone}</p>
 <p>Street: ${obj.street}</p>
 <p>city: ${obj.city}</p>
 <h3>-------------------------------</h3>
 
+
+
+
+
+
+
+
+
+
+
+</br>
+</br>
+</br>
 ======================FETCHING EXTERNAL API DATA using ACCESS TOKEN=============================
 <!--BhargavSeshadri - STEP: 4 - By using a HTL in component, we render the data we got from the api
 For step:3 -> com/aem/geeks/core/models/UserAPISlingModel.java
@@ -41,6 +58,14 @@ For step:3 -> com/aem/geeks/core/models/UserAPISlingModel.java
         </ul>
     </div>
 
+
+
+
+</br>
+</br>
+</br>
+</br>
+    ======================For testing purposes : Here I am printing the response json here directly on page=============================
 
     <!--Just for testing purposes : Here I am printing the response json here directly on page-->
     <div class="dummyjson-component">
