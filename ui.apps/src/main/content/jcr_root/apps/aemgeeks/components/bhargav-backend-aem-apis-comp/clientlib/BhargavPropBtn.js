@@ -70,8 +70,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 If statusEl.textContent = "Added successfully",then the above div will look like below
                 After : <div class="status">Added successfully</div>
               */
-                statusEl.textContent =
-                  data.status === "success" ? "Added successfully" : "Error";
+                statusEl.textContent = data.status === "success" ? "Added successfully" : "Error";
               })
               .catch(() => {
                 statusEl.textContent = "Request failed";
