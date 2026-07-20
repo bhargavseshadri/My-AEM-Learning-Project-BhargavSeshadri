@@ -1076,6 +1076,9 @@ ans. We can acheive it by using "PAGE POLICY", we can add that clientlib categor
 19. How do you handle API failures?
 20. I have published a page and immediately a wf should run and the assign a task to one user
 21. A page contains Static + Dynamic + Personalized Page, how do you cache this page?
+22. I have some hundreds of pages and I want to publish all of them, how can I do this?
+Ans. Have multiple approachs : 1. Using OOTB workflow - "Request for Activation"
+                               2. Using Groovy Console
 =============================================================================================
 *) AEM as a Cloud Understanding  (material is in process)
 
@@ -1091,6 +1094,7 @@ ans. We can acheive it by using "PAGE POLICY", we can add that clientlib categor
     - The only way to change anything in these paths is to commit the code to Git and run it through the deployment pipeline.
     - In AEM 6.5, you can build a .zip package locally and upload it directly to your staging or production server via the Package Manager.
       In AEMaaC, direct package deployment to higher environments is blocked.
+
 =============================================================================================
 
 

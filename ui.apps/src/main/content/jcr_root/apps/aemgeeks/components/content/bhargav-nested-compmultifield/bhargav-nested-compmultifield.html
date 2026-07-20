@@ -9,10 +9,9 @@
 
     <p>${authoritem.email}</p>
 
-
     </br>
     <li><b>Nested Composite Multifield Data</b></li>
-    <ul data-sly-list.bookitem="${author.books}">
+    <ul data-sly-list.bookitem="${authoritem.books}">
         <li>
             ${bookitem.title} (${bookitem.year})
         </li>

@@ -52,6 +52,7 @@ public class GeeksWorkflowStep implements WorkflowProcess {  //To write this we 
         try {
             LOG.info("\n ====================================Custom Workflow Step========================================");
             WorkflowData workflowData = workItem.getWorkflowData();
+            LOG.info("Bhargav Custom Workflow Step : {}", workflowData);
             if (workflowData.getPayloadType().equals("JCR_PATH")) {
                 Session session = workflowSession.adaptTo(Session.class); //getting the session using "WorkflowSession"
 
