@@ -31,15 +31,7 @@
                                         sling:resourceType="granite/ui/components/coral/foundation/container">
                                         <items jcr:primaryType="nt:unstructured">
 
-<!--BhargavSeshadri - I want to hide this field, so i have overrided it and hided it and similarly I have added a custom field ass well
-                      and the remain core components fileds are also shown in dialog, that thing AEM takes care-->
-                                            <id
-                                                sling:hideResource="{Boolean}true"
-                                                jcr:primaryType="nt:unstructured"
-                                                sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
-                                                fieldDescription="HTML ID attribute to apply to the component."
-                                                fieldLabel="ID"
-                                                name="./id"/>
+<!--BhargavSeshadri - I have added a custom field here and the remain core components fileds are also shown in dialog alon with this one, that thing AEM takes care-->
 
                                             <customField
                                                     jcr:primaryType="nt:unstructured"

@@ -501,11 +501,8 @@ Step: 2 - Include the clientlib in your component : apps/aemgeeks/components/con
 -> Component : apps/aemgeeks/components/bhargavtextproxy
 -> Sling Model for this Proxy Comp : com/aem/geeks/core/models/impl/BhargavTextProxyModelImpl.java
 
-* This below approach is not recommended
--> Overriding : From CRXDE get a package zip of CQ_DIALOG from the extended core component. and add that in intellij comp folder.
--> Overrided the Core comp dialog by adding a cq_dialog, which I got from the core comp. and now I will add an extra custom dialog field in it.
--> To print the Custom field we have added - we should Override the HTML File. Copy all the Core Comp Html code and add it in proxy comp and then add
-   your custom field code to print it.
+- I have added a custom field in the dialog and the remain core components fileds are also shown in the dialog along with this one, AEM takes care all that.
+- In this component I have used delegation concept.
 
 -------------------------------------------------------------
 * Proxy Component 2 - bhargavtextproxy-two
