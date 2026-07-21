@@ -20,7 +20,7 @@
                 <items jcr:primaryType="nt:unstructured">
 
                     <!-- ===================================================== -->
-                    <!-- Hiding the ID field in Text tab these are coming from Core comp -->
+                    <!-- Hiding the ID field in Text tab -  this field is coming from Core comp -->
                     <!-- ===================================================== -->
 
                     <text jcr:primaryType="nt:unstructured">
@@ -44,11 +44,13 @@
                     </text>
                     <!-- ===================================================== -->
 
+                    <!-- =======================Adding my Custom Fields============================== -->
+
 
 
                     <properties
                             jcr:primaryType="nt:unstructured"
-                            jcr:title="Properties"
+                            jcr:title="Custom Properties"
                             sling:resourceType="granite/ui/components/coral/foundation/container">
 
                         <items jcr:primaryType="nt:unstructured">

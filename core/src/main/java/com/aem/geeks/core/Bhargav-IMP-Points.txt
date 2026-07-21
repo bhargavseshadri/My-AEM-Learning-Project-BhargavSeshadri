@@ -362,21 +362,30 @@ Eg : @Model(adaptables = SlingHttpServletRequest.class)
 
 -----------------------------------------------------
 
-@Via : Before injecting, go through this object first.
+@Via : @Via in AEM Sling Models is used when the data you want is not directly available from the current adaptable.
+* It says Before injecting, go through this object first.
 * It is mainly used because most AEM models are adaptable from request, but properties are stored in resource.
 
-Eg : Model created using request, but property is inside resource.
-@Inject
-private String title;  // this will mostly gives null
+Eg :
+1. Model created/adapts from a request, but property is inside resource.
+        @Inject
+        private String title;  // this will mostly gives null
 
-@Inject
-@Via("resource")       // This fixes the issue and get the props by looking in component resource properties.
-private String title;
+        @Inject
+        @Via("resource")       // This fixes the issue and get the props by looking in component resource properties.
+        private String title;
 
-* Here the flow is
-    - Start with request.
-    - Go to request.getResource().
-    - Then read property title.
+        * Here the flow is
+            - Start with request.
+            - Go to request.getResource().
+            - Then read property title.
+
+2. suppose in your proxy component sling model you want to use the Core Component model.
+        @Inject
+        @Via(type = ResourceSuperType.class)
+        private Title title;
+
+
 
 =============================================================================================
 *) req.setAttribute() AND req.getAttribute()  Explanation with Example
