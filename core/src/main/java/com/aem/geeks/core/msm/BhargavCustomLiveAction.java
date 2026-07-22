@@ -37,8 +37,8 @@ public class BhargavCustomLiveAction implements LiveAction {
     public void execute(Resource source, Resource target, LiveRelationship relation, boolean autoSave, boolean isResetRollout) throws WCMException {
 
         try {
-            LOG.info("BhargavCustomLiveAction - source: {}", source.getPath());
-            LOG.info("BhargavCustomLiveAction - target: {}", target.getPath());
+            LOG.info("BhargavCustomLiveAction - source : {}, sourceName : {}", source.getPath(),source.getName());
+            LOG.info("BhargavCustomLiveAction - target: : {}, targetName : {}", target.getPath(),target.getName());
             LOG.info("BhargavCustomLiveAction - autoSave: {}", autoSave);
             LOG.info("BhargavCustomLiveAction - isResetRollout: {}", isResetRollout);
             LOG.info("BhargavCustomLiveAction - LiveRelationship: {} : {}", relation.getRolloutConfigs(), relation.getTargetPath());

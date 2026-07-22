@@ -7,7 +7,7 @@ import org.osgi.service.component.annotations.Component;
 
 /*BhargavSeshadri : Step : 1 - Create a Live Action Factory Java class
 *
-* Step : 2 - com/aem/geeks/core/msm/BhargavCustomLiveActionFactory.java*/
+* Step : 2 - com/aem/geeks/core/msm/BhargavCustomLiveAction.java*/
 
 /*
 * FLOW to get here
@@ -29,8 +29,9 @@ import org.osgi.service.component.annotations.Component;
   *-- Important--
   * In our rollout config, we have to give the same name in 4 places :
 * 1) LiveActionFactory property -> LiveActionFactory.LIVE_ACTION_NAME + "=bhargavCustomLiveAction"
-* 2) liveaction node name in out custom rollout -> /apps/msm/wcm/rolloutconfigs/bhargav-custom-rollout/jcr:content/bhargavCustomLiveAction
-* 3) cq:action property value in out liveAction node. cq:action = bhargavCustomLiveAction
+* 2) liveaction node name in our custom rollout -> /apps/msm/wcm/rolloutconfigs/bhargav-custom-rollout/jcr:content/bhargavCustomLiveAction
+* 3) cq:action property value in our liveAction node "/apps/msm/wcm/rolloutconfigs/bhargav-custom-rollout/jcr:content/bhargavCustomLiveAction".
+     cq:action = bhargavCustomLiveAction
 * 4) Same name should be returned in createsAction method of LiveActionFactory. return "bhargavCustomLiveAction";
 * */
 

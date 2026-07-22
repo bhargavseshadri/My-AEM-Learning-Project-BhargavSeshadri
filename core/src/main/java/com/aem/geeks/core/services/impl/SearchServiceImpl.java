@@ -52,7 +52,7 @@ public class SearchServiceImpl implements SearchService{
     * */
     public Map<String,String> createTextSearchQuery(String searchText,int startResult,int resultPerPage){
         Map<String,String> queryMap=new HashMap<>();
-        queryMap.put("path","/content/we-retail");
+        queryMap.put("path","/content");
         queryMap.put("type","cq:Page");
         queryMap.put("fulltext",searchText);
         queryMap.put("p.offset",Long.toString(startResult));

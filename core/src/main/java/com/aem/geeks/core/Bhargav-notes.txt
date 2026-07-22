@@ -640,7 +640,7 @@ Step: 2 - Using that sling model in HTL to render the data : apps/aemgeeks/compo
 
 --> Steps for Live Action
 Step: 1 - Create a Live Action Factory Java class : com/aem/geeks/core/msm/BhargavCustomLiveActionFactory.java
-Step: 2 - Create a Live Action Java class : com/aem/geeks/core/msm/BhargavCustomLiveActionFactory.java
+Step: 2 - Create a Live Action Java class : com/aem/geeks/core/msm/BhargavCustomLiveAction.java
 Step: 3 - Give a Build and check if the component is created and active in the system/console/components.
 
 --> Creating Custom Rollout Configuration
