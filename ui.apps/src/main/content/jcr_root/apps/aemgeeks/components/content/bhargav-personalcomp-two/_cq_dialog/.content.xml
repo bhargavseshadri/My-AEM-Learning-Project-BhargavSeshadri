@@ -55,6 +55,8 @@
                                 <datasource
                                         jcr:primaryType="nt:unstructured"
                                         sling:resourceType="aemgeeks/components/datasources/todos"/>
+                                        <!--The above given resource is a dummy resource given to use in resourceType Servlet-->
+
                             </selectedTodo>
 
                         </items>
