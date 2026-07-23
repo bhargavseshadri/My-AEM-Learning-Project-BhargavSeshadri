@@ -78,8 +78,9 @@ In this Example we gonna use selectors and also we "render the output of a file"
 -> Directly we cannot call the file using data-sly-resource, we can call using "selectors"
 -> I have created a file: apps/aemgeeks/components/content/author-books/dataSlyResourceTest.html we gonna print the content in that file
 ->IMP:  Observe below that I am giving the "page path" as a resouurce and then giving the file name in the selector
-* So if we hit the url with the selector then the html inside "dataSlyResourceTest.html" will execute. otherwise, it simply executes and
-  shows the resource wee have given.
+* So if we hit the url with the selector then the html inside "dataSlyResourceTest.html" will execute.
+ Url :  http://localhost:4502/content/aemgeeks/us/en/bhargavseshadritestpage/jcr:content/parsys/author_books.dataSlyResourceTest.html
+  otherwise it simply executes and shows the resource wee have given.
 -->
 <div data-sly-resource="${'/content/aemgeeks/us/en/bhargavseshadritestpage/jcr:content/parsys/author_books' @ addSelectors='dataSlyResourceTest'}"></div>
 

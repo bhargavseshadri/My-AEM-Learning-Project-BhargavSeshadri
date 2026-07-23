@@ -5,12 +5,14 @@
 
     <div data-sly-use.articleListModel="com.aem.geeks.core.models.BhargavArticleListModel" class="cmp-articlelist__cards-container">
 
-    <sly data-sly-list.articleList="${articleListModel.bhargavArticleListDataBeanList}">
+        <sly data-sly-list.articleList="${articleListModel.bhargavArticleListDataBeanList}">
             <div class="cmp-articlelist__cards">
                 <h2 class="cmp-articlelist__card-title">${articleList.title}</h2>
                 <div class="cmp-articlelist__card-desc">${articleList.description}</div>
                 <div class="cmp-articlelist__card-btn-container">
-                    <a href="${articleList.path}.html" class="cmp-articlelist__card-btn">Explore</a>
+                    <sly data-sly-test="${articleList.path}">
+                        <a href="${articleList.path}.html" class="cmp-articlelist__card-btn">Explore</a>
+                    </sly>
                 </div>
             </div>
         </sly>

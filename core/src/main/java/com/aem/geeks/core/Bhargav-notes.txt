@@ -738,6 +738,7 @@ Step : 1 - Add the validation in the dialog field and then add a child node to i
 Step : 2 - Add the validation logic in the clientlib JS file
              : apps/aemgeeks/components/content/bhargav-personalcomp-two/clientlib/BhargavDialogValidator.js
 
+Step : 3 - Now in the dialog xml add the "extraClientlibs="[bhargav.dialog.validation]" so oour AEM will load the client library code when we open the dialog box.
 -------------------------------------------------------------
 18.d) Big One - Printing all the article pages as a Cards using ResourceResolver and QUERY BUILDER
 
@@ -764,12 +765,6 @@ Approach-2: We can go to our base page component under /apps and there that base
             then add a cq:dialog and add your tab with fields in that, Now AEM will automatically merge your TAB with other
             ootb tabs. this is exactly like we do in our proxy component dialog.
             - apps/aemgeeks/components/page/_cq_dialog/.content.xml
-
-
-
-
-
-
 
 =============================================================================================
 19. STYLE SYSTEM USAGE AND IMPLIMENTATION
@@ -847,9 +842,9 @@ New concepts/usecases to explore
 
 ***CREATE A SIGNUP AND LOGIN PAGE USING JWT token.
 
-* can we execute the servlet from a sling model or service code
+
 I* InheritanceValueMap inheritanceValueMap = new HierarchyNodeInheritanceValueMap();
-* Dispatcher setup and learn
+
 I* ResourceType Servlets
 * Internationalization in AEM  -- THIS
 I* Adding and modifying asset metadata through backend  -- THIS
@@ -961,6 +956,7 @@ i)data-sly-set : setting a variable in HTL, If you want a variable that should b
 <sly data-sly-set.imageData="${articleIntro.ImageRenditionsBean}"/>
 --- So here, the imageData value is -->  in ArticleIntro class ----> there should be "getImageRenditionsBean", it will becomes the imageData value.
 
+--------------------
 j) data-sly-test : using this we write, if else type conditional logic
                     - apps/aemgeeks/components/content/bhargav-compmultifield/bhargav-compmultifield.html
 
