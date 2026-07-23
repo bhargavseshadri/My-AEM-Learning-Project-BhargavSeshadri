@@ -30,7 +30,21 @@ Step:2 - Sling Model to for the Composite Multifield - com/aem/geeks/core/models
         <p>Answer : <b>${item.answer}</b></p>
 
         <!--data-sly-test usage-->
-        <p data-sly-test.hasModel="${obj}">There</p>
-        <p data-sly-test="${!hasModel}">Not There</p>
+        <p data-sly-test.hasModel="${obj}">
+            There
+        </p>
+
+        <p data-sly-test="${!hasModel}">
+            Not There
+        </p>
+
+        <!--AND, OR-->
+        <div data-sly-test="${properties.showCTA && model.hasPermission}">
+            <button>Buy Now</button>
+        </div>
+
+        <div data-sly-test="${wcmmode.edit || properties.showPlaceholder}">
+            Placeholder Content
+        </div>
     </div>
 </sly>

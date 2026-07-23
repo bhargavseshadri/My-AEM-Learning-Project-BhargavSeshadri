@@ -364,7 +364,7 @@ Eg : /cache
 - It only affects cache invalidation (flush) behavior.
 - It is especially useful when authors publish many pages or assets in a short time.
 
-- The /gracePeriod property defines the number of seconds a stale, auto-invalidated resource may still be served from the cache after the last occurring activation.
+- The /gracePeriod property defines the number of seconds a stale.
 
 Eg: /cache
     {
@@ -485,5 +485,53 @@ Ans: No. That’s where statfileslevel matters. statfileslevel defines how deep 
 - Dispatcher lives in one region. A CDN has hundreds of servers across continents. Users get content from the closest server, not from datacenter.
 
 =============================================================================================
+*) Dispatcher Re-Write Rules
 
+- In AEM Dispatcher, rewrite rules are typically not written in Dispatcher itself. They are usually handled by the web server
+  in front of Dispatcher.URL rewriting happens before the request reaches Dispatcher.
+- Rewrite rules are usually placed in your VirtualHost configuration or an included rewrite file.
+- In a standard AEM project (including AEM as a Cloud Service), these rules are typically written in your Dispatcher module,
+  often inside a file like conf.d/rewrites/rewrite.rules.
+- You must ensure the rewrite engine is turned on "RewriteEngine On"
 
+1. https://www.example.com/about Internally rewrite to: /content/my-site/us/en/about.html
+    Rule : RewriteEngine On
+           RewriteRule ^/(.*)$ /content/my-site/us/en/$1.html [PT,L]
+           - The PT (Pass Through) flag ensures the rewritten request is passed to Dispatcher.
+           - [L]: Last rule. Stop processing further rewrite rules if this one matches.
+
+2. Global root mapping: Redirecting the root domain [www.yoursite.com/](https://www.yoursite.com/) to a specific language homepage.
+        - RewriteRule ^/$ /us/en.html [R=301,L]
+        - [R=301]: Issues a permanent HTTP 301 redirect to the browser.
+
+3. Redirect old URL to new URL -> RewriteRule ^/old-page/?$ /new-page [R=301,L]
+
+=============================================================================================
+*) TTL - time to live
+
+- TTL stands for Time To Live. In the context of web performance and AEM, it refers to the amount of time a cached file (like an HTML
+  page, image, or JSON response) is considered "fresh" or valid.
+- When a user requests a file, the cache (like the AEM Dispatcher, a CDN, or the user's browser) checks the file's TTL.
+- If the TTL has not expired, The cache serves the file directly to the user (a "cache hit"), which is extremely fast. If the TTL has expired,
+  The cache considers the file "stale" and makes a trip back to the origin server (the AEM Publisher) to fetch a fresh copy, which it then
+  re-caches with a new TTL.
+- TTL is almost always defined in seconds using the HTTP "Cache-Control: max-age=..." header.
+
+Setting TTL:
+> Step 1: Enable TTL in the Dispatcher Farm, By default, the Dispatcher ignores time-based headers and relies on AEM publish events. You must
+  explicitly configure your Dispatcher farm file.
+  - Locate your /cache section and add /enableTTL "1" : /cache {
+                                                            # Other cache configurations...
+
+                                                            # Enable TTL evaluation
+                                                            /enableTTL "1"
+                                                        }
+  - When this is set to "1", the Dispatcher will look for Cache-Control: max-age or Expires headers coming from AEM. When the max-age is reached,
+    the Dispatcher will automatically delete the cached file.
+
+> Step 2: Set the Cache-Control Headers
+        Method A: Setting TTL via Apache (Best for Static Assets) For static assets that rarely change—like fonts, images, or clientlibs (CSS/JS)
+                  —it is best practice to set the TTL directly in your Apache virtual host configuration using mod_headers.
+
+        Method B: Setting TTL via AEM (Best for Dynamic Pages & API Responses) For actual AEM pages or JSON API endpoints, the TTL often needs to
+                  be determined dynamically by the backend (e.g., caching a news feed for 5 minutes, but a static "About Us" page for 12 hours).
