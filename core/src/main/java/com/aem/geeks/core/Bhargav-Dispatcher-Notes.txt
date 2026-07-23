@@ -131,15 +131,20 @@ Eg:1. * Allowing every header
 - using this we tell the server from where it can get and serve the response for the incoming request.
 - This section tells Dispatcher where to forward uncached requests, usually to your AEM Publish instances.
 - Dispatcher can distribute traffic among multiple instances, acting as a load balancer.
+- Each publish instance is defined as a render.
+
+- Can I prioritize one publisher? Yes. Dispatcher supports assigning a /priority to renders. A lower number indicates a higher priority.
 
 Eg: /renders {
       /publish1 {
         /hostname "aem-publish1"
         /port "4503"
+        /priority "1"
       }
       /publish2 {
         /hostname "aem-publish2"
         /port "4503"
+        /priority "2"
       }
     }
 
@@ -319,17 +324,23 @@ Eg:      /allowedClients
 
 =============================================================================================
 9) /ignoreUrlParams
+- It tells Dispatcher whether URL query parameters (?param=value) should be considered when caching. Without it, query parameters can cause many
+  unnecessary cache misses or even incorrect caching behavior.
 - The ignoreUrlParams section contains query parameter names that should be ignored when determining whether some request's output can be cached
   or not.
-- EG : In this example configuration, the "q" parameter will be ignored.
+- EG : In this example configuration,
               /ignoreUrlParams
                 {
-                /0001 { /glob "*" /type "deny" }
-                /0002 { /glob "q" /type "allow" }
+                /0001 { /glob "q" /type "deny" }
+                /0002 { /glob "*" /type "allow" }
                 }
+- /content/search.html?q=a
+  /content/search.html?q=b
+  are not treated as the same page, because q affects the content.
 
-* Here - /type "allow" → Ignore the matching query parameters when caching.
-       - /type "deny" → Do not ignore the matching query parameters; they influence cache behavior.
+* /type "allow" → Ignore the matching query parameters when caching.
+       - Ignore all query parameters. So: ?page=1, ?id=2, ?abc=test are all treated as the same cache key.
+       - /type "deny" → Do not ignore the query parameters.
 
 =============================================================================================
 10) /headers
@@ -509,7 +520,7 @@ Ans: No. That’s where statfileslevel matters. statfileslevel defines how deep 
 =============================================================================================
 *) TTL - time to live
 
-- TTL stands for Time To Live. In the context of web performance and AEM, it refers to the amount of time a cached file (like an HTML
+- TTL stands for Time To Live. it refers to the amount of time a cached file (like an HTML
   page, image, or JSON response) is considered "fresh" or valid.
 - When a user requests a file, the cache (like the AEM Dispatcher, a CDN, or the user's browser) checks the file's TTL.
 - If the TTL has not expired, The cache serves the file directly to the user (a "cache hit"), which is extremely fast. If the TTL has expired,
@@ -527,9 +538,10 @@ Setting TTL:
                                                             /enableTTL "1"
                                                         }
   - When this is set to "1", the Dispatcher will look for Cache-Control: max-age or Expires headers coming from AEM. When the max-age is reached,
-    the Dispatcher will automatically delete the cached file.
+    the Dispatcher will automatically invalidates the cached file.
 
-> Step 2: Set the Cache-Control Headers
+> Step 2: Set the AEM to send Cache-Control Headers
+- Dispatcher does not decide the TTL. It uses the headers returned by AEM.
         Method A: Setting TTL via Apache (Best for Static Assets) For static assets that rarely change—like fonts, images, or clientlibs (CSS/JS)
                   —it is best practice to set the TTL directly in your Apache virtual host configuration using mod_headers.
 
