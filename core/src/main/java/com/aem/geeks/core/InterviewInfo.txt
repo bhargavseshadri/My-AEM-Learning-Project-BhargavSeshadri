@@ -16,6 +16,27 @@ AEM solves several problems related to digital experience management:
 -> Integration: AEM integrates well with other Adobe marketing cloud products
 
 =============================================================================================
+**) My Self Intro
+
+Thank you for the opportunity.
+I completed my studies and started my career at Infosys as a fresher in 2022. During my training, I learned AEM frontend, AEM backend, and Java.
+After the training, I worked on the Millennium Trust Company project for about five months as an AEM Backend Developer. Later, I moved to
+the Intel project, where I worked on both AEM Sites and AEM Assets. majorly on backend, but I also handled some frontend tasks as well.
+I worked on the Intel project until my last day at Infosys.
+
+After that, I joined Cognizant, where I have worked in TSC project for four months.
+
+Over the course of my projects, I have worked on various AEM core concepts like component development and migration, Sling Models, OSGi services, Servlets, Workflows,
+Schedulers, MSM, Query Builder, HTL, Client Libraries, and API integrations. In AEM Assets, I have worked on Dynamic Media integration,
+metadata schemas, and fixing production issues.
+
+And Recently, I learnt GraphQL and Dispatcher configuration concepts. That's all about myself thank you.
+
+
+
+
+
+=============================================================================================
 ==> Basic Important Points
 
 -> Implimentation used by JCR is - APACHE JACKRABBIT OAK, Apache oak
