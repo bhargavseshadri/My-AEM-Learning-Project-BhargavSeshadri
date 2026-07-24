@@ -1096,7 +1096,83 @@ Ans. Have multiple approachs : 1. Using OOTB workflow - "Request for Activation"
       In AEMaaC, direct package deployment to higher environments is blocked.
 
 =============================================================================================
+*) Microservices Understanding
 
+1. Docker Image
+- A Docker image is the packaged microservice.
+- It contains: your Node.js/Java/Python code, libraries, dependencies
+
+2. 2. CaaS (Container as a Service) / Container Registry
+- This is the place where Docker images are stored.
+- our CI/CD pipeline pushes images here.
+
+3. 3. Kubernetes (K8s)
+- Kubernetes is the orchestration layer that:
+      * pulls the Docker image from CaaS
+      * creates pods
+      * auto-scales the service
+      * ensures the microservice is always running
+      * restarts when it crashes
+      * runs cron jobs / schedulers
+- This is where your microservice lives and runs.
+
+---------------
+* Basically Our microservice means our node js code, with all the logic, schedulers and details.
+* That code is packed into a Docker image Docker image = a package of Node.js runtime, Your code, Dependencies. Think of a Docker image as a zip of
+  your app with everything needed to run it.
+
+Step: 1 - whenever we run the Git workflow, That workflow runs and generates new docker image and pushes it to that CAAS(Harbor)
+- Harbor : Private Docker registry (like a secure private Docker Hub used by your company)
+                - DevOps builds the Docker image
+                  Pushes it to Harbor
+                  Harbor stores it with tags/versions, scans for vulnerabilities, manages access, etc.
+
+Step: 2 - Now Kubernetes runs the microservice using that image, It is a a cluster of servers that runs containers from images.
+          * What it does: - Pulls the image from Harbor
+                          - Creates Pods/Containers from that image
+                          - Keeps them running (restarts if crash)
+                          - Scales them (more replicas if needed)
+                          - Exposes them
+- So now Node.js service is live at something like: https://api.company.com/node-scheduler-service/
+
+* RANCHER : You can think of Rancher as a control panel / dashboard for Kubernetes. it is a UI + management layer on top of one or more Kubernetes clusters.
+            - So while Kubernetes actually runs the containers, Rancher controls Kubernetes in a nice way.
+
+----------------
+* How AEM Receives the JSON data?
+- Here the microservice makes a POST request and sends the data. and the data is stored under /content
+- we give the microservice our AEM URL and user credentials. in microservice Environment variables.
+- Flow : Node.js Scheduler
+                 │
+                 ▼
+         Creates JSON
+                 │
+                 ▼
+         POST request
+         (to an AEM content path)
+                 │
+                 ▼
+         Sling POST Servlet (built into AEM)
+                 │
+                 ▼
+         Creates/updates nodes under /content
+
+- The microservice doesn't need a custom servlet if it's posting directly to a JCR path. For example, it could send a request
+  like: POST https://author.company.com/content/myproject/data, along with authentication and form parameters (or JSON, depending
+   on how it's implemented). The built-in Sling POST Servlet interprets the request and writes the content into the JCR repository.
+
+- So according to this setup everyday at 6 PM microservie runs fetches json from API an then it and then shares that json to our AEM.
+- Our AEM  store it in a DAM Asset - /content/dam/project/pim/hierarchy.json, and The actual file content is stored in the jcr:data binary property of that asset.
+- So after microservice sends the data, we have one servlet in our AEM to receive that data and then store it one path in our aem.
+- he servlet probably uses the AssetManager API. AssetManager.createAsset(
+                                                       "/content/dam/project/hierarchy.json",
+                                                       inputStream,
+                                                       "application/json",
+                                                       true
+                                                   );
+  * That creates or replaces: /content/dam/project/hierarchy.json
+
+=============================================================================================
 
 
 
