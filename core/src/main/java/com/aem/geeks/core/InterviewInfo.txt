@@ -1095,6 +1095,26 @@ Ans. Have multiple approachs : 1. Using OOTB workflow - "Request for Activation"
     - In AEM 6.5, you can build a .zip package locally and upload it directly to your staging or production server via the Package Manager.
       In AEMaaC, direct package deployment to higher environments is blocked.
 
+-------------------------
+Important Points related to AEMaaC
+- In AEM on-prem all the asset processing happens in AEM, whereas in AEMaaC all the asset processings happen outside of AEM.
+- on-prem have "DAM UPDATE ASSET" which do the asset processing where as in AEMaaC dam update asset is not available, here microservice do the required processings.
+- In AEMaaC if we need any post processing for the asset, we can add post processing workflows, we can create them just like our normal AEM wf. but
+  remember at the end add a DAM UPDATE ASSET WF PROCESS COMPLETED step.
+- No custom replication agents and reverse replication agents are also not available on cloud.
+- In AEMaaCS replication happens using the concept of SLING CONTENT DISTRUBTION.
+- Cloud Readiness AnalyZer -(CRA) Tool or Best Practices Analyser Tool (BPA): It provides a report that helps in analysing the compatibility for migration
+  of existing AEM on-prem to AEMaaCS.
+- /apps and /libs are immutable is AEMaaCS, there are read only, we cant modify them.
+- Custom run modes are not allowed in AEMaaC, only predefined one are allowed.
+-Asset handling is taken care by Asset Microservices now.
+- Changes for /apps, MSM, Rollout configurations, I18 translation changes, osgi configuration changes all should come from CI/CD pipelines.
+
+AEMaaC terminology:
+- AEM Image :
+- Golden Master : The AEM publish Tier.
+- Orchastration Engine : AEMaaCS uses a orchastration  engine to ensure all authors and services are scaling up when needed.
+
 =============================================================================================
 *) Microservices Understanding
 
