@@ -366,17 +366,6 @@ ans. “By placing configuration files inside run mode–specific folders like /
       AEM automatically picks the correct configuration based on its active run mode.”
 
 =============================================================================================
-Context-Aware Configuration (CaConfig) (Have to learn in depth)
-- Context-Aware Configuration (CaConfig) in AEM is a mechanism for storing and retrieving configuration values based on the content
-  hierarchy rather than the AEM environment.
-- Unlike OSGi configurations, which are global to an AEM instance, Context-Aware Configurations allow different sites, brands, or sections of a
-  site to have different configuration values while running on the same AEM instance.
-- For example, if Site A and Site B are hosted on the same AEM production environment, Site A can have support@sitea.com and Site B can have
-  support@siteb.com configured separately without requiring different run modes or deployments.
-- To implement it, we define a configuration interface using @Configuration, store the values under /conf/<site>/sling:configs, and access them
-  in Sling Models using ConfigurationBuilder or @ContextAwareConfiguration.
-
-=============================================================================================
 CORE COMPONENTS & PROXY COMPONENTS
 
 -> CORE COMPONENTS: Core Components are a set of ready-made, production-ready components provided by Adobe (like Text, Image, Carousel,
@@ -857,6 +846,32 @@ CSRF (Cross-Site Request Forgery) :
         * referencesUpdate - Updates the references
         * productUpdate - Updates Commerce product references. useful only when linked with adobe commer
         * orderChildren - Synchronizes the order of child nodes.
+
+=============================================================================================
+Context-Aware Configuration (CaConfig)
+- Context-Aware Configuration (CaConfig) in AEM is a mechanism for storing and retrieving configuration values based on the content or site
+  hierarchy rather than the AEM environment.
+- Unlike OSGi configurations, which are global to an AEM instance, Context-Aware Configurations allow different sites, brands, or sections of a
+  site to have different configuration values while running on the same AEM instance.
+- For example, if Site A and Site B are hosted on the same AEM production environment, Site A can have support@sitea.com and Site B can have
+  support@siteb.com configured separately without requiring different run modes or deployments.
+- To implement it, we define a configuration interface using @Configuration, store the values under /conf/<site>/sling:configs, and access them
+  in Sling Models using ConfigurationBuilder or @ContextAwareConfiguration
+
+Demo:
+Step: 1 : Create OSGI Configuration - com/aem/geeks/core/config/GeeksCAConfig.java
+Step: 2 - Calling that Configuration and using it in sling model - com/aem/geeks/core/models/impl/CAConfigImpl.java
+* Now giving the values to the configuration and using it For our pages
+Step: 3 - go to /conf/aemgeeks in crxde and create a node with name "Package name : configuration name Eg: com.aem.geeks.core.config.GeeksCAConfig", node is nt:unstructured.
+        - add the jcr properties to that node by giving the values to the fields defined in the configuration.
+Step: 4 - linking this configuration to our Pages
+        - Go to the parent page - "/content/aemgeeks/jcr:content".
+        - Add property - "sling:configRef" and give value "/conf/aemgeeks". so from now on pages under /content/aemgeeks using our context aware configuration.
+
+Important : - Now to create a site specific configuration then we have to create /conf/aemgeeks/in/sling:configs or /conf/aemgeeks/de/sling:configs folders
+              and the inside those folders create the node just like above with the name just like above and give the config value as you need.
+            - Now go to your parent page -> /content/aemgeeks/in/jcr:content, /content/aemgeeks/de/jcr:content and add "sling:configRef" and give value point
+              to the folder "/conf/aemgeeks/in" or "/conf/aemgeeks/de"
 
 =============================================================================================
 *) GRAPHQL

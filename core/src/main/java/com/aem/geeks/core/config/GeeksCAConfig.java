@@ -3,6 +3,11 @@ package com.aem.geeks.core.config;
 import org.apache.sling.caconfig.annotation.Configuration;
 import org.apache.sling.caconfig.annotation.Property;
 
+
+/*BhargavSeshadri : Step: 1 - Demo for Context Aware onfiguration
+* Here we are using @Configuration for creating a context aware configuration
+*
+* Step: 2 - com/aem/geeks/core/models/impl/CAConfigImpl.java*/
 @Configuration(label="Geeks - Context Aware Configuration", description="Context Aware Configuration for AEM Geeks.")
 public @interface GeeksCAConfig {
 

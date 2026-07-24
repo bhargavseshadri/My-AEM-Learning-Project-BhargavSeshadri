@@ -18,6 +18,11 @@ import org.apache.sling.caconfig.ConfigurationResolver;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
+
+/*Step: 2 - Calling that Configuration - com/aem/geeks/core/models/impl/CAConfigImpl.java
+Step: 1 - Demo for Context Aware onfiguration
+ *
+ */
 @Model(adaptables = {SlingHttpServletRequest.class},
         adapters = {CAConfig.class},
         resourceType = {CAConfigImpl.RESOURCE_TYPE},
@@ -62,6 +67,8 @@ public class CAConfigImpl implements CAConfig {
         return siteSection;
     }
 
+
+    //using the below method here we are getting the values of the configuration
     @PostConstruct
     public void postConstruct() {
     GeeksCAConfig caConfig=getContextAwareConfig(currentPage.getPath(),resourceResolver);
@@ -71,6 +78,8 @@ public class CAConfigImpl implements CAConfig {
         siteSection=caConfig.siteSection();
     }
 
+
+    //So here this method will return the configuration for that we use "configurationBuilder"
     public GeeksCAConfig getContextAwareConfig(String currentPage, ResourceResolver resourceResolver) {
         String currentPath = StringUtils.isNotBlank(currentPage) ? currentPage : StringUtils.EMPTY;
         Resource contentResource = resourceResolver.getResource(currentPath);
