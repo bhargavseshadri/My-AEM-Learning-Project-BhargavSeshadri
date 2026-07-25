@@ -330,6 +330,8 @@ Normal config to Factory Config : @Designate(ocd = BhargavFactoryOSGiConfig.clas
   or Production.
 - Instead of maintaining separate codebases for author, publish, development, staging, and production, you use run modes to with
   different configurations.
+- When AEM starts, it checks the active run modes and loads the corresponding configuration folders, such as config.author,
+  config.publish, or config.dev, and applies those OSGi configurations.
 
 - PURPOSE of runmodes:
         *Separate configurations for Author and Publish.
@@ -515,8 +517,8 @@ Ans. It is used to specify from which object the model can be adapted or the mod
 
 ---------------------------------------------------------
 OSGI Services Defination : - A Service in AEM (or OSGi Service) is a Java class that contains reusable business logic and can be shared
-                             across other services, servlets, and sling models. It is not dependent on any component.
-                      - It’s registered in the OSGi container, and AEM automatically manages its lifecycle (create, start, stop).
+                             across other services, servlets, and sling models.
+                      - It’s registered in the OSGi container, and osgi automatically manages its lifecycle (create, start, stop).
                       - @Component — registers our normal java class as an OSGi service.
 
 PROBLEM: for one SERVICE interface class ,there is two implimentation classes, so in this scenario, which service have to executed?
@@ -1107,11 +1109,12 @@ Ans. approach-1: We can overlay the /libs path in our /apps and add a new tab.
 ans. We can acheive it by using "PAGE POLICY", we can add that clientlib categories in "temp-a page policy" and not in temp-b page policy.
         - By doing this, that clientlib will load only for temp-a pages and not for temp-b pages.
 
-17. two components using the same service which call the external api? how do you design it so that the response can be stored and cached.
+17. in aem Component-A is added two times on page that component using the same service which call the external api? how do you design it
+    so that the response can be stored and cached. instead of makeing multiple api requests for fetching same content?
+Ans.
+
 18. in api how do you handle the timeouts and how do you add the retry logic?
 19. How do you handle API failures?
-20. I have published a page and immediately a wf should run and the assign a task to one user
-21. A page contains Static + Dynamic + Personalized Page, how do you cache this page?
 22. I have some hundreds of pages and I want to publish all of them, how can I do this?
 Ans. Have multiple approachs : 1. Using OOTB workflow - "Request for Activation"
                                2. Using Groovy Console
