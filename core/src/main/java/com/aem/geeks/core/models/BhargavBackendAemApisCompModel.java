@@ -11,6 +11,9 @@ public interface BhargavBackendAemApisCompModel {
     String postConstructMethod();
 
     String getPersonName();
+
+    String getPersonLastName();
+
     String getFatherName();
     String getAverageIncome();
     String[] getMultifieldvalues();

@@ -26,6 +26,12 @@
                                     fieldLabel="Person Name"
                                     name="./personName"/>
 
+                            <personlastname
+                                    jcr:primaryType="nt:unstructured"
+                                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"
+                                    fieldLabel="Person Last Name"
+                                    name="./personlastname"/>
+
                             <fathername
                                     jcr:primaryType="nt:unstructured"
                                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"

@@ -7,6 +7,7 @@ import com.day.cq.wcm.api.PageManager;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ValueMap;
+import org.apache.sling.models.annotations.Default;
 import org.apache.sling.models.annotations.DefaultInjectionStrategy;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.ScriptVariable;
@@ -29,6 +30,10 @@ public class BhargavBackendAemApisCompModelImpl implements BhargavBackendAemApis
     private String fatherName;
 
     @ValueMapValue
+    @Default(values = "Intipeeru")
+    private String personlastname;
+
+    @ValueMapValue
     private String averageIncome;
 
     @ValueMapValue
@@ -44,6 +49,11 @@ public class BhargavBackendAemApisCompModelImpl implements BhargavBackendAemApis
     @Override
     public String getPersonName() {
         return personName;
+    }
+
+    @Override
+    public String getPersonLastName() {
+        return personlastname;
     }
 
     @Override

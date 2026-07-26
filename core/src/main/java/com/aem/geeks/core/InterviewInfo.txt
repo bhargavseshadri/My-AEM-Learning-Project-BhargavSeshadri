@@ -318,10 +318,10 @@ Normal config to Factory Config : @Designate(ocd = BhargavFactoryOSGiConfig.clas
                     c) MULTIPLE  : Can have many implementations injected (a list).
                     d) AT_LEAST_ONE : Must have at least one available.
 
-- ReferencePolicy → When to update the reference
-                  a) STATIC :  It won't considers the unbind method with bind method. Injects dependency only once during activation.
-                  b) DYNAMIC : It will automatically considers the unbind method with bind method. Automatically updates the reference at runtime
-                                when services appear/disappear.
+- ReferencePolicy → It tells OSGi how to react when the referenced service changes at runtime.
+                  a) STATIC :  if the referenced service changes (for example, a new implementation is deployed or the existing service stops),
+                               OSGi deactivates and reactivates your component so it gets a fresh reference.
+                  b) DYNAMIC : OSGi does not restart your component. Instead, it updates the service reference while the component is running.
 
 - PID : Every configuration have pid -> "Persistent Identity (PID): com.aem.geeks.core.services.impl.BhargavOsgiConfigServiceImpl" :
                                      - It is nothing but the "Service" that this configuration is linked to.
@@ -1206,9 +1206,6 @@ Ans. approach-1: We can overlay the /libs path in our /apps and add a new tab.
 ans. We can acheive it by using "PAGE POLICY", we can add that clientlib categories in "temp-a page policy" and not in temp-b page policy.
         - By doing this, that clientlib will load only for temp-a pages and not for temp-b pages.
 
-17. in aem Component-A is added two times on page that component using the same service which call the external api? how do you design it
-    so that the response can be stored and cached. instead of makeing multiple api requests for fetching same content?
-Ans.
 
 18. in api how do you handle the timeouts and how do you add the retry logic?
 19. How do you handle API failures?
@@ -1256,7 +1253,7 @@ Ans. - Using sling:resourceSuperType (Recommended)
 Ans. a. check error logs
      b. check the cpu usage(dont say this)
      c. check dispatcher cache
-     
+
 =============================================================================================
 *) AEM as a Cloud Understanding  (material is in process)
 
@@ -1923,6 +1920,7 @@ b) LinkedHashSet : - Unlike HashSet, it remembers the insertion order in which e
 c) TreeSet : - TreeSet stores elements in sorted order.
              - Removes Duplicates
              - It wont take null values
+             - No insertion order
 
 ============
 MAP : - A Map in Java is a data structure that stores key-value pairs.
