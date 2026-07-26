@@ -291,6 +291,10 @@ Defination: - A Scheduler in AEM is a background job (a Java class) that runs au
 
 -> ScheduleOptions scheduleOptions = scheduler.EXPR(config.cronExpression());
 
+-----------------------------------------
+* options.canRunConcurrently(false); : this line tells the Sling Scheduler: "Never run more than one instance of this job at the same time."
+* options.canRunConcurrently(true); : this line tells the Sling Scheduler: "run multiple threads executing the same code simultaneously."
+
 =============================================================================================
 OSGI CONFIGURATIONS:
 Definition: - OSGi Configuration is used to store application settings separately from the code. It allows us to change the behavior
@@ -937,8 +941,24 @@ Important : - Now to create a site specific configuration then we have to create
               to the folder "/conf/aemgeeks/in" or "/conf/aemgeeks/de"
 
 =============================================================================================
-*) CONTENT FRAGMENT backend usage
+*) CONTENT FRAGMENT backend API's
 
+a. FragmentTemplate API : Used to Create content fragment through backend.
+* FragmentTemplate : FragmentTemplate template = bhargavCfModelResource.adaptTo(FragmentTemplate.class);
+    > it is one of the core APIs in AEM Content Fragments.
+    > FragmentTemplate is an AEM API that represents a Content Fragment Model as a template for creating Content Fragments, using this only we can
+      create CF's through backend.
+    > When you adapt that model to a FragmentTemplate, AEM creates an object that knows:  what fields exist, their data types, validation rules, metadata.
+    > Important method :
+            - ContentFragment fragment = template.createFragment(parentFolder, fragmentName, recipe.getName()); - when we use this method aem automatically
+              creates empty Content Fragment.
+            - ContentElement element = fragment.getElement(elementName); - getting hold of a purticular field in the CF, elementName is a field name.
+
+
+b. ContentFragment API : used to get or fetch the data present in our CF.
+*. ContentFragment cf = cfResource.adaptTo(ContentFragment.class);
+   cf.getTitle();
+   name = cf.getElement("name").getContent();
 
 =============================================================================================
 *) GRAPHQL

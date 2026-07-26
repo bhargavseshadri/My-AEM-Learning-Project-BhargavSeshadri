@@ -35,12 +35,12 @@ public class RecipeScheduler implements Runnable {
     private RecipeSchedulerService recipeSchedulerService;
 
     @Activate
-    protected void activate() {
+    protected void activate() {  //when the service gets active this "activate method" runs immediately for once
         LOG.debug("RecipeScheduler Started - Activate method executed");
 
         ScheduleOptions options = scheduler.EXPR("0 0/2 * * * ?"); //Uncomment this line to make the functionality to start and work
         options.name(JOB_NAME);
-        options.canRunConcurrently(false);
+        options.canRunConcurrently(false); //tells the Sling Scheduler Never run more than one instance of this job at the same time.
         scheduler.schedule(this, options);
     }
 

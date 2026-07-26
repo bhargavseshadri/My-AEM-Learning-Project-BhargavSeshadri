@@ -18,47 +18,24 @@ public class Recipe {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public int getServings() {
         return servings;
     }
 
-    public void setServings(int servings) {
-        this.servings = servings;
-    }
-
     public String getDifficulty() {
         return difficulty;
-    }
-
-    public void setDifficulty(String difficulty) {
-        this.difficulty = difficulty;
     }
 
     public String getCuisine() {
         return cuisine;
     }
 
-    public void setCuisine(String cuisine) {
-        this.cuisine = cuisine;
-    }
-
     public List<String> getMealType() {
         return mealType;
     }
 
-    public void setMealType(List<String> mealType) {
-        this.mealType = mealType;
-    }
 }

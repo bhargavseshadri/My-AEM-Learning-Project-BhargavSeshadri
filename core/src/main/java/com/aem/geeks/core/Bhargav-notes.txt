@@ -611,12 +611,12 @@ Step: 2 - Using that sling model in HTL to render the data : apps/aemgeeks/compo
   fetching the data from API.
 - API used : https://dummyjson.com/recipes
 
-STEP: 1 - create a content fragment model with these fiedls - recipeId (number), name (single line text), servings (number), difficulty (single line text),
+STEP: 1 (imp)- create a content fragment model with these fiedls - recipeId (number), name (single line text), servings (number), difficulty (single line text),
           cuisine (single line text), mealType (mutiline text)
-STEP: 2 - Create a folder for our content fragments in assets - /content/dam/bhargav-cf-model/bhargav-cf-recipes-folder
+STEP: 2 (imp)- Create a folder for our content fragments in assets - /content/dam/bhargav-cf-model/bhargav-cf-recipes-folder
 STEP: 3 - Create a Scheduler - com/aem/geeks/core/schedulers/RecipeScheduler.java
-Step: 4 - (Last step)Create a Service - com/aem/geeks/core/services/RecipeSchedulerService.java
-                                        ServiceImpl - com/aem/geeks/core/services/impl/RecipeSchedulerServiceImpl.java
+Step: 4 - (Last step)Create a Service (MAIN LOGIC)- com/aem/geeks/core/services/RecipeSchedulerService.java
+                                                    ServiceImpl - com/aem/geeks/core/services/impl/RecipeSchedulerServiceImpl.java
 
 Step: 5 - Create a helper classes for our service to store api data - com/aem/geeks/core/utils/Recipe.java
                                                                       com/aem/geeks/core/utils/CfRecipeRLTD/RecipeResponse.java

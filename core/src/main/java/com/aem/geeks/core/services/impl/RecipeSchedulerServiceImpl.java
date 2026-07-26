@@ -38,14 +38,14 @@ public class RecipeSchedulerServiceImpl implements RecipeSchedulerService {
 
 
     private static final String API_URL = "https://dummyjson.com/recipes";
-    private static final String CF_PARENT_PATH = "/content/dam/bhargav-cf-model/bhargav-cf-recipes-folder";
+    private static final String CF_PARENT_FOLDER_PATH = "/content/dam/bhargav-cf-model/bhargav-cf-recipes-folder";
     private static final String CF_MODEL_PATH = "/conf/Bhargav-Content-Fragments-config/settings/dam/cfm/models/bhargav-receipe-cf-model";
 
     @Reference
     private ResourceResolverFactory resourceResolverFactory;
 
     private List<Recipe> recipes;
-    private int currentIndex = 0; // was 1 — was skipping recipe id 1
+    private int currentIndex = 0;
 
     @Override
     public void createNextRecipeContentFragment() {
@@ -74,9 +74,11 @@ public class RecipeSchedulerServiceImpl implements RecipeSchedulerService {
         }
     }
 
+    //In this method we are making a API call and gets the data and store in our helper pojo classes.
     private void loadRecipes() throws Exception {
         try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
             HttpGet request = new HttpGet(API_URL);
+
             try (CloseableHttpResponse response = httpClient.execute(request)) {
                 Reader reader = new InputStreamReader(response.getEntity().getContent());
                 Gson gson = new Gson();
@@ -87,30 +89,36 @@ public class RecipeSchedulerServiceImpl implements RecipeSchedulerService {
         }
     }
 
+
+    //MAIN METHOD - this method create the content fragment in our folder using our model and api response
     private void createContentFragment(ResourceResolver resolver, Recipe recipe) throws Exception {
 
         String fragmentName = "recipe-" + recipe.getId();
-        Resource existingResource = resolver.getResource(CF_PARENT_PATH + "/" + fragmentName);
+        Resource existingResource = resolver.getResource(CF_PARENT_FOLDER_PATH + "/" + fragmentName);
 
         if (existingResource != null) {
             LOG.debug("Fragment {} already exists, skipping", fragmentName);
             return;
         }
 
-        Resource modelResource = resolver.getResource(CF_MODEL_PATH);
+        Resource modelResource = resolver.getResource(CF_MODEL_PATH); //here we are getting our CF Model resource.
         if (modelResource == null) {
             throw new IllegalStateException("CF Model not found at " + CF_MODEL_PATH);
         }
 
+        /*FragmentTemplate is an AEM API that represents a Content Fragment Model as a template for creating Content Fragments, using this only we can
+          create CF's through backend.
+          - This line simply craetes a freash content fragment*/
         FragmentTemplate template = modelResource.adaptTo(FragmentTemplate.class);
         if (template == null) {
             throw new IllegalStateException(CF_MODEL_PATH + " did not adapt to FragmentTemplate — check it's really a CF model");
         }
 
-        // auto-create the parent folder instead of assuming it exists
-        Resource parentFolder = ResourceUtil.getOrCreateResource(resolver, CF_PARENT_PATH, "sling:OrderedFolder", "sling:OrderedFolder", true);
+        // if the parent folder exists it gets that resource, if not this method creates that folder
+        Resource parentFolder = ResourceUtil.getOrCreateResource(resolver, CF_PARENT_FOLDER_PATH, "sling:OrderedFolder", "sling:OrderedFolder", true);
         ContentFragment fragment = template.createFragment(parentFolder, fragmentName, recipe.getName());
 
+        //this custom method is used to fill the fields with content in the craeted CF.
         updateElement(fragment, "recipeId", recipe.getId());
         updateElement(fragment, "name", recipe.getName());
         updateElement(fragment, "servings", recipe.getServings());
@@ -122,15 +130,15 @@ public class RecipeSchedulerServiceImpl implements RecipeSchedulerService {
     }
 
     private void updateElement(ContentFragment fragment, String elementName, Object value) throws ContentFragmentException {
-        ContentElement element = fragment.getElement(elementName);
+        ContentElement element = fragment.getElement(elementName); // gets the specific field in the created content fragment
 
         if (element == null) {
             LOG.debug("Element '{}' not found on CF Model — check the technical name matches exactly", elementName);
             return;
         }
 
-        FragmentData fragmentData = element.getValue();
-        fragmentData.setValue(value);
-        element.setValue(fragmentData);
+        FragmentData fragmentData = element.getValue(); //getting the stored value in the current object or field.
+        fragmentData.setValue(value); //chnaging that field data with our data
+        element.setValue(fragmentData); //Replace your existing value with this updated FragmentData
     }
 }
