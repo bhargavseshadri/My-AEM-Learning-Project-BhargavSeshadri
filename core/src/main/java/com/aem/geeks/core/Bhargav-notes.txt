@@ -65,6 +65,7 @@ INDEX:
         18.c) Comp Dialog level validation using - granite:data & data-validate
 
 19. STYLE SYSTEM USAGE AND IMPLIMENTATION
+20) Context Aware Configuration
 
 last) HTL
 
@@ -597,7 +598,17 @@ Step: 1 - Sling Model to get the CF data : com/aem/geeks/core/models/impl/Bharga
 Step: 2 - Using that sling model in HTL to render the data : apps/aemgeeks/components/content/bhargav-content-fragment-comp
 
 -------------------------------------------------------------
-14.b) GRAPHQL with CONTENT FRAGMENTS
+14.b) CONTENT FRAGMENTS WITH API
+- So the work of this is when the scheduler is on and running, then for every three minutes a content fragment automatically get creates by
+  fetching the data from API.
+- API used : https://dummyjson.com/recipes
+
+STEP: 1 - create a content fragment model with these fiedls - recipeId, name, servings, difficulty, cuisine, mealType
+STEP: 2 - Create a folder for our cintent fragments - /content/dam/bhargav-cf-model/bhargav-cf-recipes-folder
+STEP: 3 -
+
+-------------------------------------------------------------
+14.c) GRAPHQL with CONTENT FRAGMENTS
 
 * To use graphQl you should first create graphiql end point to write queries
         1- Go to AEM -> tools -> general -> graphiql : open it
@@ -814,6 +825,23 @@ Steps to implement Style System:
     - So add a design dialog (_cq_design_dialog) to our custom comp : apps/aemgeeks/components/content/bhargav-personalcomp-two/_cq_design_dialog
     - Now you can see the policies icon and in that policies icon you will have the tabs you have defined in the "design dialog",
       now you can add styles.
+
+=============================================================================================
+20) Context Aware Configuration
+
+Step: 1 : Create OSGI Configuration - com/aem/geeks/core/config/GeeksCAConfig.java
+Step: 2 - Calling that Configuration and using it in sling model - com/aem/geeks/core/models/impl/CAConfigImpl.java
+* Now giving the values to the configuration and using it For our pages
+Step: 3 - go to /conf/aemgeeks in crxde and create a node with name "Package name : configuration name Eg: com.aem.geeks.core.config.GeeksCAConfig", node is nt:unstructured.
+        - add the jcr properties to that node by giving the values to the fields defined in the configuration.
+Step: 4 - linking this configuration to our Pages
+        - Go to the parent page - "/content/aemgeeks/jcr:content".
+        - Add property - "sling:configRef" and give value "/conf/aemgeeks". so from now on pages under /content/aemgeeks using our context aware configuration.
+
+Important : - Now to create a site specific configuration then we have to create /conf/aemgeeks/in/sling:configs or /conf/aemgeeks/de/sling:configs folders
+              and the inside those folders create the node just like above with the name just like above and give the config value as you need.
+            - Now go to your parent page -> /content/aemgeeks/in/jcr:content, /content/aemgeeks/de/jcr:content and add "sling:configRef" and give value point
+              to the folder "/conf/aemgeeks/in" or "/conf/aemgeeks/de"
 
 =============================================================================================
 

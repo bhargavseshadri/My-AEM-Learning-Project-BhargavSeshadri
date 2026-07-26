@@ -812,7 +812,7 @@ CSRF (Cross-Site Request Forgery) :
 
 - We have Blueprint source root or Language Master or Master site (language-masters), and we have Blueprint source Language
   Copies(language-masters/en, language-masters/fr) in it and inside those we have Blueprint source Pages.
-- We have Live Copy roots of country sites, and inside those we have Live Copy Language Copies and inside those we have Live Copy Pages.
+- We have Live Copy roots of country sites, and inside those we have Live Copy, Language Copies and inside those we have Live Copy Pages.
 -(IMP) So all the master site pages are in the language-masters and all the live copy pages are in the live copy country sites like Brazil,
  Indonasia are always linked.
 -(IMP) If we make any changes in the blueprint source page, then those changes will be reflected in the live copy pages when we do the sync
@@ -820,7 +820,29 @@ CSRF (Cross-Site Request Forgery) :
        * but if we make any changes in the live copy page, then those changes won't be reflected in the blueprint page because the flow
          of data is only from blueprint to live copy, not the other way.
        * And editing live copy page is not recommendable, because it de links the sync between live cody and blueprint.
+- Once after we created the language copies then the language copies becomes independent. there will be no relation between language copies at all, But there is a
+  sync between "blueprint language copy pages" and "live copy language copy pages".
+- Whenever we create a separate site then we need BLUEPRINT.
+- If in blueprint page edit console, if you dont find "rollout page" option, then go to your root live copy page properties "/content/aemgeeks/Live-Copy-One"
+  and in the live copy tab check "Live Copy Inheritance". now you will get that option in blueprint page. Note: Check this for all live copy sites.
+- In live copy we have couple of options:
+            a. Suspend : we can suspend the relation between live copy and blue print, and again we can build the realetion as well, It os reversable.
+            b. Detach : we can detach the live copy page with the blueprint page, but once we detach we cant reverse it, means we cant build the relation again.
+            c. Synchronize : it will sync the content of live copy with the blueprint, keeping our live copy changes.
+            d. Reset : this is also sync the content with the blueprint, but override our live copy changes.
+- We give the rollout configuration to live copies not to blueprint. root : /content/aemgeeks/Live-Copy-One. we can add to blueprint as well but giving to
+  live copy is preferred because we can chnage and give differnt rollout configs to different live copies based on our need.
 
+- New page scenario :
+       For Language Copies - Suppose you have craeted a new page, to send that page to all the language copies "in the current site", select
+                             root "/content/aemgeeks/us" -> cleck Create --> Language Copy --> now only select that newly created page only
+                             --> and then select "Add to Existing Project".
+
+       For BluePrint and Live copies: if a page has to gets craeted in livecopy whenever the page is created in blueprint, then we have to configure
+                                      "PUSH ON MODIFY" rollout config(this will trigger when for page create also) on LIVE COPY - LANGUAGE COPY,
+                                       EG: "/content/aemgeeks/Live-Copy-One/en" - we have to add that rollout config on this.
+
+------------------------------
 - Creation of Language Copies:
     Step : 1 - go to the language you want to create the copy and then click on create and in that select "Language Copy"
     Step: 2 - Now select the source page from which you want to create the copy.
@@ -833,7 +855,7 @@ CSRF (Cross-Site Request Forgery) :
     Step:1 - First we need a Blueprint for this, so first create it.
                 a. go to tools -> sites -> Blueprints and then click on create
                 b. Then select "Create" and then select blueprint template.
-                c. Now select the source site you want to create the blueprint for. Eg : /content/aemgeeks/language-masters
+                c. Now select the source site you want to create the blueprint for. Eg : /content/aemgeeks/language-masters or /content/aemgeeks/us
                 d. Then give the name and title and then click on create.
     Step:2 - Now we have the blueprint, now we will create the live copy root country site from our master site. go to sites and
              select your project
@@ -843,6 +865,8 @@ CSRF (Cross-Site Request Forgery) :
     --> Thats it now the live copy country site is craeted with all the language copies and pages linked to the master site.
 
 - You can see all your bluprint in this path - /apps/msm in crx
+- And in Crx under "/apps/msm/Bhargav-live-copy-one/jcr:content" you can see that live copy is linked to which blueprint on "sitePath" property. if that property is
+  not there then blueprint tab wont appear for in page properties for a blueprint page.
 
 - In the create option you see three different options -> 1. Language copy, 2. Live copy, 3. Site. So the difference between these three is
     - Language Copy : This is used to create the copy of different language "but in the same site", but in.
@@ -869,6 +893,22 @@ CSRF (Cross-Site Request Forgery) :
         * referencesUpdate - Updates the references
         * productUpdate - Updates Commerce product references. useful only when linked with adobe commer
         * orderChildren - Synchronizes the order of child nodes.
+
+=============================================================================================
+AEM site Translation using Microsoft Machine translator
+
+- While craeting language copies we select the translation.
+Step: 1-  Now to start the translation go to /aem/start.html --> select PROJECTS -> there you see you Translation project. Select it --> and go inside --> you will
+          find your language copy "Translation Job" --> to start that click on arrow and click start, post that click on complete.
+Step: 2 - Now yo can see some names like default aem properties gets translated but component wont gets translated.
+Step: 3 - To make components also gets translated, you have to go to tools --> general --> translation configuration --> there select "/content" -->
+          click on edit --> select ADD COMPONENT, there your component path in crxde "aemgeeks/components/content/bhargav-compmultifield" --> and then
+          add the dialog field properties name in the add property fields and save.
+Step: 4 - Now we have to re run the translation job , go to /aem/start.html --> Projects --> you translation project --> and click on "ADD" there. --> seect
+          Translation jobs --> and then a new job is created and there in "TARGET" give the launguage copy you want --> and click on three dots abd select the page
+          in the language copy  that you wanted to translate. --> Now just select that page and go back, now in the translation job you see page = 1.
+          --> No on the job click on arrow and select start and the refreash and then select complete.
+Step: 5 - Now the translation of that page will be done.
 
 =============================================================================================
 Context-Aware Configuration (CaConfig)

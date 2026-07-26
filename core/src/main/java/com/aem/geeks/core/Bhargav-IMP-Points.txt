@@ -485,6 +485,16 @@ dispatcher.forward(req, res);
                     /apps/myproject/a (prop1=newValue)
                     /apps/myproject/b (prop2=value2)
 
+
+- Difference Between Replace and update : In the case when some node like node-A which is present in JCR Repo and not there in our code Package, What Replace will do is
+  it will delete that node-A in JCR Repo, but Update will leave that node untouched in the JCR repo.
+  - And in the case of nodes which are already exists in both JCR and code "Replace will overrites that node props with code props, Update also do the same thing".
+
+- Mode	    Adds new nodes	    Updates existing nodes	        Deletes nodes not in package
+  replace   (default)Yes	    Yes (overwrites)	            Yes
+  merge	    Yes	                No (leaves untouched)	        No
+  update	Yes	                Yes (overwrites)	            No
+
 =============================================================================================
 *) Important Points while integrating with external API's
 - Api will not return the data smoothly everytime, some times it fails.
