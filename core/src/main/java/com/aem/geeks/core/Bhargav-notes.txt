@@ -51,7 +51,8 @@ INDEX:
 12) Creating a SYSTEM/SERVICE USER (Manual Way)
 13) Creating regular user (not a system/service user) through User Administration.
 14) Creating Content Fragment Model and Using that CF Data in the Backend.
-        * 14.b) GRAPHQL with CONTENT FRAGMENTS
+        14.b) CONTENT FRAGMENTS WITH API ****BIG ONE AND VERY IMPORTANT ONE FOR HEADLESS*****
+        14.c) GRAPHQL with CONTENT FRAGMENTS
 
 15) Creating Custom Rollout Configuration and Live action for that rollout configuration.
 16) Query Builder API in Backend
@@ -86,6 +87,7 @@ j) Proxy Components : 1. apps/aemgeeks/components/bhargavtextproxy
                       3. apps/aemgeeks/components/bhargav-ctabar-proxycomp
 k) Bhargav Article List Component (Querybuilder backend api used) : apps/aemgeeks/components/content/bhargav-articlelist-comp
 l) Using Service in Java class - Component : apps/aemgeeks/components/content/bhargav-model-service-class-testing
+m) bhargav-context-aware-config-comp - THIS IS NOT FULLY CREATED SO WIP.
 
 =============================================================================================
 1) ResourceResolverFactory related Notes is in
@@ -171,6 +173,11 @@ C) Calling an API using a servlet to get a field value in the metadata schema fi
 d) Calling an API using a Resource type servlet to get a dynamic dropdown dialog field values.
 - No access token needed.
 - More info : 18.b) Dynamic Dropdown values in Dialog - bhargav-personalcomp-two
+
+-------------------------------------------------
+e) 14.b) CONTENT FRAGMENTS WITH API ****BIG ONE AND VERY IMPORTANT ONE FOR HEADLESS*****
+- No access token needed
+- here we create content fragment automatically bu fetching data from API
 
 =============================================================================================
 3) SERVLET
@@ -598,14 +605,23 @@ Step: 1 - Sling Model to get the CF data : com/aem/geeks/core/models/impl/Bharga
 Step: 2 - Using that sling model in HTL to render the data : apps/aemgeeks/components/content/bhargav-content-fragment-comp
 
 -------------------------------------------------------------
-14.b) CONTENT FRAGMENTS WITH API
+14.b) CONTENT FRAGMENTS WITH API ****BIG ONE AND VERY IMPORTANT ONE FOR HEADLESS*****
+
 - So the work of this is when the scheduler is on and running, then for every three minutes a content fragment automatically get creates by
   fetching the data from API.
 - API used : https://dummyjson.com/recipes
 
-STEP: 1 - create a content fragment model with these fiedls - recipeId, name, servings, difficulty, cuisine, mealType
-STEP: 2 - Create a folder for our cintent fragments - /content/dam/bhargav-cf-model/bhargav-cf-recipes-folder
-STEP: 3 -
+STEP: 1 - create a content fragment model with these fiedls - recipeId (number), name (single line text), servings (number), difficulty (single line text),
+          cuisine (single line text), mealType (mutiline text)
+STEP: 2 - Create a folder for our content fragments in assets - /content/dam/bhargav-cf-model/bhargav-cf-recipes-folder
+STEP: 3 - Create a Scheduler - com/aem/geeks/core/schedulers/RecipeScheduler.java
+Step: 4 - (Last step)Create a Service - com/aem/geeks/core/services/RecipeSchedulerService.java
+                                        ServiceImpl - com/aem/geeks/core/services/impl/RecipeSchedulerServiceImpl.java
+
+Step: 5 - Create a helper classes for our service to store api data - com/aem/geeks/core/utils/Recipe.java
+                                                                      com/aem/geeks/core/utils/CfRecipeRLTD/RecipeResponse.java
+
+* Now after you give the build then the schedulers execute every 15 times for every 2 mins and create a Content fragments in the bhargav-cf-recipes-folder
 
 -------------------------------------------------------------
 14.c) GRAPHQL with CONTENT FRAGMENTS
