@@ -25,11 +25,7 @@ public class RecipeScheduler implements Runnable {
 
     private static final Logger LOG = LoggerFactory.getLogger(RecipeScheduler.class);
     private static final String JOB_NAME = "RecipeContentFragmentScheduler";
-
-    // Quartz format: sec min hour day month weekday — "0 0/2 * * * ?" = every 2 minutes
-    private static final String SCHEDULER_EXPRESSION = "0 0/2 * * * ?";
-    private static final int MAX_CF_COUNT = 7;
-
+    private static final int MAX_CF_COUNT = 5;
     private int createdCount = 0;
 
     @Reference
@@ -42,7 +38,7 @@ public class RecipeScheduler implements Runnable {
     protected void activate() {
         LOG.debug("RecipeScheduler Started - Activate method executed");
 
-        ScheduleOptions options = scheduler.EXPR(SCHEDULER_EXPRESSION);
+        ScheduleOptions options = scheduler.EXPR("0 0/2 * * * ?"); //Uncomment this line to make the functionality to start and work
         options.name(JOB_NAME);
         options.canRunConcurrently(false);
         scheduler.schedule(this, options);

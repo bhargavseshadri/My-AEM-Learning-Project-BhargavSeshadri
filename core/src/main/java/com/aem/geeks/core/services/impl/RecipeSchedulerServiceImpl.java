@@ -88,8 +88,10 @@ public class RecipeSchedulerServiceImpl implements RecipeSchedulerService {
     }
 
     private void createContentFragment(ResourceResolver resolver, Recipe recipe) throws Exception {
+
         String fragmentName = "recipe-" + recipe.getId();
         Resource existingResource = resolver.getResource(CF_PARENT_PATH + "/" + fragmentName);
+
         if (existingResource != null) {
             LOG.debug("Fragment {} already exists, skipping", fragmentName);
             return;
@@ -99,15 +101,14 @@ public class RecipeSchedulerServiceImpl implements RecipeSchedulerService {
         if (modelResource == null) {
             throw new IllegalStateException("CF Model not found at " + CF_MODEL_PATH);
         }
+
         FragmentTemplate template = modelResource.adaptTo(FragmentTemplate.class);
         if (template == null) {
             throw new IllegalStateException(CF_MODEL_PATH + " did not adapt to FragmentTemplate — check it's really a CF model");
         }
 
         // auto-create the parent folder instead of assuming it exists
-        Resource parentFolder = ResourceUtil.getOrCreateResource(resolver, CF_PARENT_PATH,
-                "sling:OrderedFolder", "sling:OrderedFolder", true);
-
+        Resource parentFolder = ResourceUtil.getOrCreateResource(resolver, CF_PARENT_PATH, "sling:OrderedFolder", "sling:OrderedFolder", true);
         ContentFragment fragment = template.createFragment(parentFolder, fragmentName, recipe.getName());
 
         updateElement(fragment, "recipeId", recipe.getId());
@@ -122,10 +123,12 @@ public class RecipeSchedulerServiceImpl implements RecipeSchedulerService {
 
     private void updateElement(ContentFragment fragment, String elementName, Object value) throws ContentFragmentException {
         ContentElement element = fragment.getElement(elementName);
+
         if (element == null) {
             LOG.debug("Element '{}' not found on CF Model — check the technical name matches exactly", elementName);
             return;
         }
+
         FragmentData fragmentData = element.getValue();
         fragmentData.setValue(value);
         element.setValue(fragmentData);

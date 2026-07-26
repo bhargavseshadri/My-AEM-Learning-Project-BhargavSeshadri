@@ -937,6 +937,10 @@ Important : - Now to create a site specific configuration then we have to create
               to the folder "/conf/aemgeeks/in" or "/conf/aemgeeks/de"
 
 =============================================================================================
+*) CONTENT FRAGMENT backend usage
+
+
+=============================================================================================
 *) GRAPHQL
 
 - In AEM, GraphQL is mainly used when your content is stored as Content Fragments and some external application needs that content.
