@@ -694,6 +694,11 @@ Ans : What it actually do is, if we give some client library name(here my.site.A
 - we give this when we want our clientlibs to load at the time when we open the "comp authoring dialog".
 - we give this in our "comp dialog XML".
 
+* I have multiple clientlibs with same category. Which one loads?
+Ans. All clientlibs with the same category are included.
+     The loading order depends on dependencies and embed configuration. If they define the same CSS selectors or JavaScript functions, later-loaded resources can
+     override earlier ones. It's best to avoid duplicate categories unless intentionally combining libraries.
+
 --------------------------------------------------
 STYLE SYSTEM Usage and Implementation
 - Style system allow you to define style classes in the content policy for a component and in page policy for a template, so that content author
@@ -1241,6 +1246,17 @@ Ans. To ensure a component appears only once on a page. On the client side, I'd 
       If the component has a fixed position on every page, I'd instead place it in the editable template's structure so authors can't add additional instances at all.
        This layered approach is the one typically used in enterprise AEM projects.
 
+28. I want to reuse the same dialog in multiple components. How?
+Ans. - Using sling:resourceSuperType (Recommended)
+     - Using granite/ui/components/coral/foundation/include (Reuse Part of a Dialog)
+            sling:resourceType="granite/ui/components/coral/foundation/include"
+            path="/apps/project/dialogs/common/image"  --> Path of our dialog
+
+29. how do we troubleshoot performanche issues In aem, what tools we use and where we have to look?
+Ans. a. check error logs
+     b. check the cpu usage(dont say this)
+     c. check dispatcher cache
+     
 =============================================================================================
 *) AEM as a Cloud Understanding  (material is in process)
 
