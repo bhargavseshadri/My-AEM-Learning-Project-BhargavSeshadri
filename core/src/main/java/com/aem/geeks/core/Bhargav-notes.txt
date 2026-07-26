@@ -992,6 +992,7 @@ g)data-sly-include : used to include files, if we want to include any file like 
 h)data-sly-resource : used to include resources.
 -> Example and notes for this is at : apps/aemgeeks/components/content/author-books/author-books.html
 -> Whatever the OUTPUT of the resource will be available in the place where we added this.
+-> It is used to include and render another AEM resource (component, page, or content node) inside the current component
 -> Note: The OUTPUT of the resource we have given will be displayed to the user
 
 --------------------

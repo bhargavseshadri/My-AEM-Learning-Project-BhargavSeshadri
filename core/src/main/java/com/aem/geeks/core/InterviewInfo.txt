@@ -66,6 +66,8 @@ And Recently, I learnt GraphQL and Dispatcher configuration concepts. That's all
             > For a JAR FILE - we give "org.osgi.annotation.bundle"
             > For a ZIP file - we give "<packaging>content-package</packaging>"
 
+-> We can disable a one of the component dialog field, by giving "disabled="{Boolean}true" in the dialog xml.
+
 =============================================================================================
 ==> DEFINITIONS
 1) Resource :  - A resource is basically any node or file in the jcr that sling can access and maps it to a url.
@@ -961,6 +963,32 @@ b. ContentFragment API : used to get or fetch the data present in our CF.
    name = cf.getElement("name").getContent();
 
 =============================================================================================
+*) SlingPostProcessor
+
+- A SlingPostProcessor is an AEM/Sling extension point that allows you to intercept and modify or validate content during a Sling POST request
+  means after we added the dialog fields and clicks done, now those values saved in jcr, before the changes are committed to the JCR repository,
+  this SlingPostProcessor enters and runs our custom code and do any modifications to the given values if needed.
+- FLOW : Author edits component
+                 │
+                 ▼
+         POST Request (/content/...)
+                 │
+                 ▼
+         SlingPostServlet
+                 │
+                 ▼
+         SlingPostProcessor  ← Your custom code runs here
+                 │
+                 ▼
+         Content saved to JCR
+                 │
+                 ▼
+         Response returned
+- SlingPostProcessor is primarily intended for validation and processing, not for rewriting the submitted values.
+- Reference code : com/aem/geeks/core/services/impl/BhargavSlingPostProcessorExample.java - only step - no need to link this anywhere it will directly work.
+    - the above code will work when we try to submit without giving "personName" value for "bhargav-backend-aem-apis-comp" dialog. and it also add hello + personName.
+
+=============================================================================================
 *) GRAPHQL
 
 - In AEM, GraphQL is mainly used when your content is stored as Content Fragments and some external application needs that content.
@@ -1182,6 +1210,37 @@ Ans.
 22. I have some hundreds of pages and I want to publish all of them, how can I do this?
 Ans. Have multiple approachs : 1. Using OOTB workflow - "Request for Activation"
                                2. Using Groovy Console
+
+23. What is webpack module?
+Ans. Webpack : It takes multiple frontend files and bundles them into one optimised file during the build, that browsers can load efficiently.
+24. What happens if two servlets are registered for the same path?
+ans. AEM cannot guarantee which servlet executes. Avoid registering multiple servlets for the same path.
+
+25. My Sling Model calls an external API. Every component on the page calls the same API again. How do you optimise?
+Ans. Have couple of approachs for this
+     1. request-level cache : Means we store the api response in the current http request in the first call using "request.setAttribute(REQUEST_CACHE_KEY, apiResponse);"
+        and get that data using, Later in the same request in the second time I will check if "REQUEST_CACHE_KEY" is present, if yes then I wont make a call.
+        - This only useful for current request only.
+     2. Using Caffeine : - Caffeine caches data across multiple requests.
+                         - and if give 5 min, then Only after 5 minutes will the next request trigger another API call.
+
+26. I have added a new field in dialog. Old pages don't have that property. How do you handle it?
+Ans. - Provide default values
+     @ValueMapValue
+     @Default(values="Default Title")
+
+27. 22. I renamed a component folder. Existing pages stopped working. Why?
+    Ans. Because sling:resourceType still points to old component path. Need migration or update resourceType.
+
+28. I want a component to appear only once on a page?
+Ans. To ensure a component appears only once on a page. On the client side, I'd use Granite UI or custom
+     JavaScript validation(using granite:data and data-validation) to check whether another instance of the same component already exists on the page and prevent
+     the author from saving by returning a String, so if it return string granite blocks the save, providing immediate feedback. However, client-side validation
+     alone isn't sufficient because it can be bypassed. Therefore, I'd also implement backend validation such as a Sling POST Processor or another server-side
+     validation mechanism—to traverse the page, count components of the same resource type, and reject the operation if a duplicate is found buy throwing an exception.
+      If the component has a fixed position on every page, I'd instead place it in the editable template's structure so authors can't add additional instances at all.
+       This layered approach is the one typically used in enterprise AEM projects.
+
 =============================================================================================
 *) AEM as a Cloud Understanding  (material is in process)
 
