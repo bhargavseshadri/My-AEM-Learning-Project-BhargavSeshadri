@@ -67,6 +67,18 @@ And Recently, I learnt GraphQL and Dispatcher configuration concepts. That's all
             > For a ZIP file - we give "<packaging>content-package</packaging>"
 
 -> We can disable a one of the component dialog field, by giving "disabled="{Boolean}true" in the dialog xml.
+-> Touch UI = The modern AEM authoring interface. whatever we see in the authoring interface it is a touch ui.
+   Granite UI = Granite UI is the server-side framework. It provides: Dialog definitions, Resource Types, Form rendering, Server-side logic.
+   Coral UI = The UI component library used to build Touch UI. Coral UI is not AEM itself. It is Adobe's component library.
+              It provides ready-made UI widgets such as: Buttons, Textfields, Dropdowns, Checkboxes, Tabs
+              Simple flow : Developer writes XML
+                            ↓
+                            Granite UI processes it
+                            ↓
+                            Granite renders Coral TextField
+                            ↓
+                            Author sees
+
 
 =============================================================================================
 ==> DEFINITIONS
@@ -1185,9 +1197,10 @@ Ans. 1. RepositoryException : Thrown when JCR repository operations fail like se
                 Eg: session.getNode("/content/demo");
 
 15. what is sling binding in aem?
-Ans. Sling Bindings are a collection of predefined objects that Apache Sling automatically makes available during htl script execution.
-     They provide access to objects like the current resource, request, response, current page, page manager, and component, allowing
-     HTL and JSP scripts to access rendering context without manually creating these objects.
+Ans. - Sling Bindings are a collection of predefined objects that Apache Sling automatically makes available during htl script execution.
+     - Sling Bindings are pre-defined execution objects made automatically accessible in HTL scripts without explicit initialization.
+
+     Top 5: currentPage, resource, request, properties, pageManager.
 
      Eg: <h1>${currentPage.title}</h1>
          <p>${properties.description}</p>
@@ -1263,6 +1276,68 @@ Ans. Servlet-1 will execute, because its selector is first.
 31. I have two resourceType servlets (servlet-a, servlet-b) where everything is same, like resourceType, Selector and Extension. but according to bussiness servlet-b
     should execute when we hit the url, at that time what we will do?
 Ans. we use @ServiceRanking
+
+32. What is an OSGi Container?
+Ans. An OSGi container is the runtime environment that manages OSGi bundles and services. In AEM, Apache Felix acts as the OSGi container. It is responsible
+    for installing, starting, stopping, updating bundles, managing their lifecycle, maintaining the service registry, and performing dependency injection
+    between services. It enables a modular architecture where components can be deployed or updated without restarting the entire application."
+
+* What is an OSGi Service?
+Ans. An OSGi service is a reusable Java component that provides specific business functionality. It is registered with the OSGi container
+     using the @Component annotation and can be consumed by other components using @Reference. The container manages the service's
+     lifecycle and injects it wherever required.
+
+     - In simple terms, the OSGi container manages the services, while the services implement the actual business logic."
+
+33. What is Sling Filters?
+34. What is metadata profile?
+Ans. This is used to automatically add the properties to the assets without any author intervention. we create a metadata profile and add some fields and default values
+     to those. and the we assign it to a folder. so what happens is whenever we add a asset in that folder these fields in this metadata profile automatically gets
+     added in the metadata node to that asset.
+     - One thing to remember is while giving the values to the fields the "Map to property" should be unique for every field. other wise one field value overrides
+     other field values.
+     EG : Field 1 --> ./jcr:content/metadata/bhargavfield1, Field 2 --> ./jcr:content/metadata/bhargavfield2
+
+35. You need to override an Out-Of-The-Box (OOTB) OSGi service (like a workflow process) without modifying the original Adobe code. How?
+Ans. - Create a custom OSGi service in your codebase that implements the exact same Interface as the OOTB service.
+       Add the @ServiceRanking property to your OSGi component configuration and set it to a higher integer value (e.g., 1000)
+       than the OOTB service. AEM will inject your service instead of the default one.
+
+     - Important Note : * According to the OSGi specification: If a service does not define service.ranking, its ranking is 0 by default.
+                        * If multiple services implement the same interface: The service with the highest ranking is preferred.
+                        * If rankings are equal, the service with the lowest service ID (typically the one registered first) is chosen.
+36. A heavy JavaScript clientlib is blocking the initial page render and reducing Google Lighthouse scores. How do you load it asynchronously?
+Ans. - In your HTL, when including the clientlib, you can use the HTL attributes to defer or load async.
+       <sly data-sly-use.clientlib="/libs/granite/sightly/templates/clientlib.html" data-sly-call="${clientlib.js @ categories='my.category', async=true}"></sly>
+
+37. A specific section of the published site (/content/mysite/premium) should only be accessible to logged-in users of the group premium-members.
+    How is this configured to work with Dispatcher caching?
+Ans. - 1. Configure Closed User Groups (CUG) in the page properties of the premium page, restricting read access to premium-members.
+          On the Dispatcher, configure the AuthChecker. When a request comes in for a cached premium page, the Dispatcher sends a
+          HEAD request to the AEM Publisher with the user's session cookie. If AEM returns a 200 OK, Dispatcher serves the cached file;
+          if 403, it denies access.
+
+38. Author Accidentally Published 10,000 Pages? How do you stop further publishing and recover?
+Ans. Disable replication agent. Pause workflow launcher. Clear replication queue if required.
+
+39. An external front-end developer asks you to build a Java Servlet just to accept a standard HTML form submission (First Name, Last Name)
+    and save it as a JCR node. What is the better AEM approach?
+Ans. - You don't need a custom servlet. Use the OOTB Sling Post Servlet.
+       Have the HTML form target the desired JCR path (e.g., /content/mysite/data/*). Use standard Sling Post parameters in the form inputs
+       (e.g., name="./firstName", name="./lastName"). AEM will automatically handle the node creation and property mapping without any custom Java code.
+
+40. An author creates a page using a new Editable Template. They try to drag and drop a component onto the page, but the "Drag components here" drop zone
+    is missing. What is wrong with the template?
+    Ans. - The template's structure (or the base page component) is missing the Layout Container (Responsive Grid).
+           Without <sly data-sly-resource="${'root' @ resourceType='wcm/foundation/components/responsivegrid'}"></sly>,
+           authors have no paragraph system to drag and drop components into.
+
+41. 7. I want a component to automatically disappear after a configured expiry date.
+Ans. Store expiry date in dialog. Sling Model compares current date. HTL renders only if not expired.
+
+42. Authors should never delete this component on page.
+Ans. - Use CQ:EDITCONFIG's -> cq:actions. and Hide delete action. -> cq:actions="[EDIT,INSERT,COPYPASTE,MOVE]"
+     - We can add the same property in cq:dialog xml also.
 
 =============================================================================================
 *) AEM as a Cloud Understanding  (material is in process)

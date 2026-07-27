@@ -88,6 +88,7 @@ j) Proxy Components : 1. apps/aemgeeks/components/bhargavtextproxy
 k) Bhargav Article List Component (Querybuilder backend api used) : apps/aemgeeks/components/content/bhargav-articlelist-comp
 l) Using Service in Java class - Component : apps/aemgeeks/components/content/bhargav-model-service-class-testing
 m) bhargav-context-aware-config-comp - THIS IS NOT FULLY CREATED SO WIP.
+n) bhargav-default-sling-post-servlet-example - Default Sling post servlet example.
 
 =============================================================================================
 1) ResourceResolverFactory related Notes is in

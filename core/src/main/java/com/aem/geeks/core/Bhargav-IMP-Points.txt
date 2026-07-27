@@ -22,6 +22,10 @@ IMPORTANT PATHS
 -> GRAPHIQL EDITOR : http://localhost:4502/aem/graphiql.html
 -> To see graphql endpoints in crxde : /content/cq:graphql/global/endpoint
 -> to create graphql endpoint : http://localhost:4502/libs/cq/graphql/sites/admin/content/console.html
+-> For a simple form submissions we dont need to create a Servlets. AEM provides a default "SLING POST SERVLET". so we just write a basic html form with
+   <input> tag giving attribute like this <input type="text" id="firstName" name="./firstName" required> and after submit the servlet adds the property "firstName"
+   or creates a new node under the path given in action, if we give "/*" --> action="${resource.path}/*"
+   Reference : apps/aemgeeks/components/content/bhargav-default-sling-post-servlet-example/bhargav-default-sling-post-servlet-example.html
 
 =============================================================================================
 * Important Points
@@ -312,6 +316,7 @@ g) Custom Live Action(for custom rollout configurations) : 1) LiveActionFactory 
                                          - It simply means request.getAttribute("rAttribute")
                                          - it is used to get a value that is passed only for that specific request.
 
+@RequestParameter(name = "category") : this sling model annotation is used to get the query param given in the url.
 -------------------------
 @Self & @Via
 

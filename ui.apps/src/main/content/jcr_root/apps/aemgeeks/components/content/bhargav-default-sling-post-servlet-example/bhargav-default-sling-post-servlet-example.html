@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Registration</title>
+</head>
+<body>
+
+<h2>User Registration Form</h2>
+
+<!--If we give /* - it will create a new set for every set of form submission, if not it will add the props on same node-->
+<form method="POST" action="${resource.path}/*">
+
+    <div>
+        <label for="firstName">First Name:</label>
+        <!--so the jcr property is created with name="./firstName" -->
+        <input type="text" id="firstName" name="./firstName" required>
+    </div>
+
+    <br>
+
+    <div>
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName"  name="./lastName" required>
+    </div>
+
+    <br>
+
+    <button type="submit">Submit</button>
+
+</form>
+<h1>${resource.path}</h1>
+
+</body>
+</html>
