@@ -724,9 +724,9 @@ Step : 3 - select your metadata schema and pick "ADD TO FOLDERS" option, andadd 
            this metadata schema to be applicable. so now the metadata schema creating is completed
 
 --> Coding part
-Step : 1 - create a clientlib and in that give categories (for timebeing I gave libs path clientlib categories, because that clientlib is
-           loading in Asset Properties console).
-           - but the best approach is overlaying that libs clientlib to our /apps path and in that adding embed="[bhargav.asset.properties]". So our
+Step : 1 - create a clientlib and in that give categories "dam.gui.coral.metadataeditor", this category is beloged to the global metadata properties page in
+           /libs path. so here if we give this our clientlib also load whenever the metadata properties page loads.
+           - Another approach is overlaying that libs clientlib to our /apps path and in that adding embed="[bhargav.asset.properties]". So our
              clientlib - bhargav.asset.properties, also gets loaded with that /apps/ path clientlib.
            - apps/aemgeeks/clientlibs/clientlib-bhargav-metadataschema/.content.xml
 
