@@ -1254,6 +1254,16 @@ Ans. a. check error logs
      b. check the cpu usage(dont say this)
      c. check dispatcher cache
 
+30. So I have a two resourceType Servlet and servlet-1 have selector: A1 and servlet-2 have selector: A2, and both have extension "xml" so If i hit
+    http://localhost:4502/content/aemgeeks/us/en/bhargavseshadritestpage/jcr:content.A1.A2.xml, then what servlet will execute?
+Ans. Servlet-1 will execute, because its selector is first.
+     - If we hit this http://localhost:4502/content/aemgeeks/us/en/bhargavseshadritestpage/jcr:content.A2.A1.xml, then the servlet-2 will execute because its
+     selector is first.
+
+31. I have two resourceType servlets (servlet-a, servlet-b) where everything is same, like resourceType, Selector and Extension. but according to bussiness servlet-b
+    should execute when we hit the url, at that time what we will do?
+Ans. we use @ServiceRanking
+
 =============================================================================================
 *) AEM as a Cloud Understanding  (material is in process)
 

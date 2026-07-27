@@ -33,8 +33,8 @@ import java.io.IOException;
         extensions = "xml",
         selectors = {"demo","bha"}
 )
-@ServiceRanking(1000)
-public class BhargavResourceTypeGETServlet extends SlingSafeMethodsServlet {
+@ServiceRanking(1001)
+public class BhargavResourceTypeTestingGETServlet extends SlingSafeMethodsServlet {
 
     private String name;
 
@@ -48,6 +48,6 @@ public class BhargavResourceTypeGETServlet extends SlingSafeMethodsServlet {
     protected void doGet(final SlingHttpServletRequest request, final SlingHttpServletResponse response) throws IOException {  //One of the method from SlingSafeMethodsServlet
         final Resource resource = request.getResource();  //here it will get the resource they hit
         response.setContentType("text/plain");             //In which type of format it should give response to us
-        response.getWriter().write("Page Title = " + resource.getValueMap().get(JcrConstants.JCR_TITLE) + " :: value from configuration : "+ name);  //getting the title to show to us
+        response.getWriter().write("Bhargav testing Page Title = " + resource.getValueMap().get(JcrConstants.JCR_TITLE) + " :: value from configuration : "+ name);  //getting the title to show to us
     }
 }

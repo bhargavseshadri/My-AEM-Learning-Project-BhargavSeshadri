@@ -39,10 +39,6 @@ public class ExternalAPIDemoModelImpl implements ExternalAPIDemoModel {
     private String zipcode;
     private String lng;
 
-    public Resource getResource() {
-        return resource;
-    }
-
     @PostConstruct
     public void init() {
         String apiUrl = "https://jsonplaceholder.typicode.com/users/1";      //here we are giving the API url to fetch data from that api
