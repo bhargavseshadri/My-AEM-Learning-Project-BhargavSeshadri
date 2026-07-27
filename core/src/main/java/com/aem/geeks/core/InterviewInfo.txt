@@ -1941,6 +1941,29 @@ c. ArrayList<String> list = new ArrayList<>();
 - allows duplicates and nulls.
 - used When we need ordered data and duplicates allowed.
 - To add elements -> .add("bhargav")
+- List have all these methods : add()
+                                addAll()
+                                clear()
+                                contains()
+                                containsAll()
+                                isEmpty()
+                                remove()
+                                removeAll()
+                                retainAll()
+                                size()
+                                toArray()
+                                iterator()
+                           - Methods specific to List : get()
+                                                        set()
+                                                        add(int index, E element)
+                                                        remove(int index)
+                                                        indexOf()
+                                                        lastIndexOf()
+                                                        listIterator()
+                                                        subList()
+                                                        replaceAll()
+                                                        sort()
+
 
         a) ArrayList
         - its a growable or resizable array.
