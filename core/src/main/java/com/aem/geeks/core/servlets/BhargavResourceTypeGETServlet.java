@@ -30,10 +30,10 @@ import java.io.IOException;
         //So when we hit the page with that "sling: resourceType"  and with the below extensions and selector, then immediately our servlet runs.
         resourceTypes = "aemgeeks/components/structure/content",
         methods = {HttpConstants.METHOD_GET},
-        extensions = "xml",
+        extensions = {"xml","txt"},
         selectors = {"demo","bha"}
 )
-@ServiceRanking(1000)
+@ServiceRanking(1050)
 public class BhargavResourceTypeGETServlet extends SlingSafeMethodsServlet {
 
     private String name;

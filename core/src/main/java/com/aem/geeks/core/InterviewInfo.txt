@@ -1244,8 +1244,8 @@ Ans. - Provide default values
      @ValueMapValue
      @Default(values="Default Title")
 
-27. 22. I renamed a component folder. Existing pages stopped working. Why?
-    Ans. Because sling:resourceType still points to old component path. Need migration or update resourceType.
+27. I renamed a component folder. Existing pages stopped working. Why?
+Ans. (ans is verified) Because sling:resourceType still points to old component path. Need migration or update resourceType.
 
 28. I want a component to appear only once on a page?
 Ans. To ensure a component appears only once on a page. On the client side, I'd use Granite UI or custom

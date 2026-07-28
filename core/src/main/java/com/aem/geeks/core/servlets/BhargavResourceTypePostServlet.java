@@ -32,7 +32,7 @@ import java.io.IOException;
  * Page used for the demo: http://localhost:4502/content/aemgeeks/us/en/registration-form-post-servlet.html*/
 
 @Component(service = Servlet.class)
-@SlingServletResourceTypes(methods = {HttpConstants.METHOD_POST},  //here only using post method, if want we can use GET also
+@SlingServletResourceTypes(methods = {HttpConstants.METHOD_POST, HttpConstants.METHOD_GET},  //here only using post method, if want we can use GET also
         resourceTypes = "aemgeeks/components/content/registrationformservlet", //here we are giving our Component Path
         extensions = "txt",
         selectors = "bha"

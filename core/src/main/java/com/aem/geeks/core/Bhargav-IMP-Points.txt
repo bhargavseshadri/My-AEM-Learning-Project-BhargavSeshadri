@@ -633,7 +633,7 @@ dispatcher.forward(req, res);
 
 =============================================================================================
 *) Asset API --> Asset asset = resource.adaptTo(Asset.class);
-
+- We use thi when we only need to read asset metadata.
 - By doing this "Asset asset = resource.adaptTo(Asset.class);", we are converting the generic resource into an AEM DAM Asset API object
   that provides higher-level methods.
 
@@ -643,6 +643,16 @@ dispatcher.forward(req, res);
 * asset.getRenditions()
 * asset.addRendition(...)
 * asset.getMimeType()
+
+----------------------------------------------
+AssetManager API
+
+- AssetManager asset = resourceResolver.adaptTo(AssetManager.class);
+- the AssetManager API is used to programmatically create, manage, and manipulate assets in the Digital Asset Manager (DAM).
+- To Create a new asset - Asset asset = assetManager.createAsset(
+- To Retrieve assets: Asset asset = assetManager.getAsset("/content/dam/images/logo.png");
+- We can use this to Move or copy assets, Remove Assets,
+- Reference Code : com/aem/geeks/core/schedulers/BhargavExpiredAssetsReportScheduler.java
 
 =============================================================================================
 *) PAGE MANAGER(Aem's API) & Page
