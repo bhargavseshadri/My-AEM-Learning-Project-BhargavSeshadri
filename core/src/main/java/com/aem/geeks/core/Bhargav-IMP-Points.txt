@@ -22,11 +22,8 @@ IMPORTANT PATHS
 -> GRAPHIQL EDITOR : http://localhost:4502/aem/graphiql.html
 -> To see graphql endpoints in crxde : /content/cq:graphql/global/endpoint
 -> to create graphql endpoint : http://localhost:4502/libs/cq/graphql/sites/admin/content/console.html
--> For a simple form submissions we dont need to create a Servlets. AEM provides a default "SLING POST SERVLET". so we just write a basic html form with
-   <input> tag giving attribute like this <input type="text" id="firstName" name="./firstName" required> and after submit the servlet adds the property "firstName"
-   or creates a new node under the path given in action, if we give "/*" --> action="${resource.path}/*"
-   Reference : apps/aemgeeks/components/content/bhargav-default-sling-post-servlet-example/bhargav-default-sling-post-servlet-example.html
-
+-> Tool for checking query performance : http://localhost:4502/libs/granite/operations/content/diagnosistools/queryPerformance.html
+-> Tool to get Oak Index definition : https://oak-indexing.github.io/oakTools/indexDefGenerator.html
 =============================================================================================
 * Important Points
 
@@ -65,6 +62,11 @@ IMPORTANT PATHS
                                     resource using request it will give the path we have given in the code, eg: "/bin/bhargav".
                                     because the request is not associated with a content resource.
                                     - Here to get the Current Resource path we have to either send it through Query Params or some other way.
+
+-> For a simple form submissions we dont need to create a Servlets. AEM provides a default "SLING POST SERVLET". so we just write a basic html form with
+   <input> tag giving attribute like this <input type="text" id="firstName" name="./firstName" required> and after submit the servlet adds the property "firstName"
+   or creates a new node under the path given in action, if we give "/*" --> action="${resource.path}/*"
+   Reference : apps/aemgeeks/components/content/bhargav-default-sling-post-servlet-example/bhargav-default-sling-post-servlet-example.html
 
 =============================================================================================
 USING a Model, Service, HTL in NORMAL JAVA CLASS
