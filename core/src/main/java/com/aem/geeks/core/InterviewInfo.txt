@@ -140,6 +140,8 @@ a) ResourceType Servlets
 -> ResourceType, Methods, extensions and Selectors will only work for resourceType servlets. (ResourceType is manditory in these
    and others are optional)
 -> so we give a Resource in the servlet, and whenever that resource is accessed, our servlet will be "CALLED".
+-> VERY IMPORTANT : A resourceType servlet is only chosen when the requested resource itself has that resource type.
+
 -> ResourceType Servlets : @SlingServletResourceTypes()
 - these servlets can be accessed controlled using a jcr repo ACL
 - if we do not provide any method then the default method is GET
@@ -702,6 +704,15 @@ Ans : What it actually do is, if we give some client library name(here my.site.A
       , it will automatically get included in this client library because of this embed property. it will simply merge all those other client
       lib contents in to this client lib and render it.
 
+* DEPENDENCIES : - So in this we give a categories of a OOTB clientlibs or our custom clientlibs.
+                 - Whatever categories we have provided here will load before, then after our clientlib loads.
+
+- Difference between EMBED & DEPENDENCIES?
+Ans. dependencies = "Load that clientlib first."
+     embed = "Copy that clientlib into mine."
+     - the clientlibs we given in the dependencies will load first and then our current clientlib will load. where as if we use Embed, Both clientlibs will
+       be combined as one and gets loaded.
+
 * extraClientlibs="[bhargav.dialog.validation]"
 - we give this when we want our clientlibs to load at the time when we open the "comp authoring dialog".
 - we give this in our "comp dialog XML".
@@ -710,6 +721,12 @@ Ans : What it actually do is, if we give some client library name(here my.site.A
 Ans. All clientlibs with the same category are included.
      The loading order depends on dependencies and embed configuration. If they define the same CSS selectors or JavaScript functions, later-loaded resources can
      override earlier ones. It's best to avoid duplicate categories unless intentionally combining libraries.
+
+* In my clientlib, Can we use a already written js code in some other clientlib?
+Ans. Yes, we can do but multiple approaches are there:
+        1. dependencies (Enterprise preferred)
+        2. If you're on AEMaaCS, consider migrating shared utils to the JS Modules pattern for cleaner import/export semantics
+           instead of relying on a global namespace object.
 
 --------------------------------------------------
 STYLE SYSTEM Usage and Implementation
@@ -1339,6 +1356,16 @@ Ans. Store expiry date in dialog. Sling Model compares current date. HTL renders
 Ans. - Use CQ:EDITCONFIG's -> cq:actions. and Hide delete action. -> cq:actions="[EDIT,INSERT,COPYPASTE,MOVE]"
      - We can add the same property in cq:dialog xml also.
 
+43. Scenario: A developer added @Model(adaptables = SlingHttpServletRequest.class) to a Sling Model used on the Header component. The Header
+    is on every page. Now, Authoring performance has degraded significantly, and memory usage is high. What Sling Model feature should you enable?
+    Ans. - Enable Sling Model Caching: @Model(..., cache = true).
+           Without caching, if the Header component is included multiple times (e.g., desktop view, mobile menu view) on the same page,
+           the model instantiates and executes its @PostConstruct logic multiple times per request. Caching ensures the model is
+           instantiated only once per request lifecycle.
+         - @PostConstruct runs only once
+         - Scope of the cache, The cache is not global. It is tied to the adaptable instance. means Sling Models caches the created model
+           instance for the same adaptable object (such as the same Resource or SlingHttpServletRequest).
+
 =============================================================================================
 *) AEM as a Cloud Understanding  (material is in process)
 
@@ -1352,7 +1379,6 @@ Ans. - Use CQ:EDITCONFIG's -> cq:actions. and Hide delete action. -> cq:actions=
 
     - You cannot change code, overlay components, or modify OSGi configs directly on any Cloud environment.
     - The only way to change anything in these paths is to commit the code to Git and run it through the deployment pipeline.
-    - In AEM 6.5, you can build a .zip package locally and upload it directly to your staging or production server via the Package Manager.
       In AEMaaC, direct package deployment to higher environments is blocked.
 
 -------------------------

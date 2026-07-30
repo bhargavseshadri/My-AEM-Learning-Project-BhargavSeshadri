@@ -17,6 +17,11 @@ public interface BhargavBackendAemApisCompModel {
     String getFatherName();
     String getAverageIncome();
     String[] getMultifieldvalues();
+
+    String getPageTitleUsingVia();
+
+    String getProductModelImpl();
+
     String getResourcePath();
     String getResourceDetails();
     String isExpectedResourceType();

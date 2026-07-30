@@ -10,11 +10,12 @@ import org.apache.sling.api.resource.ValueMap;
 import org.apache.sling.models.annotations.Default;
 import org.apache.sling.models.annotations.DefaultInjectionStrategy;
 import org.apache.sling.models.annotations.Model;
-import org.apache.sling.models.annotations.injectorspecific.ScriptVariable;
-import org.apache.sling.models.annotations.injectorspecific.SlingObject;
-import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
+import org.apache.sling.models.annotations.Via;
+import org.apache.sling.models.annotations.injectorspecific.*;
 
 import javax.annotation.PostConstruct;
+import javax.inject.Inject;
+import javax.inject.Named;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -71,6 +72,28 @@ public class BhargavBackendAemApisCompModelImpl implements BhargavBackendAemApis
         return multifieldvalues;
     }
 
+    /***********************************************USAGE OF @Via**********************/
+//Not working at present - Ignore this section now
+    @Inject
+    @Named("jcr:title")
+    @Via("jcr:content")
+    private String title;
+
+    @Override
+    public String getPageTitleUsingVia() {
+        return "Print the Values Using @Via - JCR:TITLE : "+ title;
+    }
+
+
+    //Here we are getting hold of another Sling Model and Using that here
+    //com/aem/geeks/core/models/impl/ProductModelImpl.java
+    @Self
+    private ProductModelImpl productModelImpl;
+
+    @Override
+    public String getProductModelImpl() {
+        return "Print the Values from another sling model using @Via - JCR:TITLE : "+ productModelImpl.getProductName();
+    }
 
     /***********************************************USAGE OF BACKEND API's**********************/
 
