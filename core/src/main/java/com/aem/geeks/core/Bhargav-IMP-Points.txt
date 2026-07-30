@@ -185,7 +185,7 @@ Difference between data-sly-template and data-sly-call?
                          }
                      }
     Htl : <sly data-sly-use.util="com.myproject.core.utils.DateUtil"/>
-          <footer>© ${util.currentYear}</footer>
+          <footer>${util.currentYear}</footer>
 
 ------------------------------------
 *)

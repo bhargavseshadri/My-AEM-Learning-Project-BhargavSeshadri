@@ -112,6 +112,9 @@ public class UserAPIServiceImpl implements UserAPIService {
             post.setHeader("Content-Type", "application/json");
 
             //Just JSON String with username & password.
+            /*Here we are sending the creds in Request Body, we are not sending them in headers because For login APIs, the
+            server usually expects credentials in the request body It allows sending structured data (JSON).
+            Login requests often contain multiple fields*/
             String payload = String.format("{\"username\":\"%s\",\"password\":\"%s\"}", Username, password);
 
             //Here we are sending our JSON String payload to the POST request.
