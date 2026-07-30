@@ -93,15 +93,16 @@ page, where we authored this comp)
 -->
 
 
-<!-- EXAMPLE:4 -- We can also restrict the Resource when it has only some particular given "slingResourceType (our component path)"
--> so now it only renders the content of the resource we have given when it has the mentioned "slingResourceType"
--> <div data-sly-resource="${'/content/aemgeeks/us/en/bhargavseshadritestpage/jcr:content/parsys/author_books' @ resourceType='aemgeeks/components/content/author-books'}"></div>
--->
+<!--EXAMPLE:4 -- Overriding
+If we give like below the provided "resourceType" will override the page resource we have provided, and load on page.
+<div data-sly-resource="${'/content/aemgeeks/us/en/bhargavseshadritestpage/jcr:content/parsys/author_books' @ resourceType='aemgeeks/components/content/author-books'}"></div>-->
 
 
-<!-- EXAMPLE:5 (MOST COMMON): We can also add component using this
--> Below example we are saying add the component(author-books) at the path bhargavseshadritestpage (our page path)
-<div data-sly-resource="${@ path='bhargavseshadritestpage', resourceType='aemgeeks/components/content/author-books'}"></div>
+<!-- EXAMPLE:5 (MOST COMMON) & Important: We can also add unauthored component using this, and author can author that component.
+-> Below example we are saying add the component(author-books) along with this component.
+-> @ path='bhargavSomething' : the use of this is after author given the values in the dialog, a node with name "bhargavSomething" gets created and those values
+   store in that.
+<div data-sly-resource="${@ path='bhargavSomething', resourceType='aemgeeks/components/content/author-books'}"></div>
 -->
 
 ================== GLOBAL OBJECTS DEMO (Enumerable Objects) ====================

@@ -1366,6 +1366,10 @@ Ans. - Use CQ:EDITCONFIG's -> cq:actions. and Hide delete action. -> cq:actions=
          - Scope of the cache, The cache is not global. It is tied to the adaptable instance. means Sling Models caches the created model
            instance for the same adaptable object (such as the same Resource or SlingHttpServletRequest).
 
+44. In aem sites console can we hide a purticualr page or folder for authors?
+Ans. Yes we can do that by restricting all permissions to that user or group. after denying the permission for that user or group the page wont show up in sites
+      navigation.
+
 =============================================================================================
 *) AEM as a Cloud Understanding  (material is in process)
 
