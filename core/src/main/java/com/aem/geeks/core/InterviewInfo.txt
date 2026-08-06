@@ -648,6 +648,9 @@ NOTE: execute(WorkItem workItem, WorkflowSession workflowSession, MetaDataMap pr
         * MetaDataMap : If we pass any data to the dialog, that data we can get using this.(in case of custom WF process we get the data we have
                         given in "ARGUMENTS" process step dialog box)(in case of normal process step we can get the data we have given in dialog
                         box of that step).
+                        - MetaDataMap args cannot give you information about a normal workflow instance.
+                          It only contains the Process Arguments configured for that specific Process Step in the workflow model.
+
         * WorkItem : we might have the steps before and after our process step, and there will be an information and payload flowing from
                      starting of our WF model till end. that payload and the other information should be available in our Custom WF Process
                      and that all information is available in "WorkItem". apart from the available information we can also pass the other
@@ -1081,7 +1084,6 @@ cq:PageContent	     : /content/.../jcr:content	  : Holds the actual page content
 cq:Template	         : /conf/.../templates	      : Defines editable templates.
 cq:Component	     : /apps/.../components	      : Defines a component.
 cq:ClientLibraryFolder:	/apps/.../clientlibs	  : Defines a client library (CSS/JS).
-cq:Dialog	          : Under component	Represents a component dialog in Classic UI.
 cq:EditConfig	      : Under component	Defines component behavior in authoring mode (like drag/drop, inplace editing).
 cq:Widget	          : In dialogs	              :Defines a Classic UI widget type.
 cq:WorkflowModel	  : Defines a workflow model.
@@ -1600,6 +1602,9 @@ Example Code : com/aem/geeks/core/javarelatedcodes/StaticExamples.java
 * Non-Static can access both static and non-static methods.
 * Static does not support "this" and "super"
 * And we don't give the access modifier for the variables defined inside the static method.
+* static blocks are used to execute code once when the class is loaded into memory, before any objects are created or any static methods are called.A static block
+  is used for one-time initialization of static data or resources. It executes exactly once when the class is loaded, before any object is created and before any
+  static methods (including main()) are executed. It is useful when initialization requires more than a simple assignment.
 
 -----------------------------------------------------------
 4) Dynamic Binding (also called Late Binding or Runtime Polymorphism) : it means that the method to be called is decided at runtime,
