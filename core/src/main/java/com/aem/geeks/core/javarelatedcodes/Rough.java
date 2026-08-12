@@ -4,26 +4,18 @@ import java.util.*;
 
 public class Rough {
     public static void main(String[] args) {
-        TreeSet<Integer> bhaList = new TreeSet<>();
+        Set<String> fruits = new TreeSet<>();
 
-        bhaList.add(6);
-        bhaList.add(5);
-        bhaList.add(3);
-        bhaList.add(4);
-        bhaList.add(2);
-        bhaList.add(1);
+        fruits.add("Apple");
+        fruits.add("Banana");
 
+        fruits.add("Mango");
+        fruits.add("Mango");
+        fruits.add("Mango");
+        fruits.add("Mango");
+        fruits.add("Mango");
 
-        Iterator<Integer> it = bhaList.iterator();
-        while (it.hasNext()){
-            Integer temp = it.next();
-            System.out.println("temp : "+temp);
-        }
-
-
-
-
-//        System.out.println("List : "+bhaList);
-//        System.out.println("Set : "+setting);
+        System.out.println(fruits);
+//        System.out.println(fruits);
     }
 }

@@ -390,6 +390,14 @@ STEP:4 - (Last Step) - apps/aemgeeks/components/content/bhargav-personalcomp-one
   (here we used in apps/aemgeeks/components/content/bhargav-personalcomp-one/bhargav-personalcomp-one.html).
 - Now you can see the values of the multiple config instances.
 
+
+----------------------
+Approach-2
+
+Step: 1 - com/aem/geeks/core/config/BhargavOsgiFactoryConfig.java
+Step: 2 - com/aem/geeks/core/services/impl/BhargavOsgiFactoryConfigServiceImpl.java
+Step: 3 - com/aem/geeks/core/services/impl/BhargavOsgiFactoryConfigManagerServiceImpl.java
+
 =============================================================================================
 7) SCHEDULERS  (Configuration(to take the values) -> Scheduler Service )
 

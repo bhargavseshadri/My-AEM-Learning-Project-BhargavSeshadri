@@ -766,6 +766,7 @@ DATASOURCE
                    3. Dynamic Checkboxes etc
 
 =============================================================================================
+=============================================================================================
 BUNDLE LIFECYCLE
 
 1. INSTALLED : The bundle has been successfully uploaded and installed into the OSGi container, but its dependencies have not yet been satisfied.
@@ -2058,7 +2059,7 @@ a) HashSet : - No duplicates
 
 b) LinkedHashSet : - Unlike HashSet, it remembers the insertion order in which elements were added.
                    - Removes Duplicates
-                   - Allows null values
+                   - Allows one null values
 
 c) TreeSet : - TreeSet stores elements in sorted order.
              - Removes Duplicates

@@ -4,6 +4,7 @@ package com.aem.geeks.core.models.impl;
 import com.aem.geeks.core.models.BhargavBackendAemApisCompModel;
 import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.PageManager;
+import com.day.cq.wcm.api.components.Component;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.resource.ValueMap;
@@ -12,6 +13,7 @@ import org.apache.sling.models.annotations.DefaultInjectionStrategy;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.Via;
 import org.apache.sling.models.annotations.injectorspecific.*;
+import org.apache.sling.xss.XSSAPI;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -187,6 +189,10 @@ public class BhargavBackendAemApisCompModelImpl implements BhargavBackendAemApis
     @ScriptVariable
     private Page currentPage;
 
+    @ScriptVariable
+    private Component component;
+
+
     @Override
     public String getCurrentPageDetails() {
 
@@ -208,9 +214,15 @@ public class BhargavBackendAemApisCompModelImpl implements BhargavBackendAemApis
 
         Boolean isHideInNav = currentPage.isHideInNav();
 
+        String componentName = component.getName();
+        String componentGroup = component.getComponentGroup();
+        String componentResourceType = component.getResourceType();
+
         return "Jcr:Title : " + jcrTitleOfCurrPage + "\n" + "Page Path : " + pagePath + "\n" + "Parent Path : " + parentPath + "\n" + "Page Title : "
                 + pageTitle + "\n" + "Template Title : " + templateTitle + "\n" + "Template Path : " + templatePath + "\n"
-                + "JCR Content Resource Path : : " + jcrContentResource + "\n" + "Language of the Page : " + language + "\n" + "Is Hide in Nav : " + isHideInNav;
+                + "JCR Content Resource Path : : " + jcrContentResource + "\n" + "Language of the Page : " + language + "\n" + "Is Hide in Nav : " + isHideInNav
+                + "\n" + "ScriptVariable(Component) componentName : " + componentName + "\n" + "ScriptVariable(Component) componentGroup: " + componentGroup
+                + "\n" + "ScriptVariable(Component) componentResourceType: " + componentResourceType;
 
     }
 
