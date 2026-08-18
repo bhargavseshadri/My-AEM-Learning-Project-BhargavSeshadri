@@ -13,16 +13,11 @@ import org.apache.sling.models.annotations.DefaultInjectionStrategy;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.injectorspecific.OSGiService;
 import org.apache.sling.models.annotations.injectorspecific.ScriptVariable;
-import org.apache.sling.models.annotations.injectorspecific.SlingObject;
 import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.inject.Inject;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 //BhargavSeshadri - STEP:3 - Sling Model Demo, here we have all the info about sling model and services
@@ -50,6 +45,12 @@ public class ProductModelImpl implements ProductModel{
 
     @OSGiService
     private ProductService productService;     //BhargavSeshadri - Step:4 - Sling Model - Using of Service in our model
+
+
+    @Override
+    public String getBranchServiceMessage(){
+        return productService.getBranchServiceMessage();
+    }
 
     @Override
     public String getManufacturerName() {

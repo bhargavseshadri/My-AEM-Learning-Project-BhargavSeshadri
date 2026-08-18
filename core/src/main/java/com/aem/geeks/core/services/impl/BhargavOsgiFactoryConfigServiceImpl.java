@@ -8,7 +8,7 @@ import org.osgi.service.metatype.annotations.Designate;
 
 @Component(service = BhargavOsgiFactoryConfigService.class)
 @Designate(
-        ocd = BhargavOsgiFactoryConfigService.class,
+        ocd = BhargavOsgiFactoryConfig.class,
         factory = true
 )
 public class BhargavOsgiFactoryConfigServiceImpl implements BhargavOsgiFactoryConfigService {

@@ -12,6 +12,9 @@ public interface ProductModel {
 
     public String getProductName();
     public String getProductPrice();
+
+    String getBranchServiceMessage();
+
     public String getManufacturerName();
     public String getCurrentPageTitle();
     public String isReturnName();

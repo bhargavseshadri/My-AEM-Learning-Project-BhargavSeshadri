@@ -1,5 +1,6 @@
 package com.aem.geeks.core.services.impl;
 
+import com.aem.geeks.core.services.MainServiceInterface;
 import com.aem.geeks.core.services.ProductPriceBranchService;
 import com.aem.geeks.core.services.ProductService;
 import org.osgi.service.component.annotations.Component;
@@ -27,4 +28,11 @@ public class ProductServiceImpl implements ProductService{
     }
 
 
+    @Reference
+    private MainServiceInterface mainServiceInterface;
+
+    @Override
+    public String getBranchServiceMessage(){
+        return mainServiceInterface.branchServiceMessage();
+    }
 }
