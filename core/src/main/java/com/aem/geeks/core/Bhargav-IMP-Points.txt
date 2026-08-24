@@ -68,6 +68,15 @@ IMPORTANT PATHS
    or creates a new node under the path given in action, if we give "/*" --> action="${resource.path}/*"
    Reference : apps/aemgeeks/components/content/bhargav-default-sling-post-servlet-example/bhargav-default-sling-post-servlet-example.html
 
+-> @PostConstruct - Imp points
+        - we can have multiple PostConstruct methods in a sling model, but defining only one postConstruct method is a good practice.
+        - The order of execution of multiple PostConstruct methods is not guaranteed, so we cannot rely.
+        - this method should not have parameters.
+        - we mostly use void method and it is preferred, but we can also use return type method, but it is not a good practice because the postConstruct method
+          purpose is initialization, not returning a value.
+        - It can have different visibility, generally don't need to make it public. private/protected is commonly preferable because it is an implementation
+          detail of the model.
+
 =============================================================================================
 USING a Model, Service, HTL in NORMAL JAVA CLASS
 

@@ -4,16 +4,20 @@ package com.aem.geeks.core.models.impl;
 import com.aem.geeks.core.models.BhargavBackendAemApisCompModel;
 import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.PageManager;
+import com.day.cq.wcm.api.WCMMode;
 import com.day.cq.wcm.api.components.Component;
 import org.apache.sling.api.SlingHttpServletRequest;
-import org.apache.sling.api.resource.Resource;
-import org.apache.sling.api.resource.ValueMap;
+import org.apache.sling.api.resource.*;
 import org.apache.sling.models.annotations.Default;
 import org.apache.sling.models.annotations.DefaultInjectionStrategy;
 import org.apache.sling.models.annotations.Model;
 import org.apache.sling.models.annotations.Via;
-import org.apache.sling.models.annotations.injectorspecific.*;
-import org.apache.sling.xss.XSSAPI;
+import org.apache.sling.models.annotations.injectorspecific.ScriptVariable;
+import org.apache.sling.models.annotations.injectorspecific.Self;
+import org.apache.sling.models.annotations.injectorspecific.SlingObject;
+import org.apache.sling.models.annotations.injectorspecific.ValueMapValue;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -24,6 +28,8 @@ import java.util.List;
 
 @Model(adaptables = {Resource.class, SlingHttpServletRequest.class}, adapters = BhargavBackendAemApisCompModel.class, defaultInjectionStrategy = DefaultInjectionStrategy.OPTIONAL)
 public class BhargavBackendAemApisCompModelImpl implements BhargavBackendAemApisCompModel {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(BhargavBackendAemApisCompModelImpl.class);
 
     //Printing The Basic Dialog Fields Data
     @ValueMapValue
@@ -41,12 +47,6 @@ public class BhargavBackendAemApisCompModelImpl implements BhargavBackendAemApis
 
     @ValueMapValue
     private String[] multifieldvalues;
-
-    @PostConstruct
-    @Override
-    public String postConstructMethod() {
-        return "Post Construct Method is Executed";
-    }
 
 
     @Override
@@ -192,6 +192,9 @@ public class BhargavBackendAemApisCompModelImpl implements BhargavBackendAemApis
     @ScriptVariable
     private Component component;
 
+    @ScriptVariable
+    private WCMMode wcmmode;
+
 
     @Override
     public String getCurrentPageDetails() {
@@ -218,11 +221,22 @@ public class BhargavBackendAemApisCompModelImpl implements BhargavBackendAemApis
         String componentGroup = component.getComponentGroup();
         String componentResourceType = component.getResourceType();
 
+        String currentMode = "";
+        LOGGER.debug("WCM MODE = {}", wcmmode);
+        if (WCMMode.EDIT.equals(wcmmode)) {
+            currentMode = "Author-Edit Mode";
+        }else if (WCMMode.PREVIEW.equals(wcmmode)) {
+            currentMode = "Author-Preview Mode";
+        } else {
+            currentMode = "null";
+        }
+
         return "Jcr:Title : " + jcrTitleOfCurrPage + "\n" + "Page Path : " + pagePath + "\n" + "Parent Path : " + parentPath + "\n" + "Page Title : "
                 + pageTitle + "\n" + "Template Title : " + templateTitle + "\n" + "Template Path : " + templatePath + "\n"
                 + "JCR Content Resource Path : : " + jcrContentResource + "\n" + "Language of the Page : " + language + "\n" + "Is Hide in Nav : " + isHideInNav
                 + "\n" + "ScriptVariable(Component) componentName : " + componentName + "\n" + "ScriptVariable(Component) componentGroup: " + componentGroup
-                + "\n" + "ScriptVariable(Component) componentResourceType: " + componentResourceType;
+                + "\n" + "ScriptVariable(Component) componentResourceType: " + componentResourceType
+                + "\n" + "ScriptVariable(wcmmode) currentMode: " + currentMode;
 
     }
 
@@ -328,6 +342,20 @@ public class BhargavBackendAemApisCompModelImpl implements BhargavBackendAemApis
     @Override
     public String getPath() {
         return "Request Path(it gives Current Resource Path) : " + request.getRequestPathInfo().getResourcePath();
+    }
+
+    @SlingObject
+    private ResourceResolver resourceResolver;
+
+//Using Sling API to do JCR write operations.
+    @PostConstruct
+    public void usingSlingApiJcrOperation() throws PersistenceException {
+
+        LOGGER.debug("Bhargav Msg : PostConstruct ran in BhargavBackendAemApisCompModelImpl");
+
+        ModifiableValueMap map = resource.adaptTo(ModifiableValueMap.class);
+        map.put("BhargavProp", "Test property added");
+        resourceResolver.commit();
     }
 
 }

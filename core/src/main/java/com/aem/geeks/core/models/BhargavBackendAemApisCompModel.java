@@ -7,8 +7,7 @@ import java.util.List;
 
 public interface BhargavBackendAemApisCompModel {
 
-    @PostConstruct
-    String postConstructMethod();
+
 
     String getPersonName();
 
