@@ -73,5 +73,19 @@ public class ArrayRelatedCode {
         // ---- Method 4: Using Java Utility (Arrays.toString) ----
         System.out.println("\nUsing Arrays.toString:");
         System.out.println(java.util.Arrays.toString(arr5));
+
+
+        //=================================================================
+        //Way to store different types of elements in a single Array - Not Recommended
+
+
+        Object[] obj = new Object[3];
+        obj[0] = "hello";
+        obj[1] = 5;
+        obj[2] = 0.65;
+
+        for (Object a : obj) {
+            System.out.println(a+" ");
+        }
     }
 }

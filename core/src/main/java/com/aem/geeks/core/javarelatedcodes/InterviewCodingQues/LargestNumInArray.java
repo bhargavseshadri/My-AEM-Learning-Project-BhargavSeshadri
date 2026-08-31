@@ -1,4 +1,4 @@
-package com.aem.geeks.core.javarelatedcodes;
+package com.aem.geeks.core.javarelatedcodes.InterviewCodingQues;
 
 import java.util.Arrays;
 

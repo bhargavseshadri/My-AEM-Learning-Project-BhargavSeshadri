@@ -1957,6 +1957,14 @@ COLLECTION Framework
   and storing collections of objects.
 - Represents a group of objects known as elements.
 - Methods include add, remove, contains, size, etc.
+- When we convert and Array in to List using "asList", the returned list is backed by the original array. This means that changes to the
+  list will be reflected in the Array as well, and vice versa. And we also cant modify or add extra new elements to these type of lists because they are
+  backed by an array.
+  Eg: String[] arr = {"A", "B", "C"};
+      List<String> list = Arrays.asList(arr);
+      list.set(0, "Z"); // Changes the first element of the list
+      System.out.println(Arrays.toString(arr)); // Outputs: ["Z", "B", "C"]
+
 - com/aem/geeks/core/javarelatedcodes/CollectionExampleCodes.java
 - https://medium.com/@cibofdevs/collections-in-java-a-comprehensive-guide-1d63f8cd5c05
 
@@ -2129,8 +2137,14 @@ Deque: can be used both as FIFO and LIFO.
 ---------------------------
 *) Generics : To restrict the datatype of the elements you want to store in the list. acts like a datatype placeholders
 
-
-
+- When we use upperbounds concept, java doesn't allow us to do the write operations.
+- While doing the read operation, we can store the value in any supertype(parent class) of the upper bound. means we must have to assign the subclass object to a super
+  class reference variable.
+    eg: com/aem/geeks/core/javarelatedcodes/genericsrltd/Generics7-upperBounds3.png
+- We can do the write operation when we use lowerbounds concept with some limitations.
+    eg:  com/aem/geeks/core/javarelatedcodes/genericsrltd/Generics8-lowerBounds3.png
+- but in lower bounds we cannot do the read operations.
+   eg: com/aem/geeks/core/javarelatedcodes/genericsrltd/Generics11-lowerBounds4-read.png
 
 
 
