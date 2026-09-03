@@ -1,15 +1,11 @@
 package com.aem.geeks.core.javarelatedcodes.genericsrltd.genericCodes.exampleOne;
 
-
 import java.util.ArrayList;
 
-
-
-
-
-
-//GENERIC CLASS
-public class Team<T extends Player> {
+/**
+ * Created by dev on 17/10/2015.
+ */
+public class Team<T extends Player> implements Comparable<Team<T>> {
     private String name;
     int played = 0;
     int won = 0;
@@ -68,7 +64,37 @@ public class Team<T extends Player> {
         return (won * 2) + tied;
     }
 
+    @Override
+    public int compareTo(Team<T> team) {
+        if(this.ranking() > team.ranking()) {
+            return -1;
+        } else if(this.ranking() < team.ranking()) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

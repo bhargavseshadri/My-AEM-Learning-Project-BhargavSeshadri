@@ -2146,6 +2146,63 @@ Deque: can be used both as FIFO and LIFO.
 - but in lower bounds we cannot do the read operations.
    eg: com/aem/geeks/core/javarelatedcodes/genericsrltd/Generics11-lowerBounds4-read.png
 
+- Java allows generic type parameters on classes, abstract classes, and interfaces.
+
+    > Abstract Class Example
+    - abstract class : abstract class Player<T> {
+                           private T data;
+
+                           public Player(T data) {
+                               this.data = data;
+                           }
+
+                           public T getData() {
+                               return data;
+                           }
+
+                           public abstract void play();
+                       }
+    - Using it : class SoccerPlayer extends Player<String> {
+
+                     public SoccerPlayer(String name) {
+                         super(name);
+                     }
+
+                     @Override
+                     public void play() {
+                         System.out.println("Playing soccer");
+                     }
+                 }
+
+
+    > Interface Example : interface Player<T> {
+                              void play(T data);
+                          }
+
+      - Using it : class SoccerPlayer implements Player<String> {
+
+                       @Override
+                       public void play(String data) {
+                           System.out.println(data);
+                       }
+                   }
+
+      - Interfaces can also remain generic
+            - Example :
+                -> Interface : interface Player<T> {
+                                   void play(T data);
+                               }
+
+                -> using in java Class : class SoccerPlayer<T> implements Player<T> {
+                                                                            @Override
+                                                                            public void play(T data) {
+                                                                                System.out.println(data);
+                                                                            }
+                                                                        }
+                -> Creating object for it : SoccerPlayer<String> p1 = new SoccerPlayer<>();
+                                            SoccerPlayer<Integer> p2 = new SoccerPlayer<>();
+
+
 
 
 

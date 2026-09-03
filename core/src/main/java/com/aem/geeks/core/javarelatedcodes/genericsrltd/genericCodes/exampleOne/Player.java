@@ -1,8 +1,8 @@
 package com.aem.geeks.core.javarelatedcodes.genericsrltd.genericCodes.exampleOne;
 
-
-
-//Parent Abstract Class --> this class have 3 children :SoccerPlayer, FootballPlayer, BaseballPlayer
+/**
+ * Created by dev on 17/10/2015.
+ */
 public abstract class Player {
     private String name;
 
