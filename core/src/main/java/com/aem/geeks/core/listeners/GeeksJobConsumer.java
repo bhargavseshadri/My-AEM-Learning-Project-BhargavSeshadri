@@ -11,10 +11,16 @@ import org.osgi.service.component.annotations.Reference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+
+
+
+//BhargavSeshadri : Example for "JOB CONSUMER"
+// Step : 2
+// Step : 1 - com/aem/geeks/core/listeners/GeeksJobCreater.java
 @Component(service = JobConsumer.class,
             immediate = true,
             property = {
-                JobConsumer.PROPERTY_TOPICS + "=geeks/job"
+                JobConsumer.PROPERTY_TOPICS + "=geeks/job"  // using this we are linking JOB MANAGER & JOB CONSUMER
         })
 public class GeeksJobConsumer implements JobConsumer {
 
@@ -23,12 +29,15 @@ public class GeeksJobConsumer implements JobConsumer {
     @Reference
     ResourceResolverFactory resourceResolverFactory;
 
+
+    //MANDATORY METHOD
+    //HANDLER
     @Override
-    public JobResult process(Job job) {
+    public JobResult process(Job job) { // this JOB object will have whatever we have given in the JobManager "handleEvent(final Event event)" method
         try {
             ResourceResolver resourceResolver= ResolverUtil.newResolver(resourceResolverFactory);
-            String path = (String) job.getProperty("path");
-            String event= (String) job.getProperty("event");
+            String path = (String) job.getProperty("path");             // This path is the one we given in the Job Manager, here we are getting it
+            String event= (String) job.getProperty("event");            // This event is the one we given in the Job Manager, here we are getting it
             String heropage=(String) job.getProperty("heropage");
             LOG.info("\n Job executing for  : {} ",resourceResolver.getResource(heropage).getName());
             return JobResult.OK;

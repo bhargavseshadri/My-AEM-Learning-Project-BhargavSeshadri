@@ -875,6 +875,22 @@ Important : - Now to create a site specific configuration then we have to create
               to the folder "/conf/aemgeeks/in" or "/conf/aemgeeks/de"
 
 =============================================================================================
+21. Event Handling in AEM
+
+1. JCR Based Event Handling : com/aem/geeks/core/listeners/JCREventHandler.java
+
+------------------------------------------
+2. Osgi Api based event handling : com/aem/geeks/core/listeners/OSGiEventHandler.java
+
+------------------------------------------
+3. Sling Api based event handling : com/aem/geeks/core/listeners/ResourceEventHandler.java
+
+------------------------------------------
+4. Job Manager & Job Consumer :
+    - Step : 1 - Job Manager : com/aem/geeks/core/listeners/GeeksJobCreater.java
+    - Step : 2 - Job Consumer : com/aem/geeks/core/listeners/GeeksJobConsumer.java
+
+=============================================================================================
 
 
 

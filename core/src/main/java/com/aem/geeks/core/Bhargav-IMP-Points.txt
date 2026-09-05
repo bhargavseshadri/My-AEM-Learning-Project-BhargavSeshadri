@@ -253,6 +253,10 @@ g) Custom Live Action(for custom rollout configurations) : 1) LiveActionFactory 
                                                            2) LiveAction : getName(), execute(Resource source, Resource target, LiveRelationship relation,
                                                                                               boolean autoSave, boolean isResetRollout)
 
+f) Event Handlers:
+        a) JCR Based Event Handler : onEvent(EventIterator eventIterator)
+        b)
+
 =============================================================================================
 *) @Component
 
@@ -1130,6 +1134,80 @@ ResourceResolver
         Node
            ↓ getSession()
         Session.save()
+
+=============================================================================================
+*) Event Handling in AEM
+
+- We have different types of event handling
+1. JCR Based Event Handling(looks node) : - This is used to listen to changes in the JCR repository, like node added, removed, or property changed.
+
+- "javax.jcr.observation.EventListener" is the interface we implement to listen to JCR events.
+- Event handling at JCR/repository level means listening the events at node level.
+- Event listener can be registered via the "Observation manager" object.
+        * session.getWorkspace().getObservationManager().addEventListener(...);
+        * Once the event listener or event handler is added, then we have to write the handler "onEvent(EventIterator eventIterator)" method,
+          which will be called when the event occurs.
+- this event listener will act asynchronously.
+- This event listener will look for the session/user access right before executing the event.
+
+- Types of Events
+    Event.NODE_ADDED -- 1
+    Event.NODE_REMOVED -- 2
+    Event.NODE_MOVED -- 32
+    Event.PERSIST -- 64
+    Event.PROPERTY_ADDED -- 4
+    Event.PROPERTY_CHANGED -- 16
+    Event.PROPERTY_REMOVED -- 8
+
+
+- JCR Based Event Handling : com/aem/geeks/core/listeners/JCREventHandler.java
+
+--------------------------------------------------
+2. Resource Based Event Handling(looks resource) : Using this we can listen to what we are listening using "JCR based event handling", and also we can
+                                                   listen few more events which we can directly listen using Resource based event handling, like resource
+                                                   added, removed, changed, moved, copied, etc.
+                                                         eg: Published any content/page.
+- This is of two types :
+2a. Osgi Api based event handling : "org.osgi.service.event.EventHandler" is the interface we implement to listen to OSGi events.
+- Event handler object must be registered with a service property "EventConstants.EVENT_TOPIC" whose value is the list of topics for which the event handler listen to.
+- Event handler can also be registered with an "EventConstants.EVENT_FILTER" property, which is an filter expression that further restricts the events for which
+  the handler is called.
+- once we given the "Event_Topic and Event_Filter" then we have to write the handler "handleEvent(Event event)" method, which will be called when the event occurs.
+- Osgi Api based event handling : com/aem/geeks/core/listeners/OSGiEventHandler.java
+
+
+
+2b. Sling Api based event handling : "org.apache.sling.api.resource.observation.ResourceChangeListener" is the interface we implement to listen to Sling events.
+- For Sling related APIs we have to implement the "ResourceChangeListener" interface and register it as an OSGi service.
+- ResourceChnageListener must be registered with a service property "ResourceChangeListener.PATHS" whose value is the list of paths for which the event handler listen to.
+- ResourceChangeListener can also be registered with an "ResourceChangeListener.CHANGES" property, which is an filter expression that further restricts the events
+  for which the handler is called.
+- Once we have written the "PATHS and CHANGES" then we have to write the handler "onChange(List<ResourceChange> changes)" method, which will be
+  called when the event occurs.
+
+- com/aem/geeks/core/listeners/ResourceEventHandler.java
+
+
+--------------------------------------------------
+Note: In all the above three types of event handling there is no guarantee of execution, means if we are listening to a event, and that event is triggered,
+      but in between AEM instance went down, then our event will not be executed. To get a guarantee of execution there is a one more event handler.
+
+3. Sling Job manager & Job Consumer : This is a guaranteed event handling, means if we are listening to a event, and that event is triggered, but in between
+                                      AEM instance went down, then our event will be executed when the AEM instance comes up. This is because this event is
+                                      stored in a queue and when the instance comes up it will check the queue and execute the events.
+                                      - This will definitely execute atleast once, or it will give the statuc of the event.
+                                      - org.apache.sling.event.jobs.consumer.JobConsumer is the interface we implement to listen to Sling jobs.
+                                      - org.apache.sling.event.jobs.JobManager is the interface we use to create a job and add it to the queue.
+
+
+* JOB MANAGER : com/aem/geeks/core/listeners/GeeksJobCreater.java
+        - Here using JobManager we can create a job and add it to the queue, and using JobConsumer we can listen to that job and execute it when the job is triggered.
+        - After giving "EVENT_TOPIC & EVENT_FILTER" we have to write the handler "handleEvent(final Event event)" method, which will be called when the job is triggered.
+
+* Job Consumer : com/aem/geeks/core/listeners/GeeksJobConsumer.java
+        - Using "JobConsumer.PROPERTY_TOPICS" we link the job manager and job consumer.
+        - Here we have to write the handler "process(Job job)" method, which will be called when the job is triggered.
+
 
 =============================================================================================
 --> Debugging Tips

@@ -31,13 +31,17 @@ import org.slf4j.LoggerFactory;
 
 import javax.jcr.Node;
 
+
+
+/*BhargavSeshadri : Example code for "Osgi Api based event handling"*/
+
 @Component(service = EventHandler.class,
            immediate = true,
            property = {
-                   EventConstants.EVENT_TOPIC + "=org/apache/sling/api/resource/Resource/ADDED",
+                   EventConstants.EVENT_TOPIC + "=org/apache/sling/api/resource/Resource/ADDED",   //here i am adding the event types
                    EventConstants.EVENT_TOPIC + "=org/apache/sling/api/resource/Resource/CHANGED",
                    EventConstants.EVENT_TOPIC + "=org/apache/sling/api/resource/Resource/REMOVED",
-                   EventConstants.EVENT_FILTER +"=(path=/content/aemgeeks/us/en/author/*)"
+                   EventConstants.EVENT_FILTER +"=(path=/content/aemgeeks/us/en/author/*)"         //here i am telling at which path this event handler should listen.
            })
 public class OSGiEventHandler implements EventHandler {
 
@@ -46,6 +50,8 @@ public class OSGiEventHandler implements EventHandler {
     @Reference
     ResourceResolverFactory resourceResolverFactory;
 
+    //Mandatory method
+    //once we given the "Event_Topic and Event_Filter" then we have to write the handler "handleEvent(Event event)" method, which will be called when the event occurs.
     public void handleEvent(final Event event) {
         LOG.info("\n Resource event: {} at: {}", event.getTopic(), event.getProperty(SlingConstants.PROPERTY_PATH));
         try {

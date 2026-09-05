@@ -12,7 +12,7 @@ import javax.jcr.observation.Event;
 import javax.jcr.observation.EventIterator;
 import javax.jcr.observation.EventListener;
 
-
+/*BhargavSeshadri : Example for "JCR Based Event Handler"*/
 @Component(immediate = true,service= EventListener.class)
 public class JCREventHandler implements EventListener{
 
@@ -20,29 +20,35 @@ public class JCREventHandler implements EventListener{
     private Session session;
 
     @Reference
-    SlingRepository slingRepository;
+    SlingRepository slingRepository;  //Using this we can get the session.
     
 
     @Activate
     public void activate() throws Exception {
         try {
 
-            String[] nodetypes={"cq:PageContent"};
-            session = slingRepository.loginService("geeksserviceuser",null);
-            session.getWorkspace().getObservationManager().addEventListener(
-                    this,                                 //handler
-                    Event.NODE_ADDED | Event.PROPERTY_ADDED,      //int code for event type
-                    "/content/aemgeeks/us/en/accordion",          //path
+
+            //EVENT LISTENING PART
+            String[] nodetypes={"cq:PageContent"};  //this we can give in nodeTypes in place of null for filtering
+            session = slingRepository.loginService("seshadribhargavlatestserviceuser",null);  //getting the session using Service User.
+            session.getWorkspace().getObservationManager().addEventListener(   //getting "addEventListener" object
+                    this,                                               // For current event handler in this java class.
+                    Event.NODE_ADDED | Event.PROPERTY_ADDED,         //telling what kind of event this event handler should listen. can take one or more event types.
+                    "/content/aemgeeks/us/en/eventhandlingRLTD",          //path
                     true,                                        //is Deep?
                     null,                                    //UUIDs filter
-                    nodetypes,                                   //nodetypes filter
-                    true);
+                    null,                                   //nodetypes filter
+                    false);
 
         } catch (RepositoryException e){
             log.info(" \n Error while adding Event Listener : {} ",e.getMessage());
         }
     }
 
+
+
+    //EVENT HANDLER PART
+    //it is a mandatory method
     public void onEvent(EventIterator eventIterator) {
         try {
             while (eventIterator.hasNext()){
